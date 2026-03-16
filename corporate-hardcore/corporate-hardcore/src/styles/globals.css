@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* LinkedIn-ish neutrals */
+  --linkedin-blue: #0a66c2;   /* not the exact brand blue, but close */
+  --linkedin-hover: #004182;
+  --card-bg: #ffffff;
+  --bg-main: #f3f2ef;        /* warm off-white */
+  --text-primary: #000000e6; /* 90% black */
+  --text-secondary: #00000099; /* 60% black */
+  --border-light: #e0e0e0;
+  --border-medium: #ccc;
+  --button-secondary: #0000000a; /* subtle gray */
+}
+
+body {
+  @apply bg-bg-main text-text-primary;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* Card surfaces */
+.surface-card {
+  @apply bg-card-bg rounded-xl border border-border-light shadow-sm;
+}
+
+.nav-height { height: 52px; } /* match LinkedIn nav */
+.content-max { max-width: 1128px; } /* LI desktop breakpoint */
