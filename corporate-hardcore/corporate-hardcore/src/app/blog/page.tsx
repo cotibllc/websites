@@ -60,7 +60,7 @@ export default function BlogPage() {
         </section>
 
         {/* Right rail */}
-        <aside className="hidden lg:block space-y-4">
+        <aside className="space-y-4">
           <div className="surface-card p-4">
             <h3 className="font-semibold mb-2">Browse by Arc</h3>
             <ul className="space-y-2 text-sm">

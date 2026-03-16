@@ -78,7 +78,7 @@ export default async function BlogPostPage({ params }: Props) {
           {/* Content */}
           <div className="p-6 md:p-8">
             <div
-              className="prose prose-neutral prose-lg max-w-none
+              className="prose prose-neutral prose-base sm:prose-lg max-w-none
                 prose-headings:font-semibold prose-headings:text-text-primary
                 prose-p:text-text-primary prose-p:leading-relaxed
                 prose-a:text-linkedin-blue prose-a:no-underline hover:prose-a:underline

@@ -1,8 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { Search, Bell, UserCircle } from "lucide-react";
+import { Search, Bell, UserCircle, Menu, X } from "lucide-react";
 import { usePathname } from "next/navigation";
+import { useState } from "react";
 
 const navLinks = [
   { label: "Home", href: "/" },
@@ -12,6 +13,7 @@ const navLinks = [
 
 export default function Navigation() {
   const pathname = usePathname();
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
     <header className="sticky top-0 z-50 bg-card-bg border-b border-border-light">
@@ -21,10 +23,10 @@ export default function Navigation() {
           <div className="w-10 h-10 rounded bg-linkedin-blue grid place-items-center">
             <span className="text-white font-bold text-xl tracking-tighter">CH</span>
           </div>
-          <span className="hidden sm:block font-semibold text-text-primary">Corporate&nbsp;Hardcore</span>
+          <span className="font-semibold text-text-primary">Corporate&nbsp;Hardcore</span>
         </Link>
 
-        {/* Center nav */}
+        {/* Center nav — desktop only */}
         <nav className="hidden md:flex items-center space-x-1">
           {navLinks.map((l) => (
             <Link
@@ -48,14 +50,49 @@ export default function Navigation() {
               className="pl-10 pr-4 py-2 rounded-md bg-bg-main border border-border-light focus:outline-none focus:ring-2 focus:ring-linkedin-blue w-64"
             />
           </div>
-          <button className="p-2 rounded-full hover:bg-btn-secondary" aria-label="Notifications">
+          <button className="p-2 rounded-full hover:bg-btn-secondary hidden md:block" aria-label="Notifications">
             <Bell className="w-5 h-5 text-text-secondary" />
           </button>
-          <button className="p-2 rounded-full hover:bg-btn-secondary" aria-label="Profile">
+          <button className="p-2 rounded-full hover:bg-btn-secondary hidden md:block" aria-label="Profile">
             <UserCircle className="w-5 h-5 text-text-secondary" />
+          </button>
+          {/* Hamburger — mobile only */}
+          <button
+            className="md:hidden p-2 rounded-full hover:bg-btn-secondary"
+            aria-label="Toggle menu"
+            onClick={() => setMobileOpen((o) => !o)}
+          >
+            {mobileOpen
+              ? <X className="w-5 h-5 text-text-secondary" />
+              : <Menu className="w-5 h-5 text-text-secondary" />}
           </button>
         </div>
       </div>
+
+      {/* Mobile dropdown menu */}
+      {mobileOpen && (
+        <nav className="md:hidden border-t border-border-light bg-card-bg px-4 pb-3 pt-2 space-y-1">
+          {navLinks.map((l) => (
+            <Link
+              key={l.href}
+              href={l.href}
+              onClick={() => setMobileOpen(false)}
+              className={`block px-3 py-2 rounded-md text-sm font-medium transition
+                ${pathname === l.href ? "bg-linkedin-blue text-white" : "text-text-secondary hover:bg-btn-secondary hover:text-text-primary"}`}
+            >
+              {l.label}
+            </Link>
+          ))}
+          <div className="relative pt-1">
+            <Search className="absolute left-3 top-1/2 mt-0.5 -translate-y-1/2 w-4 h-4 text-text-secondary" />
+            <input
+              type="search"
+              placeholder="Search articles..."
+              className="w-full pl-10 pr-4 py-2 rounded-md bg-bg-main border border-border-light focus:outline-none focus:ring-2 focus:ring-linkedin-blue text-sm"
+            />
+          </div>
+        </nav>
+      )}
     </header>
   );
 }

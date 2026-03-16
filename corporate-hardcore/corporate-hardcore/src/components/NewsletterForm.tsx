@@ -48,7 +48,7 @@ export default function NewsletterForm() {
             <span className="text-sm">You&apos;re on the list.</span>
           </div>
         ) : (
-          <form onSubmit={handleSubmit} className="flex gap-2">
+          <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-2">
             <input
               type="email"
               placeholder="your@email.com"

@@ -11,7 +11,7 @@ export default function Home() {
       <div className="mx-auto content-max px-4 py-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
 
         {/* Left rail */}
-        <aside className="hidden lg:block space-y-4">
+        <aside className="space-y-4">
           <div className="surface-card p-4">
             <h3 className="font-semibold mb-2">About Chuck</h3>
             <p className="text-sm text-text-secondary">
@@ -55,7 +55,7 @@ export default function Home() {
         </section>
 
         {/* Right rail */}
-        <aside className="hidden lg:block space-y-4">
+        <aside className="space-y-4">
           <div className="surface-card p-4">
             <h3 className="font-semibold mb-2">Stay Updated</h3>
             <NewsletterForm />
