@@ -43,8 +43,8 @@ export default function Home() {
           <div className="surface-card divide-y divide-border-light">
             <div className="p-6 hover:bg-gray-50 transition cursor-pointer">
               <span className="text-xs text-text-secondary uppercase tracking-wide">Performance Review Arc</span>
-              <h2 className="mt-1 text-lg font-semibold">The Interview Wasn't an Evaluation</h2>
-              <p className="mt-1 text-text-secondary">It was confirmation they'd already decided.</p>
+              <h2 className="mt-1 text-lg font-semibold">The Interview Wasn&apos;t an Evaluation</h2>
+              <p className="mt-1 text-text-secondary">It was confirmation they&apos;d already decided.</p>
             </div>
             <div className="p-6 hover:bg-gray-50 transition cursor-pointer">
               <span className="text-xs text-text-secondary uppercase tracking-wide">Holiday Party Arc</span>
@@ -55,7 +55,7 @@ export default function Home() {
         </section>
 
         {/* Right rail */}
-        <aside className="hidden xl:block space-y-4">
+        <aside className="hidden lg:block space-y-4">
           <div className="surface-card p-4">
             <h3 className="font-semibold mb-2">Stay Updated</h3>
             <NewsletterForm />
@@ -64,9 +64,9 @@ export default function Home() {
           <div className="surface-card p-4">
             <h3 className="font-semibold mb-2">Quick Links</h3>
             <ul className="space-y-2 text-sm">
-              <li><a className="text-linkedin-blue hover:underline" href="#">YouTube Shorts</a></li>
-              <li><a className="text-linkedin-blue hover:underline" href="#">LinkedIn Articles</a></li>
-              <li><a className="text-linkedin-blue hover:underline" href="#">TikTok Clips</a></li>
+              <li><a className="text-linkedin-blue hover:underline" href="https://www.youtube.com/@corphardcore" target="_blank" rel="noopener noreferrer">YouTube Shorts</a></li>
+              <li><a className="text-linkedin-blue hover:underline" href="https://www.instagram.com/corphardcore/" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+              <li><a className="text-linkedin-blue hover:underline" href="https://www.tiktok.com/@corphardcore" target="_blank" rel="noopener noreferrer">TikTok Clips</a></li>
             </ul>
           </div>
         </aside>

@@ -22,6 +22,7 @@ const config: Config = {
         "btn-secondary": "var(--button-secondary)",
       },
       spacing: { nav: "52px" },
+      height: { nav: "52px" },
       width: { "content": "1128px" },
       boxShadow: {
         card: "0 0 0 1px rgba(0,0,0,.15), 0 2px 3px rgba(0,0,0,.05)",
