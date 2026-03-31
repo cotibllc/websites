@@ -11,15 +11,13 @@ export default function NewsletterForm() {
     e.preventDefault();
     setStatus('submitting');
     
-    // Replace with your ConvertKit/MailerLite form action URL
-    const FORM_URL = 'YOUR_CONVERTKIT_FORM_URL';
-    
+    const FORM_URL = 'https://app.kit.com/forms/0857ce1976/subscriptions';
+
     try {
-      // Example: Using ConvertKit's API
       const response = await fetch(FORM_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email_address: email }),
       });
       
       if (response.ok) {
