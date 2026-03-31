@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>LLM Chat Interface</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <div class="container mx-auto mt-8">
+        <h1 class="text-2xl font-bold mb-4">LLM Chat Interface</h1>
+        <div>
+            <label for="model-select" class="block mb-2">Select Model:</label>
+            <select id="model-select" class="border p-2 mb-4">
+                <option value="openai" selected>OpenAI</option>
+                <option value="claude">Claude Opus</option>
+                <option value="gemini">Gemini 1.0</option>
+            </select>
+        </div>
+        <div id="chat-container" class="border p-4 mb-4" style="height: 400px; overflow-y: scroll;"></div>
+        <div>
+            <input type="text" id="user-input" class="border p-2 w-full mb-2" placeholder="Type your message...">
+            <button id="send-button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Send</button>
+        </div>
+    </div>
+
+    <script>
+        const chatContainer = document.getElementById('chat-container');
+        const userInput = document.getElementById('user-input');
+        const sendButton = document.getElementById('send-button');
+        const modelSelect = document.getElementById('model-select');
+
+        sendButton.addEventListener('click', sendMessage);
+        userInput.addEventListener('keyup', function(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        function sendMessage() {
+            const message = userInput.value.trim();
+            if (message !== '') {
+                displayMessage('user', message);
+                userInput.value = '';
+
+                const model = modelSelect.value;
+                axios.post('/api/chat', {
+                    model: model,
+                    message: message
+                })
+                .then(function(response) {
+                    displayMessage('assistant', response.data.response);
+                })
+                .catch(function(error) {
+                    console.error(error);
+                });
+            }
+        }
+
+        function displayMessage(role, message) {
+            const messageElement = document.createElement('div');
+            messageElement.className = 'mb-2';
+            messageElement.innerHTML = `<strong>${role}:</strong> ${message}`;
+            chatContainer.appendChild(messageElement);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+    </script>
+</body>
+</html>
