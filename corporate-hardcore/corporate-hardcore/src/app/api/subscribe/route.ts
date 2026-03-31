@@ -14,7 +14,9 @@ export async function POST(request: Request) {
   });
 
   if (!response.ok) {
-    return NextResponse.json({ error: 'Subscription failed' }, { status: response.status });
+    const body = await response.text();
+    console.error('Kit error:', response.status, body);
+    return NextResponse.json({ error: 'Subscription failed', details: body }, { status: response.status });
   }
 
   return NextResponse.json({ success: true });
