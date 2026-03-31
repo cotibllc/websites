@@ -7,10 +7,10 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Email is required' }, { status: 400 });
   }
 
-  const response = await fetch('https://app.kit.com/forms/0857ce1976/subscriptions', {
+  const response = await fetch('https://api.convertkit.com/v3/forms/9272877/subscribe', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email_address: email }),
+    body: JSON.stringify({ api_key: process.env.KIT_API_KEY, email }),
   });
 
   if (!response.ok) {
