@@ -5,49 +5,96 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Business Oriented - Services</title>
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" /> <!-- https://fonts.google.com/ -->    
-    <link href="css/bootstrap.min.css" rel="stylesheet" /> <!-- https://getbootstrap.com/ -->
-    <link href="fontawesome/css/all.min.css" rel="stylesheet" /> <!-- https://fontawesome.com/ -->
+    <meta name="description" content="COTIB LLC Services — Cloud computing, cybersecurity, DevOps, and on-premises infrastructure consulting for public and private sector organizations.">
+    <title>COTIB LLC — Services</title>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link href="fontawesome/css/all.min.css" rel="stylesheet" />
     <link href="css/templatemo-business-oriented.css" rel="stylesheet" />
+    <style>
+        .service-detail {
+            border-left: 4px solid #0099FF;
+            padding-left: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+        .service-detail h4 {
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+        .service-detail .service-icon {
+            color: #0099FF;
+            font-size: 1.75rem;
+            margin-bottom: 0.75rem;
+        }
+        .service-list li {
+            color: #666;
+            margin-bottom: 0.4rem;
+        }
+        .cta-strip {
+            background: #0099FF;
+            color: #fff;
+            padding: 3rem 0;
+            text-align: center;
+        }
+        .cta-strip h3 { color: #fff; font-weight: 700; margin-bottom: 0.5rem; }
+        .cta-strip p { color: rgba(255,255,255,0.85); margin-bottom: 1.5rem; }
+        .cta-strip .btn {
+            background: #fff;
+            color: #0099FF;
+            font-weight: 600;
+            border-radius: 0;
+            padding: 0.75rem 2rem;
+            border: 2px solid #fff;
+        }
+        .cta-strip .btn:hover { background: transparent; color: #fff; }
+        .approach-box {
+            background: #f8f9fa;
+            padding: 2rem;
+            height: 100%;
+        }
+        .approach-box i {
+            color: #0099FF;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        .approach-box h5 { font-weight: 700; margin-bottom: 0.5rem; }
+    </style>
 </head>
-<!--
 
-TemplateMo 549 Business Oriented
-
-https://templatemo.com/tm-549-business-oriented
-
--->
 <body>
+    <!-- Header / Logo -->
     <div id="parallax-1" class="parallax-window" data-parallax="scroll" data-image-src="img/biz-oriented-header.jpg">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
                     <div class="tm-logo">
-                        <i class="fas fa-industry fa-5x mr-5"></i>
-                        <span class="text-uppercase tm-logo-text">Business Oriented</span>
+                        <i class="fas fa-network-wired fa-4x mr-4"></i>
+                        <span class="text-uppercase tm-logo-text">COTIB LLC</span>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- Navigation -->
     <div class="tm-nav-container-outer">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-12">                    
+                <div class="col-12">
                     <nav class="navbar navbar-expand-lg" id="tm-main-nav">
                         <button class="navbar-toggler toggler-example" type="button" data-toggle="collapse"
                             data-target="#navbar-nav" aria-controls="navbar-nav" aria-expanded="false"
                             aria-label="Toggle navigation">
                             <span class="dark-blue-text"><i class="fas fa-bars"></i></span>
-                        </button>                    
+                        </button>
                         <div class="collapse navbar-collapse tm-nav" id="navbar-nav">
                             <ul class="navbar-nav ml-auto">
                                 <li class="nav-item">
                                     <a class="nav-link tm-nav-link" href="index.html">Home</a>
                                 </li>
                                 <li class="nav-item active">
-                                    <a class="nav-link tm-nav-link" href="#">Services <span class="sr-only">(current)</span></a>
+                                    <a class="nav-link tm-nav-link" href="services.html">Services <span class="sr-only">(current)</span></a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link tm-nav-link" href="about.html">About</a>
@@ -55,124 +102,151 @@ https://templatemo.com/tm-549-business-oriented
                                 <li class="nav-item">
                                     <a class="nav-link tm-nav-link" href="contact.html">Contact</a>
                                 </li>
-                            </ul>                        
-                        </div>                        
-                    </nav>                    
+                            </ul>
+                        </div>
+                    </nav>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- Services Content -->
     <div class="container-fluid mt-7">
         <div class="row mb-6">
             <div class="col-lg-7 mb-lg-0 mb-5 pr-lg-5">
-                <section class="mb-10">
-                    <div>
-                        <h3 class="tm-title-gray mb-4">Our services for your business growth</h3>
-                        <hr class="mb-5 tm-hr">
-                        <p class="mb-5">This is another HTML page for services in Business Oriented Template. You are
-                            <span class="tm-text-primary">allowed</span> to use this CSS template for your business or
-                            personal website. You are <span class="tm-text-primary">NOT allowed</span> to re-distribute
-                            the template ZIP file on any template collection website.
-                            <a href="https://templatemo.com/contact" class="tm-text-primary-link">Contact us</a> for
-                            more information about this template.
-                        </p>
-                        <p class="mb-5">Nulla eget ipsum nec augue semper convallis non a lacus. Integer vel condimentum
-                            neque. Fusce sollicitudin arcu et tortor lobortis rhoncus. Morbi accumsan efficitur nunc, in
-                            faucibus velit pretium quis. Sed elementum auctor felis eu tristique.</p>
-                    </div>
-                </section>
-                <section>
-                    <h3 class="tm-title-gray mb-4">Professional Business Services</h3>
+                <section class="mb-6">
+                    <h3 class="tm-title-gray mb-4">Technology services built around your business</h3>
                     <hr class="mb-5 tm-hr">
-                    <div class="tm-services-box mb-60">
-                        <img src="img/services-2.jpg" alt="Image" class="img-fluid tm-services-img">
-                        <div>
-                            <h4 class="tm-text-primary mb-4">Maecenas molestie varius ipsum</h4>
-                            <p class="tm-strategy-text">Donec mauris eros, suscipit fermentum faucibus sagittis, dictum
-                                eget nulla. Duis maximus porttitor ornare. Maecenas blandit vestibulum massa at
-                                accumsan. Duis ultricies mi id justo porttitor, et sollicitudin justo vehicula.</p>
-                        </div>
+                    <p class="mb-5">We don't sell technology — we solve problems. Every engagement starts with understanding your organization's goals, constraints, and culture. From there, we build a roadmap that delivers results without unnecessary complexity.</p>
+                    <p class="mb-5">Our consultants have worked across both public and private sectors, giving us a broad perspective on what works — and what doesn't — in the real world.</p>
+                </section>
+
+                <section>
+                    <h3 class="tm-title-gray mb-4">Our Core Services</h3>
+                    <hr class="mb-5 tm-hr">
+
+                    <div class="service-detail">
+                        <div class="service-icon"><i class="fas fa-cloud"></i></div>
+                        <h4>Cloud Computing</h4>
+                        <p>Whether you're migrating from on-premises, optimizing an existing cloud environment, or building cloud-native from day one, we guide you through every step. We work across AWS, Microsoft Azure, and Google Cloud Platform with no vendor bias — just the right fit for your needs.</p>
+                        <ul class="service-list">
+                            <li>Cloud readiness assessments</li>
+                            <li>Migration planning and execution</li>
+                            <li>Cost optimization and right-sizing</li>
+                            <li>Multi-cloud and hybrid architecture</li>
+                        </ul>
                     </div>
-                    <div class="tm-services-box mb-5">
-                        <img src="img/services-3.jpg" alt="Image" class="img-fluid tm-services-img">
-                        <div>
-                            <h4 class="tm-text-primary mb-4">Sed elementum justo in pulvinar</h4>
-                            <p class="tm-strategy-text">Sed non tellus vestibulum, tincidunt risus a, semper erat.
-                                Aliquam porta leo eget faucibus consectetur. Nam mauris felis, consectetur non cursus
-                                sit amet, pellentesque ac leo. Aliquam at dolor du velit scelerisque fringilla.</p>
-                        </div>
+
+                    <div class="service-detail">
+                        <div class="service-icon"><i class="fas fa-shield-alt"></i></div>
+                        <h4>Cybersecurity</h4>
+                        <p>A breach doesn't just cost money — it costs trust. We help organizations build security postures that protect sensitive data, meet compliance requirements, and keep operations running when threats emerge. Our approach is practical and risk-based, not checkbox-driven.</p>
+                        <ul class="service-list">
+                            <li>Security assessments and gap analysis</li>
+                            <li>Policy development and implementation</li>
+                            <li>Endpoint protection and threat monitoring</li>
+                            <li>Data loss prevention (DLP) strategies</li>
+                        </ul>
+                    </div>
+
+                    <div class="service-detail">
+                        <div class="service-icon"><i class="fas fa-code-branch"></i></div>
+                        <h4>DevOps</h4>
+                        <p>Speed and stability don't have to be in conflict. We help engineering and operations teams adopt DevOps practices that shorten release cycles, reduce incidents, and foster collaboration. From CI/CD pipelines to containerization and infrastructure-as-code, we build the foundation your team needs to move fast with confidence.</p>
+                        <ul class="service-list">
+                            <li>CI/CD pipeline design and implementation</li>
+                            <li>Infrastructure as Code (Terraform, Ansible)</li>
+                            <li>Container orchestration (Docker, Kubernetes)</li>
+                            <li>Monitoring, logging, and observability</li>
+                        </ul>
+                    </div>
+
+                    <div class="service-detail">
+                        <div class="service-icon"><i class="fas fa-server"></i></div>
+                        <h4>On-Premises Infrastructure</h4>
+                        <p>Cloud isn't right for every workload. For organizations that require on-site infrastructure — whether for compliance, latency, or control — we design and deploy reliable, scalable environments. We also help legacy environments modernize without a full rip-and-replace.</p>
+                        <ul class="service-list">
+                            <li>Data center design and buildout</li>
+                            <li>Server procurement and configuration</li>
+                            <li>Network architecture and implementation</li>
+                            <li>Legacy system modernization</li>
+                        </ul>
                     </div>
                 </section>
             </div>
+
+            <!-- Sidebar -->
             <div class="col-lg-5">
-                <img src="img/services-1.jpg" alt="Image" class="img-fluid">
+                <img src="img/services-1.jpg" alt="COTIB consulting services" class="img-fluid mb-4">
                 <div class="tm-bg-gray-dark tm-box-2">
-                    <h4 class="tm-text-primary tm-h3 mb-4">Fusce sollicitudin arcu et tortor</h4>
-                    <p class="mb-5">Cras rhoncus tempor consequat. Donec convallis orci id scelerisque convallis. Suspendisse varius sapien mauris.</p>
-                    <p class="mb-5">Quisque accumsan lorem sed bibendum vehicula. Aenean gravida, nunc ac bibendum bibendum.</p>
-                    <p>Donec convallis orci id scelerisque convallis. Suspendisse varius sapien mauris. Proin accumsan.</p>
+                    <h4 class="tm-text-primary tm-h3 mb-4">Our Approach</h4>
+                    <p class="mb-4">We start by listening. Before recommending any solution, we take the time to understand your environment, your team, and your goals.</p>
+                    <p class="mb-4">We believe in the simplest solution that solves the real problem — not the most expensive or the most impressive-sounding one.</p>
+                    <p>Every engagement is guided by transparency, clear communication, and a commitment to leaving your team more capable than when we arrived.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Approach Cards -->
+        <div class="row mb-7">
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="approach-box text-center">
+                    <i class="fas fa-search-plus"></i>
+                    <h5>Assess</h5>
+                    <p>We evaluate your current state honestly — no overselling, no fear-mongering.</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="approach-box text-center">
+                    <i class="fas fa-map-marked-alt"></i>
+                    <h5>Strategize</h5>
+                    <p>We build a roadmap that aligns technology decisions with your business priorities.</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="approach-box text-center">
+                    <i class="fas fa-tools"></i>
+                    <h5>Implement</h5>
+                    <p>We execute alongside your team — hands-on, not just advisory.</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="approach-box text-center">
+                    <i class="fas fa-graduation-cap"></i>
+                    <h5>Enable</h5>
+                    <p>We transfer knowledge so your team can own and operate what we build together.</p>
                 </div>
             </div>
         </div>
     </div>
-    <div id="parallax-3" class="parallax-window parallax-window-2" data-parallax="scroll"
-        data-image-src="img/biz-oriented-footer-2.jpg">
+
+    <!-- CTA Strip -->
+    <div class="cta-strip">
         <div class="container-fluid">
-            <div class="row">
-                <div class="col-12">
-                    <div class="tm-overlay tm-bg-black-transparent p-5 ml-auto mr-0">
-                        <p class="mb-0 text-white">This is a parallax image background section. Text section box has 50% alpha on black color. Phasellus interdum lobortis ultrices. Cras nulla nulla, fermentum vel ligula in, mollis imperdiet ipsum.</p>
-                    </div>
-                </div>
-            </div>
+            <h3>Not sure where to start?</h3>
+            <p>Book a free consultation and let's figure it out together.</p>
+            <a href="contact.html" class="btn">Book a Free Consultation</a>
         </div>
     </div>
 
-    <div class="container-fluid mt-7 mb-6">
-        <div class="row">
-            <div class="col-xl-3 col-lg-6 px-xl-4 px-3">
-                <div class="tm-box-3 tm-bg-gray">
-                    <div class="text-center"><i class="fas fa-cloud-sun fa-3x mb-8 mt-4"></i></div>
-                    <p>Nam nulla purus, lobortis ac euismod non, tincidunt eget velit. Nullam bibendum tortor id consectetur auctor.</p>
-                </div>
-            </div>
-            <div class="col-xl-3 col-lg-6 px-xl-4 px-3">
-                <div class="tm-box-3 tm-bg-gray">
-                    <div class="text-center"><i class="fas fa-hiking fa-3x mb-8 mt-4"></i></div>
-                    <p>Nam nulla purus, lobortis ac euismod non, tincidunt eget velit. Nullam bibendum tortor id consectetur auctor.</p>
-                </div>
-            </div>
-            <div class="col-xl-3 col-lg-6 px-xl-4 px-3">
-                <div class="tm-box-3 tm-bg-gray">
-                    <div class="text-center"><i class="fas fa-tree fa-3x mb-8 mt-4"></i></div>
-                    <p>Nam nulla purus, lobortis ac euismod non, tincidunt eget velit. Nullam bibendum tortor id consectetur auctor.</p>
-                </div>
-            </div>
-            <div class="col-xl-3 col-lg-6 px-xl-4 px-3">
-                <div class="tm-box-3 tm-bg-gray">
-                    <div class="text-center"><i class="fas fa-campground fa-3x mb-8 mt-4"></i></div>
-                    <p>Nam nulla purus, lobortis ac euismod non, tincidunt eget velit. Nullam bibendum tortor id consectetur auctor.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
+    <!-- Footer -->
     <footer class="container-fluid">
-        <div class="row">
-            <p class="col-lg-9 col-md-8 mb-5 mb-md-0">
-                Copyright &copy; 2020 <span class="tm-text-primary">Business Oriented</span>
-                - designed by <a rel="nofollow" target="_parent" href="https://templatemo.com" class="tm-link-primary">TemplateMo</a>
+        <div class="row align-items-center">
+            <p class="col-lg-6 col-md-8 mb-5 mb-md-0">
+                Copyright &copy; 2026 <span class="tm-text-primary">COTIB LLC</span> &mdash; New York City
             </p>
-            <div class="col-lg-3 col-md-4 text-right">
-                <a rel="nofollow" target="_blank" href="https://fb.com/templatemo" class="tm-social-link">
-                    <i class="fab fa-facebook fa-2x tm-social-icon"></i>
+            <div class="col-lg-6 col-md-4 text-right">
+                <a href="https://www.youtube.com/@theitxp" target="_blank" rel="noopener" class="tm-social-link">
+                    <i class="fab fa-youtube fa-2x tm-social-icon"></i>
                 </a>
-                <a href="https://twitter.com" class="tm-social-link">
+                <a href="https://twitter.com/theitxp" target="_blank" rel="noopener" class="tm-social-link">
                     <i class="fab fa-twitter fa-2x tm-social-icon"></i>
                 </a>
-                <a href="https://linkedin.com" class="tm-social-link">
-                    <i class="fab fa-linkedin fa-2x tm-social-icon"></i>
+                <a href="https://www.instagram.com/corphardcore/" target="_blank" rel="noopener" class="tm-social-link">
+                    <i class="fab fa-instagram fa-2x tm-social-icon"></i>
+                </a>
+                <a href="https://www.tiktok.com/@corphardcore" target="_blank" rel="noopener" class="tm-social-link">
+                    <i class="fab fa-tiktok fa-2x tm-social-icon"></i>
                 </a>
             </div>
         </div>
@@ -180,12 +254,11 @@ https://templatemo.com/tm-549-business-oriented
 
     <script src="js/jquery-3.4.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
-    <script src="js/parallax.min.js"></script> <!-- https://pixelcog.github.io/parallax.js/ -->
+    <script src="js/parallax.min.js"></script>
     <script src="js/tooplate-script.js"></script>
     <script>
         $(document).ready(function () {
             $('#parallax-1').parallax({ imageSrc: 'img/biz-oriented-header.jpg' });
-            $('#parallax-3').parallax({ imageSrc: 'img/biz-oriented-footer-2.jpg' });
         });
     </script>
 </body>

@@ -5,32 +5,54 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Business Oriented - Contact Page</title>
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600" rel="stylesheet" /> <!-- https://fonts.google.com/ -->    
-    <link href="css/bootstrap.min.css" rel="stylesheet" /> <!-- https://getbootstrap.com/ -->
-    <link href="fontawesome/css/all.min.css" rel="stylesheet" /> <!-- https://fontawesome.com/ -->
+    <meta name="description" content="Contact COTIB LLC — Reach out for technology consulting, content partnerships, or general inquiries. Based in New York City.">
+    <title>COTIB LLC — Contact</title>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link href="fontawesome/css/all.min.css" rel="stylesheet" />
     <link href="css/templatemo-business-oriented.css" rel="stylesheet" />
+    <style>
+        .contact-info-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+        .contact-info-item i {
+            color: #0099FF;
+            font-size: 1.25rem;
+            margin-right: 1rem;
+            margin-top: 3px;
+            min-width: 24px;
+        }
+        .contact-info-item strong {
+            display: block;
+            color: #333;
+            margin-bottom: 0.15rem;
+        }
+        .form-note {
+            font-size: 0.85rem;
+            color: #999;
+            margin-top: 0.5rem;
+        }
+    </style>
 </head>
-<!--
 
-TemplateMo 549 Business Oriented
-
-https://templatemo.com/tm-549-business-oriented
-
--->
 <body>
+    <!-- Header / Logo -->
     <div id="parallax-1" class="parallax-window" data-parallax="scroll" data-image-src="img/biz-oriented-header.jpg">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
                     <div class="tm-logo">
-                        <i class="fas fa-industry fa-5x mr-5"></i>
-                        <span class="text-uppercase tm-logo-text">Business Oriented</span>
+                        <i class="fas fa-network-wired fa-4x mr-4"></i>
+                        <span class="text-uppercase tm-logo-text">COTIB LLC</span>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- Navigation -->
     <div class="tm-nav-container-outer">
         <div class="container-fluid">
             <div class="row">
@@ -41,7 +63,7 @@ https://templatemo.com/tm-549-business-oriented
                             aria-label="Toggle navigation">
                             <span class="dark-blue-text"><i class="fas fa-bars"></i></span>
                         </button>
-                        <div class="collapse navbar-collapse tm-nav" id="navbar-nav">                            
+                        <div class="collapse navbar-collapse tm-nav" id="navbar-nav">
                             <ul class="navbar-nav ml-auto">
                                 <li class="nav-item">
                                     <a class="nav-link tm-nav-link" href="index.html">Home</a>
@@ -63,69 +85,141 @@ https://templatemo.com/tm-549-business-oriented
         </div>
     </div>
 
-    <div class="container-fluid mt-7 mb-25">
+    <div class="container-fluid mt-7 mb-7">
         <div class="row">
-            <div class="col-12">
-                <section class="tm-contact-form-box mx-auto mb-7">
-                    <h3 class="tm-title-gray mb-4 text-center">Contact Information</h3>
-                    <hr class="mb-8 tm-hr tm-hr-s mx-auto">
-                    <form id="contact-form" action="" method="POST" class="tm-contact-form">
+            <!-- Contact Form -->
+            <div class="col-lg-7 mb-lg-0 mb-6">
+                <section class="tm-contact-form-box mb-7">
+                    <h3 class="tm-title-gray mb-4">Get In Touch</h3>
+                    <hr class="mb-5 tm-hr">
+                    <p class="mb-5">Whether you're looking for technology consulting, interested in a content partnership, or just have a question — we'd love to hear from you. Fill out the form below and we'll get back to you within one business day.</p>
+
+                    <!--
+                        Formspree integration: replace YOUR_FORM_ID below with your actual Formspree form ID.
+                        Sign up free at https://formspree.io — no backend required.
+                        Example: action="https://formspree.io/f/abcd1234"
+                    -->
+                    <form id="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" class="tm-contact-form">
                         <div class="form-group">
-                            <input type="text" name="name" class="form-control rounded-0" placeholder="Name" required />
+                            <input type="text" name="name" class="form-control rounded-0" placeholder="Your Name" required />
                         </div>
                         <div class="form-group">
-                            <input type="email" name="email" class="form-control rounded-0" placeholder="Email" required />
+                            <input type="email" name="email" class="form-control rounded-0" placeholder="Your Email" required />
                         </div>
                         <div class="form-group">
-                            <select class="form-control" id="contact-select" name="inquiry">
-                                <option value="-">Subject</option>
-                                <option value="sales">Sales &amp; Marketing</option>
-                                <option value="creative">Creative Design</option>
-                                <option value="uiux">UI / UX</option>
+                            <input type="text" name="organization" class="form-control rounded-0" placeholder="Organization (optional)" />
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control rounded-0" name="inquiry">
+                                <option value="">— Select a Subject —</option>
+                                <option value="cloud">Cloud Computing</option>
+                                <option value="cybersecurity">Cybersecurity</option>
+                                <option value="devops">DevOps</option>
+                                <option value="onprem">On-Premises Infrastructure</option>
+                                <option value="content">Content Partnership</option>
+                                <option value="general">General Inquiry</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <textarea rows="8" name="message" class="form-control rounded-0" placeholder="Message" required=></textarea>
+                            <textarea rows="7" name="message" class="form-control rounded-0" placeholder="Tell us about your project or question..." required></textarea>
                         </div>
-
                         <div class="form-group mb-0">
-                            <button type="submit" class="btn btn-primary rounded-0 d-block mx-auto">Submit</button>
+                            <button type="submit" class="btn btn-primary rounded-0 d-block">Send Message</button>
                         </div>
+                        <p class="form-note">We typically respond within one business day.</p>
                     </form>
                 </section>
-                <section class="tm-address-box mx-auto">
-                    <h3 class="tm-title-gray mb-4 text-center">Our Address</h3>
-                    <hr class="mb-5 tm-hr tm-hr-s mx-auto">
-                    <p class="mb-8 mx-auto text-center tm-address-text">Ut aliquam impoerdiet velit quis imperdiet. Aliquam facilisis commodo tristique. Nam feugiat, sem vitae mollis auctor, est dolor suscipit massa, vitae consectetur erat elit vel dui.</p>
-                    <div class="mapouter mb-60">
-                        <div class="gmap_canvas">
-                            <iframe width="100%" height="520" id="gmap_canvas"
-                                src="https://maps.google.com/maps?q=Av.+L%C3%BAcio+Costa,+Rio+de+Janeiro+-+RJ,+Brazil&t=&z=13&ie=UTF8&iwloc=&output=embed"
-                                frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
-                        </div>
+            </div>
+
+            <!-- Contact Info -->
+            <div class="col-lg-5">
+                <h3 class="tm-title-gray mb-4">Contact Information</h3>
+                <hr class="mb-5 tm-hr">
+
+                <div class="contact-info-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <div>
+                        <strong>Location</strong>
+                        <p class="mb-0">New York City, NY</p>
                     </div>
-                    <p class="mx-auto text-center tm-address-text">Aenean id posuere dui. Sed luctus luctus quam at blanbit. Aenean molestie lacinia mauris sed vestibulum. Praesent laoreet commodo sem eget fermentum.</p>
-                </section>
+                </div>
+
+                <div class="contact-info-item">
+                    <i class="fas fa-envelope"></i>
+                    <div>
+                        <strong>Email</strong>
+                        <p class="mb-0"><a href="mailto:hello@cotib.com" class="tm-text-primary-link">hello@cotib.com</a></p>
+                    </div>
+                </div>
+
+                <div class="contact-info-item">
+                    <i class="fas fa-clock"></i>
+                    <div>
+                        <strong>Response Time</strong>
+                        <p class="mb-0">Within one business day</p>
+                    </div>
+                </div>
+
+                <hr class="my-4">
+
+                <h5 class="mb-4" style="color:#333; font-weight:700;">Follow Our Brands</h5>
+
+                <div class="contact-info-item">
+                    <i class="fas fa-microphone-alt"></i>
+                    <div>
+                        <strong>The IT XP</strong>
+                        <p class="mb-1">
+                            <a href="https://www.youtube.com/@theitxp" target="_blank" rel="noopener" class="tm-text-primary-link mr-3"><i class="fab fa-youtube mr-1"></i>YouTube</a>
+                            <a href="https://twitter.com/theitxp" target="_blank" rel="noopener" class="tm-text-primary-link"><i class="fab fa-twitter mr-1"></i>Twitter</a>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="contact-info-item">
+                    <i class="fas fa-briefcase"></i>
+                    <div>
+                        <strong>Corporate Hardcore</strong>
+                        <p class="mb-1">
+                            <a href="https://www.youtube.com/@corphardcore" target="_blank" rel="noopener" class="tm-text-primary-link mr-3"><i class="fab fa-youtube mr-1"></i>YouTube</a>
+                            <a href="https://www.instagram.com/corphardcore/" target="_blank" rel="noopener" class="tm-text-primary-link mr-3"><i class="fab fa-instagram mr-1"></i>Instagram</a>
+                            <a href="https://www.tiktok.com/@corphardcore" target="_blank" rel="noopener" class="tm-text-primary-link"><i class="fab fa-tiktok mr-1"></i>TikTok</a>
+                        </p>
+                    </div>
+                </div>
+
+                <hr class="my-4">
+
+                <!-- NYC Map -->
+                <div class="mapouter">
+                    <div class="gmap_canvas">
+                        <iframe width="100%" height="300"
+                            src="https://maps.google.com/maps?q=New+York+City,+NY&t=&z=12&ie=UTF8&iwloc=&output=embed"
+                            frameborder="0" scrolling="no" marginheight="0" marginwidth="0"
+                            title="COTIB LLC - New York City"></iframe>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
+    <!-- Footer -->
     <footer class="container-fluid">
-        <div class="row">
-            <p class="col-lg-9 col-md-8 mb-5 mb-md-0">
-                Copyright &copy; 2020
-                <span class="tm-text-primary">Business Oriented</span>
-                - designed by <a rel="nofollow" target="_parent" href="https://templatemo.com" class="tm-link-primary">TemplateMo</a>
+        <div class="row align-items-center">
+            <p class="col-lg-6 col-md-8 mb-5 mb-md-0">
+                Copyright &copy; 2026 <span class="tm-text-primary">COTIB LLC</span> &mdash; New York City
             </p>
-            <div class="col-lg-3 col-md-4 text-right">
-                <a rel="nofollow" target="_blank" href="https://fb.com/templatemo" class="tm-social-link">
-                    <i class="fab fa-facebook fa-2x tm-social-icon"></i>
+            <div class="col-lg-6 col-md-4 text-right">
+                <a href="https://www.youtube.com/@theitxp" target="_blank" rel="noopener" class="tm-social-link">
+                    <i class="fab fa-youtube fa-2x tm-social-icon"></i>
                 </a>
-                <a href="https://twitter.com" class="tm-social-link">
+                <a href="https://twitter.com/theitxp" target="_blank" rel="noopener" class="tm-social-link">
                     <i class="fab fa-twitter fa-2x tm-social-icon"></i>
                 </a>
-                <a href="https://linkedin.com" class="tm-social-link">
-                    <i class="fab fa-linkedin fa-2x tm-social-icon"></i>
+                <a href="https://www.instagram.com/corphardcore/" target="_blank" rel="noopener" class="tm-social-link">
+                    <i class="fab fa-instagram fa-2x tm-social-icon"></i>
+                </a>
+                <a href="https://www.tiktok.com/@corphardcore" target="_blank" rel="noopener" class="tm-social-link">
+                    <i class="fab fa-tiktok fa-2x tm-social-icon"></i>
                 </a>
             </div>
         </div>
@@ -133,7 +227,7 @@ https://templatemo.com/tm-549-business-oriented
 
     <script src="js/jquery-3.4.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
-    <script src="js/parallax.min.js"></script> <!-- https://pixelcog.github.io/parallax.js/ -->
+    <script src="js/parallax.min.js"></script>
     <script src="js/tooplate-script.js"></script>
     <script>
         $(document).ready(function () {
