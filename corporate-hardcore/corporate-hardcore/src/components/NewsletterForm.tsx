@@ -5,19 +5,17 @@ import { ArrowRight, Check } from 'lucide-react';
 
 export default function NewsletterForm() {
   const [email, setEmail] = useState('');
-  const [status, setStatus] = useState<'idle' | 'submitting' | 'success'>('idle');
+  const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus('submitting');
     
-    const FORM_URL = 'https://app.kit.com/forms/0857ce1976/subscriptions';
-
     try {
-      const response = await fetch(FORM_URL, {
+      const response = await fetch('/api/subscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email_address: email }),
+        body: JSON.stringify({ email }),
       });
       
       if (response.ok) {
@@ -26,7 +24,7 @@ export default function NewsletterForm() {
       }
     } catch (error) {
       console.error('Newsletter signup error:', error);
-      setStatus('idle');
+      setStatus('error');
     }
   };
 
@@ -44,6 +42,11 @@ export default function NewsletterForm() {
           <div className="flex items-center gap-2 text-green-600">
             <Check size={18} />
             <span className="text-sm">You&apos;re on the list.</span>
+          </div>
+        ) : status === 'error' ? (
+          <div className="text-sm text-red-500">
+            Something went wrong. Try again.{' '}
+            <button className="underline" onClick={() => setStatus('idle')}>Retry</button>
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-2">
