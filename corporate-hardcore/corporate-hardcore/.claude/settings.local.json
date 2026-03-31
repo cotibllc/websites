@@ -1,7 +1,12 @@
 {
   "permissions": {
     "allow": [
-      "Bash(cd \"F:\\\\Projects\\\\websites\\\\corporate-hardcore\\\\corporate-hardcore\" && npm install 2>&1 | tail -5)"
+      "Bash(cd \"F:\\\\Projects\\\\websites\\\\corporate-hardcore\\\\corporate-hardcore\" && npm install 2>&1 | tail -5)",
+      "Bash(npm ls:*)",
+      "Bash(ls /f/Projects/githubprojects/websites/corporate-hardcore/corporate-hardcore/node_modules/gray-matter/*.d.ts 2>&1 | head -3)",
+      "Bash(npx tsc:*)",
+      "Bash(npm run:*)",
+      "Bash(find /f/Projects/githubprojects/websites/corporate-hardcore/corporate-hardcore -name \"*.html\" -o -name \"head.*\" 2>/dev/null | head -20)"
     ]
   }
 }
