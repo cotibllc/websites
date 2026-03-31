@@ -5,32 +5,95 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Business Oriented HTML Template</title>
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600" rel="stylesheet" /> <!-- https://fonts.google.com/ -->    
-    <link href="css/bootstrap.min.css" rel="stylesheet" /> <!-- https://getbootstrap.com/ -->
-    <link href="fontawesome/css/all.min.css" rel="stylesheet" /> <!-- https://fontawesome.com/ -->
+    <meta name="description" content="About COTIB LLC — A New York City technology consulting and content company serving public and private sector organizations.">
+    <title>COTIB LLC — About</title>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link href="fontawesome/css/all.min.css" rel="stylesheet" />
     <link href="css/templatemo-business-oriented.css" rel="stylesheet" />
+    <style>
+        .value-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1.75rem;
+        }
+        .value-item i {
+            color: #0099FF;
+            font-size: 1.5rem;
+            margin-right: 1rem;
+            margin-top: 4px;
+            min-width: 28px;
+        }
+        .value-item strong {
+            display: block;
+            color: #333;
+            margin-bottom: 0.25rem;
+        }
+        .brand-section {
+            background: #f8f9fa;
+            padding: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .brand-section h5 {
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+        .brand-section .brand-icon {
+            color: #0099FF;
+            font-size: 1.75rem;
+            margin-bottom: 0.75rem;
+        }
+        .brand-section .social-links a {
+            color: #666;
+            margin-right: 0.75rem;
+            font-size: 1.1rem;
+            transition: color 0.3s;
+        }
+        .brand-section .social-links a:hover { color: #0099FF; }
+        .cta-strip {
+            background: #0099FF;
+            color: #fff;
+            padding: 3rem 0;
+            text-align: center;
+        }
+        .cta-strip h3 { color: #fff; font-weight: 700; margin-bottom: 0.5rem; }
+        .cta-strip p { color: rgba(255,255,255,0.85); margin-bottom: 1.5rem; }
+        .cta-strip .btn {
+            background: #fff;
+            color: #0099FF;
+            font-weight: 600;
+            border-radius: 0;
+            padding: 0.75rem 2rem;
+            border: 2px solid #fff;
+        }
+        .cta-strip .btn:hover { background: transparent; color: #fff; }
+        blockquote {
+            border-left: 4px solid #0099FF;
+            padding-left: 1.5rem;
+            color: #555;
+            font-style: italic;
+            margin: 1.5rem 0;
+        }
+    </style>
 </head>
-<!--
 
-TemplateMo 549 Business Oriented
-
-https://templatemo.com/tm-549-business-oriented
-
--->
 <body>
+    <!-- Header / Logo -->
     <div id="parallax-1" class="parallax-window" data-parallax="scroll" data-image-src="img/biz-oriented-header.jpg">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
                     <div class="tm-logo">
-                        <i class="fas fa-industry fa-5x mr-5"></i>
-                        <span class="text-uppercase tm-logo-text">Business Oriented</span>
+                        <i class="fas fa-network-wired fa-4x mr-4"></i>
+                        <span class="text-uppercase tm-logo-text">COTIB LLC</span>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- Navigation -->
     <div class="tm-nav-container-outer">
         <div class="container-fluid">
             <div class="row">
@@ -62,167 +125,130 @@ https://templatemo.com/tm-549-business-oriented
             </div>
         </div>
     </div>
-    <div class="container-fluid mt-7">
-        <div class="row mb-4">
-            <section class="col-lg-4 mb-8 tm-px-3">
-                <div class="tm-box-bordered p-5">
-                    <h3 class="tm-title-gray mb-3">Message from the CEO</h3>
-                    <hr class="mb-4 tm-hr tm-hr-s">
-                    <p class="mb-4">Donec convallis orci id scelerisque convallis. Suspendisse varius sapien mauris.
-                        Proin accumsan.</p>
-                    <p class="mb-5">Quisque accumsan lorem sed bibendum vehicula. Aenean gravida, nunc ac bibendum
-                        bibendum.</p>
-                    <div class="text-right">
-                        <a href="#" class="btn btn-primary">Read More</a>
+
+    <!-- About Content -->
+    <div class="container-fluid mt-7 mb-6">
+        <div class="row mb-6">
+            <!-- Company Bio -->
+            <div class="col-lg-7 mb-lg-0 mb-5 pr-lg-5">
+                <h3 class="tm-title-gray mb-4">Who We Are</h3>
+                <hr class="mb-5 tm-hr">
+                <p class="mb-4">COTIB LLC is a New York City-based technology company founded on the belief that businesses deserve straightforward, expert technology guidance — without the jargon, the upsell, or the one-size-fits-all approach.</p>
+                <p class="mb-4">We started as a consulting firm serving both public and private sector organizations, helping them navigate decisions around cloud computing, cybersecurity, DevOps, and on-premises infrastructure. Over the years, our work exposed us to a common thread: the people doing the work — the IT professionals, the managers, the engineers — rarely had a platform that spoke to their real, day-to-day experience.</p>
+                <p class="mb-4">That insight led us to expand beyond consulting into content. Today, COTIB operates two content brands that serve the technology and corporate professional communities: <strong>The IT XP</strong> and <strong>Corporate Hardcore</strong>. Together, they extend our mission — not just to solve technology problems, but to educate, connect, and give voice to the people living them.</p>
+
+                <blockquote>
+                    "The first responsibility of a leader is to define reality. The last is to say thank you. In between, the leader is a servant." — Max DePree
+                </blockquote>
+
+                <p class="mb-5">That ethos guides everything we do at COTIB — from how we engage with clients to the content we put into the world.</p>
+
+                <h3 class="tm-title-gray mb-4 mt-5">Our Values</h3>
+                <hr class="mb-5 tm-hr">
+
+                <div class="value-item">
+                    <i class="fas fa-balance-scale"></i>
+                    <div>
+                        <strong>Unbiased Advisory</strong>
+                        <p class="mb-0">We have no vendor allegiances. Our recommendations are driven entirely by what's best for your organization.</p>
                     </div>
                 </div>
-            </section>
-            <div class="col-lg-4 col-md-6 mb-8 tm-px-3">
-                <figure class="tm-about-person-layout">
-                    <img src="img/about-01.jpg" alt="Image" class="img-fluid mb-5">
-                    <figcaption>
-                        <h3 class="mb-4">
-                            <span class="text-primary">Erik Morris</span>&nbsp;
-                            <span class="small tm-text-gray">(Founder and CEO)</span>
-                        </h3>
-                        <p>Quisque lacinia arcu sit amet est sollicitudin, ut hendrerit augue egestas. Donec accumsan
-                            justo sit amet orci interdum.</p>
-                    </figcaption>
-                </figure>
+                <div class="value-item">
+                    <i class="fas fa-compress-arrows-alt"></i>
+                    <div>
+                        <strong>Simplicity First</strong>
+                        <p class="mb-0">The best solution is the simplest one that solves the real problem. Complexity for its own sake is waste.</p>
+                    </div>
+                </div>
+                <div class="value-item">
+                    <i class="fas fa-handshake"></i>
+                    <div>
+                        <strong>Partnership Over Transaction</strong>
+                        <p class="mb-0">We're invested in your long-term success, not just the close of an engagement.</p>
+                    </div>
+                </div>
+                <div class="value-item">
+                    <i class="fas fa-bullhorn"></i>
+                    <div>
+                        <strong>Authentic Voice</strong>
+                        <p class="mb-0">In consulting and in content, we say what we mean. No fluff, no corporate theater.</p>
+                    </div>
+                </div>
             </div>
-            <div class="col-lg-4 col-md-6 mb-8 tm-px-3">
-                <figure class="tm-about-person-layout">
-                    <img src="img/about-02.jpg" alt="Image" class="img-fluid mb-5">
-                    <figcaption>
-                        <h3 class="mb-4">
-                            <span class="text-primary">Michael Owen</span>&nbsp;
-                            <span class="small tm-text-gray">(Co-founder / CTO)</span>
-                        </h3>
-                        <p>In bibendum dignissim nulla, vitae rutrum enim interdum quis. Quisque erat velit, gravida
-                            quis lectus sit amet, mattis ullamcorper diam.</p>
-                    </figcaption>
-                </figure>
-            </div>
-            <div class="col-lg-4 col-md-6 mb-8 tm-px-3">
-                <figure class="effect-milo tm-about-person tm-about-person-layout">
-                    <img src="img/about-03.jpg" alt="Image" class="img-fluid">
-                    <figcaption>
-                        <h2><span>Mary Kay</span>&nbsp;&nbsp;(Marketing Director)</h2>
-                        <p class="mb-4">Manages the marketing function with emphasis on championing the brand and
-                            expanding the customer base.</p>
-                        <p>
-                            <a href="https://linkedin.com" class="tm-social-link">
-                                <i class="fab fa-linkedin fa-15x tm-social-icon tm-social-icon-2"></i>
-                            </a>
-                            <a href="https://twitter.com" class="tm-social-link">
-                                <i class="fab fa-twitter fa-15x tm-social-icon tm-social-icon-2"></i>
-                            </a>
-                            <a href="https://youtube.com" class="tm-social-link">
-                                <i class="fab fa-youtube fa-15x tm-social-icon tm-social-icon-2"></i>
-                            </a>
-                        </p>
-                    </figcaption>
-                </figure>
-            </div>
-            <div class="col-lg-4 col-md-6 mb-8 tm-px-3">
-                <figure class="effect-milo tm-about-person tm-about-person-layout">
-                    <img src="img/about-04.jpg" alt="Image" class="img-fluid">
-                    <figcaption>
-                        <h2><span>Jen Terry</span>&nbsp;&nbsp;(Finance Director)</h2>
-                        <p class="mb-4">Plans and manages all large scale financial functions of the business.</p>
-                        <p>
-                            <a href="https://linkedin.com" class="tm-social-link">
-                                <i class="fab fa-linkedin fa-15x tm-social-icon tm-social-icon-2"></i>
-                            </a>
-                            <a href="https://twitter.com" class="tm-social-link">
-                                <i class="fab fa-twitter fa-15x tm-social-icon tm-social-icon-2"></i>
-                            </a>
-                            <a href="https://youtube.com" class="tm-social-link">
-                                <i class="fab fa-youtube fa-15x tm-social-icon tm-social-icon-2"></i>
-                            </a>
-                        </p>
-                    </figcaption>
-                </figure>
-            </div>
-            <div class="col-lg-4 col-md-6 mb-8 tm-px-3">
-                <figure class="effect-milo tm-about-person tm-about-person-layout">
-                    <img src="img/about-05.jpg" alt="Image" class="img-fluid">
-                    <figcaption>
-                        <h2><span>Levi Moore</span>&nbsp;&nbsp;(Creative Director)</h2>
-                        <p class="mb-4">Implements concepts, guidelines and strategies in various creative projects and
-                            oversees them to completion</p>
-                        <p>
-                            <a href="https://linkedin.com" class="tm-social-link">
-                                <i class="fab fa-linkedin fa-15x tm-social-icon tm-social-icon-2"></i>
-                            </a>
-                            <a href="https://twitter.com" class="tm-social-link">
-                                <i class="fab fa-twitter fa-15x tm-social-icon tm-social-icon-2"></i>
-                            </a>
-                            <a href="https://youtube.com" class="tm-social-link">
-                                <i class="fab fa-youtube fa-15x tm-social-icon tm-social-icon-2"></i>
-                            </a>
-                        </p>
-                    </figcaption>
-                </figure>
+
+            <!-- Our Brands Sidebar -->
+            <div class="col-lg-5">
+                <h3 class="tm-title-gray mb-4">Our Brands</h3>
+                <hr class="mb-5 tm-hr">
+
+                <div class="brand-section">
+                    <div class="brand-icon"><i class="fas fa-microphone-alt"></i></div>
+                    <h5>The IT XP</h5>
+                    <p class="mb-3">A show dedicated to the world of Information Technology and the professionals using their skills to drive business forward. Pulling back the curtain on what it's actually like to work in tech.</p>
+                    <div class="social-links mb-3">
+                        <a href="https://www.youtube.com/@theitxp" target="_blank" rel="noopener" title="YouTube"><i class="fab fa-youtube fa-lg"></i></a>
+                        <a href="https://twitter.com/theitxp" target="_blank" rel="noopener" title="Twitter/X"><i class="fab fa-twitter fa-lg"></i></a>
+                    </div>
+                    <a href="https://www.theitxp.com" target="_blank" rel="noopener" class="btn btn-primary btn-sm" style="border-radius:0;">Visit theitxp.com</a>
+                </div>
+
+                <div class="brand-section">
+                    <div class="brand-icon"><i class="fas fa-briefcase"></i></div>
+                    <h5>Corporate Hardcore</h5>
+                    <p class="mb-3">Observational satire for the corporate lifer. Not a rebellion — an observation. Real content for anyone who's ever sat through a meeting that should have been an email.</p>
+                    <div class="social-links mb-3">
+                        <a href="https://www.youtube.com/@corphardcore" target="_blank" rel="noopener" title="YouTube"><i class="fab fa-youtube fa-lg"></i></a>
+                        <a href="https://www.instagram.com/corphardcore/" target="_blank" rel="noopener" title="Instagram"><i class="fab fa-instagram fa-lg"></i></a>
+                        <a href="https://www.tiktok.com/@corphardcore" target="_blank" rel="noopener" title="TikTok"><i class="fab fa-tiktok fa-lg"></i></a>
+                    </div>
+                    <a href="#" class="btn btn-primary btn-sm" style="border-radius:0;">Coming Soon</a>
+                </div>
             </div>
         </div>
     </div>
+
+    <!-- Parallax Banner -->
     <div id="parallax-3" class="parallax-window parallax-window-2" data-parallax="scroll"
         data-image-src="img/biz-oriented-footer-3.jpg">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
                     <div class="tm-overlay p-5 mx-auto text-center">
-                        <p class="mb-5 text-white">Here is a text paragraph to join our team. This is a parallax image
-                            background section. Phasellus interdum lobortis ultrices. Cras nulla nulla, fermentum vel ligula in.</p>
-                        <a href="#" class="btn btn-primary">Join Our Team</a>
+                        <p class="mb-5 text-white">We're always looking to connect with organizations ready to make smart technology decisions — and with professionals who have a story to tell.</p>
+                        <a href="contact.html" class="btn btn-primary">Get In Touch</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="container-fluid mt-7">
-        <div class="row">
-            <div class="col-lg-5 col-md-6 mb-4">
-                <h3 class="tm-title-gray mb-4">About the business oriented</h3>
-                <hr class="mb-5 tm-hr">
-                <p class="mb-5">
-            Business Oriented Template is free HTML CSS layout made for your corporate or <a href="https://templatemo.com/tag/digital-marketing" target="_blank">digital marketing</a> websites. You can download, edit, and apply this template. </p>
-                <p class="mb-5">
-                    If you wish to support us via PayPal, feel free to <a href="https://templatemo.com/contact" target="_blank">contact us</a>. Please do not re-distribute the
-                template ZIP file on any template collection website. Thank you. </p>
-            </div>
-            <div class="col-lg-6 col-md-6 mb-4 mr-0 ml-auto">
-                <h3 class="tm-title-gray mb-4">History of our company</h3>
-                <hr class="mb-5 tm-hr">
-                <p class="mb-5">
-                    Aenean placerat neque fermentum diam malesuada, eget pretium felis elementum. Ut aliquam imperdiet
-                    velit quis imperdiet. Aliquam facilisis commodo tristique.
-                </p>
-                <p class="mb-5">
-                    Nam feugiat, sem vitae mollis auctor, est dolor suscipit massa, vitae consectetur erat elit vel dui.
-                    Phasellus pellentesque in urna at imperdiet. Nulla euismod nibh bibendum.
-                </p>
-            </div>
+    <!-- CTA Strip -->
+    <div class="cta-strip">
+        <div class="container-fluid">
+            <h3>Work with us</h3>
+            <p>Whether it's a consulting engagement or a content partnership, let's talk.</p>
+            <a href="contact.html" class="btn">Contact COTIB LLC</a>
         </div>
     </div>
 
+    <!-- Footer -->
     <footer class="container-fluid">
-        <div class="row">
-            <p class="col-lg-9 col-md-8 mb-5 mb-md-0">
-                Copyright &copy; 2020 <span class="tm-text-primary">Business Oriented</span>
-                - designed by <a rel="nofollow" target="_parent" href="https://templatemo.com" class="tm-link-primary">TemplateMo</a>
+        <div class="row align-items-center">
+            <p class="col-lg-6 col-md-8 mb-5 mb-md-0">
+                Copyright &copy; 2026 <span class="tm-text-primary">COTIB LLC</span> &mdash; New York City
             </p>
-            <div class="col-lg-3 col-md-4 text-right">
-                <a rel="nofollow" target="_blank" href="https://fb.com/templatemo" class="tm-social-link">
-                    <i class="fab fa-facebook fa-2x tm-social-icon"></i>
+            <div class="col-lg-6 col-md-4 text-right">
+                <a href="https://www.youtube.com/@theitxp" target="_blank" rel="noopener" class="tm-social-link">
+                    <i class="fab fa-youtube fa-2x tm-social-icon"></i>
                 </a>
-                <a href="https://twitter.com" class="tm-social-link">
+                <a href="https://twitter.com/theitxp" target="_blank" rel="noopener" class="tm-social-link">
                     <i class="fab fa-twitter fa-2x tm-social-icon"></i>
                 </a>
-                <a href="https://linkedin.com" class="tm-social-link">
-                    <i class="fab fa-linkedin fa-2x tm-social-icon"></i>
+                <a href="https://www.instagram.com/corphardcore/" target="_blank" rel="noopener" class="tm-social-link">
+                    <i class="fab fa-instagram fa-2x tm-social-icon"></i>
+                </a>
+                <a href="https://www.tiktok.com/@corphardcore" target="_blank" rel="noopener" class="tm-social-link">
+                    <i class="fab fa-tiktok fa-2x tm-social-icon"></i>
                 </a>
             </div>
         </div>
@@ -230,7 +256,7 @@ https://templatemo.com/tm-549-business-oriented
 
     <script src="js/jquery-3.4.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
-    <script src="js/parallax.min.js"></script> <!-- https://pixelcog.github.io/parallax.js/ -->
+    <script src="js/parallax.min.js"></script>
     <script src="js/tooplate-script.js"></script>
     <script>
         $(document).ready(function () {
