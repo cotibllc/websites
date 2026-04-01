@@ -1,8 +1,12 @@
+import Link from "next/link";
 import Navigation from "@/components/Navigation";
 import NewsletterForm from "@/components/NewsletterForm";
 import CorporateWisdom from "@/components/CorporateWisdom";
+import { getSortedPostsData } from "@/lib/blog";
 
 export default function Home() {
+  const posts = getSortedPostsData();
+
   return (
     <main className="min-h-screen bg-bg-main">
       <Navigation />
@@ -14,10 +18,13 @@ export default function Home() {
         <aside className="space-y-4">
           <div className="surface-card p-4">
             <h3 className="font-semibold mb-2">About Chuck</h3>
-            <p className="text-sm text-text-secondary">
+            <p className="text-sm text-text-secondary mb-3">
               IT Manager, 18 years at the same company.
               Quietly documenting dysfunction.
             </p>
+            <Link href="/about" className="text-sm text-linkedin-blue hover:underline">
+              View profile →
+            </Link>
           </div>
           <CorporateWisdom />
         </aside>
@@ -30,27 +37,36 @@ export default function Home() {
               Not a rebellion. An observation. We follow Chuck Morrison through monthly arcs of office absurdity.
             </p>
             <div className="flex items-center gap-3">
-              <button className="px-4 py-2 rounded-md bg-linkedin-blue text-white hover:bg-linkedin-blue-hover">
+              <Link
+                href="/blog"
+                className="px-4 py-2 rounded-md bg-linkedin-blue text-white hover:bg-linkedin-blue-hover transition-colors"
+              >
                 Start Reading
-              </button>
-              <button className="px-4 py-2 rounded-md border border-border-medium hover:bg-btn-secondary">
+              </Link>
+              <a
+                href="https://www.youtube.com/@corphardcore/shorts"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-4 py-2 rounded-md border border-border-medium hover:bg-btn-secondary transition-colors"
+              >
                 View Latest Video
-              </button>
+              </a>
             </div>
           </div>
 
-          {/* Article cards */}
+          {/* Article cards — dynamic */}
           <div className="surface-card divide-y divide-border-light">
-            <div className="p-6 hover:bg-gray-50 transition cursor-pointer">
-              <span className="text-xs text-text-secondary uppercase tracking-wide">Performance Review Arc</span>
-              <h2 className="mt-1 text-lg font-semibold">The Interview Wasn&apos;t an Evaluation</h2>
-              <p className="mt-1 text-text-secondary">It was confirmation they&apos;d already decided.</p>
-            </div>
-            <div className="p-6 hover:bg-gray-50 transition cursor-pointer">
-              <span className="text-xs text-text-secondary uppercase tracking-wide">Holiday Party Arc</span>
-              <h2 className="mt-1 text-lg font-semibold">Mandatory Fun, Optional Attendance</h2>
-              <p className="mt-1 text-text-secondary">The only thing worse was being there.</p>
-            </div>
+            {posts.map((post) => (
+              <Link
+                key={post.slug}
+                href={`/blog/${post.slug}`}
+                className="block p-6 hover:bg-gray-50 transition"
+              >
+                <span className="text-xs text-text-secondary uppercase tracking-wide">{post.arc}</span>
+                <h2 className="mt-1 text-lg font-semibold">{post.title}</h2>
+                <p className="mt-1 text-text-secondary">{post.description}</p>
+              </Link>
+            ))}
           </div>
         </section>
 

@@ -5,18 +5,14 @@ import { ArrowRight, Check } from 'lucide-react';
 
 export default function NewsletterForm() {
   const [email, setEmail] = useState('');
-  const [status, setStatus] = useState<'idle' | 'submitting' | 'success'>('idle');
+  const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus('submitting');
     
-    // Replace with your ConvertKit/MailerLite form action URL
-    const FORM_URL = 'YOUR_CONVERTKIT_FORM_URL';
-    
     try {
-      // Example: Using ConvertKit's API
-      const response = await fetch(FORM_URL, {
+      const response = await fetch('/api/subscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email }),
@@ -28,7 +24,7 @@ export default function NewsletterForm() {
       }
     } catch (error) {
       console.error('Newsletter signup error:', error);
-      setStatus('idle');
+      setStatus('error');
     }
   };
 
@@ -45,7 +41,12 @@ export default function NewsletterForm() {
         {status === 'success' ? (
           <div className="flex items-center gap-2 text-green-600">
             <Check size={18} />
-            <span className="text-sm">You&apos;re on the list.</span>
+            <span className="text-sm">You&apos;re in the system. Check your email to confirm — it&apos;s the one meeting you&apos;ll actually want to attend.</span>
+          </div>
+        ) : status === 'error' ? (
+          <div className="text-sm text-red-500">
+            Something went wrong. Try again.{' '}
+            <button className="underline" onClick={() => setStatus('idle')}>Retry</button>
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-2">

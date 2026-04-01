@@ -31,6 +31,8 @@ export function getSortedPostsData(): Omit<BlogPost, "contentHtml">[] {
     return {
       slug,
       ...result.data,
+      // gray-matter parses unquoted YAML dates as Date objects; coerce to string
+      date: String(result.data.date ?? ""),
     } as Omit<BlogPost, "contentHtml">;
   });
 
@@ -68,5 +70,7 @@ export async function getPostData(slug: string): Promise<BlogPost | null> {
     slug,
     contentHtml,
     ...result.data,
+    // gray-matter parses unquoted YAML dates as Date objects; coerce to string
+    date: String(result.data.date ?? ""),
   } as BlogPost;
 }
