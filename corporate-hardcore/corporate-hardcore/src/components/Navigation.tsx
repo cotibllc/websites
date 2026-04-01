@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { Search, Bell, UserCircle, Menu, X } from "lucide-react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 
 const navLinks = [
@@ -11,6 +11,56 @@ const navLinks = [
   { label: "About", href: "/about" },
   { label: "Synergy Corp", href: "/company" },
 ];
+
+function SearchForm({ className }: { className?: string }) {
+  const router = useRouter();
+  const [query, setQuery] = useState("");
+
+  function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    const q = query.trim();
+    if (q) router.push(`/search?q=${encodeURIComponent(q)}`);
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className={className} role="search">
+      <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-secondary pointer-events-none" />
+      <input
+        type="search"
+        placeholder="Search articles..."
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        aria-label="Search articles"
+        className="pl-10 pr-4 py-2 rounded-md bg-bg-main border border-border-light focus:outline-none focus:ring-2 focus:ring-linkedin-blue w-64"
+      />
+    </form>
+  );
+}
+
+function MobileSearchForm({ className }: { className?: string }) {
+  const router = useRouter();
+  const [query, setQuery] = useState("");
+
+  function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    const q = query.trim();
+    if (q) router.push(`/search?q=${encodeURIComponent(q)}`);
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className={className} role="search">
+      <Search className="absolute left-3 top-1/2 mt-0.5 -translate-y-1/2 w-4 h-4 text-text-secondary pointer-events-none" />
+      <input
+        type="search"
+        placeholder="Search articles..."
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        aria-label="Search articles"
+        className="w-full pl-10 pr-4 py-2 rounded-md bg-bg-main border border-border-light focus:outline-none focus:ring-2 focus:ring-linkedin-blue text-sm"
+      />
+    </form>
+  );
+}
 
 export default function Navigation() {
   const pathname = usePathname();
@@ -44,12 +94,7 @@ export default function Navigation() {
         {/* Right side */}
         <div className="flex items-center space-x-2">
           <div className="relative hidden lg:block">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-secondary" />
-            <input
-              type="search"
-              placeholder="Search articles..."
-              className="pl-10 pr-4 py-2 rounded-md bg-bg-main border border-border-light focus:outline-none focus:ring-2 focus:ring-linkedin-blue w-64"
-            />
+            <SearchForm className="relative" />
           </div>
           <button className="p-2 rounded-full hover:bg-btn-secondary hidden md:block" aria-label="Notifications">
             <Bell className="w-5 h-5 text-text-secondary" />
@@ -85,12 +130,7 @@ export default function Navigation() {
             </Link>
           ))}
           <div className="relative pt-1">
-            <Search className="absolute left-3 top-1/2 mt-0.5 -translate-y-1/2 w-4 h-4 text-text-secondary" />
-            <input
-              type="search"
-              placeholder="Search articles..."
-              className="w-full pl-10 pr-4 py-2 rounded-md bg-bg-main border border-border-light focus:outline-none focus:ring-2 focus:ring-linkedin-blue text-sm"
-            />
+            <MobileSearchForm className="relative" />
           </div>
         </nav>
       )}
