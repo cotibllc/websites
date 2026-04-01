@@ -11,6 +11,7 @@
     <link href="css/bootstrap.min.css" rel="stylesheet" />
     <link href="fontawesome/css/all.min.css" rel="stylesheet" />
     <link href="css/templatemo-business-oriented.css" rel="stylesheet" />
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
     <style>
         .contact-info-item {
             display: flex;
@@ -90,41 +91,47 @@
             <!-- Contact Form -->
             <div class="col-lg-7 mb-lg-0 mb-6">
                 <section class="tm-contact-form-box mb-7">
-                    <h3 class="tm-title-gray mb-4">Get In Touch</h3>
+                    <h3 class="tm-title-gray mb-4">Book a Free Consultation</h3>
                     <hr class="mb-5 tm-hr">
                     <p class="mb-5">Whether you're looking for technology consulting, interested in a content partnership, or just have a question — we'd love to hear from you. Fill out the form below and we'll get back to you within one business day.</p>
 
-                    <!--
-                        Formspree integration: replace YOUR_FORM_ID below with your actual Formspree form ID.
-                        Sign up free at https://formspree.io — no backend required.
-                        Example: action="https://formspree.io/f/abcd1234"
-                    -->
-                    <form id="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" class="tm-contact-form">
+                    <div id="form-success" style="display:none;" class="alert alert-success rounded-0 mb-4">
+                        <strong>Message sent!</strong> We'll be in touch within one business day.
+                    </div>
+                    <div id="form-error" style="display:none;" class="alert alert-danger rounded-0 mb-4"></div>
+
+                    <form id="contact-form" class="tm-contact-form" novalidate>
                         <div class="form-group">
-                            <input type="text" name="name" class="form-control rounded-0" placeholder="Your Name" required />
+                            <input type="text" id="f-name" class="form-control rounded-0" placeholder="Your Name *" required />
                         </div>
                         <div class="form-group">
-                            <input type="email" name="email" class="form-control rounded-0" placeholder="Your Email" required />
+                            <input type="email" id="f-email" class="form-control rounded-0" placeholder="Your Email *" required />
                         </div>
                         <div class="form-group">
-                            <input type="text" name="organization" class="form-control rounded-0" placeholder="Organization (optional)" />
+                            <input type="text" id="f-organization" class="form-control rounded-0" placeholder="Organization (optional)" />
                         </div>
                         <div class="form-group">
-                            <select class="form-control rounded-0" name="inquiry">
-                                <option value="">— Select a Subject —</option>
-                                <option value="cloud">Cloud Computing</option>
-                                <option value="cybersecurity">Cybersecurity</option>
-                                <option value="devops">DevOps</option>
-                                <option value="onprem">On-Premises Infrastructure</option>
-                                <option value="content">Content Partnership</option>
-                                <option value="general">General Inquiry</option>
+                            <input type="tel" id="f-phone" class="form-control rounded-0" placeholder="Phone Number (optional)" />
+                        </div>
+                        <div class="form-group">
+                            <select id="f-service" class="form-control rounded-0">
+                                <option value="">— Service of Interest —</option>
+                                <option value="Cloud Computing">Cloud Computing</option>
+                                <option value="Cybersecurity">Cybersecurity</option>
+                                <option value="DevOps">DevOps</option>
+                                <option value="On-Premises Infrastructure">On-Premises Infrastructure</option>
+                                <option value="Content Partnership">Content Partnership</option>
+                                <option value="General Inquiry">General Inquiry</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <textarea rows="7" name="message" class="form-control rounded-0" placeholder="Tell us about your project or question..." required></textarea>
+                            <textarea rows="6" id="f-message" class="form-control rounded-0" placeholder="Tell us about your project or question... *" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <div class="cf-turnstile" data-sitekey="YOUR_TURNSTILE_SITE_KEY"></div>
                         </div>
                         <div class="form-group mb-0">
-                            <button type="submit" class="btn btn-primary rounded-0 d-block">Send Message</button>
+                            <button type="submit" id="submit-btn" class="btn btn-primary rounded-0 d-block">Book Free Consultation</button>
                         </div>
                         <p class="form-note">We typically respond within one business day.</p>
                     </form>
@@ -232,6 +239,62 @@
     <script>
         $(document).ready(function () {
             $('#parallax-1').parallax({ imageSrc: 'img/biz-oriented-header.jpg' });
+        });
+
+        document.getElementById('contact-form').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const btn = document.getElementById('submit-btn');
+            const successEl = document.getElementById('form-success');
+            const errorEl = document.getElementById('form-error');
+            const turnstileToken = document.querySelector('[name="cf-turnstile-response"]')?.value;
+
+            successEl.style.display = 'none';
+            errorEl.style.display = 'none';
+
+            if (!turnstileToken) {
+                errorEl.textContent = 'Please complete the security check.';
+                errorEl.style.display = 'block';
+                return;
+            }
+
+            btn.disabled = true;
+            btn.textContent = 'Sending...';
+
+            try {
+                const res = await fetch('/api/contact', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        name: document.getElementById('f-name').value.trim(),
+                        email: document.getElementById('f-email').value.trim(),
+                        organization: document.getElementById('f-organization').value.trim(),
+                        phone: document.getElementById('f-phone').value.trim(),
+                        service: document.getElementById('f-service').value,
+                        message: document.getElementById('f-message').value.trim(),
+                        turnstileToken,
+                    }),
+                });
+
+                const data = await res.json();
+
+                if (res.ok) {
+                    successEl.style.display = 'block';
+                    document.getElementById('contact-form').reset();
+                    if (window.turnstile) window.turnstile.reset();
+                    successEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                } else {
+                    errorEl.textContent = data.error || 'Something went wrong. Please try again.';
+                    errorEl.style.display = 'block';
+                    if (window.turnstile) window.turnstile.reset();
+                }
+            } catch {
+                errorEl.textContent = 'Network error. Please check your connection and try again.';
+                errorEl.style.display = 'block';
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Book Free Consultation';
+            }
         });
     </script>
 </body>
