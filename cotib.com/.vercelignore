@@ -1,0 +1,3 @@
+terraform.tf
+node_modules/
+.DS_Store

@@ -1,0 +1,16 @@
+{
+  "name": "cotib-com",
+  "version": "1.0.0",
+  "description": "COTIB LLC — Technology consulting and content creation. New York City.",
+  "private": true,
+  "scripts": {
+    "dev": "vercel dev",
+    "deploy": "vercel --prod"
+  },
+  "devDependencies": {
+    "vercel": "^50.38.2"
+  },
+  "engines": {
+    "node": ">=18.x"
+  }
+}
