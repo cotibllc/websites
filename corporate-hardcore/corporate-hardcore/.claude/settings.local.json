@@ -7,7 +7,8 @@
       "Bash(npx tsc:*)",
       "Bash(npm run:*)",
       "Bash(find /f/Projects/githubprojects/websites/corporate-hardcore/corporate-hardcore -name \"*.html\" -o -name \"head.*\" 2>/dev/null | head -20)",
-      "Bash(cd \"F:\\\\Projects\\\\githubprojects\\\\websites\\\\corporate-hardcore\\\\corporate-hardcore\" && npm install resend)"
+      "Bash(cd \"F:\\\\Projects\\\\githubprojects\\\\websites\\\\corporate-hardcore\\\\corporate-hardcore\" && npm install resend)",
+      "Bash(cd \"F:\\\\Projects\\\\githubprojects\\\\websites\\\\corporate-hardcore\\\\corporate-hardcore\" && npm install @marsidev/react-turnstile)"
     ]
   }
 }

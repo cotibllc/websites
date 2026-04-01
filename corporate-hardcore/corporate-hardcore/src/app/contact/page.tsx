@@ -1,13 +1,17 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import Navigation from '@/components/Navigation';
 import { Check, Send } from 'lucide-react';
+import { Turnstile } from '@marsidev/react-turnstile';
+import type { TurnstileInstance } from '@marsidev/react-turnstile';
 
 export default function ContactPage() {
   const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' });
   const [honeypot, setHoneypot] = useState('');
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+  const turnstileRef = useRef<TurnstileInstance>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -21,17 +25,21 @@ export default function ContactPage() {
       const response = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...form, honeypot }),
+        body: JSON.stringify({ ...form, honeypot, turnstileToken }),
       });
 
       if (response.ok) {
         setStatus('success');
         setForm({ name: '', email: '', subject: '', message: '' });
+        setTurnstileToken(null);
+        turnstileRef.current?.reset();
       } else {
         setStatus('error');
+        turnstileRef.current?.reset();
       }
     } catch {
       setStatus('error');
+      turnstileRef.current?.reset();
     }
   };
 
@@ -137,6 +145,14 @@ export default function ContactPage() {
                 />
               </div>
 
+              <Turnstile
+                ref={turnstileRef}
+                siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY!}
+                onSuccess={(token) => setTurnstileToken(token)}
+                onExpire={() => setTurnstileToken(null)}
+                onError={() => setTurnstileToken(null)}
+              />
+
               {status === 'error' && (
                 <p className="text-sm text-red-500">
                   Something went wrong. Try again or email{' '}
@@ -149,7 +165,7 @@ export default function ContactPage() {
 
               <button
                 type="submit"
-                disabled={status === 'submitting'}
+                disabled={status === 'submitting' || !turnstileToken}
                 className="flex items-center gap-2 px-6 py-2 bg-linkedin-blue text-white text-sm font-medium rounded hover:bg-linkedin-blue-hover transition-colors disabled:opacity-50"
               >
                 <Send size={14} />
