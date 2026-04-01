@@ -6,7 +6,8 @@
       "Bash(ls /f/Projects/githubprojects/websites/corporate-hardcore/corporate-hardcore/node_modules/gray-matter/*.d.ts 2>&1 | head -3)",
       "Bash(npx tsc:*)",
       "Bash(npm run:*)",
-      "Bash(find /f/Projects/githubprojects/websites/corporate-hardcore/corporate-hardcore -name \"*.html\" -o -name \"head.*\" 2>/dev/null | head -20)"
+      "Bash(find /f/Projects/githubprojects/websites/corporate-hardcore/corporate-hardcore -name \"*.html\" -o -name \"head.*\" 2>/dev/null | head -20)",
+      "Bash(cd \"F:\\\\Projects\\\\githubprojects\\\\websites\\\\corporate-hardcore\\\\corporate-hardcore\" && npm install resend)"
     ]
   }
 }
