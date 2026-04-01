@@ -2,7 +2,7 @@ const { Resend } = require('resend');
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-const TO_EMAIL = 'hello@cotib.com';
+const TO_EMAIL = 'customerservice@cotib.com';
 const FROM_EMAIL = 'COTIB LLC <no-reply@cotib.com>';
 
 function escapeHtml(str) {
@@ -107,7 +107,7 @@ module.exports = async function handler(req, res) {
     } catch (err) {
         console.error('Resend error:', err);
         return res.status(500).json({
-            error: 'Failed to send your message. Please try again or email us directly at hello@cotib.com.',
+            error: 'Failed to send your message. Please try again or use the contact information on this page.',
         });
     }
 };
