@@ -1,6 +1,6 @@
----
+﻿---
 title: "February First"
-date: 2026-02-03
+date: "2026-02-03"
 description: "The 2026 transformation initiative has been postponed indefinitely. My coworker is back to normal. The inbox is the same as it was."
 arc: "Vision Emails"
 ---

@@ -1,6 +1,6 @@
----
+﻿---
 title: "Comfortable With Ambiguity"
-date: 2026-03-10
+date: "2026-03-10"
 description: "Got one interview. The hiring manager asked if I'm comfortable with ambiguity. I've been comfortable with ambiguity for eighteen years. They hired someone who wasn't."
 arc: "Job Search"
 ---

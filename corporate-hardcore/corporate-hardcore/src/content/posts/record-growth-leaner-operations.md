@@ -1,6 +1,6 @@
----
+﻿---
 title: "Record Growth, Leaner Operations"
-date: 2026-02-17
+date: "2026-02-17"
 description: "The CEO showed the revenue slide. Q4 up twenty-three percent. Then he explained why we need to tighten our belts. I did the math."
 arc: "Budget Cuts"
 ---

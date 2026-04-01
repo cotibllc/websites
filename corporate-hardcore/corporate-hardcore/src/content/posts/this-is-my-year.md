@@ -1,6 +1,6 @@
----
+﻿---
 title: "This Is My Year"
-date: 2026-01-27
+date: "2026-01-27"
 description: "My coworker stopped by to tell me 2026 is their year. I've heard this eighteen times. It's never their year."
 arc: "Vision Emails"
 ---

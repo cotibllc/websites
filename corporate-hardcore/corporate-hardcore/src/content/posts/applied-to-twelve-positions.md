@@ -1,6 +1,6 @@
----
+﻿---
 title: "Applied to Twelve Positions"
-date: 2026-03-03
+date: "2026-03-03"
 description: "Three rejections. Nine silences. The postings wanted five to seven years of experience. I have eighteen. That's the first problem."
 arc: "Job Search"
 ---

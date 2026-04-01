@@ -1,6 +1,6 @@
----
+﻿---
 title: "The Adjustment"
-date: 2026-02-24
+date: "2026-02-24"
 description: "Lost two team members. Zero backfills approved. My manager asked how we'll absorb the work. I told him we won't."
 arc: "Budget Cuts"
 ---

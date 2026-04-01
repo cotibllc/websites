@@ -1,6 +1,6 @@
----
+﻿---
 title: "Same Email, Different Year"
-date: 2026-01-20
+date: "2026-01-20"
 description: "The 2026 vision email arrived. I checked it against 2025. Same goals, same initiatives, same buzzwords. Different font."
 arc: "Vision Emails"
 ---

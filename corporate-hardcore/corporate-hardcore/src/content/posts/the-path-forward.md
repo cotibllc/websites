@@ -1,6 +1,6 @@
----
+﻿---
 title: "The Path Forward"
-date: 2026-02-10
+date: "2026-02-10"
 description: "Budget email came through. Subject line: 'Important Update on Our Path Forward.' I've read this email before."
 arc: "Budget Cuts"
 ---

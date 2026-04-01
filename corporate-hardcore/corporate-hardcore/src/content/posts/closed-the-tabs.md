@@ -1,6 +1,6 @@
----
+﻿---
 title: "Closed the Tabs"
-date: 2026-03-17
+date: "2026-03-17"
 description: "Stopped updating my resume. Closed the job search tabs. Not because it's good here. Because everywhere else is the same."
 arc: "Job Search"
 ---
