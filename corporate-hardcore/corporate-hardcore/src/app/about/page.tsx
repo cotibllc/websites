@@ -1,5 +1,6 @@
 import Navigation from "@/components/Navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { MapPin, Building2, Calendar } from "lucide-react";
 
 export const metadata = {
@@ -20,8 +21,14 @@ export default function AboutPage() {
           {/* Profile header */}
           <div className="px-6 md:px-8 pb-6">
             <div className="flex flex-col md:flex-row md:items-end gap-4">
-              <div className="w-28 h-28 rounded-lg bg-bg-main border-4 border-card-bg shadow-sm flex items-center justify-center">
-                <span className="text-4xl font-bold text-text-secondary">CM</span>
+              <div className="w-28 h-28 rounded-lg border-4 border-card-bg shadow-sm overflow-hidden">
+                <Image
+                  src="/chuck-morrison.png"
+                  alt="Chuck Morrison"
+                  width={112}
+                  height={112}
+                  className="object-cover w-full h-full"
+                />
               </div>
               
               <div className="flex-1 pb-2">
