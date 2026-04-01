@@ -1,6 +1,6 @@
 import Navigation from "@/components/Navigation";
 import Link from "next/link";
-import { Mail, MapPin, Building2, Calendar } from "lucide-react";
+import { MapPin, Building2, Calendar } from "lucide-react";
 
 export const metadata = {
   title: "About | Corporate Hardcore",
@@ -32,16 +32,6 @@ export default function AboutPage() {
                 </p>
               </div>
             </div>
-          </div>
-
-          {/* Action buttons */}
-          <div className="px-6 md:px-8 py-4 border-t border-border-light flex flex-wrap gap-3">
-            <button className="px-4 py-2 rounded-full bg-linkedin-blue text-white text-sm font-medium hover:bg-linkedin-blue-hover transition">
-              Connect
-            </button>
-            <button className="px-4 py-2 rounded-full border border-border-medium text-text-primary text-sm font-medium hover:bg-btn-secondary transition">
-              Message
-            </button>
           </div>
 
           {/* Main content grid */}
@@ -127,12 +117,8 @@ export default function AboutPage() {
                 <h3 className="font-semibold mb-3">Contact</h3>
                 <ul className="space-y-3 text-sm">
                   <li className="flex items-center gap-2 text-text-secondary">
-                    <Mail className="w-4 h-4" />
-                    <span>chuck.morrison@corphardcore.com</span>
-                  </li>
-                  <li className="flex items-center gap-2 text-text-secondary">
                     <MapPin className="w-4 h-4" />
-                    <span>Washington D.C. Area</span>
+                    <span>NY Metro Area</span>
                   </li>
                 </ul>
                 <div className="mt-4 pt-4 border-t border-border-light">
