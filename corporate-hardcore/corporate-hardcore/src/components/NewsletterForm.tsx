@@ -41,7 +41,7 @@ export default function NewsletterForm() {
         {status === 'success' ? (
           <div className="flex items-center gap-2 text-green-600">
             <Check size={18} />
-            <span className="text-sm">You&apos;re on the list.</span>
+            <span className="text-sm">You&apos;re in the system. Check your email to confirm — it&apos;s the one meeting you&apos;ll actually want to attend.</span>
           </div>
         ) : status === 'error' ? (
           <div className="text-sm text-red-500">
