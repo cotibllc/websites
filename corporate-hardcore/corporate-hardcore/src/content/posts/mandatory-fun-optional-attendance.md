@@ -1,7 +1,8 @@
-# Mandatory Fun, Optional Attendance
-
-*Holiday Party Arc — Video 1*
-
+﻿---
+title: "Mandatory Fun, Optional Attendance"
+date: "2025-12-09"
+description: "Attendance will be tracked. RSVP by Friday. Dress is festive business casual."
+arc: "Holiday Party Arc"
 ---
 
 The invitation said "You're Invited."

@@ -1,7 +1,8 @@
-# The Survey About the Party They Made You Attend
-
-*Holiday Party Arc — Video 3*
-
+﻿---
+title: "The Survey About the Party They Made You Attend"
+date: "2025-12-21"
+description: "Fifteen questions. Candid photos. A feedback form for an event that was already mandatory."
+arc: "Holiday Party Arc"
 ---
 
 Monday morning. Subject line: "Thank you for an amazing night, and a quick favor!"

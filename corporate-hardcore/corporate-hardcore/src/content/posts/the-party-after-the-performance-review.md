@@ -1,7 +1,8 @@
-# The Party After the Performance Review
-
-*Holiday Party Arc — Video 2*
-
+﻿---
+title: "The Party After the Performance Review"
+date: "2025-12-15"
+description: "HR found me within four minutes. She always finds me within four minutes."
+arc: "Holiday Party Arc"
 ---
 
 I arrived at five-fifteen.

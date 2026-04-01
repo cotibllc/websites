@@ -1,7 +1,8 @@
-# The Gap Between the Review and the Rating
-
-*Performance Review Arc — Video 2*
-
+﻿---
+title: "The Gap Between the Review and the Rating"
+date: "2025-11-25"
+description: "He was reading from a document I'd never seen. The review wasn't a conversation. It was a delivery mechanism."
+arc: "Performance Review Arc"
 ---
 
 My manager opened his laptop and started reading from a document I'd never seen.

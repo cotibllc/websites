@@ -1,7 +1,8 @@
-# The Interview Wasn't an Evaluation
-
-*Performance Review Arc — Video 1*
-
+﻿---
+title: "The Interview Wasn't an Evaluation"
+date: "2025-11-22"
+description: "The self-assessment isn't for the manager. The manager already knows what they're going to write."
+arc: "Performance Review Arc"
 ---
 
 It was question seventeen of forty-seven.
