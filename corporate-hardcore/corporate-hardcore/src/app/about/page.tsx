@@ -1,4 +1,5 @@
 import Navigation from "@/components/Navigation";
+import Link from "next/link";
 import { Mail, MapPin, Building2, Calendar } from "lucide-react";
 
 export const metadata = {
@@ -134,6 +135,11 @@ export default function AboutPage() {
                     <span>Washington D.C. Area</span>
                   </li>
                 </ul>
+                <div className="mt-4 pt-4 border-t border-border-light">
+                  <Link href="/contact" className="text-sm text-linkedin-blue hover:underline">
+                    Send a message →
+                  </Link>
+                </div>
               </section>
 
               {/* Current company */}
