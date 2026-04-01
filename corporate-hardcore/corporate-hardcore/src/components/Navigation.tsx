@@ -9,6 +9,7 @@ const navLinks = [
   { label: "Home", href: "/" },
   { label: "Articles", href: "/blog" },
   { label: "About", href: "/about" },
+  { label: "Synergy Corp", href: "/company" },
 ];
 
 export default function Navigation() {

@@ -44,7 +44,7 @@ export default function Home() {
                 Start Reading
               </Link>
               <a
-                href="https://www.youtube.com/@corphardcore"
+                href="https://www.youtube.com/@corphardcore/shorts"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="px-4 py-2 rounded-md border border-border-medium hover:bg-btn-secondary transition-colors"
