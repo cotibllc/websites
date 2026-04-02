@@ -1,2 +1,21 @@
-public/
-themes
+# Next.js
+.next/
+out/
+
+# Dependencies
+node_modules/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Vercel
+.vercel/
+
+# OS
+.DS_Store
+
+# Build artifacts
+*.tsbuildinfo
+next-env.d.ts
