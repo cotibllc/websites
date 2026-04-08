@@ -3,6 +3,9 @@ import Navigation from "@/components/Navigation";
 export const metadata = {
   title: "Privacy Policy | Corporate Hardcore",
   description: "Privacy policy for Corporate Hardcore.",
+  alternates: {
+    canonical: "/privacy",
+  },
 };
 
 export default function PrivacyPage() {

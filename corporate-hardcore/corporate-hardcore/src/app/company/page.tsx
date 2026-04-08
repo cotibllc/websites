@@ -6,6 +6,9 @@ export const metadata = {
   title: "Synergy Corp | Corporate Hardcore",
   description:
     "Optimizing Tomorrow's Solutions Today™. An integrated enterprise solutions provider since 1987.",
+  alternates: {
+    canonical: "/company",
+  },
 };
 
 const values = [
@@ -115,6 +118,19 @@ function LeadershipCard({ person }: { person: (typeof leadership)[number] }) {
 export default function CompanyPage() {
   return (
     <main className="min-h-screen bg-bg-main">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            name: "Synergy Corp",
+            description: "Optimizing Tomorrow's Solutions Today™. An integrated enterprise solutions provider since 1987.",
+            url: "https://www.corphardcore.com/company",
+            foundingDate: "1987",
+          }),
+        }}
+      />
       <Navigation />
 
       {/* Banner */}

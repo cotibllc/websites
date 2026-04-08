@@ -24,11 +24,22 @@ export async function generateMetadata({ params }: Props) {
   return {
     title: `${post.title} | Corporate Hardcore`,
     description: post.description,
+    alternates: {
+      canonical: `/blog/${slug}`,
+    },
     openGraph: {
       title: post.title,
       description: post.description,
       type: "article",
+      url: `/blog/${slug}`,
       publishedTime: post.date,
+      authors: ["Chuck Morrison"],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.description,
+      creator: "@corphardcore",
     },
   };
 }
@@ -43,6 +54,33 @@ export default async function BlogPostPage({ params }: Props) {
 
   return (
     <main className="min-h-screen bg-bg-main">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BlogPosting",
+            headline: post.title,
+            description: post.description,
+            datePublished: post.date,
+            url: `https://www.corphardcore.com/blog/${post.slug}`,
+            mainEntityOfPage: {
+              "@type": "WebPage",
+              "@id": `https://www.corphardcore.com/blog/${post.slug}`,
+            },
+            author: {
+              "@type": "Person",
+              name: "Chuck Morrison",
+              url: "https://www.corphardcore.com/about",
+            },
+            publisher: {
+              "@type": "Organization",
+              name: "Corporate Hardcore",
+              url: "https://www.corphardcore.com",
+            },
+          }),
+        }}
+      />
       <Navigation />
 
       <div className="mx-auto content-max px-4 py-6">

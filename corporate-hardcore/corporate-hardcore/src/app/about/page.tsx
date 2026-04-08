@@ -6,11 +6,32 @@ import { MapPin, Building2, Calendar } from "lucide-react";
 export const metadata = {
   title: "About | Corporate Hardcore",
   description: "Meet Chuck Morrison. IT Manager. 18 years. Still here.",
+  alternates: {
+    canonical: "/about",
+  },
 };
 
 export default function AboutPage() {
   return (
     <main className="min-h-screen bg-bg-main">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Person",
+            name: "Chuck Morrison",
+            jobTitle: "IT Manager",
+            description: "IT Manager with 18 years at the same company, quietly documenting corporate dysfunction through observational satire.",
+            url: "https://www.corphardcore.com/about",
+            sameAs: [
+              "https://www.youtube.com/@corphardcore",
+              "https://www.instagram.com/corphardcore/",
+              "https://www.tiktok.com/@corphardcore",
+            ],
+          }),
+        }}
+      />
       <Navigation />
 
       {/* Hero banner */}

@@ -1,5 +1,17 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import Navigation from "@/components/Navigation";
+
+export const metadata: Metadata = {
+  title: "Corporate Hardcore | Circle Back. Never Return.",
+  description: "Observational satire for the corporate lifer. Not a rebellion — an observation. Follow Chuck Morrison through monthly arcs of office absurdity.",
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    url: "https://www.corphardcore.com",
+  },
+};
 import NewsletterForm from "@/components/NewsletterForm";
 import CorporateWisdom from "@/components/CorporateWisdom";
 import { getSortedPostsData } from "@/lib/blog";

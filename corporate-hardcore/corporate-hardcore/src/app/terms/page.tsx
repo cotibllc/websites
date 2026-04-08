@@ -3,6 +3,9 @@ import Navigation from "@/components/Navigation";
 export const metadata = {
   title: "Terms of Use | Corporate Hardcore",
   description: "Terms of use for Corporate Hardcore.",
+  alternates: {
+    canonical: "/terms",
+  },
 };
 
 export default function TermsPage() {

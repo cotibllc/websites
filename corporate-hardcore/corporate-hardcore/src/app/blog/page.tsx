@@ -6,6 +6,9 @@ import { Calendar } from "lucide-react";
 export const metadata = {
   title: "Articles | Corporate Hardcore",
   description: "Observational satire documenting corporate dysfunction.",
+  alternates: {
+    canonical: "/blog",
+  },
 };
 
 export default function BlogPage() {

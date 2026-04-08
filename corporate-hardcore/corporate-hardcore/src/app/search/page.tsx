@@ -10,6 +10,9 @@ export function generateMetadata({
 }) {
   return searchParams.then(({ q }) => ({
     title: q ? `"${q}" – Search | Corporate Hardcore` : "Search | Corporate Hardcore",
+    description: q
+      ? `Search results for "${q}" on Corporate Hardcore.`
+      : "Search articles on Corporate Hardcore.",
   }));
 }
 
