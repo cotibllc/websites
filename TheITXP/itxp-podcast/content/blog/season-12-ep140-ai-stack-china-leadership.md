@@ -1,6 +1,6 @@
 +++
 title = "Season 12 Kicks Off: My AI Stack, 12 Days in China, and Why I Chose Content Over a Doctorate"
-Date = 2026-04-08T06:00:00-06:00
+date = 2026-04-08T06:00:00-06:00
 +++
 
 Season 12 is here — and Episode 140 isn't a soft opener. I crammed three pretty big topics into one episode because honestly, they're all connected: the tools I'm using every day, what I saw firsthand in China, and a career pivot that I've been sitting on for a while.
