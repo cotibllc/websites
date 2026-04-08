@@ -420,3 +420,6 @@ select:not([multiple]) {
         margin-bottom: 30px;
     }
 }
+
+/* SEO: h1 elements styled to match h3 visual size */
+h1.tm-title-gray { font-size: 1.75rem; }

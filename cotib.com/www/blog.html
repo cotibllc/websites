@@ -5,247 +5,284 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Our Tech Blog</title>
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" /> <!-- https://fonts.google.com/ -->    
-    <link href="css/bootstrap.min.css" rel="stylesheet" /> <!-- https://getbootstrap.com/ -->
-    <link href="fontawesome/css/all.min.css" rel="stylesheet" /> <!-- https://fontawesome.com/ -->
+    <meta name="description" content="COTIB LLC Blog — Insights on technology, IT strategy, cloud computing, cybersecurity, and the evolving digital workplace.">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="COTIB LLC">
+    <meta property="og:title" content="COTIB LLC — Blog">
+    <meta property="og:description" content="Insights on technology, IT strategy, cloud computing, cybersecurity, and the evolving digital workplace from the team at COTIB LLC.">
+    <meta property="og:image" content="https://cotib.com/img/blog_head.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta property="og:url" content="https://cotib.com/blog">
+    <link rel="canonical" href="https://cotib.com/blog">
+    <title>COTIB LLC — Blog</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Blog",
+      "name": "COTIB LLC Blog",
+      "url": "https://cotib.com/blog",
+      "description": "Insights on technology, IT strategy, cloud computing, cybersecurity, and the evolving digital workplace.",
+      "publisher": {
+        "@type": "Organization",
+        "name": "COTIB LLC",
+        "url": "https://cotib.com"
+      }
+    }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link href="fontawesome/css/all.min.css" rel="stylesheet" />
     <link href="css/templatemo-business-oriented.css" rel="stylesheet" />
+    <style>
+        .blog-post {
+            margin-bottom: 4rem;
+            padding-bottom: 4rem;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .blog-post:last-child {
+            border-bottom: none;
+        }
+        .blog-post h2 {
+            font-size: 1.75rem;
+        }
+        .cta-strip {
+            background: #0099FF;
+            color: #fff;
+            padding: 3rem 0;
+            text-align: center;
+        }
+        .cta-strip h3 { color: #fff; font-weight: 700; margin-bottom: 0.5rem; }
+        .cta-strip p { color: rgba(255,255,255,0.85); margin-bottom: 1.5rem; }
+        .cta-strip .btn {
+            background: #fff;
+            color: #0099FF;
+            font-weight: 600;
+            border-radius: 0;
+            padding: 0.75rem 2rem;
+            border: 2px solid #fff;
+        }
+        .cta-strip .btn:hover { background: transparent; color: #fff; }
+    </style>
 </head>
-<!--
 
-TemplateMo 549 Business Oriented
-
-https://templatemo.com/tm-549-business-oriented
-
--->
 <body>
+    <!-- Header / Logo -->
     <div id="parallax-1" class="parallax-window" data-parallax="scroll" data-image-src="img/blog_head.jpg">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
                     <div class="tm-logo">
-                        <i class="fas fa-industry fa-5x mr-5"></i>
-                        <span class="text-uppercase tm-logo-text">COTIB's Tech Blog</span>
+                        <i class="fas fa-network-wired fa-4x mr-4"></i>
+                        <span class="text-uppercase tm-logo-text">COTIB LLC</span>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- Navigation -->
     <div class="tm-nav-container-outer">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-12">                    
+                <div class="col-12">
                     <nav class="navbar navbar-expand-lg" id="tm-main-nav">
                         <button class="navbar-toggler toggler-example" type="button" data-toggle="collapse"
                             data-target="#navbar-nav" aria-controls="navbar-nav" aria-expanded="false"
                             aria-label="Toggle navigation">
                             <span class="dark-blue-text"><i class="fas fa-bars"></i></span>
-                        </button>                    
+                        </button>
                         <div class="collapse navbar-collapse tm-nav" id="navbar-nav">
                             <ul class="navbar-nav ml-auto">
                                 <li class="nav-item">
                                     <a class="nav-link tm-nav-link" href="index.html">Home</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link tm-nav-link" href=#>Services</a>
+                                    <a class="nav-link tm-nav-link" href="services.html">Services</a>
                                 </li>
                                 <li class="nav-item active">
-                                    <a class="nav-link tm-nav-link" href="#">Blog <span class="sr-only">(current)</span></a>
+                                    <a class="nav-link tm-nav-link" href="blog.html">Blog <span class="sr-only">(current)</span></a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link tm-nav-link" href=#>About</a>
+                                    <a class="nav-link tm-nav-link" href="about.html">About</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link tm-nav-link" href=#>Contact</a>
+                                    <a class="nav-link tm-nav-link" href="contact.html">Contact</a>
                                 </li>
-                            </ul>                        
-                        </div>                        
-                    </nav>                    
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="container-fluid mt-7">
-        <div class="row mb-6">
-            <div class="col-lg-7 mb-lg-0 mb-5 pr-lg-5">
-                <section class="mb-10">
-                    <div>
-                        <h2 class="tm-title-gray mb-4">Information Technology is Dead</h2>
-                        <hr class="mb-5 tm-hr">
-                        <p class="mb-5">Information technology is dead. It's time to change.
-
-                            That may sound like a bold statement but it's true. For the last few years, I've been part of a growing movement of people who are no longer using the term "Information Technology" in their day-to-day
-                            discussions about technology. This includes our customers, our partners, and even ourselves as a team at COTIB LLC.
-                            Instead, we use phrases such as "Technology" or "Digital". Let's talk about why that is and what it means for your business!
-                        </p>
-                        <h4 class="tm-title-gray mb-4">IT is Dead, Long Live Digital and the Business</h4>
-                            <hr class="mb-5 tm-hr">
-                            <p class="mb-5">IT is dead. Long live Digital! The role of IT has been transformed by the digital revolution, and it's time to realize that IT is no longer just a function that manages networks, systems,
-                                and devices. The new IT should be seen as a business enabler that can transform an organization into a digital business—one that innovates is agile, and agile in its mission-critical operations.
-
-                                That transformation requires both technology and change management initiatives: rethinking processes; adopting new tools; moving from silos to cross-functional teams for problem-solving; increasing
-                                collaboration across departments; enhancing security and privacy protection; using data analytics effectively; making better use of cloud services and platforms such as mobile apps…</p>
-                        <h4 class="tm-title-gray mb-4">Technology Skills are not the same as Business Process Domain Skills</h4>
-                            <hr class="mb-5 tm-hr">
-                            <p class="mb-5">There are two primary reasons why technology skills are not the same as business process domain skills:
-
-                                The first reason is that most people confuse technology and business processes. They think “technology” means “computers,” and that if they know computers well then they can do IT. But this isn't true.
-                                A computer is just one tool among many used by IT professionals—and it's not even their most important tool! Their most important tools are actually human beings who have specific knowledge in certain
-                                areas like accounting, sales operations, manufacturing or financial services; these people usually have undergraduate degrees in those fields (or sometimes even graduate degrees).
-                                
-                                Business process domain experts need to understand how their industry works so they can create a new way of doing things using this new technology—or at least improve upon existing processes through
-                                more efficient use of existing technologies. This often involves developing new computer systems and applications but also involves making changes to existing company policies and practices related to
-                                employee training programs on how best to use those technologies -- which requires asking questions like "How will our customers react when we change from paper-based transactions?"</p>
-                        <h4 class="tm-title-gray mb-4">Information Technology is dead. If you use that term to describe yourself or your team, it's time to change.</h4>
-                            <hr class="mb-5 tm-hr">
-                            <p class="mb-5">The term IT has been around for a while, but it’s time to retire it. As we move into an era where the majority of business processes are digital and cloud-based, it’s clear that what we call information technology is no longer just about computers. IT is dead.
-
-                                The reason: Information Technology (IT) is not synonymous with “digital” or “cloud computing” or “business process domain skills.” The world has changed and so must our language.</p>
-                        <h4 class="tm-title-gray mb-4">Conclusion</h4>
-                            <hr class="mb-5 tm-hr">
-                            <p class="mb-5">Information Technology is dead. This phrase has been used so many times that it’s not even funny anymore. But we need to stop using this term and instead focus on how technology can help us solve business problems, build better products and services for our customers and make more money for our companies.</p>
-                    </div>
-                </section>
-            </div>
-        </div>
-     </div>          
-    <div class="container-fluid mt-7">
-        <div class="row mb-6">
-            <div class="col-lg-7 mb-lg-0 mb-5 pr-lg-5">
-                <section class="mb-10">
-                    <div>
-                        <h2 class="tm-title-gray mb-4">What is Web3?</h2>
-                        <hr class="mb-5 tm-hr">
-                        <p class="mb-5">The internet was built on the idea that information should be free and available to everyone. But lately, we've seen that this is not always true. Centralized
-                             companies like Facebook and Google are gaining control over our data and using it for their own benefit. While they make huge profits off our data, at the same time they're
-                              selling us short by selling us out to advertisers who have no qualms about invading our privacy for their own ends. Web3 changes all that: It's a decentralized web that puts
-                               users back in control of their own data - not only because it decentralizes user identity but also because it decentralizes databases and storage systems so nothing gets
-                                centralized again!
-                        </p>
-                        <h4 class="tm-title-gray mb-4">Web3 is the decentralized web</h4>
-                            <hr class="mb-5 tm-hr">
-                            <p class="mb-5">The contemporary internet is defined by centralized application and data ownership, which means any data you use on the web can be censored, manipulated or stolen. With a
-                                decentralized web, applications and data are stored on computers all over the world instead of being owned by one company or organization—making it impossible for any central
-                                 authority to control your information. This also means you don’t have to rely on Google or Facebook for information about you; that information would belong to you instead!
-                               
-                               The decentralized web is still in its infancy, but it’s already starting to come into being. The most high-profile example of a decentralized application (dapp) is Ethereum,
-                               which allows users to create their own applications that run on the blockchain.</p>
-                        <h4 class="tm-title-gray mb-4">Web3 decentralizes the use of data</h4>
-                            <hr class="mb-5 tm-hr">
-                            <p class="mb-5">Data is the new oil. It’s a commodity, to be bought and sold like any other valuable resource. In the same way that oil was once used to power cars, data is now being used to
-                                 power artificial intelligence (AI), machine learning and other algorithms that have become central to our lives as consumers, citizens and workers.
-
-                                The ability to monetize data has created an ecosystem of big tech companies that are able to use it for profit-making purposes—Google uses your search history so it can serve you more relevant
-                                 ads; Facebook tracks your browsing habits in order to serve up targeted ads based on what you like or dislike; Uber analyzes user location data
-                                 so it knows when there’s demand for rides at certain times of day; Amazon learns from your shopping habits so it can recommend products you might want next time around.</p>
-                        <h4 class="tm-title-gray mb-4">Web3 is a peer-to-peer network</h4>
-                            <hr class="mb-5 tm-hr">
-                            <p class="mb-5">Since Web3 is a peer-to-peer network, it’s decentralized. This means that every computer on the network is connected to one another, so users can access information at the same time
-                                 and there are no central servers or single points of failure.
-
-                                This means that no single entity controls the network, and users have complete control of their data. Users can also interact with each other directly, which gives them more control over their
-                                 interactions than they would have if they were using a centralized system.</p>
-                        <h4 class="tm-title-gray mb-4">Web3 decentralizes the internet</h4>
-                            <hr class="mb-5 tm-hr">
-                            <p class="mb-5">Decentralizing the internet is about making it more secure, private and transparent. The web we use today is controlled by large companies that use our data to profit from us. By decentralizing the internet, you can own your data and keep it private from anyone who might want to see it or sell it without your consent.
-
-                                Decentralized applications run on an open source platform where software developers can write code without having to seek approval from a central authority (like Apple). This allows for greater transparency since anyone can review the code of any app before using it on their device. It also reduces barriers for developers because
-                                 there's no need for complex technical processes like getting approved by Apple before releasing an app.</p>
-                        <h4 class="tm-title-gray mb-4">Web3 decentralizes user identity</h4>
-                            <hr class="mb-5 tm-hr">
-                            <p class="mb-5">User identity is a key component of the web. The current internet model puts user identity and personal data in the hands of large corporations like Google and Facebook, who control the information you share about yourself online. Web3 decentralizes user identity by putting this information back in your hands and making it accessible to anyone.
-
-                                Through a combination of public key cryptography and the power of Ethereum, users can securely store their identity data on the blockchain. Users can then use this information to sign into applications, share data with trusted parties, or prove ownership of certain assets.
-                                
-                                The decentralized web is a new way to organize the internet, where users are in control of their own data and applications run as software on top of open protocols. It’s also possible to build this infrastructure without any centralized servers.</p>
-                        <h4 class="tm-title-gray mb-4">The web isn't just evolving - it's transforming into something totally new and decentralized</h4>
-                            <hr class="mb-5 tm-hr">
-                            <p class="mb-5">It's not just the web that's transforming. The whole internet is decentralizing, going peer-to-peer, becoming more secure, private and censorship resistant.
-
-                                To understand how this has happened and what it means for you we need to take a look at the history of how the internet was created.
-                                
-                                The Internet was designed for peer-to-peer communication. When it was first built, there were no centralized servers or providers. The internet was a decentralized network of computers that connected directly to each other without the use of any central authority. This design allowed people all over the world to communicate directly with each other without having to go through an intermediary like Facebook or Google.
-                                
-                                This peer-to-peer design of the internet was a very important step towards freedom of speech and expression. It enabled people to communicate directly with each other, without having to worry about censorship or political interference by governments.</p>
-                     <p>Web3 is the future of the web. It is a next-generation decentralized, peer-to-peer network that aims to replace the current Web2 infrastructure. This new protocol allows for more decentralized applications (dApps) than ever before, in which users can interact directly with each other without going through big corporations like Google or Facebook who control everything we see online today. - COTIB LLC <span>&copy;</span>2022</p>           
-                     
-                    </div>
-                </section>
-            </div>
-        </div>
-     </div>          
-    <div class="container-fluid mt-7">
-        <div class="row mb-6">
-            <div class="col-lg-7 mb-lg-0 mb-5 pr-lg-5">
-                <section class="mb-10">
-                    <div>
-                        <h2 class="tm-title-gray mb-4">Redis: Your Caching Key-Value Database</h2>
-                        <hr class="mb-5 tm-hr">
-                        <p class="mb-5">Have you ever developed a web application? If yes, do you remember the feeling you felt when your app was down and there was no way to
-                             access your data? Of course, this is happening only with badly designed applications or worst-case scenario applications. You can definitely use
-                              other tools for caching like Varnish , Memcached but Redis is the fastest caching tool on the market.
-                        </p>
-                        <ul>
-                            <li><h4>Redis is open source.</h4>
-                                <hr class="mb-5 tm-hr">
-                                     <p class="mb-5">Redis is the leading open source, in-memory data structure store. Hundreds of enterprises, startups and developers use Redis to build
-                             and power a wide variety of apps and services. Their customers include industry leaders such as Adobe, Twitter, Cisco, Square and Yandex.</p></li>
-                             <li><h4>Redis supports data persistence.</h4>
-                                 <hr class="mb-5 tm-hr">
-                                     <p class="mb-5">Redis is an in-memory data structure store that persists on disk. This allows for very fast performance, but also the ability
-                                         to recover quickly from a restart or power failure. Because Redis is fast and persistent, developers are using it for everything from small applications to big web sites.</p></li>
-                             <li><h4>Redis has great scalability.</h4>
-                                 <hr class="mb-5 tm-hr">
-                                     <p class="mb-5">Redis is highly scalable. It can handle thousands of requests per second, even for very large datasets. Redis supports sharding and replication, which allow
-                                         users to scale out their deployments over multiple servers.</p></li>
-                             <li><h4>Redis is fast.</h4>
-                                 <hr class="mb-5 tm-hr">
-                                     <p class="mb-5">Redis is very fast and can process 100,000s of requests per second. It’s also very lightweight, which means that it uses little CPU, memory and disk space on your server.</p></li>
-                             <li><h4>Redis has great client support.</h4>
-                                 <hr class="mb-5 tm-hr">
-                                     <p class="mb-5">Redis has native support for many different programming languages and frameworks. It’s also very easy to use from the command line, which means that you can integrate it into your own scripts or build a simple API on top of it.</p></li>
-                        </ul>
-                        <p>There are a number of reasons why developers are choosing to use Redis, including that it is free, open source, and flexible. It is fast, lightweight and easy to use. You can also get a lot of value out of Redis by integrating it into your application,
-                             whether that’s with a client library or by writing your own scripts. - COTIB LLC <span>&copy;</span>2022</p>
-                    </div>
-                </section>
-
-            </div>
-           
-        </div>
-    </div>
-    <div id="parallax-3" class="parallax-window parallax-window-2" data-parallax="scroll"
-        data-image-src="img/biz-oriented-footer-2.jpg">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-12">
-                    <div class="tm-overlay tm-bg-black-transparent p-5 ml-auto mr-0">
-                        <p class="mb-0 text-white">To know, is to know that you know nothing. That is the meaning of true knowledge. - Socrates</p>
-                    </div>
+                            </ul>
+                        </div>
+                    </nav>
                 </div>
             </div>
         </div>
     </div>
 
-
-    <footer class="container-fluid">
+    <!-- Blog Content -->
+    <div class="container-fluid mt-7 mb-6">
         <div class="row">
-            <p class="col-lg-9 col-md-8 mb-5 mb-md-0">
-                Copyright &copy; 2020 <span class="tm-text-primary">COTIB LLC</span>
-                - designed by <a rel="nofollow" target="_parent" href="https://templatemo.com" class="tm-link-primary">TemplateMo</a>
+            <div class="col-lg-8 mb-lg-0 mb-5 pr-lg-5">
+
+                <h1 class="tm-title-gray mb-4">Insights &amp; Perspectives</h1>
+            <hr class="mb-5 tm-hr">
+            <p class="mb-6">Thoughts on technology, IT strategy, and the evolving digital workplace from the team at COTIB LLC.</p>
+
+            <div class="blog-post">
+                    <h2 class="tm-title-gray mb-4">Information Technology is Dead</h2>
+                    <hr class="mb-5 tm-hr">
+                    <p class="mb-5">Information technology is dead. It's time to change.
+
+                        That may sound like a bold statement but it's true. For the last few years, I've been part of a growing movement of people who are no longer using the term "Information Technology" in their day-to-day
+                        discussions about technology. This includes our customers, our partners, and even ourselves as a team at COTIB LLC.
+                        Instead, we use phrases such as "Technology" or "Digital". Let's talk about why that is and what it means for your business!
+                    </p>
+                    <h4 class="tm-title-gray mb-4">IT is Dead, Long Live Digital and the Business</h4>
+                    <hr class="mb-5 tm-hr">
+                    <p class="mb-5">IT is dead. Long live Digital! The role of IT has been transformed by the digital revolution, and it's time to realize that IT is no longer just a function that manages networks, systems,
+                        and devices. The new IT should be seen as a business enabler that can transform an organization into a digital business—one that innovates, is agile, and agile in its mission-critical operations.
+
+                        That transformation requires both technology and change management initiatives: rethinking processes; adopting new tools; moving from silos to cross-functional teams for problem-solving; increasing
+                        collaboration across departments; enhancing security and privacy protection; using data analytics effectively; making better use of cloud services and platforms such as mobile apps.</p>
+                    <h4 class="tm-title-gray mb-4">Technology Skills are not the same as Business Process Domain Skills</h4>
+                    <hr class="mb-5 tm-hr">
+                    <p class="mb-5">There are two primary reasons why technology skills are not the same as business process domain skills:
+
+                        The first reason is that most people confuse technology and business processes. They think "technology" means "computers," and that if they know computers well then they can do IT. But this isn't true.
+                        A computer is just one tool among many used by IT professionals—and it's not even their most important tool! Their most important tools are actually human beings who have specific knowledge in certain
+                        areas like accounting, sales operations, manufacturing or financial services.
+
+                        Business process domain experts need to understand how their industry works so they can create a new way of doing things using this new technology—or at least improve upon existing processes through
+                        more efficient use of existing technologies. This often involves developing new computer systems and applications but also involves making changes to existing company policies and practices related to
+                        employee training programs on how best to use those technologies.</p>
+                    <h4 class="tm-title-gray mb-4">Information Technology is dead. If you use that term to describe yourself or your team, it's time to change.</h4>
+                    <hr class="mb-5 tm-hr">
+                    <p class="mb-5">The term IT has been around for a while, but it's time to retire it. As we move into an era where the majority of business processes are digital and cloud-based, it's clear that what we call information technology is no longer just about computers. IT is dead.
+
+                        The reason: Information Technology (IT) is not synonymous with "digital" or "cloud computing" or "business process domain skills." The world has changed and so must our language.</p>
+                    <h4 class="tm-title-gray mb-4">Conclusion</h4>
+                    <hr class="mb-5 tm-hr">
+                    <p class="mb-0">Information Technology is dead. This phrase has been used so many times that it's not even funny anymore. But we need to stop using this term and instead focus on how technology can help us solve business problems, build better products and services for our customers and make more money for our companies.</p>
+                </div>
+
+                <div class="blog-post">
+                    <h2 class="tm-title-gray mb-4">What is Web3?</h2>
+                    <hr class="mb-5 tm-hr">
+                    <p class="mb-5">The internet was built on the idea that information should be free and available to everyone. But lately, we've seen that this is not always true. Centralized
+                        companies like Facebook and Google are gaining control over our data and using it for their own benefit. While they make huge profits off our data, at the same time they're
+                        selling us short by selling us out to advertisers who have no qualms about invading our privacy for their own ends. Web3 changes all that: It's a decentralized web that puts
+                        users back in control of their own data — not only because it decentralizes user identity but also because it decentralizes databases and storage systems so nothing gets
+                        centralized again.
+                    </p>
+                    <h4 class="tm-title-gray mb-4">Web3 is the decentralized web</h4>
+                    <hr class="mb-5 tm-hr">
+                    <p class="mb-5">The contemporary internet is defined by centralized application and data ownership, which means any data you use on the web can be censored, manipulated or stolen. With a
+                        decentralized web, applications and data are stored on computers all over the world instead of being owned by one company or organization—making it impossible for any central
+                        authority to control your information. This also means you don't have to rely on Google or Facebook for information about you; that information would belong to you instead.
+
+                        The decentralized web is still in its infancy, but it's already starting to come into being. The most high-profile example of a decentralized application (dapp) is Ethereum,
+                        which allows users to create their own applications that run on the blockchain.</p>
+                    <h4 class="tm-title-gray mb-4">Web3 decentralizes the use of data</h4>
+                    <hr class="mb-5 tm-hr">
+                    <p class="mb-5">Data is the new oil. It's a commodity, to be bought and sold like any other valuable resource. In the same way that oil was once used to power cars, data is now being used to
+                        power artificial intelligence (AI), machine learning and other algorithms that have become central to our lives as consumers, citizens and workers.
+
+                        The ability to monetize data has created an ecosystem of big tech companies that are able to use it for profit-making purposes — Google uses your search history so it can serve you more relevant
+                        ads; Facebook tracks your browsing habits in order to serve up targeted ads based on what you like or dislike; Amazon learns from your shopping habits so it can recommend products you might want next time around.</p>
+                    <h4 class="tm-title-gray mb-4">Web3 is a peer-to-peer network</h4>
+                    <hr class="mb-5 tm-hr">
+                    <p class="mb-5">Since Web3 is a peer-to-peer network, it's decentralized. This means that every computer on the network is connected to one another, so users can access information at the same time
+                        and there are no central servers or single points of failure.
+
+                        This means that no single entity controls the network, and users have complete control of their data. Users can also interact with each other directly, which gives them more control over their
+                        interactions than they would have if they were using a centralized system.</p>
+                    <h4 class="tm-title-gray mb-4">Web3 decentralizes the internet</h4>
+                    <hr class="mb-5 tm-hr">
+                    <p class="mb-5">Decentralizing the internet is about making it more secure, private and transparent. The web we use today is controlled by large companies that use our data to profit from us. By decentralizing the internet, you can own your data and keep it private from anyone who might want to see it or sell it without your consent.
+
+                        Decentralized applications run on an open source platform where software developers can write code without having to seek approval from a central authority. This allows for greater transparency since anyone can review the code of any app before using it on their device.</p>
+                    <h4 class="tm-title-gray mb-4">Web3 decentralizes user identity</h4>
+                    <hr class="mb-5 tm-hr">
+                    <p class="mb-5">User identity is a key component of the web. The current internet model puts user identity and personal data in the hands of large corporations like Google and Facebook, who control the information you share about yourself online. Web3 decentralizes user identity by putting this information back in your hands and making it accessible to anyone.
+
+                        Through a combination of public key cryptography and the power of Ethereum, users can securely store their identity data on the blockchain. Users can then use this information to sign into applications, share data with trusted parties, or prove ownership of certain assets.</p>
+                    <h4 class="tm-title-gray mb-4">The web isn't just evolving — it's transforming into something totally new and decentralized</h4>
+                    <hr class="mb-5 tm-hr">
+                    <p class="mb-0">It's not just the web that's transforming. The whole internet is decentralizing, going peer-to-peer, becoming more secure, private and censorship resistant.
+
+                        The Internet was designed for peer-to-peer communication. When it was first built, there were no centralized servers or providers. The internet was a decentralized network of computers that connected directly to each other without the use of any central authority. This design allowed people all over the world to communicate directly with each other without having to go through an intermediary — and it's that foundational design that Web3 aims to restore.</p>
+                </div>
+
+                <div class="blog-post">
+                    <h2 class="tm-title-gray mb-4">Redis: Your Caching Key-Value Database</h2>
+                    <hr class="mb-5 tm-hr">
+                    <p class="mb-5">Have you ever developed a web application? If yes, do you remember the feeling you felt when your app was down and there was no way to
+                        access your data? Of course, this is happening only with badly designed applications or worst-case scenario applications. You can definitely use
+                        other tools for caching like Varnish or Memcached, but Redis is the fastest caching tool on the market.
+                    </p>
+                    <h4 class="tm-title-gray mb-4">Redis is open source</h4>
+                    <hr class="mb-5 tm-hr">
+                    <p class="mb-5">Redis is the leading open source, in-memory data structure store. Hundreds of enterprises, startups and developers use Redis to build
+                        and power a wide variety of apps and services. Their customers include industry leaders such as Adobe, Twitter, Cisco, Square and Yandex.</p>
+                    <h4 class="tm-title-gray mb-4">Redis supports data persistence</h4>
+                    <hr class="mb-5 tm-hr">
+                    <p class="mb-5">Redis is an in-memory data structure store that persists on disk. This allows for very fast performance, but also the ability
+                        to recover quickly from a restart or power failure. Because Redis is fast and persistent, developers are using it for everything from small applications to big web sites.</p>
+                    <h4 class="tm-title-gray mb-4">Redis has great scalability</h4>
+                    <hr class="mb-5 tm-hr">
+                    <p class="mb-5">Redis is highly scalable. It can handle thousands of requests per second, even for very large datasets. Redis supports sharding and replication, which allow
+                        users to scale out their deployments over multiple servers.</p>
+                    <h4 class="tm-title-gray mb-4">Redis is fast</h4>
+                    <hr class="mb-5 tm-hr">
+                    <p class="mb-5">Redis is very fast and can process 100,000s of requests per second. It's also very lightweight, which means that it uses little CPU, memory and disk space on your server.</p>
+                    <h4 class="tm-title-gray mb-4">Redis has great client support</h4>
+                    <hr class="mb-5 tm-hr">
+                    <p class="mb-0">Redis has native support for many different programming languages and frameworks. It's also very easy to use from the command line, which means that you can integrate it into your own scripts or build a simple API on top of it. There are a number of reasons why developers are choosing to use Redis, including that it is free, open source, and flexible — fast, lightweight, and easy to integrate into any application.</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- CTA Strip -->
+    <div class="cta-strip">
+        <div class="container-fluid">
+            <h3>Have a technology challenge?</h3>
+            <p>Let's talk about how COTIB can help your organization.</p>
+            <a href="contact.html" class="btn">Book a Free Consultation</a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="container-fluid">
+        <div class="row align-items-center">
+            <p class="col-lg-6 col-md-8 mb-5 mb-md-0">
+                Copyright &copy; 2026 <span class="tm-text-primary">COTIB LLC</span> &mdash; New York City
             </p>
-            
+            <div class="col-lg-6 col-md-4 text-right">
+                <a href="https://www.youtube.com/@theitxp" target="_blank" rel="noopener" class="tm-social-link" title="The IT XP on YouTube">
+                    <i class="fab fa-youtube fa-2x tm-social-icon"></i>
+                </a>
+                <a href="https://twitter.com/theitxp" target="_blank" rel="noopener" class="tm-social-link" title="The IT XP on Twitter">
+                    <i class="fab fa-twitter fa-2x tm-social-icon"></i>
+                </a>
+                <a href="https://www.instagram.com/corphardcore/" target="_blank" rel="noopener" class="tm-social-link" title="Corporate Hardcore on Instagram">
+                    <i class="fab fa-instagram fa-2x tm-social-icon"></i>
+                </a>
+                <a href="https://www.tiktok.com/@corphardcore" target="_blank" rel="noopener" class="tm-social-link" title="Corporate Hardcore on TikTok">
+                    <i class="fab fa-tiktok fa-2x tm-social-icon"></i>
+                </a>
+            </div>
         </div>
     </footer>
 
     <script src="js/jquery-3.4.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
-    <script src="js/parallax.min.js"></script> <!-- https://pixelcog.github.io/parallax.js/ -->
+    <script src="js/parallax.min.js"></script>
     <script src="js/tooplate-script.js"></script>
     <script>
         $(document).ready(function () {
-            $('#parallax-1').parallax({ imageSrc: 'img/biz-oriented-header.jpg' });
-            $('#parallax-3').parallax({ imageSrc: 'img/biz-oriented-footer-2.jpg' });
+            $('#parallax-1').parallax({ imageSrc: 'img/blog_head.jpg' });
         });
     </script>
 </body>
