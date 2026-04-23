@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { platformLinks } from "@/data/content";
 import ContactFormIntranet from "@/components/ContactFormIntranet";
 
@@ -124,6 +125,20 @@ export default function AboutPage() {
               <p className="font-mono text-sm text-synergy-green">ACTIVE</p>
               <p className="dept-label mt-3 mb-1">Years of Service</p>
               <p className="font-mono text-sm text-synergy-dark">18</p>
+            </div>
+
+            <div className="intranet-card p-4">
+              <p className="dept-label mb-2">Synergy Corp</p>
+              <h2 className="font-sans text-base text-synergy-dark mb-2">
+                Want the official company story?
+              </h2>
+              <p className="font-sans text-sm text-synergy-muted leading-relaxed mb-4">
+                Review the corporate overview, leadership roster, and carefully approved history of
+                the organization Chuck has been surviving for eighteen years.
+              </p>
+              <Link href="/company" className="btn-ghost text-[10px] px-3 py-1.5 inline-block">
+                Learn About Synergy Corp
+              </Link>
             </div>
           </aside>
         </div>
