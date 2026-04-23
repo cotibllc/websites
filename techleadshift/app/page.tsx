@@ -297,7 +297,7 @@ export default function HomePage() {
                   Read on Substack
                 </a>
                 <a
-                  href="https://linkedin.com/in/charlesbetancourt"
+                  href="https://www.linkedin.com/in/charles-b-technologist/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="contact-item"
