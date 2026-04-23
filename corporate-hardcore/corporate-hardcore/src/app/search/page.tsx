@@ -1,4 +1,3 @@
-import Navigation from "@/components/Navigation";
 import Link from "next/link";
 import { getSortedPostsData } from "@/lib/blog";
 import { Calendar, SearchX } from "lucide-react";
@@ -36,9 +35,7 @@ export default async function SearchPage({
     : [];
 
   return (
-    <main className="min-h-screen bg-bg-main">
-      <Navigation />
-
+    <div className="min-h-screen bg-bg-main">
       <div className="mx-auto content-max px-4 py-6 max-w-2xl">
         <div className="surface-card p-6 mb-4">
           <h1 className="text-xl font-bold text-text-primary">
@@ -104,6 +101,6 @@ export default async function SearchPage({
           </div>
         )}
       </div>
-    </main>
+    </div>
   );
 }

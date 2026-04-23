@@ -6,9 +6,11 @@ import { ArrowRight, Check } from 'lucide-react';
 export default function NewsletterForm() {
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+  const [errorMessage, setErrorMessage] = useState('Something went wrong. Try again.');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setErrorMessage('Something went wrong. Try again.');
     setStatus('submitting');
     
     try {
@@ -17,10 +19,14 @@ export default function NewsletterForm() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email }),
       });
+      const data = (await response.json()) as { error?: string };
       
       if (response.ok) {
         setStatus('success');
         setEmail('');
+      } else {
+        setErrorMessage(data.error ?? 'Something went wrong. Try again.');
+        setStatus('error');
       }
     } catch (error) {
       console.error('Newsletter signup error:', error);
@@ -39,13 +45,13 @@ export default function NewsletterForm() {
         </p>
 
         {status === 'success' ? (
-          <div className="flex items-center gap-2 text-green-600">
+          <div className="flex items-center gap-2 text-green-600" role="status" aria-live="polite">
             <Check size={18} />
             <span className="text-sm">You&apos;re in the system. Check your email to confirm — it&apos;s the one meeting you&apos;ll actually want to attend.</span>
           </div>
         ) : status === 'error' ? (
-          <div className="text-sm text-red-500">
-            Something went wrong. Try again.{' '}
+          <div className="text-sm text-red-500" role="alert">
+            {errorMessage}{' '}
             <button className="underline" onClick={() => setStatus('idle')}>Retry</button>
           </div>
         ) : (

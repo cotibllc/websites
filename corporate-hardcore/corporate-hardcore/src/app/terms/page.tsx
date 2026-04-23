@@ -1,5 +1,3 @@
-import Navigation from "@/components/Navigation";
-
 export const metadata = {
   title: "Terms of Use | Corporate Hardcore",
   description: "Terms of use for Corporate Hardcore.",
@@ -10,8 +8,7 @@ export const metadata = {
 
 export default function TermsPage() {
   return (
-    <main className="min-h-screen bg-bg-main">
-      <Navigation />
+    <div className="min-h-screen bg-bg-main">
       <div className="mx-auto content-max px-4 py-10 max-w-3xl">
         <div className="surface-card p-8">
           <h1 className="text-2xl font-bold mb-1">Terms of Use</h1>
@@ -139,6 +136,6 @@ export default function TermsPage() {
           </div>
         </div>
       </div>
-    </main>
+    </div>
   );
 }

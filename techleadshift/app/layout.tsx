@@ -31,9 +31,31 @@ export const metadata: Metadata = {
   description:
     "What leadership competencies are required to manage hybrid teams of human workers and autonomous AI agents, and how do current frameworks fail to address them?",
   metadataBase: new URL("https://www.techleadshift.com"),
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
+    title: "Tech Lead Shift — Charles Betancourt",
+    description:
+      "What leadership competencies are required to manage hybrid teams of human workers and autonomous AI agents, and how do current frameworks fail to address them?",
     siteName: "Tech Lead Shift",
     type: "website",
+    url: "https://www.techleadshift.com",
+    images: [
+      {
+        url: "/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: "Tech Lead Shift",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Tech Lead Shift — Charles Betancourt",
+    description:
+      "What leadership competencies are required to manage hybrid teams of human workers and autonomous AI agents, and how do current frameworks fail to address them?",
+    images: ["/opengraph-image"],
   },
 };
 

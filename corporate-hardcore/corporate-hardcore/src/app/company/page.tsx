@@ -1,4 +1,3 @@
-import Navigation from "@/components/Navigation";
 import Link from "next/link";
 import { MapPin, Building2, Calendar, Users, ExternalLink } from "lucide-react";
 
@@ -117,7 +116,7 @@ function LeadershipCard({ person }: { person: (typeof leadership)[number] }) {
 
 export default function CompanyPage() {
   return (
-    <main className="min-h-screen bg-bg-main">
+    <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -131,12 +130,11 @@ export default function CompanyPage() {
           }),
         }}
       />
-      <Navigation />
+      <div className="min-h-screen bg-bg-main">
+        {/* Banner */}
+        <div className="bg-linkedin-blue h-32 md:h-44 w-full" />
 
-      {/* Banner */}
-      <div className="bg-linkedin-blue h-32 md:h-44 w-full" />
-
-      <div className="mx-auto content-max px-4 -mt-10 pb-12">
+        <div className="mx-auto content-max px-4 -mt-10 pb-12">
 
         {/* Company header card */}
         <div className="surface-card px-6 md:px-8 pb-6">
@@ -360,19 +358,20 @@ export default function CompanyPage() {
       </div>
 
       {/* Company-specific footer strip */}
-      <div className="border-t border-border-light bg-card-bg">
-        <div className="mx-auto content-max px-4 py-4 space-y-1 text-xs text-text-secondary">
-          <p>
-            © 2024 Synergy Corp. All rights reserved. Results may vary. Past performance not
-            indicative of future outcomes.
-          </p>
-          <p>
-            Synergy Corp is an equal opportunity employer. We celebrate diversity and are committed
-            to creating an inclusive environment for all employees, as outlined in Section 4.7 of
-            the Employee Handbook.
-          </p>
+        <div className="border-t border-border-light bg-card-bg">
+          <div className="mx-auto content-max px-4 py-4 space-y-1 text-xs text-text-secondary">
+            <p>
+              © 2024 Synergy Corp. All rights reserved. Results may vary. Past performance not
+              indicative of future outcomes.
+            </p>
+            <p>
+              Synergy Corp is an equal opportunity employer. We celebrate diversity and are committed
+              to creating an inclusive environment for all employees, as outlined in Section 4.7 of
+              the Employee Handbook.
+            </p>
+          </div>
         </div>
       </div>
-    </main>
+    </>
   );
 }

@@ -1,5 +1,3 @@
-import Navigation from "@/components/Navigation";
-
 export const metadata = {
   title: "Privacy Policy | Corporate Hardcore",
   description: "Privacy policy for Corporate Hardcore.",
@@ -10,8 +8,7 @@ export const metadata = {
 
 export default function PrivacyPage() {
   return (
-    <main className="min-h-screen bg-bg-main">
-      <Navigation />
+    <div className="min-h-screen bg-bg-main">
       <div className="mx-auto content-max px-4 py-10 max-w-3xl">
         <div className="surface-card p-8">
           <h1 className="text-2xl font-bold mb-1">Privacy Policy</h1>
@@ -66,15 +63,15 @@ export default function PrivacyPage() {
               <ul className="list-disc pl-5 space-y-2 mt-2">
                 <li>
                   <strong>Kit (formerly ConvertKit)</strong> — email newsletter delivery.
-                  Subscriber data is stored on Kit's servers. See{" "}
+                  Subscriber data is stored on Kit&apos;s servers. See{" "}
                   <a href="https://kit.com/privacy" target="_blank" rel="noopener noreferrer" className="text-linkedin-blue hover:underline">
-                    Kit's privacy policy
+                    Kit&apos;s privacy policy
                   </a>.
                 </li>
                 <li>
                   <strong>Vercel</strong> — website hosting and infrastructure. See{" "}
                   <a href="https://vercel.com/legal/privacy-policy" target="_blank" rel="noopener noreferrer" className="text-linkedin-blue hover:underline">
-                    Vercel's privacy policy
+                    Vercel&apos;s privacy policy
                   </a>.
                 </li>
               </ul>
@@ -162,7 +159,7 @@ export default function PrivacyPage() {
             </section>
 
             <section>
-              <h2 className="text-lg font-semibold mb-2">Children's privacy</h2>
+              <h2 className="text-lg font-semibold mb-2">Children&apos;s privacy</h2>
               <p>
                 This site is not directed at children under 13. We do not knowingly collect
                 personal data from children. If you believe a child has submitted personal
@@ -192,6 +189,6 @@ export default function PrivacyPage() {
           </div>
         </div>
       </div>
-    </main>
+    </div>
   );
 }
