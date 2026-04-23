@@ -8,16 +8,20 @@ export const metadata: Metadata = {
   alternates: { canonical: "/blog" },
 };
 
-const ARC_LIST = [
-  "Performance Review Arc",
-  "Holiday Party Arc",
-  "Vision Emails Arc",
-  "Budget Cuts Arc",
-  "Job Search Arc",
-];
+interface Props {
+  searchParams: Promise<{ arc?: string }>;
+}
 
-export default function BlogPage() {
-  const posts = getSortedPostsData();
+export default async function BlogPage({ searchParams }: Props) {
+  const { arc: activeArc } = await searchParams;
+  const allPosts = getSortedPostsData();
+
+  // Build arc list dynamically from actual frontmatter values
+  const arcs = Array.from(new Set(allPosts.map((p) => p.arc).filter(Boolean))).sort();
+
+  const posts = activeArc
+    ? allPosts.filter((p) => p.arc === activeArc)
+    : allPosts;
 
   return (
     <div className="mx-auto content-max px-4 py-8">
@@ -27,10 +31,23 @@ export default function BlogPage() {
           <span>Field Notes — Document Archive</span>
           <span className="text-white/50">{posts.length} filed</span>
         </div>
-        <div className="px-4 py-3 bg-synergy-white border-t border-synergy-rule">
+        <div className="px-4 py-3 bg-synergy-white border-t border-synergy-rule flex items-center justify-between gap-4">
           <p className="font-sans text-sm text-synergy-muted">
             Observations from eighteen years in the same company.
+            {activeArc && (
+              <span className="ml-2 font-mono text-[10px] text-synergy-amber uppercase tracking-wider">
+                — Filtered: {activeArc}
+              </span>
+            )}
           </p>
+          {activeArc && (
+            <Link
+              href="/blog"
+              className="font-mono text-[10px] tracking-widest uppercase text-synergy-navy hover:text-synergy-amber transition-colors flex-shrink-0"
+            >
+              Clear Filter ×
+            </Link>
+          )}
         </div>
       </div>
 
@@ -40,7 +57,9 @@ export default function BlogPage() {
           {posts.length === 0 ? (
             <div className="intranet-card p-8 text-center">
               <p className="dept-label mb-2">No documents on file</p>
-              <p className="font-sans text-sm text-synergy-muted">Check back soon.</p>
+              <p className="font-sans text-sm text-synergy-muted">
+                {activeArc ? `No posts found for arc: ${activeArc}` : "Check back soon."}
+              </p>
             </div>
           ) : (
             <div className="space-y-3">
@@ -76,11 +95,18 @@ export default function BlogPage() {
           <div className="intranet-card">
             <div className="intranet-header">Browse by Arc</div>
             <ul className="divide-y divide-synergy-rule">
-              {ARC_LIST.map((arc) => (
+              {arcs.map((arc) => (
                 <li key={arc}>
-                  <span className="block px-4 py-2.5 font-sans text-sm text-synergy-navy hover:bg-synergy-gray cursor-default transition-colors">
+                  <Link
+                    href={`/blog?arc=${encodeURIComponent(arc)}`}
+                    className={`block px-4 py-2.5 font-sans text-sm transition-colors ${
+                      activeArc === arc
+                        ? "bg-synergy-navy text-white"
+                        : "text-synergy-navy hover:bg-synergy-gray"
+                    }`}
+                  >
                     {arc}
-                  </span>
+                  </Link>
                 </li>
               ))}
             </ul>
