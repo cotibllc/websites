@@ -1,5 +1,101 @@
 import ContactForm from "@/components/ContactForm";
 
+const SUBSTACK_URL = "https://techleadshift.substack.com";
+
+type SeriesArticle = {
+  number: string;
+  title: string;
+  status?: "Live" | "Scheduled";
+  href?: string;
+};
+
+const actOneArticles: SeriesArticle[] = [
+  {
+    number: "01",
+    title: "The First Leadership Crisis of AI Won't Be Technical. It Will Be Cultural.",
+    status: "Live",
+    href: `${SUBSTACK_URL}/p/the-first-leadership-crisis-of-ai`,
+  },
+  {
+    number: "02",
+    title: "Managing the Invisible Worker",
+    status: "Live",
+    href: `${SUBSTACK_URL}/p/managing-the-invisible-worker`,
+  },
+  {
+    number: "03",
+    title: "Delegation Drift",
+    status: "Live",
+    href: `${SUBSTACK_URL}/p/delegation-drift`,
+  },
+  {
+    number: "04",
+    title: "Why AI Will Expose Bad Management Faster Than Ever",
+    status: "Live",
+    href: `${SUBSTACK_URL}/p/why-ai-will-expose-bad-management`,
+  },
+  {
+    number: "05",
+    title: "The new leadership skill: systems thinking",
+    status: "Scheduled",
+  },
+  {
+    number: "06",
+    title: "The end of productivity theater",
+    status: "Scheduled",
+  },
+];
+
+const actTwoArticles: SeriesArticle[] = [
+  {
+    number: "07",
+    title: "Middle management in the age of AI",
+  },
+  {
+    number: "08",
+    title: "Why culture matters more when machines work for you",
+  },
+  {
+    number: "09",
+    title: "The accountability problem no one is ready for",
+  },
+  {
+    number: "10",
+    title: "The future leader is a system architect",
+  },
+];
+
+function renderSeriesArticle(article: SeriesArticle) {
+  const articleTitle = article.href ? (
+    <a
+      href={article.href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="article-link"
+    >
+      {article.title}
+    </a>
+  ) : (
+    article.title
+  );
+
+  return (
+    <li key={article.number}>
+      <span className="article-num">{article.number}</span>
+      <span className="article-copy">{articleTitle}</span>
+      {article.status && (
+        <span
+          className={`article-status${
+            article.status === "Scheduled" ? " article-status--scheduled" : ""
+          }`}
+        >
+          {article.status}
+        </span>
+      )}
+    </li>
+  );
+}
+
 export default function HomePage() {
   return (
     <>
@@ -21,7 +117,7 @@ export default function HomePage() {
           </p>
           <div className="hero-cta-group">
             <a
-              href="https://techleadshift.substack.com"
+              href={SUBSTACK_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="btn-primary"
@@ -109,34 +205,7 @@ export default function HomePage() {
                 <div className="act-title">The Diagnosis</div>
               </div>
               <ul className="act-articles">
-                <li>
-                  <span className="article-num">01</span>
-                  The first AI leadership crisis will be cultural, not technical
-                  <span className="article-status">Live</span>
-                </li>
-                <li>
-                  <span className="article-num">02</span>
-                  Managing the invisible worker
-                  <span className="article-status">Live</span>
-                </li>
-                <li>
-                  <span className="article-num">03</span>
-                  Delegation drift
-                  <span className="article-status">Scheduled</span>
-                </li>
-                <li>
-                  <span className="article-num">04</span>
-                  Why AI will expose bad management faster than ever
-                  <span className="article-status">Scheduled</span>
-                </li>
-                <li>
-                  <span className="article-num">05</span>
-                  The new leadership skill: systems thinking
-                </li>
-                <li>
-                  <span className="article-num">06</span>
-                  The end of productivity theater
-                </li>
+                {actOneArticles.map(renderSeriesArticle)}
               </ul>
             </div>
 
@@ -146,29 +215,14 @@ export default function HomePage() {
                 <div className="act-title">The Transformation</div>
               </div>
               <ul className="act-articles">
-                <li>
-                  <span className="article-num">07</span>
-                  Middle management in the age of AI
-                </li>
-                <li>
-                  <span className="article-num">08</span>
-                  Why culture matters more when machines work for you
-                </li>
-                <li>
-                  <span className="article-num">09</span>
-                  The accountability problem no one is ready for
-                </li>
-                <li>
-                  <span className="article-num">10</span>
-                  The future leader is a system architect
-                </li>
+                {actTwoArticles.map(renderSeriesArticle)}
               </ul>
             </div>
           </div>
 
           <div style={{ marginTop: "2rem" }}>
             <a
-              href="https://techleadshift.substack.com"
+              href={SUBSTACK_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="btn-primary"
@@ -196,7 +250,7 @@ export default function HomePage() {
               </p>
               <div style={{ marginTop: "2rem" }}>
                 <a
-                  href="https://techleadshift.substack.com"
+                  href={SUBSTACK_URL}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn-primary"
@@ -230,7 +284,7 @@ export default function HomePage() {
               </div>
               <div className="contact-items">
                 <a
-                  href="https://techleadshift.substack.com"
+                  href={SUBSTACK_URL}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="contact-item"

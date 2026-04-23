@@ -4,11 +4,16 @@ import { useState, useRef } from 'react';
 import { Turnstile } from '@marsidev/react-turnstile';
 import type { TurnstileInstance } from '@marsidev/react-turnstile';
 
+const fallbackEmail = 'charles.betancourt@cotib.com';
+const defaultErrorMessage = 'Something went wrong.';
+
 export default function ContactForm() {
+  const turnstileSiteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
   const [form, setForm] = useState({ name: '', email: '', message: '' });
   const [honeypot, setHoneypot] = useState('');
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+  const [errorMessage, setErrorMessage] = useState(defaultErrorMessage);
   const turnstileRef = useRef<TurnstileInstance>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -17,6 +22,7 @@ export default function ContactForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setErrorMessage(defaultErrorMessage);
     setStatus('submitting');
 
     try {
@@ -25,6 +31,7 @@ export default function ContactForm() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...form, honeypot, turnstileToken }),
       });
+      const data = (await response.json()) as { error?: string };
 
       if (response.ok) {
         setStatus('success');
@@ -32,6 +39,7 @@ export default function ContactForm() {
         setTurnstileToken(null);
         turnstileRef.current?.reset();
       } else {
+        setErrorMessage(data.error ?? defaultErrorMessage);
         setStatus('error');
         turnstileRef.current?.reset();
       }
@@ -43,7 +51,7 @@ export default function ContactForm() {
 
   if (status === 'success') {
     return (
-      <div style={{ padding: '2rem 0' }}>
+      <div style={{ padding: '2rem 0' }} role="status" aria-live="polite">
         <p style={{ fontFamily: 'var(--mono)', fontSize: '11px', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--gold)', marginBottom: '0.75rem' }}>
           Sent
         </p>
@@ -108,19 +116,29 @@ export default function ContactForm() {
         />
       </div>
 
-      <Turnstile
-        ref={turnstileRef}
-        siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY!}
-        onSuccess={(token) => setTurnstileToken(token)}
-        onExpire={() => setTurnstileToken(null)}
-        onError={() => setTurnstileToken(null)}
-      />
+      {turnstileSiteKey ? (
+        <Turnstile
+          ref={turnstileRef}
+          siteKey={turnstileSiteKey}
+          onSuccess={(token) => setTurnstileToken(token)}
+          onExpire={() => setTurnstileToken(null)}
+          onError={() => setTurnstileToken(null)}
+        />
+      ) : (
+        <p className="form-note form-note--warning" role="alert">
+          Contact form is temporarily unavailable. Please email{' '}
+          <a href={`mailto:${fallbackEmail}`} style={{ color: 'var(--accent)' }}>
+            {fallbackEmail}
+          </a>{' '}
+          directly.
+        </p>
+      )}
 
       {status === 'error' && (
-        <p className="form-note" style={{ color: '#c0392b' }}>
-          Something went wrong. Try again or email{' '}
-          <a href="mailto:charles.betancourt@cotib.com" style={{ color: 'var(--accent)' }}>
-            charles.betancourt@cotib.com
+        <p className="form-note form-note--error" role="alert">
+          {errorMessage} Or email{' '}
+          <a href={`mailto:${fallbackEmail}`} style={{ color: 'var(--accent)' }}>
+            {fallbackEmail}
           </a>{' '}
           directly.
         </p>
@@ -129,9 +147,12 @@ export default function ContactForm() {
       <div>
         <button
           type="submit"
-          disabled={status === 'submitting' || !turnstileToken}
+          disabled={status === 'submitting' || !turnstileSiteKey || !turnstileToken}
           className="btn-primary"
-          style={{ width: '100%', opacity: (status === 'submitting' || !turnstileToken) ? 0.6 : 1 }}
+          style={{
+            width: '100%',
+            opacity: (status === 'submitting' || !turnstileSiteKey || !turnstileToken) ? 0.6 : 1,
+          }}
         >
           {status === 'submitting' ? 'Sending...' : 'Send Inquiry'}
         </button>
