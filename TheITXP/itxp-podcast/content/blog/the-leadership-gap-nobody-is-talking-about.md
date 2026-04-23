@@ -1,6 +1,6 @@
 +++
 title = "The Leadership Gap Nobody Is Talking About"
-Date = 2026-04-22
+date = 2026-04-22T06:00:00-06:00
 +++
 
 Every leadership framework you were ever trained on was built for humans.
