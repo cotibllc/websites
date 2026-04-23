@@ -1,3 +1,5 @@
+import ContactForm from "@/components/ContactForm";
+
 export default function HomePage() {
   return (
     <>
@@ -206,28 +208,7 @@ export default function HomePage() {
             <div>
               <div className="section-label">Speaking &amp; Consulting</div>
               <h2 className="section-headline" style={{ fontSize: "1.75rem" }}>Work with Charles</h2>
-              <div className="newsletter-form">
-                <div className="form-field">
-                  <label>Name</label>
-                  <input type="text" placeholder="Your name" />
-                </div>
-                <div className="form-field">
-                  <label>Email</label>
-                  <input type="email" placeholder="your@email.com" />
-                </div>
-                <div className="form-field">
-                  <label>How can I help?</label>
-                  <textarea placeholder="Tell me about your organization, team, or event..."></textarea>
-                </div>
-                <div>
-                  <button type="button" className="btn-primary" style={{ width: "100%" }}>
-                    Send Inquiry
-                  </button>
-                </div>
-                <p className="form-note">
-                  Available for keynotes, executive workshops, and AI leadership advisory engagements.
-                </p>
-              </div>
+              <ContactForm />
             </div>
           </div>
         </div>
