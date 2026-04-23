@@ -1,0 +1,73 @@
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-grid">
+
+      <!-- Brand Column -->
+      <div class="footer-brand">
+        <a href="/" class="footer-logo" aria-label="{{ site.brand.name }}">
+          <img src="/images/logo/ee-horizon-mark.svg" alt="" width="28" height="28">
+          <span class="footer-wordmark">
+            <span class="footer-wordmark__earned">Earned</span>
+            <span class="footer-wordmark__rule"></span>
+            <span class="footer-wordmark__escape">ESCAPE</span>
+          </span>
+        </a>
+        <p class="footer-tagline">{{ site.brand.tagline }}</p>
+        <p class="footer-desc">Certified travel advisory specializing in Royal Caribbean, Disney Cruise Line, Walt Disney World, and Universal Resorts. Affiliated with {{ site.brand.parentAgency }}.</p>
+        <p class="footer-copy">&copy; 2026 {{ site.brand.business }}</p>
+      </div>
+
+      <!-- Destinations Column -->
+      <div class="footer-col">
+        <h4 class="footer-col__heading">Destinations</h4>
+        <ul class="footer-links">
+          <li><a href="#destinations" class="footer-link">Royal Caribbean</a></li>
+          <li><a href="#destinations" class="footer-link">Disney Cruise Line</a></li>
+          <li><a href="/?tab=parks#destinations" class="footer-link">Walt Disney World</a></li>
+          <li><a href="/?tab=parks#destinations" class="footer-link">Universal Resorts</a></li>
+        </ul>
+      </div>
+
+      <!-- Resources Column -->
+      <div class="footer-col">
+        <h4 class="footer-col__heading">Resources</h4>
+        <ul class="footer-links">
+          {% if site.links.rcGuide %}
+          <li><a href="{{ site.links.rcGuide }}" class="footer-link" target="_blank" rel="noopener noreferrer">RC Beginner's Guide</a></li>
+          {% endif %}
+          {% if site.links.disneyGuide %}
+          <li><a href="{{ site.links.disneyGuide }}" class="footer-link" target="_blank" rel="noopener noreferrer">Disney Quick-Start Guide</a></li>
+          {% endif %}
+          <li><a href="{{ site.links.consultation }}" class="footer-link" target="_blank" rel="noopener noreferrer">Book Consultation</a></li>
+          <li><a href="{{ site.brand.parentAgencyUrl }}" class="footer-link" target="_blank" rel="noopener noreferrer">Castle Dreams Travel</a></li>
+        </ul>
+      </div>
+
+      <!-- Connect Column -->
+      <div class="footer-col">
+        <h4 class="footer-col__heading">Connect</h4>
+        <ul class="footer-links">
+          <li><a href="{{ site.social.instagram }}" class="footer-link" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+          <li><a href="{{ site.social.pinterest }}" class="footer-link" target="_blank" rel="noopener noreferrer">Pinterest</a></li>
+          {% if site.social.facebook %}
+          <li><a href="{{ site.social.facebook }}" class="footer-link" target="_blank" rel="noopener noreferrer">Facebook</a></li>
+          {% endif %}
+          {% if site.social.tiktok %}
+          <li><a href="{{ site.social.tiktok }}" class="footer-link" target="_blank" rel="noopener noreferrer">TikTok</a></li>
+          {% endif %}
+          <li><a href="{{ site.brand.cotibUrl }}" class="footer-link" target="_blank" rel="noopener noreferrer">COTIB Adventures LLC</a></li>
+          <li><a href="{{ site.links.consultation }}" class="footer-link" target="_blank" rel="noopener noreferrer">Free Consultation</a></li>
+        </ul>
+      </div>
+
+    </div><!-- /.footer-grid -->
+
+    <div class="footer-bottom">
+      <span class="footer-bottom__copy">&copy; 2026 {{ site.brand.business }} &middot; Operating under {{ site.brand.parentAgency }}</span>
+      <span class="footer-bottom__domains">
+        earnedescape.agency &middot; earnedescape.vacations &middot; earnedescape.voyage &middot; earnedescape.co
+      </span>
+    </div>
+
+  </div>
+</footer>

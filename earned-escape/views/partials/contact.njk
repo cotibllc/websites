@@ -1,0 +1,82 @@
+<section class="contact" id="contact">
+  <div class="contact__grid">
+
+    <!-- Left: Book Consultation -->
+    <div class="contact__book">
+      <div class="contact__book-accent" aria-hidden="true"></div>
+      <p class="section-eyebrow">Free Consultation</p>
+      <h2 class="contact__headline">
+        Let's plan the trip<br>you've <em>earned.</em>
+      </h2>
+      <p class="contact__body">
+        A 30-minute conversation is all it takes to walk away with a clear direction, the right questions answered, and a real plan in motion.
+      </p>
+      <ul class="contact__details">
+        <li>
+          <span class="contact__dot" aria-hidden="true"></span>
+          30 minutes &middot; Video or phone
+        </li>
+        <li>
+          <span class="contact__dot" aria-hidden="true"></span>
+          No obligation, no pressure
+        </li>
+        <li>
+          <span class="contact__dot" aria-hidden="true"></span>
+          Walk away with a clear plan regardless
+        </li>
+        <li>
+          <span class="contact__dot" aria-hidden="true"></span>
+          Available 7 days a week
+        </li>
+      </ul>
+      <a href="{{ site.links.consultation }}" class="btn btn--gold" target="_blank" rel="noopener noreferrer">
+        Book Your Free Consultation
+      </a>
+    </div>
+
+    <!-- Right: Guides -->
+    <div class="contact__guides">
+      <p class="section-eyebrow">Not Ready Yet?</p>
+      <h2 class="contact__headline">
+        Start with a <em>free guide.</em>
+      </h2>
+      <p class="contact__body">
+        Both guides are free, no strings attached. Download them now when they're live, or request them directly and reach out when you're ready.
+      </p>
+
+      <div class="contact__guide-list">
+        {% if site.links.rcGuide %}
+        <a href="{{ site.links.rcGuide }}" class="contact-guide-row" target="_blank" rel="noopener noreferrer">
+          <span class="contact-guide-row__dot" aria-hidden="true"></span>
+          <span class="contact-guide-row__name">Royal Caribbean Beginner's Guide</span>
+          <span class="contact-guide-row__tag">Free PDF</span>
+        </a>
+        {% else %}
+        <a href="#contact" class="contact-guide-row">
+          <span class="contact-guide-row__dot" aria-hidden="true"></span>
+          <span class="contact-guide-row__name">Royal Caribbean Beginner's Guide</span>
+          <span class="contact-guide-row__tag">Request Access</span>
+        </a>
+        {% endif %}
+        {% if site.links.disneyGuide %}
+        <a href="{{ site.links.disneyGuide }}" class="contact-guide-row" target="_blank" rel="noopener noreferrer">
+          <span class="contact-guide-row__dot" aria-hidden="true"></span>
+          <span class="contact-guide-row__name">Disney Destinations Quick-Start Guide</span>
+          <span class="contact-guide-row__tag">Free PDF</span>
+        </a>
+        {% else %}
+        <a href="#contact" class="contact-guide-row">
+          <span class="contact-guide-row__dot" aria-hidden="true"></span>
+          <span class="contact-guide-row__name">Disney Destinations Quick-Start Guide</span>
+          <span class="contact-guide-row__tag">Request Access</span>
+        </a>
+        {% endif %}
+      </div>
+
+      <a href="{{ site.social.instagram }}" class="btn btn--outline" target="_blank" rel="noopener noreferrer">
+        Follow @earned_escape
+      </a>
+    </div>
+
+  </div>
+</section>

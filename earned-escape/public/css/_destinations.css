@@ -1,0 +1,236 @@
+.destinations {
+  background-color: var(--ink);
+  padding: var(--section-pad-y) var(--section-pad-x);
+}
+
+.destinations__inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+.destinations__header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.destinations__headline {
+  font-size: clamp(36px, 4vw, 56px);
+  color: var(--white);
+  margin-bottom: 36px;
+}
+
+.dest-tabs {
+  display: inline-flex;
+  border: 1px solid rgba(201, 168, 76, 0.25);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.dest-tab {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(248, 245, 238, 0.5);
+  padding: 12px 28px;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  position: relative;
+  background: transparent;
+  border: none;
+}
+
+.dest-tab::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--gold);
+  transform: scaleX(0);
+  transition: transform var(--transition-base);
+}
+
+.dest-tab.dest-tab--active {
+  color: var(--gold);
+  background: rgba(201, 168, 76, 0.06);
+}
+
+.dest-tab.dest-tab--active::after {
+  transform: scaleX(1);
+}
+
+.dest-panel {
+  display: none;
+}
+
+.dest-panel.dest-panel--active {
+  display: block;
+}
+
+.dest-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+}
+
+.dest-card {
+  position: relative;
+  min-height: 480px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.dest-card__bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  transition: transform var(--transition-slow);
+  z-index: 0;
+}
+
+.dest-card--rc .dest-card__bg {
+  background-color: #0a1e36;
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(201, 168, 76, 0.02) 0px,
+    rgba(201, 168, 76, 0.02) 1px,
+    transparent 1px,
+    transparent 8px
+  );
+}
+
+.dest-card--dcl .dest-card__bg {
+  background-color: #0d1e30;
+  background-image: repeating-linear-gradient(
+    -45deg,
+    rgba(201, 168, 76, 0.02) 0px,
+    rgba(201, 168, 76, 0.02) 1px,
+    transparent 1px,
+    transparent 8px
+  );
+}
+
+.dest-card--wdw .dest-card__bg {
+  background-color: #0e1a2d;
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(201, 168, 76, 0.02) 0px,
+    rgba(201, 168, 76, 0.02) 1px,
+    transparent 1px,
+    transparent 8px
+  );
+}
+
+.dest-card--uni .dest-card__bg {
+  background-color: #121622;
+  background-image: repeating-linear-gradient(
+    -45deg,
+    rgba(201, 168, 76, 0.02) 0px,
+    rgba(201, 168, 76, 0.02) 1px,
+    transparent 1px,
+    transparent 8px
+  );
+}
+
+.dest-card:hover .dest-card__bg {
+  transform: scale(1.04);
+}
+
+.dest-card__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(7, 22, 41, 0.9) 0%, rgba(7, 22, 41, 0.3) 60%, transparent 100%);
+  z-index: 1;
+}
+
+.dest-card__domain {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 2;
+  font-family: var(--font-body);
+  font-size: 9px;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: lowercase;
+  color: rgba(201, 168, 76, 0.4);
+}
+
+.dest-card__icon {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 2;
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(201, 168, 76, 0.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dest-card__content {
+  position: relative;
+  z-index: 2;
+  padding: 32px;
+}
+
+.dest-card__eyebrow {
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(201, 168, 76, 0.7);
+  margin-bottom: 10px;
+}
+
+.dest-card__title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(22px, 2.5vw, 32px);
+  color: var(--white);
+  margin-bottom: 12px;
+  line-height: 1.2;
+}
+
+.dest-card__desc {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 300;
+  color: rgba(248, 245, 238, 0.55);
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+
+.dest-card__link {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold);
+  transition: color var(--transition-base);
+  text-decoration: none;
+}
+
+.dest-card__link:hover {
+  color: var(--gold-light);
+}
+
+@media (max-width: 767px) {
+  .dest-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dest-card {
+    min-height: 360px;
+  }
+}

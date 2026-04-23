@@ -1,0 +1,134 @@
+.contact {
+  position: relative;
+}
+
+.contact__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 560px;
+}
+
+.contact__book {
+  background: var(--navy);
+  padding: var(--section-pad-y) clamp(32px, 6vw, 80px);
+  position: relative;
+}
+
+.contact__book-accent {
+  position: absolute;
+  left: 0;
+  top: 10%;
+  bottom: 10%;
+  width: 2px;
+  background: linear-gradient(to bottom, transparent, var(--gold) 30%, var(--gold) 70%, transparent);
+}
+
+.contact__guides {
+  background: var(--navy-deep);
+  padding: var(--section-pad-y) clamp(32px, 6vw, 80px);
+  border-left: 1px solid rgba(201, 168, 76, 0.08);
+}
+
+.contact__headline {
+  font-size: clamp(28px, 3vw, 44px);
+  color: var(--white);
+  margin-bottom: 20px;
+  line-height: 1.15;
+}
+
+.contact__body {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 300;
+  color: rgba(248, 245, 238, 0.55);
+  line-height: 1.8;
+  margin-bottom: 32px;
+  max-width: 44ch;
+}
+
+.contact__details {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 36px;
+}
+
+.contact__details li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 300;
+  color: rgba(248, 245, 238, 0.65);
+}
+
+.contact__dot {
+  display: block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--gold);
+  flex-shrink: 0;
+}
+
+.contact__guide-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-bottom: 32px;
+}
+
+.contact-guide-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  border: 1px solid rgba(201, 168, 76, 0.1);
+  text-decoration: none;
+  transition: border-color var(--transition-base), background-color var(--transition-base), transform var(--transition-base);
+}
+
+.contact-guide-row:hover {
+  border-color: rgba(201, 168, 76, 0.3);
+  background: rgba(201, 168, 76, 0.03);
+  transform: translateY(-1px);
+}
+
+.contact-guide-row__dot {
+  display: block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--gold);
+  flex-shrink: 0;
+}
+
+.contact-guide-row__name {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 300;
+  color: rgba(248, 245, 238, 0.7);
+  flex: 1;
+}
+
+.contact-guide-row__tag {
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(201, 168, 76, 0.6);
+}
+
+@media (max-width: 767px) {
+  .contact__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .contact__guides {
+    border-left: none;
+    border-top: 1px solid rgba(201, 168, 76, 0.08);
+  }
+}

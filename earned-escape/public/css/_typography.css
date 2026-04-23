@@ -1,0 +1,71 @@
+body {
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: 16px;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 300;
+  line-height: 1.1;
+}
+
+em {
+  font-style: italic;
+  color: var(--gold);
+}
+
+.section-eyebrow {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  opacity: 0.8;
+  margin-bottom: 16px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 14px 28px;
+  border-radius: 2px;
+  transition: all var(--transition-base);
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.btn--gold {
+  background: var(--gold);
+  color: var(--navy-deep);
+  border: 1px solid var(--gold);
+}
+
+.btn--gold:hover {
+  background: var(--gold-light);
+  border-color: var(--gold-light);
+}
+
+.btn--outline {
+  background: transparent;
+  color: var(--gold);
+  border: 1px solid rgba(201, 168, 76, 0.5);
+}
+
+.btn--outline:hover {
+  border-color: var(--gold);
+  background: rgba(201, 168, 76, 0.06);
+}
+
+.btn--sm {
+  font-size: 11px;
+  padding: 10px 20px;
+}

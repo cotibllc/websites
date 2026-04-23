@@ -1,0 +1,79 @@
+<section class="guides" id="guides">
+  <div class="guides__inner">
+
+    <div class="guides__header">
+      <div class="guides__header-left">
+        <p class="section-eyebrow">Free Guides</p>
+        <h2 class="guides__headline">
+          Start planning with a <em>free guide.</em>
+        </h2>
+      </div>
+      <div class="guides__header-right">
+        <p class="guides__header-body">
+          Two comprehensive guides built from personal experience and professional certification. No email wall, no catch.
+        </p>
+      </div>
+    </div>
+
+    <div class="guides__grid">
+
+      <article class="guide-card">
+        <span class="guide-card__num" aria-hidden="true">01</span>
+        <div class="guide-card__content">
+          <p class="guide-card__eyebrow">Royal Caribbean</p>
+          <h3 class="guide-card__title">The Beginner's Complete Guide to Royal Caribbean</h3>
+          <p class="guide-card__desc">
+            Everything first-time sailors need to know: ship classes, itinerary types, cabin categories, dining options, drink packages, and port strategies — all from someone who's actually sailed it.
+          </p>
+          <div class="guide-card__chips">
+            <span class="guide-chip">Ship Classes</span>
+            <span class="guide-chip">Itineraries</span>
+            <span class="guide-chip">Cabins</span>
+            <span class="guide-chip">Dining</span>
+            <span class="guide-chip">Ports of Call</span>
+            <span class="guide-chip">Drink Packages</span>
+          </div>
+          {% if site.links.rcGuide %}
+          <a href="{{ site.links.rcGuide }}" class="guide-card__download" target="_blank" rel="noopener noreferrer">
+            Download Free PDF &darr;
+          </a>
+          {% else %}
+          <a href="#contact" class="guide-card__download">
+            Request This Guide &rarr;
+          </a>
+          {% endif %}
+        </div>
+      </article>
+
+      <article class="guide-card">
+        <span class="guide-card__num" aria-hidden="true">02</span>
+        <div class="guide-card__content">
+          <p class="guide-card__eyebrow">Disney Destinations</p>
+          <h3 class="guide-card__title">Disney Destinations Quick-Start Guide</h3>
+          <p class="guide-card__desc">
+            Eleven chapters covering Walt Disney World, Disneyland, and Disney Cruise Line. Organized by four family archetypes — because the right strategy depends entirely on who's coming with you.
+          </p>
+          <div class="guide-card__chips">
+            <span class="guide-chip">Walt Disney World</span>
+            <span class="guide-chip">Disneyland</span>
+            <span class="guide-chip">Disney Cruise Line</span>
+            <span class="guide-chip">Family Types</span>
+            <span class="guide-chip">Resorts</span>
+            <span class="guide-chip">Park Strategy</span>
+          </div>
+          {% if site.links.disneyGuide %}
+          <a href="{{ site.links.disneyGuide }}" class="guide-card__download" target="_blank" rel="noopener noreferrer">
+            Download Free PDF &darr;
+          </a>
+          {% else %}
+          <a href="#contact" class="guide-card__download">
+            Request This Guide &rarr;
+          </a>
+          {% endif %}
+        </div>
+      </article>
+
+    </div>
+
+  </div>
+</section>

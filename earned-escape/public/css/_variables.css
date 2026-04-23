@@ -1,0 +1,23 @@
+:root {
+  --navy:        #0B1F3A;
+  --navy-deep:   #071629;
+  --navy-mid:    #132845;
+  --navy-light:  #1C3A5E;
+  --gold:        #C9A84C;
+  --gold-light:  #E2C47A;
+  --gold-pale:   #F5E6C0;
+  --gold-dark:   #9E7B2E;
+  --white:       #F8F5EE;
+  --off-white:   #EDE8DC;
+  --ink:         #080F1A;
+
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-body:    'Montserrat', -apple-system, sans-serif;
+
+  --transition-base: 0.3s ease;
+  --transition-slow: 0.6s ease;
+
+  --max-width: 1200px;
+  --section-pad-y: clamp(72px, 8vw, 120px);
+  --section-pad-x: clamp(20px, 5vw, 60px);
+}

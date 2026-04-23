@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 70" fill="none">
+  <!-- Horizon mark icon -->
+  <g transform="translate(0, 10)">
+    <line x1="4" y1="35" x2="36" y2="35" stroke="#C9A84C" stroke-width="0.5" opacity="0.35"/>
+    <path d="M10 35 A12 12 0 0 1 30 35" stroke="#C9A84C" stroke-width="1.2" fill="none"/>
+    <circle cx="20" cy="35" r="2.5" fill="#C9A84C"/>
+    <line x1="20" y1="15" x2="20" y2="21" stroke="#C9A84C" stroke-width="0.8" opacity="0.7" stroke-linecap="round"/>
+    <line x1="28" y1="18" x2="26" y2="21" stroke="#C9A84C" stroke-width="0.7" opacity="0.45" stroke-linecap="round"/>
+    <line x1="12" y1="18" x2="14" y2="21" stroke="#C9A84C" stroke-width="0.7" opacity="0.45" stroke-linecap="round"/>
+  </g>
+  <!-- Divider -->
+  <line x1="48" y1="10" x2="48" y2="60" stroke="#C9A84C" stroke-width="1" opacity="0.4"/>
+  <!-- Wordmark — navy text on light background -->
+  <text x="58" y="31" font-family="'Cormorant Garamond', Georgia, serif" font-size="20" font-weight="300" fill="#0B1F3A" letter-spacing="3.6">Earned</text>
+  <line x1="58" y1="38" x2="192" y2="38" stroke="url(#rule-grad-light)" stroke-width="1"/>
+  <text x="60" y="54" font-family="'Montserrat', sans-serif" font-size="10" font-weight="300" fill="#C9A84C" letter-spacing="6.5">ESCAPE</text>
+  <defs>
+    <linearGradient id="rule-grad-light" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#C9A84C"/>
+      <stop offset="100%" stop-color="#C9A84C" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+</svg>
