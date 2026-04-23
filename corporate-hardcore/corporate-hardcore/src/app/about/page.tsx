@@ -1,19 +1,25 @@
-import Navigation from "@/components/Navigation";
-import Link from "next/link";
-import Image from "next/image";
-import { MapPin, Building2, Calendar } from "lucide-react";
+import type { Metadata } from "next";
+import { platformLinks } from "@/data/content";
+import ContactFormIntranet from "@/components/ContactFormIntranet";
 
-export const metadata = {
-  title: "About | Corporate Hardcore",
-  description: "Meet Chuck Morrison. IT Manager. 18 years. Still here.",
-  alternates: {
-    canonical: "/about",
-  },
+export const metadata: Metadata = {
+  title: "About",
+  description: "Chuck Morrison. IT Manager. 18 years. Still here.",
+  alternates: { canonical: "/about" },
+  openGraph: { url: "https://www.corphardcore.com/about" },
 };
+
+const subjectOptions = [
+  "General Inquiry",
+  "Speaking / Collaboration",
+  "Press",
+  "Synergy-Related Feedback",
+  "Other",
+];
 
 export default function AboutPage() {
   return (
-    <main className="min-h-screen bg-bg-main">
+    <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -22,7 +28,7 @@ export default function AboutPage() {
             "@type": "Person",
             name: "Chuck Morrison",
             jobTitle: "IT Manager",
-            description: "IT Manager with 18 years at the same company, quietly documenting corporate dysfunction through observational satire.",
+            description: "IT Manager with 18 years at the same company, documenting corporate dysfunction.",
             url: "https://www.corphardcore.com/about",
             sameAs: [
               "https://www.youtube.com/@corphardcore",
@@ -32,190 +38,96 @@ export default function AboutPage() {
           }),
         }}
       />
-      <Navigation />
 
-      {/* Hero banner */}
-      <div className="bg-linkedin-blue h-20" />
+      <div className="mx-auto content-max px-4 py-8">
+        {/* Page header */}
+        <div className="intranet-card mb-6">
+          <div className="intranet-header">About — Personnel File</div>
+        </div>
 
-      <div className="mx-auto content-max px-4 -mt-12 pb-12">
-        <div className="surface-card">
-          {/* Profile header */}
-          <div className="px-6 md:px-8 pb-6">
-            <div className="flex flex-col md:flex-row md:items-end gap-4">
-              <div className="w-28 h-28 rounded-lg border-4 border-card-bg shadow-sm overflow-hidden">
-                <Image
-                  src="/chuck-morrison.png"
-                  alt="Chuck Morrison"
-                  width={112}
-                  height={112}
-                  className="object-cover w-full h-full"
-                />
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Left col — brand story memo */}
+          <div className="lg:col-span-2 space-y-6">
+            <div className="intranet-card">
+              <div className="bg-synergy-amber-light border-b border-synergy-rule px-6 py-3 grid grid-cols-2 gap-x-6 gap-y-1">
+                <div><span className="dept-label">To</span><p className="font-sans text-sm text-synergy-dark">Visitors</p></div>
+                <div><span className="dept-label">From</span><p className="font-sans text-sm text-synergy-dark">Chuck Morrison</p></div>
+                <div><span className="dept-label">RE</span><p className="font-sans text-sm text-synergy-dark">What this is</p></div>
+                <div><span className="dept-label">Clearance</span><p className="font-mono text-sm text-synergy-dark">STANDARD</p></div>
               </div>
-              
-              <div className="flex-1 pb-2">
-                <h1 className="text-2xl font-bold text-text-primary">Chuck Morrison</h1>
-                <p className="text-text-secondary">IT Manager at Synergy Corp</p>
-                <p className="text-sm text-text-secondary mt-1">
-                  18 years in the same company. Former pre-med. Still trying to figure out what happened.
+              <div className="p-6 space-y-4 font-sans text-synergy-dark leading-relaxed">
+                <p>
+                  I&apos;ve been an IT Manager at Synergy Corp for eighteen years. That&apos;s not a typo.
+                  Eighteen years at the same company. Same building. Same fluorescent lights.
+                  Some people would call that loyalty. I&apos;m not sure what to call it yet.
+                </p>
+                <p>
+                  Before IT, I was pre-med. I had a 3.8 GPA, volunteered at a hospital, the whole thing.
+                  Then I took an IT job to pay for graduate school. That was 1998. I never went back.
+                </p>
+                <p>
+                  Corporate Hardcore is not satire in the traditional sense. It is documentation.
+                  I observe what happens in organizations with calm, factual precision, and I report it.
+                  The absurdity is not invented. The absurdity is the point.
+                </p>
+                <p>
+                  Every vision email. Every right-sizing. Every mandatory fun event. Every meeting
+                  that could have been an email and was scheduled instead. I document it so that
+                  people who live this can see it named, and people who don&apos;t can understand
+                  why the ones who do are so quiet about it.
+                </p>
+                <p className="font-sans italic text-synergy-muted">
+                  <em>Circle Back. Never Return.</em>
                 </p>
               </div>
             </div>
+
+            {/* Contact form */}
+            <div className="intranet-card">
+              <div className="intranet-header">Help Desk — Submit a Ticket</div>
+              <div className="p-6">
+                <ContactFormIntranet subjectOptions={subjectOptions} />
+              </div>
+            </div>
           </div>
 
-          {/* Main content grid */}
-          <div className="px-6 md:px-8 py-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {/* Left column - About */}
-            <div className="lg:col-span-2 space-y-8">
-              {/* About section */}
-              <section>
-                <h2 className="text-lg font-semibold mb-3">About</h2>
-                <div className="space-y-4 text-text-primary">
-                  <p>
-                    I&apos;ve been an IT Manager at Synergy Corp for eighteen years. That&apos;s not a typo.
-                    Eighteen years at the same company. Same building. Same fluorescent lights.
-                    Some people would call that loyalty. I&apos;m not sure what to call it yet.
-                  </p>
-                  <p>
-                    Before IT, I was pre-med. I was going to be a doctor. I had a 3.8 GPA,
-                    volunteered at a hospital, the whole thing. Then I took an IT job to pay
-                    for graduate school. That was 1998. I never went back.
-                  </p>
-                  <p>
-                    Now I&apos;m fifty. My daughters are sixteen and fourteen. My wife asks why
-                    I still go to the office every day. I tell her it&apos;s for the synergy.
-                    She doesn&apos;t laugh, but she doesn&apos;t argue either.
-                  </p>
-                  <p>
-                    This project — Corporate Hardcore — started as something to show my 
-                    teenagers when they asked what I do all day. It turned into a way of 
-                    seeing things. The quiet absurdity of corporate life. The meetings that 
-                    could have been emails. The vision statements that say nothing. The 
-                    mandatory fun that feels optional in all the wrong ways.
-                  </p>
-                  <p>
-                    I don&apos;t complain. I don&apos;t rebel. I just observe. And document.
-                    Because someone should.
-                  </p>
-                </div>
-              </section>
-
-              {/* Projects section */}
-              <section>
-                <h2 className="text-lg font-semibold mb-3">Projects</h2>
-                <div className="surface-card divide-y divide-border-light">
-                  <div className="p-4">
-                    <h3 className="font-medium">Corporate Hardcore</h3>
-                    <p className="text-sm text-text-secondary mt-1">
-                      Observational satire documenting corporate dysfunction through monthly video arcs and written articles.
-                    </p>
-                  </div>
-                  <div className="p-4">
-                    <h3 className="font-medium">Synergy Archive</h3>
-                    <p className="text-sm text-text-secondary mt-1">
-                      A personal collection of internal emails, vision statements, and meeting notes from 2008-present.
-                    </p>
-                  </div>
-                </div>
-              </section>
-
-              {/* Featured content */}
-              <section>
-                <h2 className="text-lg font-semibold mb-3">Featured</h2>
-                <div className="surface-card p-4">
-                  <div className="flex items-start gap-3">
-                    <div className="w-16 h-16 bg-linkedin-blue/10 rounded flex items-center justify-center flex-shrink-0">
-                      <span className="text-linkedin-blue font-bold">CH</span>
-                    </div>
+          {/* Right col — platform links */}
+          <aside className="space-y-4">
+            <div className="intranet-card">
+              <div className="intranet-header">External Channels</div>
+              <div className="divide-y divide-synergy-rule">
+                {platformLinks.map((platform) => (
+                  <div key={platform.id} className="px-4 py-3 flex items-center justify-between gap-3">
                     <div>
-                      <h3 className="font-medium">Performance Review Arc</h3>
-                      <p className="text-sm text-text-secondary mt-1">
-                        A three-part series on what happens when you realize the interview was never an evaluation.
-                      </p>
-                      <span className="text-xs text-text-secondary mt-2 block">3 articles · Nov 2025</span>
+                      <p className="dept-label">{platform.label}</p>
+                      <p className="font-mono text-xs text-synergy-dark">{platform.handle}</p>
                     </div>
+                    <a
+                      href={platform.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn-ghost text-[10px] px-3 py-1.5 flex-shrink-0"
+                    >
+                      Visit
+                    </a>
                   </div>
-                </div>
-              </section>
+                ))}
+              </div>
             </div>
 
-            {/* Right column - Sidebar */}
-            <aside className="space-y-6">
-              {/* Contact info */}
-              <section className="surface-card p-4">
-                <h3 className="font-semibold mb-3">Contact</h3>
-                <ul className="space-y-3 text-sm">
-                  <li className="flex items-center gap-2 text-text-secondary">
-                    <MapPin className="w-4 h-4" />
-                    <span>NY Metro Area</span>
-                  </li>
-                </ul>
-                <div className="mt-4 pt-4 border-t border-border-light">
-                  <Link href="/contact" className="text-sm text-linkedin-blue hover:underline">
-                    Send a message →
-                  </Link>
-                </div>
-              </section>
-
-              {/* Current company */}
-              <section className="surface-card p-4">
-                <h3 className="font-semibold mb-3">Current</h3>
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-gray-200 rounded flex items-center justify-center">
-                    <Building2 className="w-5 h-5 text-text-secondary" />
-                  </div>
-                  <div>
-                    <p className="font-medium text-sm">Synergy Corp</p>
-                    <p className="text-xs text-text-secondary">IT Manager</p>
-                  </div>
-                </div>
-              </section>
-
-              {/* Education */}
-              <section className="surface-card p-4">
-                <h3 className="font-semibold mb-3">Education</h3>
-                <div className="space-y-3">
-                  <div>
-                    <p className="font-medium text-sm">B.S. Biology</p>
-                    <p className="text-xs text-text-secondary">University of Maryland</p>
-                  </div>
-                  <div>
-                    <p className="font-medium text-sm">Minor in Computer Science</p>
-                    <p className="text-xs text-text-secondary">Because here we are.</p>
-                  </div>
-                </div>
-              </section>
-
-              {/* Joined */}
-              <section className="surface-card p-4">
-                <div className="flex items-center gap-2 text-sm text-text-secondary">
-                  <Calendar className="w-4 h-4" />
-                  <span>Joined March 2008</span>
-                </div>
-              </section>
-
-              {/* Social */}
-              <section className="surface-card p-4">
-                <h3 className="font-semibold mb-3">Follow</h3>
-                <div className="flex flex-wrap gap-2">
-                  <a href="https://www.youtube.com/@corphardcore" target="_blank" rel="noopener noreferrer" className="px-3 py-1 rounded-full border border-border-medium text-text-primary text-xs font-medium hover:bg-btn-secondary">
-                    YouTube
-                  </a>
-                  <a href="https://x.com/corphardcore" target="_blank" rel="noopener noreferrer" className="px-3 py-1 rounded-full border border-border-medium text-text-primary text-xs font-medium hover:bg-btn-secondary">
-                    X
-                  </a>
-                  <a href="https://www.tiktok.com/@corphardcore" target="_blank" rel="noopener noreferrer" className="px-3 py-1 rounded-full border border-border-medium text-text-primary text-xs font-medium hover:bg-btn-secondary">
-                    TikTok
-                  </a>
-                  <a href="https://www.instagram.com/corphardcore/" target="_blank" rel="noopener noreferrer" className="px-3 py-1 rounded-full border border-border-medium text-text-primary text-xs font-medium hover:bg-btn-secondary">
-                    Instagram
-                  </a>
-                </div>
-              </section>
-            </aside>
-          </div>
+            <div className="intranet-card p-4">
+              <p className="dept-label mb-2">Employee ID</p>
+              <p className="font-mono text-2xl text-synergy-dark">#00847</p>
+              <p className="dept-label mt-3 mb-1">Department</p>
+              <p className="font-sans text-sm text-synergy-dark">Information Technology</p>
+              <p className="dept-label mt-3 mb-1">Status</p>
+              <p className="font-mono text-sm text-synergy-green">ACTIVE</p>
+              <p className="dept-label mt-3 mb-1">Years of Service</p>
+              <p className="font-mono text-sm text-synergy-dark">18</p>
+            </div>
+          </aside>
         </div>
       </div>
-
-    </main>
+    </>
   );
 }
