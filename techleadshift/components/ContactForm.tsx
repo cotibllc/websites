@@ -4,7 +4,7 @@ import { useState, useRef } from 'react';
 import { Turnstile } from '@marsidev/react-turnstile';
 import type { TurnstileInstance } from '@marsidev/react-turnstile';
 
-const fallbackEmail = 'charles.betancourt@cotib.com';
+const fallbackEmail = 'hello@techleadshift.com';
 const defaultErrorMessage = 'Something went wrong.';
 
 export default function ContactForm() {
