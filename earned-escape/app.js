@@ -39,6 +39,10 @@ app.use(express.static(path.join(__dirname, 'public'), {
   maxAge: process.env.NODE_ENV === 'production' ? '1y' : 0,
 }));
 
+app.get(['/linktree', '/linktree/'], (req, res) => {
+  res.sendFile(path.join(__dirname, 'linktree', 'index.html'));
+});
+
 // Nunjucks templating
 nunjucks.configure(path.join(__dirname, 'views'), {
   autoescape: true,

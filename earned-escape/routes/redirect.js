@@ -16,6 +16,10 @@ router.use((req, res, next) => {
     return res.redirect(REDIRECT_DOMAINS[host].code, REDIRECT_DOMAINS[host].url);
   }
 
+  if (host === site.domains.linktree && req.path === '/') {
+    return res.redirect(302, '/linktree');
+  }
+
   // Development simulation via query param
   const domain = req.query.domain;
   if (domain === 'voyage') {
@@ -26,6 +30,9 @@ router.use((req, res, next) => {
   }
   if (domain === 'co') {
     return res.redirect(302, '/');
+  }
+  if (domain === 'linktree') {
+    return res.redirect(302, '/linktree');
   }
 
   next();
