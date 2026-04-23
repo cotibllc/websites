@@ -64,7 +64,7 @@ export async function POST(request: Request) {
 
   const resend = new Resend(resendApiKey);
   const { error } = await resend.emails.send({
-    from: 'Tech Lead Shift <hello@techleadshift.com>',
+    from: 'Tech Lead Shift <contact@techleadshift.com>',
     to: 'charles.betancourt@cotib.com',
     replyTo: email,
     subject: `Speaking Inquiry from ${name}`,
