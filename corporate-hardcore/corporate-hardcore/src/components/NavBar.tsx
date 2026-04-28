@@ -4,6 +4,7 @@ import SystemClock from "./SystemClock";
 const navLinks = [
   { label: "EPISODES",    href: "/episodes" },
   { label: "FIELD NOTES", href: "/blog" },
+  { label: "GLOSSARY",    href: "/glossary" },
   { label: "CHARACTERS",  href: "/characters" },
   { label: "MERCH",       href: "/merch" },
   { label: "ABOUT",       href: "/about" },
