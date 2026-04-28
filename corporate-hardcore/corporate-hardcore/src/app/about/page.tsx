@@ -4,10 +4,14 @@ import { platformLinks } from "@/data/content";
 import ContactFormIntranet from "@/components/ContactFormIntranet";
 
 export const metadata: Metadata = {
-  title: "About",
-  description: "Chuck Morrison. IT Manager. 18 years. Still here.",
+  title: "About Chuck Morrison",
+  description: "Chuck Morrison is an IT Manager and corporate satirist with 18 years documenting workplace dysfunction at Synergy Corp. Creator of Corporate Hardcore.",
   alternates: { canonical: "/about" },
-  openGraph: { url: "https://www.corphardcore.com/about" },
+  openGraph: {
+    url: "https://www.corphardcore.com/about",
+    title: "About Chuck Morrison | Corporate Hardcore",
+    description: "Chuck Morrison is an IT Manager and corporate satirist with 18 years documenting workplace dysfunction at Synergy Corp.",
+  },
 };
 
 const subjectOptions = [
@@ -29,12 +33,21 @@ export default function AboutPage() {
             "@type": "Person",
             name: "Chuck Morrison",
             jobTitle: "IT Manager",
-            description: "IT Manager with 18 years at the same company, documenting corporate dysfunction.",
+            description: "Corporate satirist and IT Manager with 18 years of firsthand experience documenting workplace dysfunction at a Fortune-adjacent company.",
             url: "https://www.corphardcore.com/about",
             sameAs: [
               "https://www.youtube.com/@corphardcore",
               "https://www.instagram.com/corphardcore/",
               "https://www.tiktok.com/@corphardcore",
+              "https://x.com/corphardcore",
+            ],
+            knowsAbout: [
+              "corporate satire",
+              "workplace culture",
+              "office humor",
+              "corporate dysfunction",
+              "organizational behavior",
+              "IT management",
             ],
           }),
         }}

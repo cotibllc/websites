@@ -58,6 +58,26 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
+              "@type": "WebSite",
+              name: "Corporate Hardcore",
+              url: "https://www.corphardcore.com",
+              description: "Observational satire documenting corporate dysfunction. By Chuck Morrison, IT Manager, 18 years at the same company.",
+              potentialAction: {
+                "@type": "SearchAction",
+                target: {
+                  "@type": "EntryPoint",
+                  urlTemplate: "https://www.corphardcore.com/search?q={search_term_string}",
+                },
+                "query-input": "required name=search_term_string",
+              },
+            }),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
               "@type": "Organization",
               name: "Corporate Hardcore",
               url: "https://www.corphardcore.com",

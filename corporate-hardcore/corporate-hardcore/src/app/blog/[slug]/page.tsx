@@ -69,6 +69,13 @@ export default async function BlogPostPage({ params }: Props) {
             <div><span className="dept-label">Classification</span><p className="font-mono text-sm text-synergy-amber">{post.arc}</p></div>
             <div><span className="dept-label">Date Filed</span><p className="font-mono text-sm text-synergy-dark">{post.date}</p></div>
             <div className="col-span-2"><span className="dept-label">Subject</span><p className="font-sans font-semibold text-synergy-dark text-lg leading-snug mt-0.5">{post.title}</p></div>
+            <div className="col-span-2 mt-1">
+              <span className="dept-label">Author</span>
+              <p className="font-sans text-sm text-synergy-dark mt-0.5">
+                <Link href="/about" className="hover:text-synergy-amber transition-colors">Chuck Morrison</Link>
+                <span className="text-synergy-muted"> — 18 years in the trenches</span>
+              </p>
+            </div>
           </div>
 
           {/* Body */}
