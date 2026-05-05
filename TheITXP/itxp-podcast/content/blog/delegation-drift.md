@@ -1,6 +1,6 @@
 +++
 title = "Delegation Drift"
-Date = 2026-05-04
+date = 2026-05-04T06:00:00-06:00
 +++
 
 I thought I was a pretty good delegator.
