@@ -12,17 +12,19 @@ export default async function HomePage() {
     <div className="max-w-6xl mx-auto px-4 py-12">
       {/* Hero */}
       <section className="mb-14 text-center">
-        <h1 className="text-4xl font-bold mb-4">The IT XP</h1>
-        <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+        <h1 className="font-condensed font-bold text-5xl md:text-6xl tracking-tight uppercase leading-none mb-4">
+          THE IT <span className="text-amber">XP</span>
+        </h1>
+        <p className="text-lg text-steel max-w-2xl mx-auto leading-relaxed">
           Pulling back the curtain on what it&apos;s really like to work in Information Technology.
           Career insights, real talk, and hard-won experience points for IT professionals.
         </p>
-        <div className="mt-6 flex justify-center gap-4 flex-wrap text-sm">
+        <div className="mt-8 flex justify-center gap-4 flex-wrap">
           <a
             href="https://podcasts.apple.com/us/podcast/the-it-xp/id1330172385"
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-gray-900 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors"
+            className="bg-amber text-navy font-semibold px-5 py-2.5 rounded hover:opacity-90 transition-opacity uppercase tracking-wide text-xs"
           >
             Apple Podcasts
           </a>
@@ -30,7 +32,7 @@ export default async function HomePage() {
             href="https://theitxp.libsyn.com/rss"
             target="_blank"
             rel="noopener noreferrer"
-            className="border border-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:border-gray-500 transition-colors"
+            className="border border-blue text-blue px-5 py-2.5 rounded hover:bg-blue hover:text-white transition-colors uppercase tracking-wide text-xs"
           >
             RSS Feed
           </a>
@@ -39,9 +41,9 @@ export default async function HomePage() {
 
       {/* Latest Episodes */}
       <section>
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="text-2xl font-bold">Latest Episodes</h2>
-          <Link href="/episodes" className="text-sm text-blue-600 hover:underline">
+        <div className="flex items-center justify-between mb-6 border-b border-slate pb-4">
+          <h2 className="font-condensed font-bold text-2xl uppercase tracking-tight">Latest Episodes</h2>
+          <Link href="/episodes" className="font-mono text-sm text-blue hover:text-amber transition-colors">
             View all →
           </Link>
         </div>

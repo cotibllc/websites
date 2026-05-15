@@ -8,13 +8,13 @@ const SOCIAL_LINKS = [
 
 export default function Footer() {
   return (
-    <footer className="bg-gray-900 text-gray-400 mt-16">
+    <footer className="bg-navy border-t border-slate text-steel">
       <div className="max-w-6xl mx-auto px-4 py-10 flex flex-col md:flex-row items-center justify-between gap-6">
-        <p className="text-sm">© {new Date().getFullYear()} COTIB LLC · The IT XP</p>
+        <p className="text-sm font-mono">© {new Date().getFullYear()} COTIB LLC · The IT XP</p>
         <ul className="flex flex-wrap gap-5 text-sm">
           {SOCIAL_LINKS.map(({ href, label }) => (
             <li key={href}>
-              <a href={href} target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
+              <a href={href} target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors uppercase tracking-widest text-xs">
                 {label}
               </a>
             </li>

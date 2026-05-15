@@ -1,10 +1,26 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { IBM_Plex_Sans, IBM_Plex_Sans_Condensed, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 
-const inter = Inter({ subsets: ["latin"] });
+const ibmPlexSans = IBM_Plex_Sans({
+  subsets: ["latin"],
+  weight: ["400", "600"],
+  variable: "--font-ibm-plex-sans",
+});
+
+const ibmPlexSansCondensed = IBM_Plex_Sans_Condensed({
+  subsets: ["latin"],
+  weight: ["700"],
+  variable: "--font-ibm-plex-condensed",
+});
+
+const ibmPlexMono = IBM_Plex_Mono({
+  subsets: ["latin"],
+  weight: ["400"],
+  variable: "--font-ibm-plex-mono",
+});
 
 export const metadata: Metadata = {
   title: {
@@ -26,8 +42,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="h-full antialiased">
-      <body className={`${inter.className} min-h-full flex flex-col bg-gray-50 text-gray-900`}>
+    <html lang="en" className={`h-full antialiased ${ibmPlexSans.variable} ${ibmPlexSansCondensed.variable} ${ibmPlexMono.variable}`}>
+      <body className="font-sans min-h-full flex flex-col bg-navy text-white">
         <Nav />
         <main className="flex-1">{children}</main>
         <Footer />

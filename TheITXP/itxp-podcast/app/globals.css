@@ -1,7 +1,45 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
-body {
-  font-family: Arial, Helvetica, sans-serif;
+@theme {
+  --color-navy: #0D1724;
+  --color-blue: #1B7FFF;
+  --color-amber: #F5A623;
+  --color-steel: #8A9BB0;
+  --color-slate: #162032;
 }
 
+@theme inline {
+  --font-sans: var(--font-ibm-plex-sans);
+  --font-condensed: var(--font-ibm-plex-condensed);
+  --font-mono: var(--font-ibm-plex-mono);
+}
+
+body {
+  font-family: var(--font-sans);
+}
+
+.prose {
+  --tw-prose-body: #ffffff;
+  --tw-prose-headings: #ffffff;
+  --tw-prose-links: #1B7FFF;
+  --tw-prose-bold: #ffffff;
+  --tw-prose-counters: #8A9BB0;
+  --tw-prose-bullets: #8A9BB0;
+  --tw-prose-hr: #162032;
+  --tw-prose-quotes: #F5A623;
+  --tw-prose-quote-borders: #F5A623;
+  --tw-prose-captions: #8A9BB0;
+  --tw-prose-code: #1B7FFF;
+  --tw-prose-pre-code: #ffffff;
+  --tw-prose-pre-bg: #162032;
+  --tw-prose-th-borders: #162032;
+  --tw-prose-td-borders: #162032;
+  font-family: var(--font-sans);
+}
+
+.prose :where(h1, h2, h3, h4) {
+  font-family: var(--font-condensed);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
