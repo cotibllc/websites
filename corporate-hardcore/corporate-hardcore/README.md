@@ -1,36 +1,88 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Corporate Hardcore — Next.js App
 
-## Getting Started
+Next.js application for [corphardcore.com](https://www.corphardcore.com) — observational satire documenting the absurdity of corporate culture. Not a rebellion. An observation.
 
-First, run the development server:
+A brand of [COTIB LLC](https://cotib.com).
+
+---
+
+## Tech Stack
+
+- **Framework**: Next.js 16 (App Router)
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS v3 + `@tailwindcss/typography`
+- **Content**: Markdown blog posts via `gray-matter` + `remark`
+- **Contact/Forms**: Cloudflare Turnstile + Resend
+- **Icons**: lucide-react
+- **Date formatting**: date-fns
+- **Deployment**: Vercel
+
+---
+
+## Development
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+cp .env.example .env.local   # fill in required keys
+npm run dev                  # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Required environment variables
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Variable | Description |
+|---|---|
+| `RESEND_API_KEY` | Resend API key for contact form emails |
+| `NEXT_PUBLIC_TURNSTILE_SITE_KEY` | Cloudflare Turnstile public site key |
+| `TURNSTILE_SECRET_KEY` | Cloudflare Turnstile server-side secret |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## Project Structure
 
-To learn more about Next.js, take a look at the following resources:
+```
+corporate-hardcore/
+├── src/
+│   ├── app/
+│   │   ├── layout.tsx          ← root layout, metadata
+│   │   ├── page.tsx            ← homepage
+│   │   ├── blog/
+│   │   │   ├── page.tsx        ← blog listing
+│   │   │   └── [slug]/page.tsx ← individual post
+│   │   └── about/page.tsx
+│   ├── components/             ← shared UI components
+│   ├── content/posts/          ← Markdown files (gray-matter frontmatter)
+│   └── styles/globals.css      ← Tailwind entry point
+└── public/                     ← static assets, manifest.json
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Adding Blog Posts
 
-## Deploy on Vercel
+Create a `.md` file in `src/content/posts/` with gray-matter frontmatter:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```markdown
+---
+title: "Post Title"
+date: "2026-01-01"
+excerpt: "Brief summary shown on listing page."
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Post content here.
+```
+
+---
+
+## Deployment
+
+Connect the repo to Vercel. Set the project root to `corporate-hardcore/corporate-hardcore`. Add environment variables in the Vercel dashboard.
+
+---
+
+## Social
+
+| Platform | Handle |
+|---|---|
+| YouTube | [@corphardcore](https://www.youtube.com/@corphardcore) |
+| Instagram | [@corphardcore](https://www.instagram.com/corphardcore/) |
+| TikTok | [@corphardcore](https://www.tiktok.com/@corphardcore) |
