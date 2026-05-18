@@ -1,17 +1,21 @@
 :root {
-  --navy:        #0B1F3A;
-  --navy-deep:   #071629;
-  --navy-mid:    #132845;
-  --navy-light:  #1C3A5E;
+  --navy:        #1A0B3B;
+  --navy-deep:   #0D0821;
+  --navy-mid:    #26134A;
+  --navy-light:  #3B2068;
   --gold:        #C9A84C;
   --gold-light:  #E2C47A;
   --gold-pale:   #F5E6C0;
   --gold-dark:   #9E7B2E;
+  --purple:      #9575CD;
+  --purple-light: #B39DDB;
+  --purple-pale:  #EDE4F5;
+  --warm-bg:     #FAF7F2;
   --white:       #F8F5EE;
   --off-white:   #EDE8DC;
-  --ink:         #080F1A;
+  --ink:         #080618;
 
-  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-display: 'Playfair Display', Georgia, serif;
   --font-body:    'Montserrat', -apple-system, sans-serif;
 
   --transition-base: 0.3s ease;

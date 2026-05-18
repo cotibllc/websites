@@ -65,6 +65,17 @@ em {
   background: rgba(201, 168, 76, 0.06);
 }
 
+.btn--purple {
+  background: var(--purple);
+  color: #fff;
+  border: 1px solid var(--purple);
+}
+
+.btn--purple:hover {
+  background: var(--purple-light);
+  border-color: var(--purple-light);
+}
+
 .btn--sm {
   font-size: 11px;
   padding: 10px 20px;

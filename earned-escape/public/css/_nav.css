@@ -9,7 +9,7 @@
 }
 
 .site-nav.scrolled {
-  background-color: rgba(7, 22, 41, 0.92);
+  background-color: rgba(13, 8, 33, 0.92);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-bottom-color: rgba(201, 168, 76, 0.12);
@@ -131,7 +131,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: var(--navy-deep);
+    background: var(--ink);
     flex-direction: column;
     justify-content: center;
     gap: 40px;

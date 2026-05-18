@@ -10,29 +10,29 @@
       <div class="dest-tabs" role="tablist">
         <button
           class="dest-tab dest-tab--active"
-          data-panel="cruise"
-          role="tab"
-          aria-selected="true"
-          aria-controls="panel-cruise"
-          id="tab-cruise"
-        >
-          <span>&#x1F6A2;</span> Cruise Voyages
-        </button>
-        <button
-          class="dest-tab"
           data-panel="parks"
           role="tab"
-          aria-selected="false"
+          aria-selected="true"
           aria-controls="panel-parks"
           id="tab-parks"
         >
           <span>&#x1F3A2;</span> Theme Parks
         </button>
+        <button
+          class="dest-tab"
+          data-panel="cruise"
+          role="tab"
+          aria-selected="false"
+          aria-controls="panel-cruise"
+          id="tab-cruise"
+        >
+          <span>&#x1F6A2;</span> Cruise Voyages
+        </button>
       </div>
     </div>
 
     <!-- Cruise Panel -->
-    <div class="dest-panel dest-panel--active" id="panel-cruise" role="tabpanel" aria-labelledby="tab-cruise">
+    <div class="dest-panel" id="panel-cruise" role="tabpanel" aria-labelledby="tab-cruise" hidden>
       <div class="dest-grid">
 
         <article class="dest-card dest-card--rc">
@@ -50,8 +50,8 @@
             <p class="dest-card__eyebrow">Royal Caribbean</p>
             <h3 class="dest-card__title">The World's Greatest Cruise Line</h3>
             <p class="dest-card__desc">From Caribbean islands to Alaskan glaciers, Royal Caribbean offers a scale and variety that has to be experienced. Let me match you to the right ship and itinerary for your family.</p>
-            <a href="{{ site.links.consultation }}" class="dest-card__link" target="_blank" rel="noopener noreferrer">
-              Plan Your Voyage &rarr;
+            <a href="/royal-caribbean" class="dest-card__link">
+              Explore Royal Caribbean &rarr;
             </a>
           </div>
         </article>
@@ -71,8 +71,8 @@
             <p class="dest-card__eyebrow">Disney Cruise Line</p>
             <h3 class="dest-card__title">Magic on the Open Ocean</h3>
             <p class="dest-card__desc">Disney storytelling meets world-class cruising. Perfect for families and multigenerational groups — the service, the characters, and the attention to detail are unlike anything else at sea.</p>
-            <a href="{{ site.links.consultation }}" class="dest-card__link" target="_blank" rel="noopener noreferrer">
-              Plan Your Voyage &rarr;
+            <a href="/disney-cruise-line" class="dest-card__link">
+              Explore Disney Cruise Line &rarr;
             </a>
           </div>
         </article>
@@ -81,7 +81,7 @@
     </div>
 
     <!-- Parks Panel -->
-    <div class="dest-panel" id="panel-parks" role="tabpanel" aria-labelledby="tab-parks" hidden>
+    <div class="dest-panel dest-panel--active" id="panel-parks" role="tabpanel" aria-labelledby="tab-parks">
       <div class="dest-grid">
 
         <article class="dest-card dest-card--wdw">
@@ -98,8 +98,8 @@
             <p class="dest-card__eyebrow">Walt Disney World</p>
             <h3 class="dest-card__title">The Most Magical Place on Earth</h3>
             <p class="dest-card__desc">Four parks, two water parks, Disney Springs, and a resort strategy that can make or break your trip. Let me handle the planning so you can be fully present for every moment of it.</p>
-            <a href="{{ site.links.consultation }}" class="dest-card__link" target="_blank" rel="noopener noreferrer">
-              Plan Your Visit &rarr;
+            <a href="/disney-world" class="dest-card__link">
+              Explore Walt Disney World &rarr;
             </a>
           </div>
         </article>
@@ -119,8 +119,8 @@
             <p class="dest-card__eyebrow">Universal Resorts</p>
             <h3 class="dest-card__title">Epic Universe Awaits</h3>
             <p class="dest-card__desc">Epic Universe, Islands of Adventure, Universal Studios — the thrill-seeker's destination just got significantly bigger. I'll build a plan that captures it all without the overwhelm.</p>
-            <a href="{{ site.links.universalLink }}" class="dest-card__link" target="_blank" rel="noopener noreferrer">
-              Explore Epic Universe &rarr;
+            <a href="/universal" class="dest-card__link">
+              Explore Universal Orlando &rarr;
             </a>
           </div>
         </article>

@@ -95,7 +95,7 @@
 }
 
 .dest-card--rc .dest-card__bg {
-  background-color: #0a1e36;
+  background-color: #140930;
   background-image: repeating-linear-gradient(
     45deg,
     rgba(201, 168, 76, 0.02) 0px,
@@ -106,7 +106,7 @@
 }
 
 .dest-card--dcl .dest-card__bg {
-  background-color: #0d1e30;
+  background-color: #110828;
   background-image: repeating-linear-gradient(
     -45deg,
     rgba(201, 168, 76, 0.02) 0px,
@@ -117,7 +117,7 @@
 }
 
 .dest-card--wdw .dest-card__bg {
-  background-color: #0e1a2d;
+  background-color: #130930;
   background-image: repeating-linear-gradient(
     45deg,
     rgba(201, 168, 76, 0.02) 0px,
@@ -128,7 +128,7 @@
 }
 
 .dest-card--uni .dest-card__bg {
-  background-color: #121622;
+  background-color: #110828;
   background-image: repeating-linear-gradient(
     -45deg,
     rgba(201, 168, 76, 0.02) 0px,
@@ -145,7 +145,7 @@
 .dest-card__overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(7, 22, 41, 0.9) 0%, rgba(7, 22, 41, 0.3) 60%, transparent 100%);
+  background: linear-gradient(to top, rgba(13, 8, 33, 0.92) 0%, rgba(13, 8, 33, 0.3) 60%, transparent 100%);
   z-index: 1;
 }
 

@@ -63,9 +63,9 @@ module.exports = {
 
   // ── SEO
   seo: {
-    title: "Earned Escape | You've Earned It. | Certified Travel Advisory",
+    title: "Earned Escape | Luxury Cruises, Disney Trips, and Elevated Escapes",
     description:
-      'Expert travel planning for Royal Caribbean, Disney Cruise Line, Walt Disney World, and Universal Resorts. Certified advisor, zero added cost to you.',
+      'Luxury cruises, Disney trips, and elevated family escapes planned with a personal touch for Royal Caribbean, Disney Cruise Line, Walt Disney World, and Universal.',
     ogImage: '/images/og/og-default.png',
     twitterHandle: '@earned_escape',
   },
