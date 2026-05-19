@@ -6,3 +6,7 @@
 
 # Node
 **/node_modules/
+
+# Local tooling
+**/.claude/
+**/.vscode/
