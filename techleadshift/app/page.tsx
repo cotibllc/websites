@@ -37,7 +37,8 @@ const actOneArticles: SeriesArticle[] = [
   {
     number: "05",
     title: "The new leadership skill: systems thinking",
-    status: "Scheduled",
+    status: "Live",
+    href: `${SUBSTACK_URL}/p/the-new-leadership-skill-systems`,
   },
   {
     number: "06",
@@ -64,6 +65,49 @@ const actTwoArticles: SeriesArticle[] = [
     title: "The future leader is a system architect",
   },
 ];
+
+type SubstackPost = { title: string; link: string };
+
+async function fetchSubstackPosts(): Promise<SubstackPost[]> {
+  try {
+    const res = await fetch(`${SUBSTACK_URL}/feed`, {
+      next: { revalidate: 3600 },
+    });
+    if (!res.ok) return [];
+    const xml = await res.text();
+    const items = [...xml.matchAll(/<item>([\s\S]*?)<\/item>/g)];
+    return items.map((m) => {
+      const block = m[1];
+      const titleMatch = block.match(
+        /<title>\s*(?:<!\[CDATA\[([\s\S]*?)\]\]>|([\s\S]*?))\s*<\/title>/
+      );
+      const linkMatch = block.match(
+        /<link>\s*(?:<!\[CDATA\[([\s\S]*?)\]\]>|([\s\S]*?))\s*<\/link>/
+      );
+      return {
+        title: (titleMatch?.[1] ?? titleMatch?.[2] ?? "").trim(),
+        link: (linkMatch?.[1] ?? linkMatch?.[2] ?? "").trim(),
+      };
+    });
+  } catch {
+    return [];
+  }
+}
+
+function normalizeTitle(t: string): string {
+  return t.toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
+}
+
+function hydrateArticlesFromFeed(
+  articles: SeriesArticle[],
+  postsByTitle: Map<string, SubstackPost>
+): SeriesArticle[] {
+  return articles.map((article) => {
+    const match = postsByTitle.get(normalizeTitle(article.title));
+    if (!match) return article;
+    return { ...article, status: "Live", href: match.link };
+  });
+}
 
 function renderSeriesArticle(article: SeriesArticle) {
   const articleTitle = article.href ? (
@@ -96,7 +140,14 @@ function renderSeriesArticle(article: SeriesArticle) {
   );
 }
 
-export default function HomePage() {
+export default async function HomePage() {
+  const posts = await fetchSubstackPosts();
+  const postsByTitle = new Map(
+    posts.map((p) => [normalizeTitle(p.title), p])
+  );
+  const liveActOneArticles = hydrateArticlesFromFeed(actOneArticles, postsByTitle);
+  const liveActTwoArticles = hydrateArticlesFromFeed(actTwoArticles, postsByTitle);
+
   return (
     <>
       {/* HERO */}
@@ -205,7 +256,7 @@ export default function HomePage() {
                 <div className="act-title">The Diagnosis</div>
               </div>
               <ul className="act-articles">
-                {actOneArticles.map(renderSeriesArticle)}
+                {liveActOneArticles.map(renderSeriesArticle)}
               </ul>
             </div>
 
@@ -215,7 +266,7 @@ export default function HomePage() {
                 <div className="act-title">The Transformation</div>
               </div>
               <ul className="act-articles">
-                {actTwoArticles.map(renderSeriesArticle)}
+                {liveActTwoArticles.map(renderSeriesArticle)}
               </ul>
             </div>
           </div>
