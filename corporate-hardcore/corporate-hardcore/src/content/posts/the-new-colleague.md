@@ -1,6 +1,6 @@
 ---
 title: "The New Colleague"
-date: 2026-04-01
+date: "2026-04-01"
 description: "A new team member joined this week. Doesn't have a desk. Already has calendar access. It scheduled three meetings before anyone knew its name."
 arc: "AI as Employee"
 ---
