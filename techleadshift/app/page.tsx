@@ -203,9 +203,7 @@ export default async function HomePage() {
               <h2 className="section-headline">Charles Betancourt</h2>
               <div className="about-body">
                 <p>
-                  <strong>Director of Cloud Engineering</strong> with nearly two decades of technology
-                  leadership experience. Currently navigating the shift from executor to strategist at
-                  the intersection of organizational leadership and agentic AI.
+                  Nearly three decades of building, breaking, and leading technology systems. <strong>Now writing about what happens to leadership when some of your team members aren't human.</strong>
                 </p>
                 <p>
                   Tech Lead Shift is not academic research. It is practitioner observation. Every
