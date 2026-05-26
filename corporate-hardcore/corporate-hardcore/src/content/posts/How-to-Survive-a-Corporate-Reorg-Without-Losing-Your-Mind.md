@@ -1,4 +1,3 @@
-# 
 ---
 title: "How to Survive a Corporate Reorg Without Losing Your Mind (or Your Job)"
 date: "2026-05-26"
