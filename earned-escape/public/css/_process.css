@@ -15,6 +15,7 @@
   gap: 48px;
   align-items: end;
   margin-bottom: 48px;
+  max-width: var(--content-max-width);
 }
 
 .process__headline {

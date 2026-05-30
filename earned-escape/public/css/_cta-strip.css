@@ -46,6 +46,10 @@
   max-width: 52ch;
 }
 
+.cta-strip__text {
+  max-width: var(--content-max-width);
+}
+
 .cta-strip__actions {
   display: flex;
   flex-direction: column;
