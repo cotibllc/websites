@@ -68,37 +68,14 @@
   color: rgba(248, 245, 238, 0.54);
 }
 
-.trust__callout {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 32px;
-  flex-wrap: wrap;
-  padding: 32px;
-  background: rgba(201, 168, 76, 0.04);
-  border: 1px solid rgba(201, 168, 76, 0.18);
+.trust__planning {
+  margin-top: 40px;
+  padding-top: 40px;
+  border-top: 1px solid rgba(201, 168, 76, 0.18);
 }
 
-.trust__callout-copy {
-  max-width: 60ch;
-}
-
-.trust__callout-label {
-  margin-bottom: 8px;
-  font-family: var(--font-body);
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
+.trust__planning .section-eyebrow {
   color: rgba(201, 168, 76, 0.74);
-}
-
-.trust__callout-text {
-  font-family: var(--font-body);
-  font-size: 14px;
-  font-weight: 300;
-  line-height: 1.8;
-  color: rgba(248, 245, 238, 0.68);
 }
 
 @media (max-width: 899px) {

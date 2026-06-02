@@ -1,4 +1,8 @@
+{% if not embedded %}
 <section class="cta-strip" id="start-planning">
+{% else %}
+<div class="trust__planning" id="start-planning">
+{% endif %}
   <div class="cta-strip__inner">
 
     <div class="cta-strip__text">
@@ -8,7 +12,10 @@
         you've been <em>dreaming about.</em>
       </h2>
       <p class="cta-strip__sub">
-        A 30-minute planning call to talk through your dates, priorities, and travel style - then map out the right next step.
+        A 30-minute planning call to talk through your dates, priorities, and travel style — then map out the right next step.
+      </p>
+      <p class="cta-strip__trust">
+        Earned Escape is operated by {{ site.brand.business }} and affiliated with {{ site.brand.parentAgency }}, pairing a personal planning experience with established travel-industry support.
       </p>
     </div>
 
@@ -20,4 +27,8 @@
     </div>
 
   </div>
+{% if not embedded %}
 </section>
+{% else %}
+</div>
+{% endif %}

@@ -37,16 +37,8 @@
       </article>
     </div>
 
-    <div class="trust__callout">
-      <div class="trust__callout-copy">
-        <p class="trust__callout-label">Trust Signals</p>
-        <p class="trust__callout-text">
-          Earned Escape is operated by {{ site.brand.business }} and affiliated with {{ site.brand.parentAgency }}, pairing a personal planning experience with established travel-industry support.
-        </p>
-      </div>
-      <a href="{{ site.links.consultation }}" class="btn btn--gold" target="_blank" rel="noopener noreferrer">
-        Reserve Your Planning Call
-      </a>
-    </div>
+    {% set embedded = true %}
+    {% include "partials/cta-strip.njk" %}
+    {% set embedded = false %}
   </div>
 </section>

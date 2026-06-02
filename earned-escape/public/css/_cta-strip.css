@@ -44,6 +44,16 @@
   color: rgba(248, 245, 238, 0.55);
   line-height: 1.75;
   max-width: 52ch;
+  margin-bottom: 16px;
+}
+
+.cta-strip__trust {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 300;
+  line-height: 1.75;
+  color: rgba(248, 245, 238, 0.42);
+  max-width: 52ch;
 }
 
 .cta-strip__text {
