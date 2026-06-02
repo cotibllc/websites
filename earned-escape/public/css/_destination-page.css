@@ -18,6 +18,17 @@
   background-size: cover;
   background-position: center;
   transition: transform var(--transition-slow);
+  overflow: hidden;
+}
+
+.dest-page-hero__photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 35%;
+  display: block;
 }
 
 .dest-page-hero:hover .dest-page-hero__img {
@@ -188,6 +199,16 @@
   position: relative;
   aspect-ratio: 4 / 3;
   overflow: hidden;
+  border: 1px solid rgba(201, 168, 76, 0.22);
+  background: #fff;
+}
+
+.dest-story__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
 }
 
 /* Tips Section */
