@@ -23,6 +23,7 @@ router.get('/royal-caribbean', (req, res) => {
     site,
     title: 'Royal Caribbean Cruises | Earned Escape',
     description: 'Royal Caribbean cruise planning shaped by firsthand travel experience, with help choosing the right ship, stateroom, and itinerary.',
+    canonical: '/royal-caribbean',
   });
 });
 
