@@ -16,7 +16,7 @@ const tiktokUrl = optionalUrl(process.env.TIKTOK_URL);
 module.exports = {
   siteUrl,
   // Bump when static assets change (cache-bust CDN after deploy)
-  assetVersion: '20260611',
+  assetVersion: '20260612',
   // ── BRAND
   brand: {
     name: 'Earned Escape',
