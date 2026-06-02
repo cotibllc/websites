@@ -476,8 +476,18 @@ body.dest-page .reveal {
   transition: transform var(--transition-slow);
 }
 
+/* Full-frame gallery shots (e.g. portrait port day with ship + faces) */
+.dest-gallery__item--fit-contain img {
+  object-fit: contain;
+  object-position: center center;
+}
+
 .dest-gallery__item:hover img {
   transform: scale(1.04);
+}
+
+.dest-gallery__item--fit-contain:hover img {
+  transform: none;
 }
 
 /* Responsive */
