@@ -197,7 +197,7 @@ Example:
 
 See:
 - `photos-to-use/enhanced/README.md`
-- `photos-to-use/enhanced/photo-inventory.md`
+- **`photos-to-use/enhanced/photo-inventory.md`** — per-photo hero / story / card sizes and site mapping
 - `public/images/photos/README.md`
 
 for the full documented system.

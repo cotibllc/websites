@@ -50,9 +50,8 @@
 
 **Target Look:** Warm, confident, approachable premium advisor. Think “successful person who still travels like a real human.”
 
-**Suggested Output Sizes for Web:**
-- Hero / large: 1800–2400px wide
-- Card / supporting: 1200px wide
+**Export variants:** See **`photos-to-use/enhanced/photo-inventory.md`** (Photo 1 row).  
+**Phase 1 minimum:** `great-wall-smiling-story.jpg` at 1600×1200.
 
 ---
 
