@@ -3,7 +3,8 @@
   min-height: 100svh;
   background-color: var(--navy-deep);
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  justify-content: center;
   overflow: hidden;
 }
 
@@ -38,28 +39,34 @@
   pointer-events: none;
 }
 
-.hero__watermark {
-  position: absolute;
-  right: -4%;
-  top: 50%;
-  transform: translateY(-50%);
-  width: clamp(300px, 42vw, 620px);
-  height: auto;
-  opacity: 0;
-  z-index: 1;
-  pointer-events: none;
-  animation: fadeIn 1.2s ease forwards;
-  animation-delay: 1s;
-  filter: brightness(0) saturate(100%) invert(70%) sepia(50%) saturate(400%) hue-rotate(5deg);
-}
-
-.hero__content {
+.hero__inner {
   position: relative;
   z-index: 2;
   max-width: var(--max-width);
   width: 100%;
   margin: 0 auto;
   padding: 120px var(--section-pad-x) 160px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(220px, 340px);
+  align-items: center;
+  gap: clamp(32px, 5vw, 72px);
+}
+
+.hero__content {
+  min-width: 0;
+}
+
+.hero__brand {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero__lockup {
+  width: 100%;
+  max-width: 320px;
+  height: auto;
+  filter: drop-shadow(0 12px 48px rgba(201, 168, 76, 0.12));
 }
 
 .hero__eyebrow {
@@ -138,9 +145,26 @@
   color: rgba(201, 168, 76, 0.5);
 }
 
+@media (max-width: 1023px) {
+  .hero__inner {
+    grid-template-columns: 1fr;
+    padding-bottom: 140px;
+  }
+
+  .hero__brand {
+    order: -1;
+    max-width: 260px;
+    margin: 0 auto 8px;
+  }
+
+  .hero__headline {
+    max-width: none;
+  }
+}
+
 @media (max-width: 767px) {
-  .hero__watermark {
-    display: none;
+  .hero__brand {
+    max-width: 220px;
   }
 
   .hero__ctas {
