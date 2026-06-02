@@ -15,7 +15,17 @@
   gap: 48px;
   align-items: end;
   margin-bottom: 48px;
-  max-width: var(--content-max-width);
+}
+
+.process__header-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  min-width: 0;
+}
+
+.process__header-copy .section-eyebrow {
+  margin-bottom: 12px;
 }
 
 .process__headline {
