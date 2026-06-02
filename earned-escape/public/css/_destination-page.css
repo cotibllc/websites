@@ -2,6 +2,12 @@
    DESTINATION PAGE — SHARED
    =========================== */
 
+/* Destination copy must stay visible even if scroll-reveal JS is cached or fails */
+body.dest-page .reveal {
+  opacity: 1;
+  transform: none;
+}
+
 /* Hero */
 .dest-page-hero {
   position: relative;
