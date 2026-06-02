@@ -14,19 +14,19 @@
   margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-areas:
-    "text images"
-    "stats images";
   gap: 48px 80px;
   align-items: start;
 }
 
-.about__text {
-  grid-area: text;
+/* Text + stats share one column so stats sit directly under copy (no row-height gap from tall photos) */
+.about__content {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  min-width: 0;
 }
 
 .about__images {
-  grid-area: images;
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -107,7 +107,6 @@
 }
 
 .about__stats {
-  grid-area: stats;
   display: flex;
   flex-direction: column;
   gap: 2px;
@@ -163,11 +162,23 @@
 @media (max-width: 899px) {
   .about__inner {
     grid-template-columns: 1fr;
-    grid-template-areas:
-      "text"
-      "images"
-      "stats";
     gap: 40px;
+  }
+
+  .about__content {
+    display: contents;
+  }
+
+  .about__text {
+    order: 1;
+  }
+
+  .about__images {
+    order: 2;
+  }
+
+  .about__stats {
+    order: 3;
   }
 
   .about__image-grid {
