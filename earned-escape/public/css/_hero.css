@@ -47,28 +47,19 @@
   padding: 120px var(--section-pad-x) 160px;
 }
 
-/* Brand: compact in flow (mobile/tablet), tall lockup absolute on desktop */
+/* Brand logo in hero: in-flow on mobile, absolute on right on desktop */
 .hero__brand {
   pointer-events: none;
   line-height: 0;
 }
 
-.hero__brand img {
+.hero__brand-logo {
   display: block;
   height: auto;
   max-width: 100%;
-}
-
-.hero__brand-full {
-  display: none;
-  width: clamp(220px, 32vw, 360px);
-  filter: drop-shadow(0 12px 48px rgba(201, 168, 76, 0.1));
-}
-
-.hero__brand-compact {
-  display: block;
   width: min(280px, 88vw);
   margin: 0 auto 28px;
+  filter: drop-shadow(0 12px 48px rgba(201, 168, 76, 0.1));
 }
 
 .hero__eyebrow {
@@ -147,7 +138,7 @@
   color: rgba(201, 168, 76, 0.5);
 }
 
-/* Desktop: tall lockup floats right; copy column unchanged */
+/* Desktop: logo floats right; copy column unchanged */
 @media (min-width: 900px) {
   .hero__brand {
     position: absolute;
@@ -155,15 +146,10 @@
     top: 50%;
     transform: translateY(-50%);
     z-index: 1;
-    width: min(38vw, 380px);
+    width: min(42vw, 420px);
   }
 
-  .hero__brand-compact {
-    display: none;
-  }
-
-  .hero__brand-full {
-    display: block;
+  .hero__brand-logo {
     width: 100%;
     margin: 0;
   }
@@ -181,7 +167,7 @@
     padding-bottom: 120px;
   }
 
-  .hero__brand-compact {
+  .hero__brand-logo {
     width: min(240px, 92vw);
     margin-bottom: 24px;
   }

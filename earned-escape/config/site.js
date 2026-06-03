@@ -20,7 +20,7 @@ const turnstileSiteKey = (process.env.TURNSTILE_SITE_KEY && !process.env.TURNSTI
 module.exports = {
   siteUrl,
   // Bump when static assets change (cache-bust CDN after deploy)
-  assetVersion: '20260622',
+  assetVersion: '20260625',
   // ── BRAND
   brand: {
     name: 'Earned Escape',

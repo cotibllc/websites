@@ -33,6 +33,10 @@
   flex-shrink: 0;
 }
 
+.home .nav-logo {
+  display: none;
+}
+
 .nav-logo__img {
   display: block;
   width: auto;

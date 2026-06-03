@@ -19,6 +19,7 @@ function escapeHtml(str) {
 router.get('/', (req, res) => {
   res.render('pages/index.njk', {
     site,
+    bodyClass: 'home',
     title: site.seo.title,
     description: site.seo.description,
   });
