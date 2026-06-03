@@ -1,0 +1,378 @@
+/* ===========================
+   PLAN PAGE — Owned Consultation Experience
+   Premium, warm, low-pressure lead capture
+   =========================== */
+
+.plan-hero {
+  background: var(--navy-deep);
+  color: var(--white);
+  padding: 120px var(--section-pad-x) 80px;
+  text-align: center;
+}
+
+.plan-hero__inner {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.plan-hero__headline {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 5vw, 58px);
+  font-weight: 500;
+  line-height: 1.1;
+  margin-bottom: 20px;
+}
+
+.plan-hero__headline em {
+  color: var(--gold);
+}
+
+.plan-hero__sub {
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 300;
+  color: rgba(248, 245, 238, 0.75);
+  line-height: 1.7;
+  max-width: 52ch;
+  margin: 0 auto 16px;
+}
+
+.plan-hero__meta {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(201, 168, 76, 0.6);
+  margin-top: 24px;
+}
+
+/* What to expect */
+.plan-expect {
+  background: var(--warm-bg);
+  padding: var(--section-pad-y) var(--section-pad-x);
+  border-top: 1px solid rgba(201, 168, 76, 0.15);
+}
+
+.plan-expect__inner {
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+}
+
+.plan-expect__headline {
+  font-size: clamp(26px, 3.2vw, 36px);
+  color: var(--navy);
+  margin-bottom: 24px;
+}
+
+.plan-expect__list {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: 18px;
+}
+
+.plan-expect__list li {
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 300;
+  color: rgba(11, 31, 58, 0.85);
+  padding-left: 28px;
+  position: relative;
+}
+
+.plan-expect__list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 9px;
+  width: 6px;
+  height: 6px;
+  background: var(--gold);
+  border-radius: 50%;
+}
+
+/* Support models */
+.plan-models {
+  padding: var(--section-pad-y) var(--section-pad-x);
+  background: #fff;
+  border-top: 1px solid rgba(201, 168, 76, 0.1);
+}
+
+.plan-models__header {
+  max-width: var(--content-max-width);
+  margin: 0 auto 40px;
+  text-align: center;
+}
+
+.plan-models__headline {
+  font-size: clamp(26px, 3.2vw, 36px);
+  color: var(--navy);
+  margin-bottom: 12px;
+}
+
+.plan-models__sub {
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: rgba(11, 31, 58, 0.7);
+  max-width: 52ch;
+  margin: 0 auto;
+}
+
+.plan-models__grid {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.plan-model {
+  background: var(--warm-bg);
+  border: 1px solid rgba(201, 168, 76, 0.2);
+  padding: 32px 28px;
+  border-radius: 4px;
+  transition: transform var(--transition-base), border-color var(--transition-base), box-shadow var(--transition-base);
+}
+
+.plan-model:hover {
+  transform: translateY(-2px);
+  border-color: rgba(201, 168, 76, 0.35);
+  box-shadow: 0 12px 30px rgba(11, 31, 58, 0.06);
+}
+
+.plan-model__eyebrow {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--purple);
+  margin-bottom: 10px;
+}
+
+.plan-model__title {
+  font-size: 22px;
+  color: var(--navy);
+  margin-bottom: 14px;
+  line-height: 1.2;
+}
+
+.plan-model__desc {
+  font-family: var(--font-body);
+  font-size: 14.5px;
+  font-weight: 300;
+  color: rgba(11, 31, 58, 0.8);
+  line-height: 1.7;
+  margin-bottom: 18px;
+}
+
+.plan-model__best {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--navy-mid);
+  padding-top: 14px;
+  border-top: 1px solid rgba(201, 168, 76, 0.15);
+}
+
+.plan-model__best strong {
+  color: var(--gold-dark);
+  font-weight: 500;
+}
+
+@media (max-width: 767px) {
+  .plan-models__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* The form */
+.plan-form {
+  background: var(--navy-deep);
+  color: var(--white);
+  padding: var(--section-pad-y) var(--section-pad-x);
+}
+
+.plan-form__inner {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.plan-form h2 {
+  font-size: clamp(26px, 3.2vw, 38px);
+  margin-bottom: 12px;
+  color: var(--white);
+}
+
+.plan-form__lead {
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 300;
+  color: rgba(248, 245, 238, 0.7);
+  max-width: 58ch;
+  margin-bottom: 32px;
+  line-height: 1.65;
+}
+
+.plan-alert {
+  padding: 16px 20px;
+  border-radius: 3px;
+  margin-bottom: 24px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.plan-alert--success {
+  background: rgba(201, 168, 76, 0.15);
+  border: 1px solid var(--gold);
+  color: var(--gold-pale);
+}
+
+.plan-alert--error {
+  background: rgba(180, 70, 70, 0.2);
+  border: 1px solid #c66;
+  color: #f8d0d0;
+}
+
+.plan-form .form-group {
+  margin-bottom: 18px;
+}
+
+.plan-form label {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(248, 245, 238, 0.65);
+  margin-bottom: 6px;
+}
+
+.plan-form input[type="text"],
+.plan-form input[type="email"],
+.plan-form input[type="tel"],
+.plan-form select,
+.plan-form textarea {
+  width: 100%;
+  background: #fff;
+  color: var(--ink);
+  border: 1px solid rgba(201, 168, 76, 0.3);
+  border-radius: 2px;
+  padding: 14px 16px;
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 1.4;
+  transition: border-color var(--transition-base), box-shadow var(--transition-base);
+}
+
+.plan-form input:focus,
+.plan-form select:focus,
+.plan-form textarea:focus {
+  outline: none;
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.12);
+}
+
+.plan-form textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.plan-form select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%230D0821' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 40px;
+}
+
+/* Support preference radios — clean row */
+.plan-tier-radios {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+@media (min-width: 520px) {
+  .plan-tier-radios {
+    flex-direction: row;
+    gap: 12px;
+  }
+}
+
+.plan-tier-radio {
+  flex: 1;
+  position: relative;
+}
+
+.plan-tier-radio input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.plan-tier-radio label {
+  display: block;
+  margin-bottom: 0;
+  padding: 14px 16px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(201, 168, 76, 0.25);
+  border-radius: 3px;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--white);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+.plan-tier-radio input:checked + label {
+  background: var(--gold);
+  color: var(--navy-deep);
+  border-color: var(--gold);
+  font-weight: 500;
+}
+
+.plan-tier-radio label:hover {
+  border-color: var(--gold);
+}
+
+/* Submit */
+.plan-form .btn {
+  width: 100%;
+  justify-content: center;
+  margin-top: 8px;
+  padding: 16px 28px;
+  font-size: 13px;
+}
+
+.plan-form .form-note,
+.plan-form .form-affiliation {
+  font-family: var(--font-body);
+  font-size: 12px;
+  color: rgba(248, 245, 238, 0.55);
+  margin-top: 16px;
+  line-height: 1.5;
+}
+
+.plan-form .form-affiliation {
+  font-size: 11px;
+  opacity: 0.6;
+  margin-top: 20px;
+}
+
+/* Small screens */
+@media (max-width: 640px) {
+  .plan-hero {
+    padding: 90px 20px 60px;
+  }
+
+  .plan-form {
+    padding: 64px 20px;
+  }
+}

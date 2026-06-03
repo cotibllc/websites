@@ -80,3 +80,95 @@ function initScrollReveal() {
 }
 
 initScrollReveal();
+
+/* ===========================
+   Plan / Consultation Form Handler
+   Matches the pattern from cotib.com (Turnstile + JSON POST)
+   =========================== */
+const planForm = document.getElementById('plan-form');
+if (planForm) {
+  planForm.addEventListener('submit', async function (e) {
+    e.preventDefault();
+
+    const btn = document.getElementById('submit-btn');
+    const successEl = document.getElementById('form-success');
+    const errorEl = document.getElementById('form-error');
+
+    // Get the Turnstile response token (cf-turnstile-response is injected by the widget)
+    const turnstileToken = document.querySelector('[name="cf-turnstile-response"]')?.value;
+
+    if (successEl) successEl.style.display = 'none';
+    if (errorEl) errorEl.style.display = 'none';
+
+    // Only require Turnstile token if the widget is actually present (i.e. site key configured)
+    const hasTurnstileWidget = !!document.querySelector('.cf-turnstile');
+    if (hasTurnstileWidget && !turnstileToken) {
+      if (errorEl) {
+        errorEl.textContent = 'Please complete the security check before submitting.';
+        errorEl.style.display = 'block';
+      }
+      return;
+    }
+
+    if (btn) {
+      btn.disabled = true;
+      btn.textContent = 'Sending...';
+    }
+
+    try {
+      const payload = {
+        name: document.getElementById('f-name')?.value.trim(),
+        email: document.getElementById('f-email')?.value.trim(),
+        phone: document.getElementById('f-phone')?.value.trim(),
+        dates: document.getElementById('f-dates')?.value.trim(),
+        tripType: document.getElementById('f-trip-type')?.value,
+        travelers: document.getElementById('f-travelers')?.value.trim(),
+        message: document.getElementById('f-message')?.value.trim(),
+        supportTier: (document.querySelector('input[name="supportTier"]:checked') || {}).value,
+        turnstileToken,
+      };
+
+      const res = await fetch('/api/plan', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await res.json();
+
+      if (res.ok && data.success) {
+        if (successEl) {
+          successEl.style.display = 'block';
+          successEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+        planForm.reset();
+        // Reset the checked radio to the default "Not sure yet"
+        const defaultRadio = document.getElementById('tier-unsure');
+        if (defaultRadio) defaultRadio.checked = true;
+
+        if (window.turnstile) {
+          window.turnstile.reset();
+        }
+      } else {
+        if (errorEl) {
+          errorEl.textContent = data.error || 'Something went wrong. Please try again.';
+          errorEl.style.display = 'block';
+          errorEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+        if (window.turnstile) {
+          window.turnstile.reset();
+        }
+      }
+    } catch (err) {
+      if (errorEl) {
+        errorEl.textContent = 'Network error. Please check your connection and try again.';
+        errorEl.style.display = 'block';
+      }
+    } finally {
+      if (btn) {
+        btn.disabled = false;
+        btn.textContent = 'Reserve My Planning Call';
+      }
+    }
+  });
+}

@@ -9,12 +9,13 @@
     "build": "node scripts/generate-sitemap.js"
   },
   "dependencies": {
-    "express": "^4.18.2",
-    "nunjucks": "^3.2.4",
-    "helmet": "^7.1.0",
     "compression": "^1.7.4",
     "dotenv": "^16.3.1",
-    "express-rate-limit": "^7.1.5"
+    "express": "^4.18.2",
+    "express-rate-limit": "^7.1.5",
+    "helmet": "^7.1.0",
+    "nunjucks": "^3.2.4",
+    "resend": "^6.12.4"
   },
   "devDependencies": {
     "nodemon": "^3.0.2"

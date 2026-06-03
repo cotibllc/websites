@@ -6,17 +6,21 @@ function optionalUrl(value) {
 }
 
 const castleDreamsQuote = 'https://castledreamstravel.com/request-a-quote';
-const consultationUrl = optionalUrl(process.env.CONSULTATION_URL) || castleDreamsQuote;
+const consultationUrl = optionalUrl(process.env.CONSULTATION_URL) || '/plan';
 const rcGuideUrl = optionalUrl(process.env.RC_GUIDE_URL);
 const disneyGuideUrl = optionalUrl(process.env.DISNEY_GUIDE_URL);
 const universalUrl = optionalUrl(process.env.UNIVERSAL_PAGE_URL) || `${siteUrl}/?tab=parks#destinations`;
 const facebookUrl = optionalUrl(process.env.FACEBOOK_URL);
 const tiktokUrl = optionalUrl(process.env.TIKTOK_URL);
 
+const turnstileSiteKey = (process.env.TURNSTILE_SITE_KEY && !process.env.TURNSTILE_SITE_KEY.startsWith('YOUR_'))
+  ? process.env.TURNSTILE_SITE_KEY
+  : null;
+
 module.exports = {
   siteUrl,
   // Bump when static assets change (cache-bust CDN after deploy)
-  assetVersion: '20260613',
+  assetVersion: '20260622',
   // ── BRAND
   brand: {
     name: 'Earned Escape',
@@ -62,6 +66,9 @@ module.exports = {
     hasFacebook: Boolean(facebookUrl),
     hasTiktok: Boolean(tiktokUrl),
   },
+
+  // ── FORM / TURNSTILE (public site key only)
+  turnstileSiteKey,
 
   // ── SEO
   seo: {

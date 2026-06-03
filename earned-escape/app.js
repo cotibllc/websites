@@ -34,6 +34,10 @@ const limiter = rateLimit({
 });
 app.use(limiter);
 
+// Body parsing for forms (JSON + urlencoded for safety)
+app.use(express.json({ limit: '100kb' }));
+app.use(express.urlencoded({ extended: true }));
+
 // Static files
 app.use(express.static(path.join(__dirname, 'public'), {
   maxAge: process.env.NODE_ENV === 'production' ? '1y' : 0,

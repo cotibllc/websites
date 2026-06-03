@@ -41,12 +41,15 @@ Also replace `public/images/og/og-default.png` with a real 1200×630 Open Graph 
 
 If you prefer environment variables instead of editing the config directly, this app also supports:
 
-- `CONSULTATION_URL`
+- `CONSULTATION_URL` (defaults to internal `/plan` page)
 - `RC_GUIDE_URL`
 - `DISNEY_GUIDE_URL`
 - `UNIVERSAL_PAGE_URL`
 - `FACEBOOK_URL`
 - `TIKTOK_URL`
+- `RESEND_API_KEY` (for /plan form emails)
+- `TURNSTILE_SECRET_KEY`
+- `TURNSTILE_SITE_KEY` (public)
 
 ---
 
@@ -60,12 +63,12 @@ earned-escape/
 ├── routes/                 ← Homepage + redirect routes
 ├── views/                  ← Nunjucks templates
 │   ├── layout/             ← base, head, nav, footer
-│   ├── pages/              ← index + 404
-│   └── partials/           ← hero, about, destinations, guides, why, contact
+│   ├── pages/              ← index, plan, 404, destination pages
+│   └── partials/           ← hero, about, destinations, guides, why, contact, cta-strip, process, trust
 ├── public/
-│   ├── css/                ← main.css imports all partials
-│   ├── js/                 ← ES module scripts
-│   └── images/logo/        ← All SVG logo files
+│   ├── css/                ← main.css imports all partials (includes _plan.css)
+│   ├── js/                 ← ES module scripts (includes plan form handler)
+│   └── images/logo/        ← SVG + PNG logos (new star/compass design from selected Higgsfield generation)
 ├── linktree/index.html     ← Standalone page for cotib.link
 └── scripts/generate-sitemap.js
 ```
@@ -100,3 +103,24 @@ SITE_URL=https://earnedescape.agency
 | `cotib.link` | Point to `linktree/index.html` (static host or same server) |
 
 The redirect logic in `routes/redirect.js` handles `.voyage` and `.vacations` → correct anchor + tab automatically when deployed.
+
+---
+
+## New Features (Phase 1)
+
+- **Owned `/plan` consultation page**: Dedicated landing with explanation of support tiers (Full-Service vs Advisory/Light-Touch), detailed inquiry form (name, email, phone, dates, trip type, travelers, message, tier preference), Cloudflare Turnstile spam protection, Resend for notification + confirmation emails. Internal lead capture (replaces external Castle Dreams redirect for primary CTAs).
+- **Premium logo redesign**: New star/compass + horizon icon design (selected from Higgsfield generations, ID 808601b3-3e79-4122-b232-5a353d426c69). Includes dark/light + lockup/horizontal variants as PNGs for better fidelity. Integrated into hero, nav, footer, favicon, 404 mark. Old placeholder SVGs retired in main usage.
+- All CTAs now point to internal `/plan` (with affiliation note preserved).
+
+See `views/pages/plan.njk`, form handler in `routes/index.js`, and logo assets in `public/images/logo/`.
+
+---
+
+## Backlog / Next Priorities
+
+- Create Vercel staging environment (preview deployments) to share in-progress changes with family (who don't have access to local `npm run dev` or direct staging).
+- Kit lead capture handoff for /plan form (after Resend confirmed).
+- Full photo replacement + story refreshes on Disney World / Universal pages (Phase 2).
+- Deeper `/about` ("The COTIB Story") page.
+- Testimonials / social proof.
+- Other Phase 2 items from EARNED_ESCAPE_GROWTH_PROPOSAL.md and PHASE_1_EXECUTION_PLAN.md.

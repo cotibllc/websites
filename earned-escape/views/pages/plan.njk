@@ -1,0 +1,167 @@
+{% extends "layout/base.njk" %}
+
+{% block content %}
+  <!-- Hero / Intro -->
+  <section class="plan-hero">
+    <div class="plan-hero__inner">
+      <p class="section-eyebrow">Owned Planning Experience</p>
+      <h1 class="plan-hero__headline">
+        Let's design the trip<br>you've <em>earned.</em>
+      </h1>
+      <p class="plan-hero__sub">
+        Book a 30-minute planning call. We'll talk through your dates, priorities, group, and what would make this trip feel truly right for you — then map out clear next steps. No pressure. No obligation.
+      </p>
+      <div class="plan-hero__meta">
+        Earned Escape by {{ site.brand.business }} &nbsp;•&nbsp; Affiliated with {{ site.brand.parentAgency }}
+      </div>
+    </div>
+  </section>
+
+  <!-- What happens on the call -->
+  <section class="plan-expect">
+    <div class="plan-expect__inner">
+      <p class="section-eyebrow">What to Expect</p>
+      <h2 class="plan-expect__headline">A real conversation, not a sales pitch.</h2>
+
+      <ul class="plan-expect__list">
+        <li>We'll cover where you want to go, who is traveling, budget range, and the feeling you want the trip to have.</li>
+        <li>I share honest recommendations based on firsthand experience (Royal Caribbean loyalty, Disney trips, China bucket-list travel, and 30+ years of precision planning).</li>
+        <li>You'll walk away with a shortlist of strong options and a clear sense of the right path — whether we work together or not.</li>
+        <li>Available by video or phone. Flexible scheduling, including evenings and weekends.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Two support models -->
+  <section class="plan-models">
+    <div class="plan-models__header">
+      <p class="section-eyebrow">How We Can Work Together</p>
+      <h2 class="plan-models__headline">Two ways I can support you.</h2>
+      <p class="plan-models__sub">
+        Choose the level of involvement that fits your style. I'm equally happy holding your hand through every detail or serving as a trusted advisor while you book directly.
+      </p>
+    </div>
+
+    <div class="plan-models__grid">
+      <div class="plan-model">
+        <div class="plan-model__eyebrow">Full-Service</div>
+        <h3 class="plan-model__title">Full-Service Planning</h3>
+        <p class="plan-model__desc">
+          I'll hold your hand through the entire process — from our first conversation all the way to the day you sail or arrive. Research, options, booking coordination, stateroom selection, dining, excursions, and ongoing support before you leave.
+        </p>
+        <p class="plan-model__best">
+          <strong>Best for:</strong> First-time cruisers, multigenerational or milestone trips, families who want everything handled with care so you can simply show up and enjoy.
+        </p>
+      </div>
+
+      <div class="plan-model">
+        <div class="plan-model__eyebrow">Advisory</div>
+        <h3 class="plan-model__title">Advisory / Light-Touch Support</h3>
+        <p class="plan-model__desc">
+          I'm your expert guide and second set of eyes. You (or your travel agent) handle the actual booking. I provide the strategy, ship and resort recommendations, honest comparisons, stateroom advice, and answers whenever questions come up.
+        </p>
+        <p class="plan-model__best">
+          <strong>Best for:</strong> Experienced travelers, repeat cruisers, or anyone who prefers to book directly but wants professional-level insight and peace of mind.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- The form -->
+  <section class="plan-form" id="plan-form-section">
+    <div class="plan-form__inner">
+      <h2>Reserve your planning call</h2>
+      <p class="plan-form__lead">
+        Tell me a little about the trip you're dreaming about. I'll personally review your note and reach out within one business day to find a time that works for both of us.
+      </p>
+
+      <div id="form-success" class="plan-alert plan-alert--success" style="display:none;">
+        <strong>Thank you.</strong> Your request has been sent. I'll be in touch shortly to schedule the call.
+      </div>
+      <div id="form-error" class="plan-alert plan-alert--error" style="display:none;"></div>
+
+      <form id="plan-form" class="plan-form" novalidate>
+        <div class="form-group">
+          <label for="f-name">Your name *</label>
+          <input type="text" id="f-name" name="name" required autocomplete="name" />
+        </div>
+
+        <div class="form-group">
+          <label for="f-email">Email address *</label>
+          <input type="email" id="f-email" name="email" required autocomplete="email" />
+        </div>
+
+        <div class="form-group">
+          <label for="f-phone">Phone number <span style="opacity:0.6">(recommended)</span></label>
+          <input type="tel" id="f-phone" name="phone" autocomplete="tel" />
+        </div>
+
+        <div class="form-group">
+          <label for="f-dates">Preferred travel window or dates</label>
+          <input type="text" id="f-dates" name="dates" placeholder="e.g. July 2026, or flexible" />
+        </div>
+
+        <div class="form-group">
+          <label for="f-trip-type">Type of trip *</label>
+          <select id="f-trip-type" name="tripType" required>
+            <option value="">— Select one —</option>
+            <option value="Royal Caribbean">Royal Caribbean</option>
+            <option value="Disney Cruise Line">Disney Cruise Line</option>
+            <option value="Walt Disney World">Walt Disney World</option>
+            <option value="Universal Orlando">Universal Orlando / Epic Universe</option>
+            <option value="Other">Other or combination of trips</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="f-travelers">Number of travelers + ages (if known)</label>
+          <input type="text" id="f-travelers" name="travelers" placeholder="e.g. 2 adults + 1 child (age 9)" />
+        </div>
+
+        <div class="form-group">
+          <label for="f-message">What matters most to you on this trip? *</label>
+          <textarea id="f-message" name="message" required placeholder="Tell me about the experience you're hoping for, any must-haves, concerns, or details that will help me prepare..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Preferred level of support</label>
+          <div class="plan-tier-radios">
+            <div class="plan-tier-radio">
+              <input type="radio" id="tier-full" name="supportTier" value="Full-Service Planning" />
+              <label for="tier-full">Full-Service Planning — hold my hand through everything</label>
+            </div>
+            <div class="plan-tier-radio">
+              <input type="radio" id="tier-advisory" name="supportTier" value="Advisory / Light-Touch" />
+              <label for="tier-advisory">Advisory / Light-Touch — guide &amp; second set of eyes</label>
+            </div>
+            <div class="plan-tier-radio">
+              <input type="radio" id="tier-unsure" name="supportTier" value="Not sure yet" checked />
+              <label for="tier-unsure">Not sure yet — let's discuss both</label>
+            </div>
+          </div>
+        </div>
+
+        {% if site.turnstileSiteKey %}
+        <div class="form-group">
+          <div class="cf-turnstile" data-sitekey="{{ site.turnstileSiteKey }}" data-theme="dark"></div>
+        </div>
+        {% else %}
+        <p style="font-size:12px; color: rgba(248,245,238,0.5); margin: 8px 0 16px;">
+          Security check temporarily unavailable — form submission will be limited in this environment.
+        </p>
+        {% endif %}
+
+        <button type="submit" id="submit-btn" class="btn btn--purple">Reserve My Planning Call</button>
+
+        <p class="form-note">
+          30 minutes &middot; No pressure &middot; Tailored guidance. I typically respond within one business day.
+        </p>
+
+        <p class="form-affiliation">
+          Earned Escape is operated by {{ site.brand.business }} and affiliated with {{ site.brand.parentAgency }}.
+          Your information is used only to schedule and prepare for our conversation.
+        </p>
+      </form>
+    </div>
+  </section>
+{% endblock %}
