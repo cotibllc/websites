@@ -1,12 +1,15 @@
 import { getEpisodes } from "@/lib/feed";
+import { getVideos, CHANNEL_URL } from "@/lib/youtube";
 import EpisodeCard from "@/components/EpisodeCard";
+import VideoCard from "@/components/VideoCard";
 import Link from "next/link";
 
 export const revalidate = 86400;
 
 export default async function HomePage() {
-  const episodes = await getEpisodes();
+  const [episodes, videos] = await Promise.all([getEpisodes(), getVideos()]);
   const latest = episodes.slice(0, 6);
+  const latestVideos = videos.slice(0, 6);
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-12">
@@ -53,6 +56,28 @@ export default async function HomePage() {
           ))}
         </div>
       </section>
+
+      {/* Latest Videos */}
+      {latestVideos.length > 0 && (
+        <section className="mt-16">
+          <div className="flex items-center justify-between mb-6 border-b border-slate pb-4">
+            <h2 className="font-condensed font-bold text-2xl uppercase tracking-tight">Latest Videos</h2>
+            <a
+              href={CHANNEL_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-mono text-sm text-blue hover:text-amber transition-colors"
+            >
+              YouTube channel →
+            </a>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {latestVideos.map((video) => (
+              <VideoCard key={video.id} video={video} />
+            ))}
+          </div>
+        </section>
+      )}
     </div>
   );
 }
