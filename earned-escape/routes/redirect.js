@@ -4,8 +4,8 @@ const site = require('../config/site');
 
 const REDIRECT_DOMAINS = {
   [site.domains.co]:       { url: `https://${site.domains.primary}`, code: 301 },
-  [site.domains.voyage]:   { url: `https://${site.domains.primary}/?tab=cruise#destinations`, code: 301 },
-  [site.domains.vacations]:{ url: `https://${site.domains.primary}/?tab=parks#destinations`, code: 301 },
+  [site.domains.voyage]:   { url: `https://${site.domains.primary}/royal-caribbean`, code: 301 },
+  [site.domains.vacations]:{ url: `https://${site.domains.primary}/disney-world`, code: 301 },
 };
 
 router.use((req, res, next) => {
@@ -23,10 +23,10 @@ router.use((req, res, next) => {
   // Development simulation via query param
   const domain = req.query.domain;
   if (domain === 'voyage') {
-    return res.redirect(302, '/?tab=cruise#destinations');
+    return res.redirect(302, '/royal-caribbean');
   }
   if (domain === 'vacations') {
-    return res.redirect(302, '/?tab=parks#destinations');
+    return res.redirect(302, '/disney-world');
   }
   if (domain === 'co') {
     return res.redirect(302, '/');

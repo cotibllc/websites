@@ -13,7 +13,7 @@ const urls = [
   { loc: '/universal', priority: '0.8', changefreq: 'monthly' },
   // Home section anchors (still valid for deep links)
   { loc: '/#about', priority: '0.7', changefreq: 'monthly' },
-  { loc: '/#destinations', priority: '0.8', changefreq: 'weekly' },
+  { loc: '/#quiz-section', priority: '0.7', changefreq: 'monthly' },
 ];
 
 const today = new Date().toISOString().split('T')[0];
