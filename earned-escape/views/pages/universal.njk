@@ -6,7 +6,14 @@
 <section class="dest-page-hero" id="top">
 
   <div class="dest-page-hero__img">
-    <div class="photo-placeholder" aria-hidden="true"></div>
+    <picture>
+      <source srcset="/images/photos/universal-hero.webp?v={{ site.assetVersion }}" type="image/webp">
+      <img
+        src="/images/photos/universal-hero.jpg?v={{ site.assetVersion }}"
+        alt="Epic Universe and Universal Orlando Portal"
+        loading="eager"
+      >
+    </picture>
   </div>
   <div class="dest-page-hero__overlay"></div>
 
@@ -56,7 +63,14 @@
     </div>
 
     <div class="dest-story__photo reveal">
-      <div class="photo-placeholder" aria-label="Universal Orlando photo coming soon"></div>
+      <picture>
+        <source srcset="/images/photos/universal-story.webp?v={{ site.assetVersion }}" type="image/webp">
+        <img
+          src="/images/photos/universal-story.jpg?v={{ site.assetVersion }}"
+          alt="Universal Orlando Resort adventure with family"
+          loading="lazy"
+        >
+      </picture>
     </div>
 
   </div>
@@ -122,24 +136,39 @@
 
     <div class="dest-gallery__header reveal">
       <h2 class="dest-gallery__headline">Our Memories</h2>
-      <p class="dest-gallery__note">Photos coming soon</p>
+      <p class="dest-gallery__note">Family moments from our Universal Orlando trips</p>
     </div>
 
     <div class="dest-gallery__grid">
-      <figure class="dest-gallery__item">
-        <div class="photo-placeholder" aria-label="Universal Orlando photo coming soon"></div>
+      <figure class="dest-gallery__item reveal">
+        <picture>
+          <source srcset="/images/photos/universal-card-1.webp?v={{ site.assetVersion }}" type="image/webp">
+          <img src="/images/photos/universal-card-1.jpg?v={{ site.assetVersion }}" alt="Universal Orlando family memory" loading="lazy">
+        </picture>
       </figure>
-      <figure class="dest-gallery__item">
-        <div class="photo-placeholder" aria-label="Universal Orlando photo coming soon"></div>
+      <figure class="dest-gallery__item reveal">
+        <picture>
+          <source srcset="/images/photos/universal-card-2.webp?v={{ site.assetVersion }}" type="image/webp">
+          <img src="/images/photos/universal-card-2.jpg?v={{ site.assetVersion }}" alt="Universal Orlando themed memory" loading="lazy">
+        </picture>
       </figure>
-      <figure class="dest-gallery__item">
-        <div class="photo-placeholder" aria-label="Universal Orlando photo coming soon"></div>
+      <figure class="dest-gallery__item reveal">
+        <picture>
+          <source srcset="/images/photos/universal-card-3.webp?v={{ site.assetVersion }}" type="image/webp">
+          <img src="/images/photos/universal-card-3.jpg?v={{ site.assetVersion }}" alt="Universal Orlando coaster memory" loading="lazy">
+        </picture>
       </figure>
-      <figure class="dest-gallery__item">
-        <div class="photo-placeholder" aria-label="Universal Orlando photo coming soon"></div>
+      <figure class="dest-gallery__item reveal">
+        <picture>
+          <source srcset="/images/photos/universal-card-4.webp?v={{ site.assetVersion }}" type="image/webp">
+          <img src="/images/photos/universal-card-4.jpg?v={{ site.assetVersion }}" alt="Universal Orlando park memory" loading="lazy">
+        </picture>
       </figure>
-      <figure class="dest-gallery__item">
-        <div class="photo-placeholder" aria-label="Universal Orlando photo coming soon"></div>
+      <figure class="dest-gallery__item reveal">
+        <picture>
+          <source srcset="/images/photos/universal-card-5.webp?v={{ site.assetVersion }}" type="image/webp">
+          <img src="/images/photos/universal-card-5.jpg?v={{ site.assetVersion }}" alt="Universal Orlando entertainment memory" loading="lazy">
+        </picture>
       </figure>
     </div>
 

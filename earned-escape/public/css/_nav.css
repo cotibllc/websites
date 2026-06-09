@@ -134,3 +134,119 @@
     letter-spacing: 0.15em;
   }
 }
+
+/* ===========================
+   Destinations Dropdown
+   =========================== */
+.nav-dropdown {
+  position: relative;
+}
+
+.nav-dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(10px);
+  background: var(--navy-deep);
+  border: 1px solid rgba(201, 168, 76, 0.25);
+  border-radius: 4px;
+  min-width: 200px;
+  padding: 12px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  opacity: 0;
+  visibility: hidden;
+  transition: all var(--transition-base);
+  z-index: 100;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  list-style: none;
+}
+
+.nav-dropdown-menu li {
+  width: 100%;
+}
+
+.nav-dropdown-menu .nav-link {
+  display: block;
+  padding: 8px 20px;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(248, 245, 238, 0.7);
+  transition: all var(--transition-base);
+  text-align: left;
+}
+
+.nav-dropdown-menu .nav-link:hover {
+  background: rgba(201, 168, 76, 0.12);
+  color: var(--gold);
+}
+
+.nav-dropdown:hover .nav-dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+.nav-caret {
+  font-size: 8px;
+  margin-left: 3px;
+  display: inline-block;
+  transition: transform var(--transition-base);
+  vertical-align: middle;
+}
+
+.nav-dropdown:hover .nav-caret {
+  transform: rotate(180deg);
+}
+
+/* Mobile dropdown behavior */
+@media (max-width: 767px) {
+  .nav-dropdown {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+
+  .nav-dropdown-toggle {
+    pointer-events: none; /* Act as header label on mobile */
+    color: var(--white) !important;
+    font-weight: 500;
+  }
+
+  .nav-dropdown-menu {
+    position: static;
+    transform: none;
+    opacity: 1;
+    visibility: visible;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    padding: 10px 0 0 0;
+    gap: 14px;
+    min-width: auto;
+  }
+
+  .nav-dropdown-menu .nav-link {
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    color: rgba(248, 245, 238, 0.55);
+    padding: 4px 0;
+    text-align: center;
+  }
+
+  .nav-dropdown-menu .nav-link:hover {
+    background: transparent;
+    color: var(--gold);
+  }
+
+  .nav-caret {
+    display: none;
+  }
+}
+

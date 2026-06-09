@@ -6,7 +6,14 @@
 <section class="dest-page-hero" id="top">
 
   <div class="dest-page-hero__img">
-    <div class="photo-placeholder" aria-hidden="true"></div>
+    <picture>
+      <source srcset="/images/photos/wdw-hero.webp?v={{ site.assetVersion }}" type="image/webp">
+      <img
+        src="/images/photos/wdw-hero.jpg?v={{ site.assetVersion }}"
+        alt="Magic Kingdom Castle at Walt Disney World"
+        loading="eager"
+      >
+    </picture>
   </div>
   <div class="dest-page-hero__overlay"></div>
 
@@ -56,7 +63,14 @@
     </div>
 
     <div class="dest-story__photo reveal">
-      <div class="photo-placeholder" aria-label="Chuck's family at Walt Disney World"></div>
+      <picture>
+        <source srcset="/images/photos/wdw-story.webp?v={{ site.assetVersion }}" type="image/webp">
+        <img
+          src="/images/photos/wdw-story.jpg?v={{ site.assetVersion }}"
+          alt="Chuck's family at Walt Disney World"
+          loading="lazy"
+        >
+      </picture>
     </div>
 
   </div>
@@ -122,24 +136,39 @@
 
     <div class="dest-gallery__header reveal">
       <h2 class="dest-gallery__headline">Our Memories</h2>
-      <p class="dest-gallery__note">Photos coming soon</p>
+      <p class="dest-gallery__note">Family moments from our Disney vacations</p>
     </div>
 
     <div class="dest-gallery__grid">
-      <figure class="dest-gallery__item">
-        <div class="photo-placeholder" aria-label="Disney World photo coming soon"></div>
+      <figure class="dest-gallery__item reveal">
+        <picture>
+          <source srcset="/images/photos/wdw-card-1.webp?v={{ site.assetVersion }}" type="image/webp">
+          <img src="/images/photos/wdw-card-1.jpg?v={{ site.assetVersion }}" alt="Disney World family memory" loading="lazy">
+        </picture>
       </figure>
-      <figure class="dest-gallery__item">
-        <div class="photo-placeholder" aria-label="Disney World photo coming soon"></div>
+      <figure class="dest-gallery__item reveal">
+        <picture>
+          <source srcset="/images/photos/wdw-card-2.webp?v={{ site.assetVersion }}" type="image/webp">
+          <img src="/images/photos/wdw-card-2.jpg?v={{ site.assetVersion }}" alt="Disney World festival memory" loading="lazy">
+        </picture>
       </figure>
-      <figure class="dest-gallery__item">
-        <div class="photo-placeholder" aria-label="Disney World photo coming soon"></div>
+      <figure class="dest-gallery__item reveal">
+        <picture>
+          <source srcset="/images/photos/wdw-card-3.webp?v={{ site.assetVersion }}" type="image/webp">
+          <img src="/images/photos/wdw-card-3.jpg?v={{ site.assetVersion }}" alt="Disney World show memory" loading="lazy">
+        </picture>
       </figure>
-      <figure class="dest-gallery__item">
-        <div class="photo-placeholder" aria-label="Disney World photo coming soon"></div>
+      <figure class="dest-gallery__item reveal">
+        <picture>
+          <source srcset="/images/photos/wdw-card-4.webp?v={{ site.assetVersion }}" type="image/webp">
+          <img src="/images/photos/wdw-card-4.jpg?v={{ site.assetVersion }}" alt="Disney World park memory" loading="lazy">
+        </picture>
       </figure>
-      <figure class="dest-gallery__item">
-        <div class="photo-placeholder" aria-label="Disney World photo coming soon"></div>
+      <figure class="dest-gallery__item reveal">
+        <picture>
+          <source srcset="/images/photos/wdw-card-5.webp?v={{ site.assetVersion }}" type="image/webp">
+          <img src="/images/photos/wdw-card-5.jpg?v={{ site.assetVersion }}" alt="Disney World character memory" loading="lazy">
+        </picture>
       </figure>
     </div>
 
