@@ -246,14 +246,14 @@ em {
 
 /* Ensure legibility on destination pages by giving the nav a dark blurred background from scroll position 0 */
 .dest-page .site-nav {
-  background-color: rgba(13, 8, 33, 0.88);
+  background-color: rgba(81, 46, 95, 0.88);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-bottom-color: rgba(201, 168, 76, 0.12);
 }
 
 .site-nav.scrolled {
-  background-color: rgba(13, 8, 33, 0.92);
+  background-color: rgba(81, 46, 95, 0.92);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-bottom-color: rgba(201, 168, 76, 0.12);
@@ -1141,7 +1141,7 @@ em {
 .dest-card__overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(13, 8, 33, 0.92) 0%, rgba(13, 8, 33, 0.3) 60%, transparent 100%);
+  background: linear-gradient(to top, rgba(81, 46, 95, 0.92) 0%, rgba(81, 46, 95, 0.3) 60%, transparent 100%);
   z-index: 1;
 }
 
@@ -1479,7 +1479,7 @@ body.dest-page .reveal {
 .dest-page-hero__overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(13, 8, 33, 0.88) 0%, rgba(13, 8, 33, 0.35) 55%, transparent 100%);
+  background: linear-gradient(to top, rgba(81, 46, 95, 0.88) 0%, rgba(81, 46, 95, 0.35) 55%, transparent 100%);
 }
 
 .dest-page-hero__content {

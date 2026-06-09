@@ -44,7 +44,7 @@ body.dest-page .reveal {
 .dest-page-hero__overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(13, 8, 33, 0.88) 0%, rgba(13, 8, 33, 0.35) 55%, transparent 100%);
+  background: linear-gradient(to top, rgba(81, 46, 95, 0.88) 0%, rgba(81, 46, 95, 0.35) 55%, transparent 100%);
 }
 
 .dest-page-hero__content {
