@@ -1,6 +1,7 @@
 {
   "name": "earned-escape",
   "version": "1.0.0",
+  "type": "commonjs",
   "description": "Earned Escape — Certified Travel Advisory by COTIB Adventures LLC",
   "main": "server.js",
   "scripts": {
