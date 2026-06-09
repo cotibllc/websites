@@ -1,6 +1,6 @@
 # Earned Escape
 
-Production-ready Node.js website for **Earned Escape**, the travel advisory brand of COTIB Adventures LLC, operated by Chuck Betancourt. Specializing in Royal Caribbean, Disney Cruise Line, Walt Disney World, and Universal Resorts.
+Production-ready Node.js website for **Earned Escape**, the travel advisory brand of COTIB Adventures LLC, operated by Chuck. Specializing in Royal Caribbean, Disney Cruise Line, Walt Disney World, and Universal Resorts.
 
 ---
 

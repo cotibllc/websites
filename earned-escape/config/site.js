@@ -26,7 +26,7 @@ module.exports = {
     name: 'Earned Escape',
     tagline: "You've Earned It.",
     handle: '@earned_escape',
-    owner: 'Chuck Betancourt',
+    owner: 'Chuck',
     business: 'COTIB Adventures LLC',
     parentAgency: 'Castle Dreams Travel',
     parentAgencyUrl: 'https://castledreamstravel.com',

@@ -69,7 +69,7 @@ router.get('/plan', (req, res) => {
   res.render('pages/plan.njk', {
     site,
     title: 'Plan Your Escape | Earned Escape',
-    description: 'Book a 30-minute planning call with Chuck Betancourt. Personal, no-pressure guidance for Royal Caribbean, Disney Cruise Line, Walt Disney World, and Universal vacations.',
+    description: 'Book a 30-minute planning call with Chuck. Personal, no-pressure guidance for Royal Caribbean, Disney Cruise Line, Walt Disney World, and Universal vacations.',
     canonical: '/plan',
   });
 });
@@ -207,7 +207,7 @@ router.post('/api/plan', async (req, res) => {
 
   <p style="margin: 24px 0 0;">Looking forward to helping you design the trip you've earned.</p>
 
-  <p style="margin: 20px 0 0; color: #0D0821;">— Chuck Betancourt<br>
+  <p style="margin: 20px 0 0; color: #0D0821;">— Chuck<br>
   <span style="font-size: 13px; color: #666;">Earned Escape by COTIB Adventures LLC</span></p>
 
   <hr style="margin: 32px 0 16px; border: none; border-top: 1px solid #eee;">
