@@ -50,7 +50,7 @@
   display: block;
 }
 
-.about__image--primary img {
+.about__image--portrait img {
   aspect-ratio: 3 / 4;
   object-position: center 20%;
 }
