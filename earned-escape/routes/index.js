@@ -224,6 +224,28 @@ router.post('/api/plan', async (req, res) => {
       html: confirmHtml,
     });
 
+    // 3. Add contact to Resend Audience if configured
+    const audienceId = process.env.RESEND_AUDIENCE_ID;
+    if (audienceId) {
+      try {
+        const nameParts = name.trim().split(/\s+/);
+        const firstName = nameParts[0] || '';
+        const lastName = nameParts.slice(1).join(' ') || '';
+
+        await resend.contacts.create({
+          email: email.trim(),
+          firstName,
+          lastName,
+          unsubscribed: false,
+          audienceId,
+        });
+      } catch (contactErr) {
+        console.error('Failed to add contact to Resend Audience:', contactErr);
+      }
+    } else {
+      console.log('RESEND_AUDIENCE_ID not set — skipping contact registration');
+    }
+
     return res.status(200).json({ success: true });
   } catch (err) {
     console.error('Resend error (plan form):', err);
