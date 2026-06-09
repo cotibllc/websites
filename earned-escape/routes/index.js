@@ -4,7 +4,7 @@ const site = require('../config/site');
 
 const { Resend } = require('resend');
 
-const TO_EMAIL = 'customerservice@cotib.com';
+const TO_EMAIL = 'support@earnedescape.co';
 const FROM_EMAIL = 'Earned Escape <no-reply@earnedescape.agency>';
 
 function escapeHtml(str) {

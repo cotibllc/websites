@@ -76,10 +76,18 @@
       </p>
 
       <div id="form-success" class="plan-success-container" style="display:none;">
-        <div class="plan-alert plan-alert--success">
-          <strong>Thank you!</strong> Your request has been sent. To lock in your 30-minute planning call on my calendar immediately, please select a time that works best for you:
+        <div class="plan-alert plan-alert--success" style="margin-bottom: 32px;">
+          <strong>Thank you!</strong> Your request has been sent.
         </div>
-        <div id="calendly-embed" style="min-width:320px; height:750px; margin-top: 24px; border-radius: 8px; overflow: hidden; background: transparent;"></div>
+        <div class="plan-booking-cta" style="text-align: center; padding: 40px 20px; background: rgba(38, 19, 74, 0.4); border: 1px solid rgba(201, 168, 76, 0.2); border-radius: 12px; max-width: 600px; margin: 0 auto;">
+          <h3 style="color: var(--white); font-family: var(--font-display); font-size: 1.8rem; margin-bottom: 12px;">Lock in your time slot</h3>
+          <p style="color: var(--off-white); opacity: 0.8; margin-bottom: 28px; line-height: 1.5;">
+            To select a date and time that fits your schedule, please book your 30-minute planning call directly on my calendar:
+          </p>
+          <a href="https://calendar.app.google/D3Wxx1mJMQyWkDAr9" target="_blank" rel="noopener noreferrer" class="btn btn--gold" style="display: inline-block; padding: 14px 32px; font-weight: 600;">
+            Book on Google Calendar &rarr;
+          </a>
+        </div>
       </div>
       <div id="form-error" class="plan-alert plan-alert--error" style="display:none;"></div>
 
