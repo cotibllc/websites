@@ -137,10 +137,11 @@ if (planForm) {
       const data = await res.json();
 
       if (res.ok && data.success) {
-        if (successEl) {
-          successEl.style.display = 'block';
-          successEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        }
+        // Capture values for Calendly pre-fill before form reset
+        const leadName = document.getElementById('f-name')?.value.trim();
+        const leadEmail = document.getElementById('f-email')?.value.trim();
+        const leadPhone = document.getElementById('f-phone')?.value.trim();
+
         planForm.reset();
         // Reset the checked radio to the default "Not sure yet"
         const defaultRadio = document.getElementById('tier-unsure');
@@ -148,6 +149,49 @@ if (planForm) {
 
         if (window.turnstile) {
           window.turnstile.reset();
+        }
+
+        // Hide form and lead paragraph
+        planForm.style.display = 'none';
+        const leadText = document.querySelector('.plan-form__lead');
+        if (leadText) leadText.style.display = 'none';
+
+        if (successEl) {
+          successEl.style.display = 'block';
+          successEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+          const embedContainer = document.getElementById('calendly-embed');
+          if (embedContainer) {
+            const initCalendly = () => {
+              window.Calendly.initInlineWidget({
+                url: 'https://calendly.com/cotib/earned-escape-consultation',
+                parentElement: embedContainer,
+                prefill: {
+                  name: leadName,
+                  email: leadEmail,
+                  phone: leadPhone,
+                },
+                pageSettings: {
+                  backgroundColor: '0d0821', // Navy Deep
+                  textColor: 'f8f5ee',       // White (warm cream)
+                  primaryColor: 'c9a84c',    // Gold
+                  hideGdprBanner: true,
+                  hideLandingPageDetails: true,
+                }
+              });
+            };
+
+            if (!window.Calendly) {
+              const script = document.createElement('script');
+              script.type = 'text/javascript';
+              script.src = 'https://assets.calendly.com/assets/external/widget.js';
+              script.async = true;
+              script.onload = initCalendly;
+              document.head.appendChild(script);
+            } else {
+              initCalendly();
+            }
+          }
         }
       } else {
         if (errorEl) {

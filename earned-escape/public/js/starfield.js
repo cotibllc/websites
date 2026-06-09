@@ -2,7 +2,9 @@ const canvas = document.getElementById('starfield-canvas');
 if (canvas) {
   const ctx = canvas.getContext('2d');
   let stars = [];
-  let raf;
+  let raf = null;
+  let isMoving = false;
+  let isTabActive = !document.hidden;
 
   function resize() {
     canvas.width = canvas.offsetWidth;
@@ -23,8 +25,8 @@ if (canvas) {
   }
 
   function draw(ts) {
-    if (document.hidden) {
-      raf = requestAnimationFrame(draw);
+    if (!isTabActive || !isMoving) {
+      raf = null;
       return;
     }
 
@@ -41,6 +43,41 @@ if (canvas) {
     raf = requestAnimationFrame(draw);
   }
 
+  function startAnimation() {
+    if (!raf && isTabActive && isMoving) {
+      raf = requestAnimationFrame(draw);
+    }
+  }
+
+  function stopAnimation() {
+    if (raf) {
+      cancelAnimationFrame(raf);
+      raf = null;
+    }
+  }
+
+  document.addEventListener('visibilitychange', () => {
+    isTabActive = !document.hidden;
+    if (isTabActive) {
+      startAnimation();
+    } else {
+      stopAnimation();
+    }
+  });
+
+  const observer = new IntersectionObserver((entries) => {
+    for (const entry of entries) {
+      isMoving = entry.isIntersecting;
+      if (isMoving) {
+        startAnimation();
+      } else {
+        stopAnimation();
+      }
+    }
+  }, { threshold: 0 });
+
+  observer.observe(canvas);
+
   let resizeTimer;
   window.addEventListener('resize', () => {
     clearTimeout(resizeTimer);
@@ -48,5 +85,4 @@ if (canvas) {
   });
 
   resize();
-  raf = requestAnimationFrame(draw);
 }
