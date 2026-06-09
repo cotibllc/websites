@@ -71,29 +71,38 @@
     <!-- Featured photos for the story section -->
     <div class="about__images">
       <figure class="about__image about__image--primary">
-        <img
-          src="/images/photos/great-wall-smiling-story.jpg?v={{ site.assetVersion }}"
-          alt="Chuck Betancourt on the Great Wall of China, January 2026"
-          loading="lazy"
-        >
+        <picture>
+          <source srcset="/images/photos/great-wall-smiling-story.webp?v={{ site.assetVersion }}" type="image/webp">
+          <img
+            src="/images/photos/great-wall-smiling-story.jpg?v={{ site.assetVersion }}"
+            alt="Chuck Betancourt on the Great Wall of China, January 2026"
+            loading="lazy"
+          >
+        </picture>
         <figcaption>Great Wall of China — January 2026</figcaption>
       </figure>
 
       <div class="about__image-grid">
         <figure class="about__image">
-          <img
-            src="/images/photos/alaska-glacier-story.jpg?v={{ site.assetVersion }}"
-            alt="Chuck and his wife on an Alaska glacier during a Royal Caribbean cruise"
-            loading="lazy"
-          >
+          <picture>
+            <source srcset="/images/photos/alaska-glacier-story.webp?v={{ site.assetVersion }}" type="image/webp">
+            <img
+              src="/images/photos/alaska-glacier-story.jpg?v={{ site.assetVersion }}"
+              alt="Chuck and his wife on an Alaska glacier during a Royal Caribbean cruise"
+              loading="lazy"
+            >
+          </picture>
           <figcaption>Alaska Glacier with my wife</figcaption>
         </figure>
         <figure class="about__image">
-          <img
-            src="/images/photos/oasis-dining-family-story.jpg?v={{ site.assetVersion }}"
-            alt="Chuck with family dining on Royal Caribbean's Oasis of the Seas"
-            loading="lazy"
-          >
+          <picture>
+            <source srcset="/images/photos/oasis-dining-family-story.webp?v={{ site.assetVersion }}" type="image/webp">
+            <img
+              src="/images/photos/oasis-dining-family-story.jpg?v={{ site.assetVersion }}"
+              alt="Chuck with family dining on Royal Caribbean's Oasis of the Seas"
+              loading="lazy"
+            >
+          </picture>
           <figcaption>Family cruise on Oasis of the Seas</figcaption>
         </figure>
       </div>

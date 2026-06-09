@@ -6,14 +6,17 @@
 <section class="dest-page-hero" id="top">
 
   <div class="dest-page-hero__img">
-    <img
-      class="dest-page-hero__photo"
-      src="/images/photos/alaska-glacier-hero.jpg?v={{ site.assetVersion }}"
-      alt="Chuck and his wife on an Alaska glacier during a Royal Caribbean cruise"
-      width="2400"
-      height="1350"
-      fetchpriority="high"
-    >
+    <picture>
+      <source srcset="/images/photos/alaska-glacier-hero.webp?v={{ site.assetVersion }}" type="image/webp">
+      <img
+        class="dest-page-hero__photo"
+        src="/images/photos/alaska-glacier-hero.jpg?v={{ site.assetVersion }}"
+        alt="Chuck and his wife on an Alaska glacier during a Royal Caribbean cruise"
+        width="2400"
+        height="1350"
+        fetchpriority="high"
+      >
+    </picture>
   </div>
   <div class="dest-page-hero__overlay"></div>
 
@@ -79,13 +82,16 @@
     </div>
 
     <figure class="dest-story__photo">
-      <img
-        src="/images/photos/alaska-glacier-story.jpg?v={{ site.assetVersion }}"
-        alt="Chuck and his wife on an Alaska glacier during a Royal Caribbean cruise"
-        loading="lazy"
-        width="1600"
-        height="1200"
-      >
+      <picture>
+        <source srcset="/images/photos/alaska-glacier-story.webp?v={{ site.assetVersion }}" type="image/webp">
+        <img
+          src="/images/photos/alaska-glacier-story.jpg?v={{ site.assetVersion }}"
+          alt="Chuck and his wife on an Alaska glacier during a Royal Caribbean cruise"
+          loading="lazy"
+          width="1600"
+          height="1200"
+        >
+      </picture>
       <figcaption class="dest-story__caption">Alaska with my wife — Royal Caribbean</figcaption>
     </figure>
 
@@ -196,22 +202,28 @@
 
     <div class="dest-gallery__grid dest-gallery__grid--duo">
       <figure class="dest-gallery__item">
-        <img
-          src="/images/photos/oasis-dining-family-story.jpg?v={{ site.assetVersion }}"
-          alt="Family dining on Oasis of the Seas"
-          loading="lazy"
-          width="1600"
-          height="1200"
-        >
+        <picture>
+          <source srcset="/images/photos/oasis-dining-family-story.webp?v={{ site.assetVersion }}" type="image/webp">
+          <img
+            src="/images/photos/oasis-dining-family-story.jpg?v={{ site.assetVersion }}"
+            alt="Family dining on Oasis of the Seas"
+            loading="lazy"
+            width="1600"
+            height="1200"
+          >
+        </picture>
       </figure>
       <figure class="dest-gallery__item">
-        <img
-          src="/images/photos/oasis-snorkel-story.jpg?v={{ site.assetVersion }}"
-          alt="Snorkeling during a Royal Caribbean cruise"
-          loading="lazy"
-          width="1600"
-          height="1200"
-        >
+        <picture>
+          <source srcset="/images/photos/oasis-snorkel-story.webp?v={{ site.assetVersion }}" type="image/webp">
+          <img
+            src="/images/photos/oasis-snorkel-story.jpg?v={{ site.assetVersion }}"
+            alt="Snorkeling during a Royal Caribbean cruise"
+            loading="lazy"
+            width="1600"
+            height="1200"
+          >
+        </picture>
       </figure>
     </div>
 

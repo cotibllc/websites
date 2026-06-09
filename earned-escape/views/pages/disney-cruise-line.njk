@@ -6,14 +6,17 @@
 <section class="dest-page-hero" id="top">
 
   <div class="dest-page-hero__img">
-    <img
-      class="dest-page-hero__photo"
-      src="/images/photos/dcl-fantasy-ship-hero.jpg?v={{ site.assetVersion }}"
-      alt="Disney Fantasy cruise ship docked at a tropical port"
-      width="2400"
-      height="1350"
-      fetchpriority="high"
-    >
+    <picture>
+      <source srcset="/images/photos/dcl-fantasy-ship-hero.webp?v={{ site.assetVersion }}" type="image/webp">
+      <img
+        class="dest-page-hero__photo"
+        src="/images/photos/dcl-fantasy-ship-hero.jpg?v={{ site.assetVersion }}"
+        alt="Disney Fantasy cruise ship docked at a tropical port"
+        width="2400"
+        height="1350"
+        fetchpriority="high"
+      >
+    </picture>
   </div>
   <div class="dest-page-hero__overlay"></div>
 
@@ -75,13 +78,16 @@
     </div>
 
     <figure class="dest-story__photo">
-      <img
-        src="/images/photos/dcl-jasmine-meet-story.jpg?v={{ site.assetVersion }}"
-        alt="Family character meet with Princess Jasmine in the Disney Fantasy atrium"
-        loading="lazy"
-        width="1600"
-        height="1200"
-      >
+      <picture>
+        <source srcset="/images/photos/dcl-jasmine-meet-story.webp?v={{ site.assetVersion }}" type="image/webp">
+        <img
+          src="/images/photos/dcl-jasmine-meet-story.jpg?v={{ site.assetVersion }}"
+          alt="Family character meet with Princess Jasmine in the Disney Fantasy atrium"
+          loading="lazy"
+          width="1600"
+          height="1200"
+        >
+      </picture>
       <figcaption class="dest-story__caption">Disney Fantasy — character meet in the atrium</figcaption>
     </figure>
 
@@ -192,22 +198,28 @@
 
     <div class="dest-gallery__grid dest-gallery__grid--duo">
       <figure class="dest-gallery__item">
-        <img
-          src="/images/photos/dcl-frozen-meet-story.jpg?v={{ site.assetVersion }}"
-          alt="Character meet with Anna and Elsa on Disney Cruise Line"
-          loading="lazy"
-          width="1600"
-          height="1200"
-        >
+        <picture>
+          <source srcset="/images/photos/dcl-frozen-meet-story.webp?v={{ site.assetVersion }}" type="image/webp">
+          <img
+            src="/images/photos/dcl-frozen-meet-story.jpg?v={{ site.assetVersion }}"
+            alt="Character meet with Anna and Elsa on Disney Cruise Line"
+            loading="lazy"
+            width="1600"
+            height="1200"
+          >
+        </picture>
       </figure>
       <figure class="dest-gallery__item dest-gallery__item--fit-contain">
-        <img
-          src="/images/photos/dcl-port-day-story.jpg?v={{ site.assetVersion }}"
-          alt="Family at a tropical port with the Disney Fantasy in the background"
-          loading="lazy"
-          width="1600"
-          height="1200"
-        >
+        <picture>
+          <source srcset="/images/photos/dcl-port-day-story.webp?v={{ site.assetVersion }}" type="image/webp">
+          <img
+            src="/images/photos/dcl-port-day-story.jpg?v={{ site.assetVersion }}"
+            alt="Family at a tropical port with the Disney Fantasy in the background"
+            loading="lazy"
+            width="1600"
+            height="1200"
+          >
+        </picture>
       </figure>
     </div>
 
