@@ -1,0 +1,146 @@
+<section class="quiz-section" id="quiz-section">
+  <div class="quiz-container">
+    <div class="quiz-header">
+      <p class="section-eyebrow">Interactive Selector</p>
+      <h2 class="quiz-headline">Help Me Design My <em>Escape</em></h2>
+      <p class="quiz-subtitle">Answer 4 quick questions to find your custom-tailored recommendation and schedule your planning call.</p>
+    </div>
+
+    <div class="quiz-card animate-fade">
+      <!-- Progress Bar -->
+      <div class="quiz-progress-bar">
+        <div class="quiz-progress-fill" id="quiz-progress" style="width: 25%;"></div>
+      </div>
+
+      <!-- Question Wrapper -->
+      <div id="quiz-questions">
+        <!-- Question 1: Travel Setting -->
+        <div class="quiz-step quiz-step--active" data-step="1">
+          <h3 class="quiz-question-title">1. Choose your ideal travel setting:</h3>
+          <div class="quiz-options">
+            <button class="quiz-option-btn" data-value="cruise" data-trip="Royal Caribbean" data-label="Ocean &amp; Cruise Voyages">
+              <span class="quiz-option-icon">🚢</span>
+              <span class="quiz-option-text">Ocean &amp; Cruise Voyages</span>
+              <span class="quiz-option-desc">Sea breeze, exploring multiple ports, and world-class onboard dining and entertainment.</span>
+            </button>
+            <button class="quiz-option-btn" data-value="parks" data-trip="Walt Disney World" data-label="Immersive Theme Parks">
+              <span class="quiz-option-icon">🏰</span>
+              <span class="quiz-option-text">Immersive Theme Parks</span>
+              <span class="quiz-option-desc">Character magic, immersive lands, coasters, and custom-planned strategies.</span>
+            </button>
+            <button class="quiz-option-btn" data-value="adventure" data-trip="Other" data-label="Grand Adventure" data-tag="Grand Adventure">
+              <span class="quiz-option-icon">🌏</span>
+              <span class="quiz-option-text">Grand Adventures &amp; Bucket-List Escapes</span>
+              <span class="quiz-option-desc">Explore the world's most unique destinations—like a journey through China or Southeast Asia.</span>
+            </button>
+            <button class="quiz-option-btn" data-value="resort" data-trip="Other" data-label="Luxury Resort" data-tag="Luxury Resort">
+              <span class="quiz-option-icon">🌴</span>
+              <span class="quiz-option-text">Luxury Resort Retreats</span>
+              <span class="quiz-option-desc">Poolside relaxation, ocean breeze, pristine beaches, and elevated fine dining.</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Question 2: Travelers -->
+        <div class="quiz-step" data-step="2" style="display: none;">
+          <h3 class="quiz-question-title">2. Who is sharing this escape with you?</h3>
+          <div class="quiz-options">
+            <button class="quiz-option-btn" data-value="solo" data-travelers="Solo Traveler" data-label="Solo Journey">
+              <span class="quiz-option-icon">🥾</span>
+              <span class="quiz-option-text">Solo Journey</span>
+              <span class="quiz-option-desc">An independent adventure, self-discovery, or business-meets-pleasure trip.</span>
+            </button>
+            <button class="quiz-option-btn" data-value="couple" data-travelers="2 Adults" data-label="Couples &amp; Adult Groups">
+              <span class="quiz-option-icon">🥂</span>
+              <span class="quiz-option-text">Couples &amp; Adult Groups</span>
+              <span class="quiz-option-desc">A romantic escape, anniversary, or adult-only getaway.</span>
+            </button>
+            <button class="quiz-option-btn" data-value="family" data-travelers="Family with kids" data-label="Family Adventure">
+              <span class="quiz-option-icon">👨‍👩‍👧‍👦</span>
+              <span class="quiz-option-text">Family Adventure</span>
+              <span class="quiz-option-desc">Traveling with kids or teenagers who need a mix of thrills and smooth logistics.</span>
+            </button>
+            <button class="quiz-option-btn" data-value="multigen" data-travelers="Multigenerational Group" data-label="Multigenerational &amp; Milestone">
+              <span class="quiz-option-icon">👵👨‍👩‍👧‍👦</span>
+              <span class="quiz-option-text">Multigenerational &amp; Milestone</span>
+              <span class="quiz-option-desc">A reunion or celebration with grandparents, siblings, or a larger group.</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Question 3: Pace -->
+        <div class="quiz-step" data-step="3" style="display: none;">
+          <h3 class="quiz-question-title">3. Select your preferred vacation pace:</h3>
+          <div class="quiz-options">
+            <button class="quiz-option-btn" data-value="relaxed" data-pace="relaxed &amp; effortless" data-label="Relaxed &amp; Effortless">
+              <span class="quiz-option-icon">✨</span>
+              <span class="quiz-option-text">Relaxed &amp; Effortless</span>
+              <span class="quiz-option-desc">Minimize the scheduling. I want to relax, enjoy fine dining, and go with the flow.</span>
+            </button>
+            <button class="quiz-option-btn" data-value="active" data-pace="adventurous &amp; active" data-label="High-Energy &amp; Active">
+              <span class="quiz-option-icon">🎢</span>
+              <span class="quiz-option-text">High-Energy &amp; Active</span>
+              <span class="quiz-option-desc">Maximize the action. I want rope-drops, coasters, excursions, and checking off milestones.</span>
+            </button>
+            <button class="quiz-option-btn" data-value="balanced" data-pace="perfect balance of activity and rest" data-label="The Perfect Balance">
+              <span class="quiz-option-icon">🧩</span>
+              <span class="quiz-option-text">The Perfect Balance</span>
+              <span class="quiz-option-desc">Give us a structured morning or key dining event, but leave the rest of the day open.</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Question 4: Support Tier -->
+        <div class="quiz-step" data-step="4" style="display: none;">
+          <h3 class="quiz-question-title">4. What level of advisory support fits you?</h3>
+          <div class="quiz-options">
+            <button class="quiz-option-btn" data-value="full" data-tier="Full-Service Planning" data-label="Full-Service Planning">
+              <span class="quiz-option-icon">🧳</span>
+              <span class="quiz-option-text">Full-Service Planning</span>
+              <span class="quiz-option-desc">I want a premium advisor to handle the research, booking, and logistics from start to finish.</span>
+            </button>
+            <button class="quiz-option-btn" data-value="advisory" data-tier="Advisory / Light-Touch" data-label="Advisory &amp; Strategy">
+              <span class="quiz-option-icon">🗺️</span>
+              <span class="quiz-option-text">Advisory &amp; Strategy</span>
+              <span class="quiz-option-desc">I prefer to book the core trip myself, but want an expert guide to review staterooms, dining, and tips.</span>
+            </button>
+            <button class="quiz-option-btn" data-value="explore" data-tier="Not sure yet" data-label="Early Exploration">
+              <span class="quiz-option-icon">💬</span>
+              <span class="quiz-option-text">Early Exploration</span>
+              <span class="quiz-option-desc">I'm in the early stages and want to run my ideas by an expert to see what matches my budget.</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Results Card (hidden by default) -->
+      <div id="quiz-results" class="quiz-results" style="display: none;">
+        <div class="quiz-results__content">
+          <span class="quiz-results__badge">Your Custom Escape Vibe</span>
+          <h3 class="quiz-results__title" id="results-title">Grand Adventure</h3>
+          <p class="quiz-results__desc" id="results-desc">Based on your answers, you are looking for...</p>
+          
+          <div class="quiz-results__details">
+            <div class="quiz-results__detail-item">
+              <strong>Preferred Pace:</strong> <span id="results-detail-pace">—</span>
+            </div>
+            <div class="quiz-results__detail-item">
+              <strong>Travel Party:</strong> <span id="results-detail-party">—</span>
+            </div>
+          </div>
+
+          <div class="quiz-results__cta-box">
+            <a href="/plan" id="quiz-cta-link" class="btn btn--gold">Design My Escape</a>
+            <button id="quiz-restart-btn" class="quiz-restart-btn">Restart Quiz</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer / Back button -->
+      <div class="quiz-footer">
+        <button id="quiz-back-btn" class="quiz-back-btn" style="visibility: hidden;">&larr; Back</button>
+        <span class="quiz-step-count" id="quiz-step-count">Step 1 of 4</span>
+      </div>
+    </div>
+  </div>
+</section>

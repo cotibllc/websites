@@ -1,6 +1,7 @@
 import './starfield.js';
 import './nav.js';
 import './destinations.js';
+import './quiz.js';
 
 /* Scroll reveal — inlined so main.js?v= cache bust applies (imported modules are not versioned) */
 const AUTO_REVEAL_SELECTORS = [
@@ -81,12 +82,56 @@ function initScrollReveal() {
 
 initScrollReveal();
 
+function prefillPlanForm() {
+  try {
+    const params = new URLSearchParams(window.location.search);
+    
+    const tripType = params.get('tripType');
+    if (tripType) {
+      const select = document.getElementById('f-trip-type');
+      if (select) select.value = tripType;
+    }
+
+    const supportTier = params.get('supportTier');
+    if (supportTier) {
+      const radios = document.getElementsByName('supportTier');
+      for (const radio of radios) {
+        if (radio.value === supportTier) {
+          radio.checked = true;
+          break;
+        }
+        if (radio.value.toLowerCase().includes(supportTier.toLowerCase()) || 
+            supportTier.toLowerCase().includes(radio.value.toLowerCase())) {
+          radio.checked = true;
+          break;
+        }
+      }
+    }
+
+    const travelers = params.get('travelers');
+    if (travelers) {
+      const input = document.getElementById('f-travelers');
+      if (input) input.value = travelers;
+    }
+
+    const message = params.get('message');
+    if (message) {
+      const textarea = document.getElementById('f-message');
+      if (textarea) textarea.value = message;
+    }
+  } catch (err) {
+    console.error('Error prefilling form:', err);
+  }
+}
+
 /* ===========================
    Plan / Consultation Form Handler
    Matches the pattern from cotib.com (Turnstile + JSON POST)
    =========================== */
 const planForm = document.getElementById('plan-form');
 if (planForm) {
+  prefillPlanForm();
+
   planForm.addEventListener('submit', async function (e) {
     e.preventDefault();
 
