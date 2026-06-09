@@ -38,6 +38,38 @@ app.use(limiter);
 app.use(express.json({ limit: '100kb' }));
 app.use(express.urlencoded({ extended: true }));
 
+// Dynamic CSS bundling in development mode
+if (process.env.NODE_ENV !== 'production') {
+  app.get('/css/main.bundle.css', (req, res) => {
+    try {
+      const fs = require('fs');
+      const cssDir = path.join(__dirname, 'public', 'css');
+      const mainCssPath = path.join(cssDir, 'main.css');
+      const mainCssContent = fs.readFileSync(mainCssPath, 'utf8');
+
+      const importRegex = /@import\s+['"]([^'"]+)['"];/g;
+      let match;
+      let bundledCss = `/* Dynamic Developer CSS Bundle */\n\n`;
+
+      while ((match = importRegex.exec(mainCssContent)) !== null) {
+        const importFile = match[1].split('?')[0];
+        const importFilePath = path.join(cssDir, importFile);
+
+        if (fs.existsSync(importFilePath)) {
+          bundledCss += `/* --- ${importFile} --- */\n`;
+          bundledCss += fs.readFileSync(importFilePath, 'utf8') + '\n\n';
+        }
+      }
+
+      res.setHeader('Content-Type', 'text/css');
+      res.send(bundledCss);
+    } catch (err) {
+      console.error('Dynamic CSS bundling error:', err);
+      res.status(500).send('/* CSS Bundling Error */');
+    }
+  });
+}
+
 // Static files
 app.use(express.static(path.join(__dirname, 'public'), {
   maxAge: process.env.NODE_ENV === 'production' ? '1y' : 0,

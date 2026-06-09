@@ -7,3 +7,6 @@ dist/
 
 # Large photo assets (originals + working enhanced versions)
 photos-to-use/
+
+# Compiled assets
+public/css/main.bundle.css
