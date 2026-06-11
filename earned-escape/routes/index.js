@@ -25,6 +25,16 @@ router.get('/', (req, res) => {
   });
 });
 
+router.get('/about', (req, res) => {
+  res.render('pages/about.njk', {
+    site,
+    bodyClass: 'dest-page',
+    title: 'The COTIB Story | Earned Escape',
+    description: 'After decades of exploring the world and 30 years in corporate IT, I built Earned Escape to help families plan the kind of trips they deserve.',
+    canonical: '/about',
+  });
+});
+
 router.get('/disney-world', (req, res) => {
   res.render('pages/disney-world.njk', {
     site,

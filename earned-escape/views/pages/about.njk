@@ -1,0 +1,144 @@
+{% extends "layout/base.njk" %}
+
+{% block content %}
+
+<!-- Hero -->
+<section class="dest-page-hero" id="top">
+
+  <div class="dest-page-hero__img">
+    <picture>
+      <source srcset="/images/photos/great-wall-smiling-hero.webp?v={{ site.assetVersion }}" type="image/webp">
+      <img
+        class="dest-page-hero__photo"
+        src="/images/photos/great-wall-smiling-hero.jpg?v={{ site.assetVersion }}"
+        alt="Chuck Betancourt smiling at the Great Wall of China"
+        loading="eager"
+      >
+    </picture>
+  </div>
+  <div class="dest-page-hero__overlay"></div>
+
+  <div class="dest-page-hero__content">
+    <p class="section-eyebrow">The COTIB Story</p>
+    <h1 class="dest-page-hero__headline">
+      Travel isn't just what I do.<br>
+      It's <em>who I am.</em>
+    </h1>
+    <p class="dest-page-hero__sub">
+      After decades of exploring the world and 30 years in corporate IT, I built Earned Escape to help families plan the kind of trips they deserve—with absolute precision.
+    </p>
+  </div>
+
+</section>
+
+<!-- The Origin -->
+<section class="dest-story" id="origin">
+  <div class="dest-story__inner">
+
+    <div class="dest-story__text reveal">
+      <p class="section-eyebrow">The Origin</p>
+      <h2 class="dest-story__headline">
+        Exploring the world<br>
+        <em>since I was six.</em>
+      </h2>
+      <p class="dest-story__body">
+        My parents instilled a love of travel in me before I could fully understand how big the world was. Since I was six years old, I've been on the move. I've traveled solo, I've traveled with my wife, and I've planned the incredibly complex, multi-generational trips that happen when your kids start having kids of their own.
+      </p>
+      <p class="dest-story__body">
+        I've made the mistakes so you don't have to. I know what an itinerary looks like when it's too packed, and I know the magic that happens when you leave just enough room to breathe.
+      </p>
+    </div>
+
+    <div class="dest-story__photo reveal">
+      <picture>
+        <source srcset="/images/photos/ecuador-hike-story.webp?v={{ site.assetVersion }}" type="image/webp">
+        <img
+          src="/images/photos/ecuador-hike-story.jpg?v={{ site.assetVersion }}"
+          alt="Hiking adventure in Ecuador"
+          loading="lazy"
+        >
+      </picture>
+    </div>
+
+  </div>
+</section>
+
+<!-- The Methodology -->
+<section class="dest-story" id="methodology">
+  <div class="dest-story__inner" style="flex-direction: row-reverse;">
+
+    <div class="dest-story__text reveal">
+      <p class="section-eyebrow">The Methodology</p>
+      <h2 class="dest-story__headline">
+        30 years of IT precision,<br>
+        <em>applied to your vacation.</em>
+      </h2>
+      <p class="dest-story__body">
+        For three decades, I built a career in corporate information technology. In that world, the difference between success and catastrophic failure comes down to one thing: attention to detail.
+      </p>
+      <p class="dest-story__body">
+        I architect travel the exact same way I used to architect complex IT systems. I look for the failure points. I mitigate the risks. I don't believe in "winging it" when it comes to the logistics, because perfectly executed logistics are what give you the freedom to actually relax. You aren't just getting a travel agent; you're getting a systems thinker who treats your investment with the respect it deserves.
+      </p>
+    </div>
+
+    <div class="dest-story__photo reveal">
+      <picture>
+        <source srcset="/images/photos/alaska-glacier-story.webp?v={{ site.assetVersion }}" type="image/webp">
+        <img
+          src="/images/photos/alaska-glacier-story.jpg?v={{ site.assetVersion }}"
+          alt="Chuck and his wife on an Alaskan glacier"
+          loading="lazy"
+        >
+      </picture>
+    </div>
+
+  </div>
+</section>
+
+<!-- The Bucket List -->
+<section class="dest-story" id="bucket-list">
+  <div class="dest-story__inner">
+
+    <div class="dest-story__text reveal">
+      <p class="section-eyebrow">The Bucket List</p>
+      <h2 class="dest-story__headline">
+        Living the<br>
+        <em>bucket list.</em>
+      </h2>
+      <p class="dest-story__body">
+        In January 2026, I checked off one of my biggest personal bucket list items: a 12-day journey through China, from Beijing to Xi'an to Chongqing. Standing on the Great Wall, seeing the Terracotta Warriors—it was a powerful reminder of why we travel.
+      </p>
+      <p class="dest-story__body">
+        It's not just about getting away. It's about being in the presence of something bigger than yourself. That feeling is exactly what I want to help you achieve on your own trips, whether that's staring at an Alaskan glacier from a cruise ship balcony or walking down Main Street U.S.A. with your grandchildren.
+      </p>
+    </div>
+
+    <div class="dest-story__photo reveal">
+      <picture>
+        <source srcset="/images/photos/great-wall-landscape-story.webp?v={{ site.assetVersion }}" type="image/webp">
+        <img
+          src="/images/photos/great-wall-landscape-story.jpg?v={{ site.assetVersion }}"
+          alt="Sweeping landscape of the Great Wall of China"
+          loading="lazy"
+        >
+      </picture>
+    </div>
+
+  </div>
+</section>
+
+<!-- The Legacy -->
+<section class="dest-intro" id="legacy">
+  <div class="dest-intro__inner">
+    <p class="dest-intro__lead">
+      Earned Escape operates under <strong>COTIB Adventures LLC</strong>, which is the company I'm building as a legacy for my family. This isn't a hobby or a side hustle. It's a long-term commitment to doing things right, building deep relationships with my clients, and proving that the highest level of service still exists.
+    </p>
+    <p class="dest-intro__body">
+      I am an independent advisor affiliated with Castle Dreams Travel, which means you get the white-glove, personal attention of a boutique planner, backed by the industry relationships and support of an established agency.
+    </p>
+  </div>
+</section>
+
+{% include "partials/cta-strip.njk" %}
+
+{% endblock %}
