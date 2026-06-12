@@ -3,6 +3,7 @@ const router = express.Router();
 const site = require('../config/site');
 
 const { Resend } = require('resend');
+const { createKitClient } = require('../lib/kit');
 
 const TO_EMAIL = 'support@earnedescape.co';
 const FROM_EMAIL = 'Earned Escape <no-reply@earnedescape.agency>';
@@ -254,6 +255,69 @@ router.post('/api/plan', async (req, res) => {
       }
     } else {
       console.log('RESEND_AUDIENCE_ID not set — skipping contact registration');
+    }
+
+    // 4. Add contact to Kit and trigger automation if configured
+    const kit = createKitClient();
+    if (kit) {
+      try {
+        const nameParts = name.trim().split(/\s+/);
+        const firstName = nameParts[0] || '';
+        const lastName = nameParts.slice(1).join(' ') || '';
+
+        // Build custom fields for Kit (metadata about the inquiry)
+        const customFields = {
+          trip_type: tripType || 'unspecified',
+          travel_window: dates || '',
+          group_size: travelers || '',
+          support_preference: supportTier || '',
+          inquiry_source: 'website_plan_form',
+        };
+
+        // Determine tags based on trip type
+        const tags = ['earned-escape-lead', 'nurture-sequence'];
+        if (tripType) {
+          if (tripType.toLowerCase().includes('royal')) {
+            tags.push('trip-type-rc', 'rc-nurture');
+          } else if (tripType.toLowerCase().includes('disney cruise') || tripType.toLowerCase().includes('dcl')) {
+            tags.push('trip-type-dcl', 'dcl-nurture');
+          } else if (tripType.toLowerCase().includes('disney world') || tripType.toLowerCase().includes('wdw')) {
+            tags.push('trip-type-wdw');
+          } else if (tripType.toLowerCase().includes('universal')) {
+            tags.push('trip-type-universal');
+          }
+        }
+
+        // Create or update subscriber in Kit
+        await kit.createOrUpdateSubscriber({
+          email: email.trim(),
+          firstName,
+          lastName,
+          customFields,
+          tags,
+        });
+
+        // Trigger the nurture automation if configured
+        const automationId = process.env.KIT_NURTURE_AUTOMATION_ID;
+        if (automationId) {
+          try {
+            await kit.triggerAutomation(parseInt(automationId), email.trim(), {
+              name: name.trim(),
+              tripType: tripType || 'general inquiry',
+              message: message.trim(),
+            });
+            console.log(`Kit automation ${automationId} triggered for ${email}`);
+          } catch (automationErr) {
+            console.error('Failed to trigger Kit automation:', automationErr.message);
+            // Don't fail the entire request if automation trigger fails
+          }
+        } else {
+          console.log('KIT_NURTURE_AUTOMATION_ID not set — skipping automation trigger');
+        }
+      } catch (kitErr) {
+        console.error('Failed to add contact to Kit:', kitErr.message);
+        // Don't fail the entire request if Kit integration fails
+      }
     }
 
     return res.status(200).json({ success: true });
