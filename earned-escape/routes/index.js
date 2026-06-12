@@ -3,7 +3,7 @@ const router = express.Router();
 const site = require('../config/site');
 
 const { Resend } = require('resend');
-const { createKitClient } = require('../lib/kit');
+const { createBrevoClient } = require('../lib/brevo');
 
 const TO_EMAIL = 'support@earnedescape.co';
 const FROM_EMAIL = 'Earned Escape <no-reply@earnedescape.agency>';
@@ -257,66 +257,56 @@ router.post('/api/plan', async (req, res) => {
       console.log('RESEND_AUDIENCE_ID not set — skipping contact registration');
     }
 
-    // 4. Add contact to Kit and trigger automation if configured
-    const kit = createKitClient();
-    if (kit) {
+    // 4. Add contact to Brevo (free email automation) if configured
+    const brevo = createBrevoClient();
+    if (brevo) {
       try {
         const nameParts = name.trim().split(/\s+/);
         const firstName = nameParts[0] || '';
         const lastName = nameParts.slice(1).join(' ') || '';
 
-        // Build custom fields for Kit (metadata about the inquiry)
-        const customFields = {
-          trip_type: tripType || 'unspecified',
-          travel_window: dates || '',
-          group_size: travelers || '',
-          support_preference: supportTier || '',
-          inquiry_source: 'website_plan_form',
+        // Build custom fields for Brevo (metadata about the inquiry)
+        const attributes = {
+          TRIP_TYPE: tripType || 'unspecified',
+          TRAVEL_WINDOW: dates || '',
+          GROUP_SIZE: travelers || '',
+          SUPPORT_PREFERENCE: supportTier || '',
+          INQUIRY_SOURCE: 'website_plan_form',
         };
 
-        // Determine tags based on trip type
-        const tags = ['earned-escape-lead', 'nurture-sequence'];
+        // Determine which list(s) to add contact to based on trip type
+        // You'll set these list IDs in Brevo and add to environment variables
+        const listIds = [parseInt(process.env.BREVO_NURTURE_LIST_ID || 0)].filter(id => id > 0);
+
         if (tripType) {
           if (tripType.toLowerCase().includes('royal')) {
-            tags.push('trip-type-rc', 'rc-nurture');
+            const rcListId = parseInt(process.env.BREVO_RC_LIST_ID || 0);
+            if (rcListId > 0) listIds.push(rcListId);
           } else if (tripType.toLowerCase().includes('disney cruise') || tripType.toLowerCase().includes('dcl')) {
-            tags.push('trip-type-dcl', 'dcl-nurture');
+            const dclListId = parseInt(process.env.BREVO_DCL_LIST_ID || 0);
+            if (dclListId > 0) listIds.push(dclListId);
           } else if (tripType.toLowerCase().includes('disney world') || tripType.toLowerCase().includes('wdw')) {
-            tags.push('trip-type-wdw');
+            const wdwListId = parseInt(process.env.BREVO_WDW_LIST_ID || 0);
+            if (wdwListId > 0) listIds.push(wdwListId);
           } else if (tripType.toLowerCase().includes('universal')) {
-            tags.push('trip-type-universal');
+            const univListId = parseInt(process.env.BREVO_UNIVERSAL_LIST_ID || 0);
+            if (univListId > 0) listIds.push(univListId);
           }
         }
 
-        // Create or update subscriber in Kit
-        await kit.createOrUpdateSubscriber({
+        // Create or update contact in Brevo
+        await brevo.createOrUpdateContact({
           email: email.trim(),
           firstName,
           lastName,
-          customFields,
-          tags,
+          attributes,
+          listIds,
         });
 
-        // Trigger the nurture automation if configured
-        const automationId = process.env.KIT_NURTURE_AUTOMATION_ID;
-        if (automationId) {
-          try {
-            await kit.triggerAutomation(parseInt(automationId), email.trim(), {
-              name: name.trim(),
-              tripType: tripType || 'general inquiry',
-              message: message.trim(),
-            });
-            console.log(`Kit automation ${automationId} triggered for ${email}`);
-          } catch (automationErr) {
-            console.error('Failed to trigger Kit automation:', automationErr.message);
-            // Don't fail the entire request if automation trigger fails
-          }
-        } else {
-          console.log('KIT_NURTURE_AUTOMATION_ID not set — skipping automation trigger');
-        }
-      } catch (kitErr) {
-        console.error('Failed to add contact to Kit:', kitErr.message);
-        // Don't fail the entire request if Kit integration fails
+        console.log(`Brevo contact created for ${email} with lists: ${listIds.join(', ')}`);
+      } catch (brevoErr) {
+        console.error('Failed to add contact to Brevo:', brevoErr.message);
+        // Don't fail the entire request if Brevo integration fails
       }
     }
 
