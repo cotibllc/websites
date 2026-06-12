@@ -1,4 +1,7 @@
 {
+  "enabledPlugins": {
+    "vercel-plugin@vercel-vercel-plugin": true
+  },
   "permissions": {
     "allow": [
       "Bash(npm install *)",
@@ -15,7 +18,10 @@
       "Bash(node server.js)",
       "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000/)",
       "Bash(curl -s http://localhost:3000/)",
-      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000/nonexistent)"
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000/nonexistent)",
+      "WebFetch(domain:www.anthropic.com)",
+      "Read(//Users/charlesbetancourt/Documents/Obsidian/Projects/**)",
+      "Read(//Users/charlesbetancourt/Documents/Obsidian/**)"
     ]
   }
 }
