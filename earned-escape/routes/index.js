@@ -99,7 +99,7 @@ router.get('/compliance', (req, res) => {
   });
 });
 
-// POST /api/plan — handles the consultation request form (Turnstile + Resend)
+// POST /api/plan – handles the consultation request form (Turnstile + Resend)
 router.post('/api/plan', async (req, res) => {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
@@ -150,7 +150,7 @@ router.post('/api/plan', async (req, res) => {
       return res.status(400).json({ error: 'Security check failed. Please refresh the page and try again.' });
     }
   } else {
-    console.warn('TURNSTILE_SECRET_KEY not set — skipping Turnstile verification (dev only)');
+    console.warn('TURNSTILE_SECRET_KEY not set – skipping Turnstile verification (dev only)');
   }
 
   const htmlEmail = `
@@ -215,7 +215,7 @@ router.post('/api/plan', async (req, res) => {
       from: FROM_EMAIL,
       to: TO_EMAIL,
       replyTo: email,
-      subject: `[Earned Escape] Planning Call: ${tripType || 'General'} — ${name}`,
+      subject: `[Earned Escape] Planning Call: ${tripType || 'General'} – ${name}`,
       html: htmlEmail,
     });
 
@@ -226,13 +226,13 @@ router.post('/api/plan', async (req, res) => {
 <body style="font-family: system-ui, -apple-system, sans-serif; color: #222; max-width: 560px; margin: 0 auto; padding: 32px 24px; line-height: 1.6;">
   <p style="margin: 0 0 16px; color: #0D0821; font-size: 15px;">Hi ${escapeHtml(name)},</p>
 
-  <p style="margin: 0 0 16px;">Thank you — I've received your planning call request. I'll personally review the details and reach out within one business day to find a time that works for you (video or phone, whatever you prefer).</p>
+  <p style="margin: 0 0 16px;">Thank you – I've received your planning call request. I'll personally review the details and reach out within one business day to find a time that works for you (video or phone, whatever you prefer).</p>
 
   <p style="margin: 0 0 16px;">In the meantime, if anything comes up or you want to add more context, just reply to this email.</p>
 
   <p style="margin: 24px 0 0;">Looking forward to helping you design the trip you've earned.</p>
 
-  <p style="margin: 20px 0 0; color: #0D0821;">— Chuck<br>
+  <p style="margin: 20px 0 0; color: #0D0821;"> –  Chuck<br>
   <span style="font-size: 13px; color: #666;">Earned Escape by COTIB Adventures LLC</span></p>
 
   <hr style="margin: 32px 0 16px; border: none; border-top: 1px solid #eee;">
@@ -245,7 +245,7 @@ router.post('/api/plan', async (req, res) => {
     await resend.emails.send({
       from: FROM_EMAIL,
       to: email,
-      subject: 'Your Earned Escape planning call request — received',
+      subject: 'Your Earned Escape planning call request – received',
       html: confirmHtml,
     });
 
@@ -268,7 +268,7 @@ router.post('/api/plan', async (req, res) => {
         console.error('Failed to add contact to Resend Audience:', contactErr);
       }
     } else {
-      console.log('RESEND_AUDIENCE_ID not set — skipping contact registration');
+      console.log('RESEND_AUDIENCE_ID not set – skipping contact registration');
     }
 
     // 4. Add contact to Brevo (free email automation) if configured

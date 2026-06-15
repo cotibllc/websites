@@ -3,7 +3,7 @@ import './nav.js';
 import './destinations.js';
 import './quiz.js';
 
-/* Scroll reveal — inlined so main.js?v= cache bust applies (imported modules are not versioned) */
+/* Scroll reveal – inlined so main.js?v= cache bust applies (imported modules are not versioned) */
 const AUTO_REVEAL_SELECTORS = [
   '.about-stat-card',
   '.why-card',
