@@ -89,6 +89,16 @@ router.get('/plan', (req, res) => {
   });
 });
 
+router.get('/compliance', (req, res) => {
+  res.render('pages/compliance.njk', {
+    site,
+    bodyClass: 'dest-page',
+    title: 'Compliance & Disclosures | Earned Escape',
+    description: 'Affiliate disclosure, business registration, and transparency about how Earned Escape operates as an affiliate of Castle Dreams Travel.',
+    canonical: '/compliance',
+  });
+});
+
 // POST /api/plan — handles the consultation request form (Turnstile + Resend)
 router.post('/api/plan', async (req, res) => {
   if (req.method !== 'POST') {
