@@ -3,10 +3,10 @@ const router = express.Router();
 const site = require('../config/site');
 
 const { Resend } = require('resend');
-const { createBrevoClient } = require('../lib/brevo');
 
-const TO_EMAIL = 'support@earnedescape.co';
-const FROM_EMAIL = 'Earned Escape <no-reply@earnedescape.agency>';
+
+const TO_EMAIL = 'cbetancourt@castledreamstravel.com';
+const FROM_EMAIL = 'Chuck Betancourt <cbetancourt@castledreamstravel.com>';
 
 function escapeHtml(str) {
   if (!str) return '';
@@ -271,64 +271,13 @@ router.post('/api/plan', async (req, res) => {
       console.log('RESEND_AUDIENCE_ID not set – skipping contact registration');
     }
 
-    // 4. Add contact to Brevo (free email automation) if configured
-    const brevo = createBrevoClient();
-    if (brevo) {
-      try {
-        const nameParts = name.trim().split(/\s+/);
-        const firstName = nameParts[0] || '';
-        const lastName = nameParts.slice(1).join(' ') || '';
 
-        // Build custom fields for Brevo (metadata about the inquiry)
-        const attributes = {
-          TRIP_TYPE: tripType || 'unspecified',
-          TRAVEL_WINDOW: dates || '',
-          GROUP_SIZE: travelers || '',
-          SUPPORT_PREFERENCE: supportTier || '',
-          INQUIRY_SOURCE: 'website_plan_form',
-        };
-
-        // Determine which list(s) to add contact to based on trip type
-        // You'll set these list IDs in Brevo and add to environment variables
-        const listIds = [parseInt(process.env.BREVO_NURTURE_LIST_ID || 0)].filter(id => id > 0);
-
-        if (tripType) {
-          if (tripType.toLowerCase().includes('royal')) {
-            const rcListId = parseInt(process.env.BREVO_RC_LIST_ID || 0);
-            if (rcListId > 0) listIds.push(rcListId);
-          } else if (tripType.toLowerCase().includes('disney cruise') || tripType.toLowerCase().includes('dcl')) {
-            const dclListId = parseInt(process.env.BREVO_DCL_LIST_ID || 0);
-            if (dclListId > 0) listIds.push(dclListId);
-          } else if (tripType.toLowerCase().includes('disney world') || tripType.toLowerCase().includes('wdw')) {
-            const wdwListId = parseInt(process.env.BREVO_WDW_LIST_ID || 0);
-            if (wdwListId > 0) listIds.push(wdwListId);
-          } else if (tripType.toLowerCase().includes('universal')) {
-            const univListId = parseInt(process.env.BREVO_UNIVERSAL_LIST_ID || 0);
-            if (univListId > 0) listIds.push(univListId);
-          }
-        }
-
-        // Create or update contact in Brevo
-        await brevo.createOrUpdateContact({
-          email: email.trim(),
-          firstName,
-          lastName,
-          attributes,
-          listIds,
-        });
-
-        console.log(`Brevo contact created for ${email} with lists: ${listIds.join(', ')}`);
-      } catch (brevoErr) {
-        console.error('Failed to add contact to Brevo:', brevoErr.message);
-        // Don't fail the entire request if Brevo integration fails
-      }
-    }
 
     return res.status(200).json({ success: true });
   } catch (err) {
     console.error('Resend error (plan form):', err);
     return res.status(500).json({
-      error: 'Something went wrong sending your request. Please try again or email support@earnedescape.co directly.',
+      error: 'Something went wrong sending your request. Please try again or email cbetancourt@castledreamstravel.com directly.',
     });
   }
 });
