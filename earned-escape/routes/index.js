@@ -237,7 +237,7 @@ router.post('/api/plan', async (req, res) => {
 
   <hr style="margin: 32px 0 16px; border: none; border-top: 1px solid #eee;">
   <p style="font-size: 11px; color: #999; margin: 0;">
-    Earned Escape is operated by COTIB Adventures LLC and affiliated with Castle Dreams Travel.
+    Earned Escape is operated by COTIB Adventures LLC and is an affiliate of Castle Dreams Travel.
   </p>
 </body>
 </html>`;
@@ -328,7 +328,7 @@ router.post('/api/plan', async (req, res) => {
   } catch (err) {
     console.error('Resend error (plan form):', err);
     return res.status(500).json({
-      error: 'Something went wrong sending your request. Please try again or email customerservice@cotib.com directly.',
+      error: 'Something went wrong sending your request. Please try again or email support@earnedescape.co directly.',
     });
   }
 });
