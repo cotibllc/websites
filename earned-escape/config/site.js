@@ -72,9 +72,9 @@ module.exports = {
 
   // ── SEO
   seo: {
-    title: "Earned Escape | Luxury Cruises, Disney Trips, and Elevated Escapes",
+    title: "Earned Escape | Luxury Cruise Travel Agency & Family Vacations",
     description:
-      'Luxury cruises, Disney trips, and elevated family escapes planned with a personal touch for Royal Caribbean, Disney Cruise Line, Walt Disney World, and Universal.',
+      "Earned Escape is a luxury cruise travel agency specializing in Disney Cruise Line, Royal Caribbean, Walt Disney World, and Universal vacations planned with a personal touch.",
     ogImage: '/images/og/og-default.png',
     twitterHandle: '@earned_escape',
   },

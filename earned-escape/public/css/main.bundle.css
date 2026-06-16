@@ -263,7 +263,7 @@ em {
   max-width: var(--max-width);
   margin: 0 auto;
   padding: 0 var(--section-pad-x);
-  height: 72px;
+  height: 100px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -284,7 +284,7 @@ em {
 .nav-logo__img {
   display: block;
   width: auto;
-  height: 36px;
+  height: 80px;
   max-width: min(200px, 42vw);
 }
 
@@ -2449,7 +2449,7 @@ body.dest-page .reveal {
 .footer-logo__img {
   display: block;
   width: auto;
-  height: 40px;
+  height: 140px;
   max-width: 100%;
 }
 
@@ -3214,6 +3214,103 @@ body.dest-page .reveal {
   color: var(--off-white);
   font-size: 0.9rem;
   opacity: 0.5;
+}
+
+
+/* ==========================================================================
+   Imported: _author.css
+   ========================================================================== */
+
+/* ==========================================================================
+   AUTHOR BIO SECTION (E-E-A-T)
+   Consistent layout for introducing the planner and showing trust credentials
+   ========================================================================== */
+
+.author-bio {
+  padding: var(--section-pad-y) var(--section-pad-x);
+  background: var(--warm-bg);
+  border-top: 1px solid rgba(201, 168, 76, 0.15);
+  position: relative;
+  z-index: 2;
+}
+
+.author-bio__inner {
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  display: grid;
+  gap: 48px;
+  align-items: center;
+}
+
+@media (min-width: 768px) {
+  .author-bio__inner {
+    grid-template-columns: 1fr 1.5fr;
+  }
+}
+
+.author-bio__photo img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  border: 1px solid rgba(201, 168, 76, 0.2);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  aspect-ratio: 4/3;
+  object-fit: cover;
+}
+
+.author-bio__name {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 4vw, 36px);
+  color: var(--navy);
+  margin-bottom: 4px;
+}
+
+.author-bio__title {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--gold);
+  letter-spacing: 0.05em;
+  margin-bottom: 24px;
+}
+
+.author-bio__paragraph {
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 1.7;
+  color: rgba(11, 31, 58, 0.85);
+  margin-bottom: 16px;
+}
+
+.author-bio__paragraph:last-of-type {
+  margin-bottom: 0;
+}
+
+.author-bio__badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 28px;
+}
+
+.author-bio__badge {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 400;
+  color: rgba(11, 31, 58, 0.7);
+  background: rgba(201, 168, 76, 0.08);
+  border: 1px solid rgba(201, 168, 76, 0.25);
+  padding: 8px 14px;
+  border-radius: 4px;
+}
+
+.author-bio__badge strong {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--navy);
+  margin-bottom: 2px;
 }
 
 

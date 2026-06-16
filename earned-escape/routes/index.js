@@ -23,6 +23,7 @@ router.get('/', (req, res) => {
     bodyClass: 'home',
     title: site.seo.title,
     description: site.seo.description,
+    canonical: '/',
   });
 });
 
@@ -83,8 +84,8 @@ router.get('/universal', (req, res) => {
 router.get('/plan', (req, res) => {
   res.render('pages/plan.njk', {
     site,
-    title: 'Plan Your Escape | Earned Escape',
-    description: 'Book a 30-minute planning call with Chuck. Personal, no-pressure guidance for Royal Caribbean, Disney Cruise Line, Walt Disney World, and Universal vacations.',
+    title: 'Vacation Planning Call | Earned Escape',
+    description: 'Book a free 30-minute vacation planning call with Chuck. Personal, no-pressure guidance for Royal Caribbean, Disney Cruise Line, Walt Disney World, and Universal vacations.',
     canonical: '/plan',
   });
 });
