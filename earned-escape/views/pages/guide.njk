@@ -1,0 +1,178 @@
+{% extends "layout/base.njk" %}
+
+{% block content %}
+  <style>
+    .guide-hero {
+      padding: 120px 24px 80px;
+      background: var(--dark-purple);
+      text-align: center;
+      position: relative;
+    }
+    .guide-hero__headline {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      color: var(--white);
+      margin-bottom: 24px;
+      line-height: 1.1;
+    }
+    .guide-hero__sub {
+      font-size: 1.2rem;
+      color: var(--off-white);
+      max-width: 600px;
+      margin: 0 auto 40px;
+      line-height: 1.6;
+    }
+    .guide-form-container {
+      max-width: 500px;
+      margin: -60px auto 100px;
+      background: var(--white);
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+      position: relative;
+      z-index: 10;
+    }
+    .guide-form-container .form-group {
+      margin-bottom: 24px;
+      text-align: left;
+    }
+    .guide-form-container label {
+      color: var(--dark-purple);
+      font-weight: 600;
+    }
+    .guide-form-container input {
+      border: 1px solid #ccc;
+      color: var(--dark-purple);
+      background: #fafafa;
+    }
+    .guide-form-container input:focus {
+      background: var(--white);
+      border-color: var(--gold);
+    }
+    #guide-success {
+      text-align: center;
+      padding: 30px 0;
+    }
+    #guide-success h3 {
+      color: var(--dark-purple);
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      margin-bottom: 16px;
+    }
+    #guide-success p {
+      color: #666;
+      margin-bottom: 24px;
+    }
+  </style>
+
+  <section class="guide-hero">
+    <div class="container">
+      <p class="section-eyebrow" style="color: var(--gold);">Free PDF Guide</p>
+      <h1 class="guide-hero__headline">
+        5 Mistakes First-Time<br>Cruisers Make
+      </h1>
+      <p class="guide-hero__sub">
+        Learn the hidden failure points that ruin family vacations, and how to pick the right ship, dining strategy, and logistics so you can actually relax.
+      </p>
+    </div>
+  </section>
+
+  <section class="guide-form-section">
+    <div class="container">
+      <div class="guide-form-container">
+        
+        <div id="guide-success" style="display:none;">
+          <h3>Check your inbox!</h3>
+          <p>I've just sent the guide directly to your email. You can also download it right now using the button below.</p>
+          <a href="/downloads/5-mistakes-first-time-cruisers-make.pdf" target="_blank" class="btn btn--gold">Download PDF Now</a>
+        </div>
+        
+        <div id="guide-error" class="plan-alert plan-alert--error" style="display:none; margin-bottom: 20px;"></div>
+
+        <form id="guide-form" novalidate>
+          <div class="form-group">
+            <label for="g-name">First Name</label>
+            <input type="text" id="g-name" name="name" required autocomplete="given-name" placeholder="Your name" />
+          </div>
+
+          <div class="form-group">
+            <label for="g-email">Email Address</label>
+            <input type="email" id="g-email" name="email" required autocomplete="email" placeholder="Where should I send it?" />
+          </div>
+
+          {% if site.turnstileSiteKey %}
+          <div class="form-group">
+            <div class="cf-turnstile" data-sitekey="{{ site.turnstileSiteKey }}" data-theme="auto"></div>
+          </div>
+          {% endif %}
+
+          <button type="submit" id="guide-submit-btn" class="btn btn--purple" style="width: 100%;">Send Me The Guide</button>
+          
+          <p style="font-size: 12px; color: #888; margin-top: 16px; text-align: center; line-height: 1.4;">
+            By requesting this guide, you'll also receive occasional travel tips from Chuck. Earned Escape is an affiliate of Castle Dreams Travel.
+          </p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const form = document.getElementById('guide-form');
+      const submitBtn = document.getElementById('guide-submit-btn');
+      const successDiv = document.getElementById('guide-success');
+      const errorDiv = document.getElementById('guide-error');
+
+      if (!form) return;
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        errorDiv.style.display = 'none';
+        errorDiv.textContent = '';
+        
+        const name = document.getElementById('g-name').value;
+        const email = document.getElementById('g-email').value;
+        let turnstileToken = '';
+
+        const tsInput = form.querySelector('[name="cf-turnstile-response"]');
+        if (tsInput) {
+          turnstileToken = tsInput.value;
+        }
+
+        if (!name || !email) {
+          errorDiv.textContent = 'Please provide both your name and email address.';
+          errorDiv.style.display = 'block';
+          return;
+        }
+
+        const originalBtnText = submitBtn.textContent;
+        submitBtn.textContent = 'Sending...';
+        submitBtn.disabled = true;
+
+        try {
+          const res = await fetch('/api/guide', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, email, turnstileToken })
+          });
+
+          const data = await res.json();
+
+          if (!res.ok) {
+            throw new Error(data.error || 'Failed to submit request');
+          }
+
+          form.style.display = 'none';
+          successDiv.style.display = 'block';
+
+        } catch (err) {
+          errorDiv.textContent = err.message;
+          errorDiv.style.display = 'block';
+          submitBtn.textContent = originalBtnText;
+          submitBtn.disabled = false;
+        }
+      });
+    });
+  </script>
+{% endblock %}

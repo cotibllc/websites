@@ -100,6 +100,107 @@ router.get('/compliance', (req, res) => {
   });
 });
 
+router.get('/guide', (req, res) => {
+  res.render('pages/guide.njk', {
+    site,
+    bodyClass: 'dest-page',
+    title: '5 Mistakes First-Time Cruisers Make | Earned Escape',
+    description: 'Get the free guide on how to avoid the hidden failure points that ruin family vacations.',
+    canonical: '/guide',
+  });
+});
+
+router.get('/links', (req, res) => {
+  // Use a minimal layout without the global header/footer
+  res.render('pages/links.njk', {
+    site,
+    title: 'Links | Earned Escape',
+    description: 'Helpful links and resources from Chuck Betancourt, Travel Advisor at Earned Escape.',
+    canonical: '/links',
+  });
+});
+
+// POST /api/guide – handles the free guide lead capture
+router.post('/api/guide', async (req, res) => {
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method not allowed' });
+  }
+
+  const { name, email, turnstileToken } = req.body || {};
+
+  if (!name?.trim() || !email?.trim()) {
+    return res.status(400).json({ error: 'Please provide both your name and email address.' });
+  }
+
+  const secret = process.env.TURNSTILE_SECRET_KEY;
+  const hasTurnstile = !!secret;
+
+  if (hasTurnstile && !turnstileToken) {
+    return res.status(400).json({ error: 'Please complete the security check.' });
+  }
+
+  if (hasTurnstile) {
+    try {
+      const verifyRes = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ secret, response: turnstileToken }),
+      });
+      const verifyData = await verifyRes.json();
+      if (!verifyData.success) {
+        return res.status(400).json({ error: 'Security check failed. Please refresh the page and try again.' });
+      }
+    } catch (err) {
+      return res.status(500).json({ error: 'Unable to complete security check.' });
+    }
+  }
+
+  const notifyHtml = `
+  <div style="font-family: sans-serif; padding: 20px;">
+    <h2>New Guide Download</h2>
+    <p><strong>Name:</strong> ${escapeHtml(name)}</p>
+    <p><strong>Email:</strong> ${escapeHtml(email)}</p>
+    <p><em>They requested the "5 Mistakes" guide via earnedescape.agency/guide</em></p>
+  </div>`;
+
+  const deliverHtml = `
+  <div style="font-family: sans-serif; max-width: 600px; padding: 20px;">
+    <p>Hi ${escapeHtml(name)},</p>
+    <p>Thanks for requesting the guide! As promised, here is the direct link to download <strong>5 Mistakes First-Time Cruisers Make (And How to Avoid Them)</strong>:</p>
+    <p><a href="https://earnedescape.agency/downloads/5-mistakes-first-time-cruisers-make.pdf" style="display:inline-block; padding:12px 24px; background:#2A164E; color:#fff; text-decoration:none; border-radius:4px;">Download The Guide</a></p>
+    <p>If you only take one thing away from the guide, pay close attention to <strong>Mistake #2</strong>. It is the single biggest money-waster I see on family sailings.</p>
+    <p>Give it a read, and if you have any questions, just reply to this email.</p>
+    <p>Talk soon,<br>Chuck Betancourt<br>Earned Escape by COTIB Adventures LLC</p>
+    <p style="font-size: 11px; color: #999; margin-top: 40px;">Earned Escape is an affiliate of Castle Dreams Travel.</p>
+  </div>`;
+
+  try {
+    const resend = new Resend(process.env.RESEND_API_KEY);
+
+    // 1. Notify Chuck
+    await resend.emails.send({
+      from: FROM_EMAIL,
+      to: TO_EMAIL,
+      replyTo: email,
+      subject: \`[Earned Escape] Guide Downloaded: \${name}\`,
+      html: notifyHtml,
+    });
+
+    // 2. Deliver PDF to lead
+    await resend.emails.send({
+      from: FROM_EMAIL,
+      to: email,
+      subject: "Here's your guide! (Plus the one mistake that drives me crazy)",
+      html: deliverHtml,
+    });
+
+    return res.status(200).json({ success: true });
+  } catch (err) {
+    console.error('Guide API error:', err);
+    return res.status(500).json({ error: 'Something went wrong. Please try again.' });
+  }
+});
+
 // POST /api/plan – handles the consultation request form (Turnstile + Resend)
 router.post('/api/plan', async (req, res) => {
   if (req.method !== 'POST') {
