@@ -182,7 +182,7 @@ router.post('/api/guide', async (req, res) => {
       from: FROM_EMAIL,
       to: TO_EMAIL,
       replyTo: email,
-      subject: \`[Earned Escape] Guide Downloaded: \${name}\`,
+      subject: '[Earned Escape] Guide Downloaded: ' + name,
       html: notifyHtml,
     });
 
