@@ -107,6 +107,7 @@ router.get('/guide', (req, res) => {
     title: '5 Mistakes First-Time Cruisers Make | Earned Escape',
     description: 'Get the free guide on how to avoid the hidden failure points that ruin family vacations.',
     canonical: '/guide',
+    ogImage: '/images/photos/guide-cover.png',
   });
 });
 
@@ -117,6 +118,7 @@ router.get('/links', (req, res) => {
     title: 'Links | Earned Escape',
     description: 'Helpful links and resources from Chuck Betancourt, Travel Advisor at Earned Escape.',
     canonical: '/links',
+    ogImage: '/images/photos/great-wall-smiling-story.jpg',
   });
 });
 
