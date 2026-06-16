@@ -37,15 +37,27 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://earnedescape.agency/#about</loc>
+    <loc>https://earnedescape.agency/about</loc>
     <lastmod>2026-06-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://earnedescape.agency/#quiz-section</loc>
+    <loc>https://earnedescape.agency/compliance</loc>
     <lastmod>2026-06-16</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://earnedescape.agency/guide</loc>
+    <lastmod>2026-06-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://earnedescape.agency/links</loc>
+    <lastmod>2026-06-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
   </url>
 </urlset>
