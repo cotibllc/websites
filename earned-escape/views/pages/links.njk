@@ -1,127 +1,130 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Links | Earned Escape</title>
-  <meta name="description" content="Helpful links and resources from Chuck Betancourt, Travel Advisor at Earned Escape.">
-  <link rel="stylesheet" href="/css/main.bundle.css?v={{ site.assetVersion }}">
-  <style>
-    body {
-      background: var(--dark-purple);
-      color: var(--white);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 60px 24px;
-      font-family: var(--font-body);
-    }
-    .links-profile {
-      text-align: center;
-      margin-bottom: 40px;
-    }
-    .links-profile img {
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 3px solid var(--gold);
-      margin-bottom: 16px;
-    }
-    .links-profile h1 {
-      font-family: var(--font-display);
-      font-size: 1.8rem;
-      margin-bottom: 8px;
-    }
-    .links-profile p {
-      color: var(--off-white);
-      font-size: 1.1rem;
-      max-width: 400px;
-      margin: 0 auto;
-    }
-    .links-container {
-      width: 100%;
-      max-width: 500px;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-    .link-card {
-      display: block;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      padding: 20px;
-      border-radius: 12px;
-      text-align: center;
-      text-decoration: none;
-      color: var(--white);
-      font-weight: 600;
-      font-size: 1.1rem;
-      transition: all 0.3s ease;
-    }
-    .link-card:hover {
-      background: rgba(255, 255, 255, 0.1);
-      border-color: var(--gold);
-      transform: translateY(-2px);
-    }
-    .link-card--primary {
-      background: var(--gold);
-      color: var(--dark-purple);
-      border-color: var(--gold);
-    }
-    .link-card--primary:hover {
-      background: #d4b55c;
-      color: var(--dark-purple);
-    }
-    .links-social {
-      display: flex;
-      gap: 20px;
-      justify-content: center;
-      margin-top: 40px;
-    }
-    .links-social a {
-      color: var(--off-white);
-      transition: color 0.3s ease;
-    }
-    .links-social a:hover {
-      color: var(--gold);
-    }
-    .links-footer {
-      margin-top: auto;
-      padding-top: 60px;
-      text-align: center;
-      font-size: 0.85rem;
-      color: rgba(255,255,255,0.5);
-    }
-  </style>
-</head>
-<body>
+{% extends "layout/base.njk" %}
 
+{% block content %}
+<style>
+  /* Hide the main header and footer for the links page */
+  .site-header, .site-footer {
+    display: none !important;
+  }
+  
+  .links-page-wrapper {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 60px 24px;
+    background: var(--dark-purple);
+  }
+  
+  .links-profile {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  .links-profile img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--gold);
+    margin-bottom: 16px;
+  }
+  .links-profile h1 {
+    font-family: var(--font-display);
+    font-size: 1.8rem;
+    margin-bottom: 8px;
+    color: var(--white);
+  }
+  .links-profile p {
+    color: var(--off-white);
+    font-size: 1.1rem;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  
+  .links-container {
+    width: 100%;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .link-card {
+    display: block;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+    text-decoration: none;
+    color: var(--white);
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+  }
+  .link-card:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--gold);
+    transform: translateY(-2px);
+  }
+  .link-card--primary {
+    background: var(--gold);
+    color: var(--dark-purple);
+    border-color: var(--gold);
+  }
+  .link-card--primary:hover {
+    background: #e2c87b;
+    color: var(--dark-purple);
+  }
+  
+  .links-social {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 40px;
+  }
+  .links-social a {
+    color: var(--off-white);
+    transition: color 0.3s ease;
+  }
+  .links-social a:hover {
+    color: var(--gold);
+  }
+  
+  .links-footer {
+    margin-top: auto;
+    padding-top: 60px;
+    text-align: center;
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.5);
+  }
+</style>
+
+<div class="links-page-wrapper">
   <div class="links-profile">
     <picture>
       <source srcset="/images/photos/chuck-portrait.webp?v={{ site.assetVersion }}" type="image/webp">
       <img src="/images/photos/chuck-portrait.jpg?v={{ site.assetVersion }}" alt="Chuck Betancourt">
     </picture>
     <h1>Earned Escape</h1>
-    <p>Travel Advisor • Systems Thinker • An affiliate of Castle Dreams Travel™</p>
+    <p>Travel Advisor • Systems Thinker<br>An affiliate of Castle Dreams Travel™</p>
   </div>
 
   <div class="links-container">
     <a href="/guide" class="link-card link-card--primary">
-      🎁 Get the Free Guide: 5 Cruise Mistakes
+      Get the Free Guide: 5 Cruise Mistakes
     </a>
     <a href="/plan" class="link-card">
-      🗓️ Book a Free Planning Call
+      Book a Free Planning Call
     </a>
     <a href="/royal-caribbean" class="link-card">
-      🚢 Royal Caribbean Cruises
+      Royal Caribbean Cruises
     </a>
     <a href="/disney-cruise-line" class="link-card">
-      ✨ Disney Cruise Line
+      Disney Cruise Line
     </a>
     <a href="/" class="link-card">
-      🌐 Visit the Website
+      Visit the Website
     </a>
   </div>
 
@@ -142,6 +145,5 @@
     Earned Escape is operated by {{ site.brand.business }}<br>
     and is an affiliate of {{ site.brand.parentAgency }}.
   </div>
-
-</body>
-</html>
+</div>
+{% endblock %}

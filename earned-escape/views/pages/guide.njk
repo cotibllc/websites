@@ -1,104 +1,53 @@
 {% extends "layout/base.njk" %}
 
 {% block content %}
-  <style>
-    .guide-hero {
-      padding: 120px 24px 80px;
-      background: var(--dark-purple);
-      text-align: center;
-      position: relative;
-    }
-    .guide-hero__headline {
-      font-family: var(--font-display);
-      font-size: clamp(2.5rem, 5vw, 4rem);
-      color: var(--white);
-      margin-bottom: 24px;
-      line-height: 1.1;
-    }
-    .guide-hero__sub {
-      font-size: 1.2rem;
-      color: var(--off-white);
-      max-width: 600px;
-      margin: 0 auto 40px;
-      line-height: 1.6;
-    }
-    .guide-form-container {
-      max-width: 500px;
-      margin: -60px auto 100px;
-      background: var(--white);
-      padding: 40px;
-      border-radius: 12px;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-      position: relative;
-      z-index: 10;
-    }
-    .guide-form-container .form-group {
-      margin-bottom: 24px;
-      text-align: left;
-    }
-    .guide-form-container label {
-      color: var(--dark-purple);
-      font-weight: 600;
-    }
-    .guide-form-container input {
-      border: 1px solid #ccc;
-      color: var(--dark-purple);
-      background: #fafafa;
-    }
-    .guide-form-container input:focus {
-      background: var(--white);
-      border-color: var(--gold);
-    }
-    #guide-success {
-      text-align: center;
-      padding: 30px 0;
-    }
-    #guide-success h3 {
-      color: var(--dark-purple);
-      font-family: var(--font-display);
-      font-size: 1.8rem;
-      margin-bottom: 16px;
-    }
-    #guide-success p {
-      color: #666;
-      margin-bottom: 24px;
-    }
-  </style>
-
-  <section class="guide-hero">
-    <div class="container">
-      <p class="section-eyebrow" style="color: var(--gold);">Free PDF Guide</p>
-      <h1 class="guide-hero__headline">
-        5 Mistakes First-Time<br>Cruisers Make
+  <!-- Hero / Intro -->
+  <section class="plan-hero">
+    <div class="plan-hero__inner">
+      <p class="section-eyebrow">Free PDF Guide</p>
+      <h1 class="plan-hero__headline">
+        5 Mistakes First-Time<br><em>Cruisers Make</em>
       </h1>
-      <p class="guide-hero__sub">
+      <p class="plan-hero__sub">
         Learn the hidden failure points that ruin family vacations, and how to pick the right ship, dining strategy, and logistics so you can actually relax.
       </p>
     </div>
   </section>
 
-  <section class="guide-form-section">
-    <div class="container">
-      <div class="guide-form-container">
-        
-        <div id="guide-success" style="display:none;">
-          <h3>Check your inbox!</h3>
-          <p>I've just sent the guide directly to your email. You can also download it right now using the button below.</p>
-          <a href="/downloads/5-mistakes-first-time-cruisers-make.pdf" target="_blank" class="btn btn--gold">Download PDF Now</a>
+  <!-- The form -->
+  <section class="plan-form" id="plan-form-section">
+    <div class="plan-form__inner">
+      <h2>Where should I send it?</h2>
+      <p class="plan-form__lead">
+        Enter your info below and I'll send the PDF directly to your inbox.
+      </p>
+
+      <div id="guide-success" class="plan-success-container" style="display:none;">
+        <div class="plan-alert plan-alert--success" style="margin-bottom: 32px;">
+          <strong>Thank you!</strong> Check your inbox.
         </div>
-        
-        <div id="guide-error" class="plan-alert plan-alert--error" style="display:none; margin-bottom: 20px;"></div>
+        <div class="plan-booking-cta" style="text-align: center; padding: 40px 20px; background: rgba(38, 19, 74, 0.4); border: 1px solid rgba(201, 168, 76, 0.2); border-radius: 12px; max-width: 600px; margin: 0 auto;">
+          <h3 style="color: var(--white); font-family: var(--font-display); font-size: 1.8rem; margin-bottom: 12px;">Download it now</h3>
+          <p style="color: var(--off-white); opacity: 0.8; margin-bottom: 28px; line-height: 1.5;">
+            You don't have to wait for the email. You can download the guide directly right now:
+          </p>
+          <a href="/downloads/5-mistakes-first-time-cruisers-make.pdf" target="_blank" rel="noopener noreferrer" class="btn btn--gold" style="display: inline-block; padding: 14px 32px; font-weight: 600;">
+            Download PDF &rarr;
+          </a>
+        </div>
+      </div>
+      <div id="guide-error" class="plan-alert plan-alert--error" style="display:none;"></div>
 
-        <form id="guide-form" novalidate>
-          <div class="form-group">
-            <label for="g-name">First Name</label>
-            <input type="text" id="g-name" name="name" required autocomplete="given-name" placeholder="Your name" />
-          </div>
+      <form id="guide-form" class="plan-form" novalidate>
+        <div class="form-group">
+          <label for="g-name">Your first name *</label>
+          <input type="text" id="g-name" name="name" required autocomplete="given-name" />
+        </div>
 
-          <div class="form-group">
-            <label for="g-email">Email Address</label>
-            <input type="email" id="g-email" name="email" required autocomplete="email" placeholder="Where should I send it?" />
-          </div>
+        <div class="form-group">
+          <label for="g-email">Email address *</label>
+          <input type="email" id="g-email" name="email" required autocomplete="email" />
+        </div>
 
           {% if site.turnstileSiteKey %}
           <div class="form-group">
@@ -106,14 +55,17 @@
           </div>
           {% endif %}
 
-          <button type="submit" id="guide-submit-btn" class="btn btn--purple" style="width: 100%;">Send Me The Guide</button>
+          <button type="submit" id="guide-submit-btn" class="btn btn--purple">Send Me The Guide</button>
           
-          <p style="font-size: 12px; color: #888; margin-top: 16px; text-align: center; line-height: 1.4;">
-            By requesting this guide, you'll also receive occasional travel tips from Chuck. Earned Escape is an affiliate of Castle Dreams Travel.
+          <p class="form-note">
+            By requesting this guide, you'll also receive occasional travel tips from Chuck.
+          </p>
+
+          <p class="form-affiliation">
+            Earned Escape is operated by {{ site.brand.business }} and is an affiliate of {{ site.brand.parentAgency }}.
           </p>
         </form>
       </div>
-    </div>
   </section>
 
   <script>
