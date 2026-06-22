@@ -1,6 +1,46 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@theme {
+  --color-synergy-gray: var(--synergy-gray);
+  --color-synergy-dark: var(--synergy-dark);
+  --color-synergy-navy: var(--synergy-navy);
+  --color-synergy-muted: var(--synergy-muted);
+  --color-synergy-rule: var(--synergy-rule);
+  --color-synergy-amber: var(--synergy-amber);
+  --color-synergy-amber-light: var(--synergy-amber-light);
+  --color-synergy-white: var(--synergy-white);
+  --color-synergy-green: var(--synergy-green);
+  --color-synergy-green-light: var(--synergy-green-light);
+
+  --font-sans: var(--font-sans), system-ui, sans-serif;
+  --font-mono: var(--font-mono), ui-monospace, monospace;
+
+  --spacing-nav: 52px;
+  --spacing-ticker: 32px;
+  --height-nav: 52px;
+  --height-ticker: 32px;
+  --max-width-content: 1128px;
+
+  --animate-ticker: tickerScroll 38s linear infinite;
+  --animate-flicker: navFlicker 9s ease-in-out infinite;
+  --animate-fade-in: fadeInUp 0.5s ease-out forwards;
+}
+
+@keyframes tickerScroll {
+  from { transform: translateX(0); }
+  to:   { transform: translateX(-50%); }
+}
+@keyframes navFlicker {
+  0%, 88%, 90%, 92%, 94%, 100% { opacity: 1; }
+  89% { opacity: 0.97; }
+  91% { opacity: 0.99; }
+  93% { opacity: 0.95; }
+}
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(6px); }
+  to:   { opacity: 1; transform: translateY(0); }
+}
 
 /* -------------------------------------------------------------------------
    Design tokens
@@ -58,18 +98,18 @@ body {
     @apply inline-block font-mono text-[9px] tracking-[0.12em] uppercase px-2 py-0.5 border;
   }
   .status-filed {
-    @apply status-badge border-synergy-rule text-synergy-muted bg-synergy-white;
+    @apply inline-block font-mono text-[9px] tracking-[0.12em] uppercase px-2 py-0.5 border border-synergy-rule text-synergy-muted bg-synergy-white;
   }
   .status-review {
-    @apply status-badge border-synergy-amber text-synergy-amber bg-synergy-amber-light;
+    @apply inline-block font-mono text-[9px] tracking-[0.12em] uppercase px-2 py-0.5 border border-synergy-amber text-synergy-amber bg-synergy-amber-light;
   }
   .status-pending {
-    @apply status-badge border-synergy-green text-synergy-green bg-synergy-green-light;
+    @apply inline-block font-mono text-[9px] tracking-[0.12em] uppercase px-2 py-0.5 border border-synergy-green text-synergy-green bg-synergy-green-light;
   }
 
   /* Priority memo left border */
   .memo-card {
-    @apply intranet-card border-l-4 border-l-synergy-amber;
+    @apply bg-white border border-synergy-rule border-l-4 border-l-synergy-amber;
   }
 
   /* Button: primary */

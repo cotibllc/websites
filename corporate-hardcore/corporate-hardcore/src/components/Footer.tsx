@@ -24,6 +24,22 @@ export default function Footer() {
           <Link href="/contact" className="font-mono text-[9px] tracking-[0.1em] uppercase text-white/25 hover:text-white/50 transition-colors">
             Contact
           </Link>
+          <a
+            href="https://www.cotib.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-mono text-[9px] tracking-[0.1em] uppercase text-white/25 hover:text-white/50 transition-colors"
+          >
+            cotib.com
+          </a>
+          <a
+            href="https://www.theitxp.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-mono text-[9px] tracking-[0.1em] uppercase text-white/25 hover:text-white/50 transition-colors"
+          >
+            theitxp.com
+          </a>
           <span className="font-mono text-[9px] text-white/20 ml-auto italic">
             Circle Back. Never Return.
           </span>
