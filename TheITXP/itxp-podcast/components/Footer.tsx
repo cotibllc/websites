@@ -1,4 +1,6 @@
 const SOCIAL_LINKS = [
+  { href: "https://www.theitxp.com", label: "theitxp.com" },
+  { href: "https://www.techleadshift.com", label: "techleadshift.com" },
   { href: "https://www.youtube.com/@theitxp", label: "YouTube" },
   { href: "https://www.tiktok.com/@the.it.xp", label: "TikTok" },
   { href: "https://twitter.com/theitxp", label: "Twitter / X" },

@@ -5,7 +5,7 @@ export const metadata: Metadata = { title: "About" };
 export default function AboutPage() {
   return (
     <div className="max-w-3xl mx-auto px-4 py-12">
-      <h1 className="text-3xl font-bold mb-8">About The IT XP</h1>
+      <h1 className="font-condensed font-bold text-4xl uppercase tracking-tight mb-8">About The IT XP</h1>
       <div className="prose prose-gray max-w-none">
         <p>
           This is the home of the The IT XP, a show dedicated to the world of Information Technology

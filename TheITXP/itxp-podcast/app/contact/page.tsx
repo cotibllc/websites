@@ -48,7 +48,7 @@ export default function ContactPage() {
 
   return (
     <div className="max-w-2xl mx-auto px-4 py-12">
-      <h1 className="text-3xl font-bold mb-2">Contact</h1>
+      <h1 className="font-condensed font-bold text-4xl uppercase tracking-tight mb-2">Contact</h1>
       <p className="text-sm text-steel mb-8">
         This form goes directly to Chuck. Response time varies.
       </p>

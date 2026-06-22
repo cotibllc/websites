@@ -52,18 +52,10 @@ function parseEntry(entry: RawEntry): Video {
   };
 }
 
-let cachedVideos: Video[] | null = null;
-let cacheTime = 0;
-const CACHE_TTL = 60 * 60 * 1000; // 1 hour in-process cache
-
 export async function getVideos(): Promise<Video[]> {
-  if (cachedVideos && Date.now() - cacheTime < CACHE_TTL) {
-    return cachedVideos;
-  }
-
   try {
-    const res = await fetch(FEED_URL, { next: { revalidate: 86400 } });
-    if (!res.ok) return cachedVideos ?? [];
+    const res = await fetch(FEED_URL, { next: { revalidate: 7200 } });
+    if (!res.ok) return [];
     const xml = await res.text();
 
     const parser = new XMLParser({
@@ -75,11 +67,8 @@ export async function getVideos(): Promise<Video[]> {
     const entriesRaw = result?.feed?.entry ?? [];
     const entries: RawEntry[] = Array.isArray(entriesRaw) ? entriesRaw : [entriesRaw];
 
-    cachedVideos = entries.map(parseEntry).filter((v) => v.id);
-    cacheTime = Date.now();
-    return cachedVideos;
+    return entries.map(parseEntry).filter((v) => v.id);
   } catch {
-    // Network/parse failure: serve stale cache if we have it, else empty.
-    return cachedVideos ?? [];
+    return [];
   }
 }

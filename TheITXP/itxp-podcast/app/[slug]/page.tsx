@@ -3,7 +3,7 @@ import EpisodePlayer from "@/components/EpisodePlayer";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 
-export const revalidate = 86400;
+export const revalidate = 7200;
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -38,19 +38,21 @@ export default async function EpisodePage({ params }: Props) {
   return (
     <article className="max-w-3xl mx-auto px-4 py-12">
       {/* Meta badges */}
-      <div className="flex flex-wrap gap-2 mb-4 text-sm">
+      <div className="flex flex-wrap items-center gap-3 mb-6">
         {episode.season > 0 && (
-          <span className="bg-blue-100 text-blue-700 px-2.5 py-0.5 rounded-full font-medium">
-            Season {episode.season} · Episode {episode.episodeNumber}
+          <span className="bg-amber/5 border border-amber/20 text-amber px-2.5 py-0.5 rounded font-mono font-semibold text-xs tracking-wider uppercase">
+            S{episode.season} · E{episode.episodeNumber}
           </span>
         )}
-        <span className="text-gray-500">{date}</span>
+        <span className="text-steel font-mono text-xs">{date}</span>
         {episode.duration && (
-          <span className="text-gray-500">· {episode.duration}</span>
+          <span className="text-steel font-mono text-xs">· {episode.duration}</span>
         )}
       </div>
 
-      <h1 className="text-3xl font-bold mb-6 leading-snug">{episode.title}</h1>
+      <h1 className="font-condensed font-bold text-4xl md:text-5xl text-white uppercase tracking-tight mb-6 leading-tight">
+        {episode.title}
+      </h1>
 
       <EpisodePlayer src={episode.enclosureUrl} title={episode.title} />
 

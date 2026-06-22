@@ -4,7 +4,7 @@ import EpisodeCard from "@/components/EpisodeCard";
 import VideoCard from "@/components/VideoCard";
 import Link from "next/link";
 
-export const revalidate = 86400;
+export const revalidate = 7200;
 
 export default async function HomePage() {
   const [episodes, videos] = await Promise.all([getEpisodes(), getVideos()]);

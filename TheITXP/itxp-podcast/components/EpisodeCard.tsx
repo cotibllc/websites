@@ -13,20 +13,20 @@ export default function EpisodeCard({ episode }: Props) {
   });
 
   return (
-    <article className="bg-white border border-gray-200 rounded-xl p-5 hover:shadow-md transition-shadow flex flex-col gap-3">
-      <div className="flex items-center gap-2 flex-wrap">
+    <article className="bg-slate border border-slate/50 rounded-xl p-5 hover:border-blue hover:shadow-lg hover:shadow-blue/5 transition-all flex flex-col gap-3">
+      <div className="flex items-center gap-2 flex-wrap text-xs">
         {episode.season > 0 && (
-          <span className="text-xs font-semibold bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">
+          <span className="font-mono text-amber tracking-wider font-semibold uppercase">
             S{episode.season} · E{episode.episodeNumber}
           </span>
         )}
-        <span className="text-xs text-gray-500">{date}</span>
+        <span className="text-steel font-mono">{date}</span>
         {episode.duration && (
-          <span className="text-xs text-gray-500 ml-auto">{episode.duration}</span>
+          <span className="text-steel font-mono ml-auto">{episode.duration}</span>
         )}
       </div>
-      <h2 className="font-semibold text-gray-900 leading-snug">
-        <Link href={`/${episode.slug}`} className="hover:text-blue-600 transition-colors">
+      <h2 className="font-semibold text-white leading-snug text-lg">
+        <Link href={`/${episode.slug}`} className="hover:text-amber transition-colors">
           {episode.title}
         </Link>
       </h2>

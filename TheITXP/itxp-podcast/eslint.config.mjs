@@ -12,6 +12,7 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    "the-it-xp-brand-preview-v1.1.jsx",
   ]),
 ]);
 

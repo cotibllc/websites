@@ -2,7 +2,7 @@ import Link from "next/link";
 
 const NAV_LINKS = [
   { href: "/episodes", label: "Episodes" },
-  { href: "/blog", label: "Blog" },
+  { href: "https://www.techleadshift.com", label: "Tech Lead Shift" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
 ];
@@ -15,13 +15,23 @@ export default function Nav() {
           THE IT <span className="text-amber">XP</span>
         </Link>
         <ul className="flex flex-wrap gap-6 text-sm font-medium">
-          {NAV_LINKS.map(({ href, label }) => (
-            <li key={href}>
-              <Link href={href} className="text-steel hover:text-white transition-colors uppercase tracking-widest text-xs">
-                {label}
-              </Link>
-            </li>
-          ))}
+          {NAV_LINKS.map(({ href, label }) => {
+            const isExternal = href.startsWith("http");
+            const className = "text-steel hover:text-white transition-colors uppercase tracking-widest text-xs";
+            return (
+              <li key={href}>
+                {isExternal ? (
+                  <a href={href} target="_blank" rel="noopener noreferrer" className={className}>
+                    {label}
+                  </a>
+                ) : (
+                  <Link href={href} className={className}>
+                    {label}
+                  </Link>
+                )}
+              </li>
+            );
+          })}
         </ul>
       </nav>
     </header>

@@ -19,9 +19,9 @@ export default function VideoCard({ video }: Props) {
       href={video.url}
       target="_blank"
       rel="noopener noreferrer"
-      className="group bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-md transition-shadow flex flex-col"
+      className="group bg-slate border border-slate/50 rounded-xl overflow-hidden hover:border-blue hover:shadow-lg hover:shadow-blue/5 transition-all flex flex-col"
     >
-      <div className="relative aspect-video bg-slate">
+      <div className="relative aspect-video bg-navy">
         <Image
           src={video.thumbnail}
           alt={video.title}
@@ -38,8 +38,8 @@ export default function VideoCard({ video }: Props) {
         </span>
       </div>
       <div className="p-5 flex flex-col gap-2">
-        {date && <span className="text-xs text-gray-500">{date}</span>}
-        <h3 className="font-semibold text-gray-900 leading-snug group-hover:text-blue-600 transition-colors line-clamp-2">
+        {date && <span className="text-xs text-steel font-mono">{date}</span>}
+        <h3 className="font-semibold text-white leading-snug group-hover:text-amber transition-colors line-clamp-2">
           {video.title}
         </h3>
       </div>

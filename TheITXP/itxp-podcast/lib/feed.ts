@@ -65,16 +65,8 @@ function parseEpisode(item: Record<string, unknown>): Episode {
   };
 }
 
-let cachedEpisodes: Episode[] | null = null;
-let cacheTime = 0;
-const CACHE_TTL = 60 * 60 * 1000; // 1 hour in-process cache
-
 export async function getEpisodes(): Promise<Episode[]> {
-  if (cachedEpisodes && Date.now() - cacheTime < CACHE_TTL) {
-    return cachedEpisodes;
-  }
-
-  const res = await fetch(RSS_URL, { next: { revalidate: 86400 } });
+  const res = await fetch(RSS_URL, { next: { revalidate: 7200 } });
   const xml = await res.text();
 
   const parser = new XMLParser({
@@ -86,9 +78,7 @@ export async function getEpisodes(): Promise<Episode[]> {
   const result = parser.parse(xml);
   const items: Record<string, unknown>[] = result?.rss?.channel?.item ?? [];
 
-  cachedEpisodes = items.map(parseEpisode);
-  cacheTime = Date.now();
-  return cachedEpisodes;
+  return items.map(parseEpisode);
 }
 
 export async function getEpisodeBySlug(slug: string): Promise<Episode | undefined> {
