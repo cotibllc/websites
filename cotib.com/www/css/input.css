@@ -1,0 +1,66 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-light: #60A5FA;
+  --color-brand: #3B82F6;
+  --color-brand-dark: #2563EB;
+  --color-brand-accent: #22D3EE;
+
+  --color-navy-50: #F8FAFC;
+  --color-navy-100: #F1F5F9;
+  --color-navy-200: #E2E8F0;
+  --color-navy-300: #CBD5E1;
+  --color-navy-400: #94A3B8;
+  --color-navy-500: #64748B;
+  --color-navy-600: #475569;
+  --color-navy-700: #334155;
+  --color-navy-800: #1E293B;
+  --color-navy-900: #0F172A;
+  --color-navy-950: #030712;
+
+  --font-sans: 'Outfit', 'Inter', 'system-ui', 'sans-serif';
+}
+
+@layer base {
+  body {
+    @apply bg-navy-950 text-navy-100 antialiased font-sans scroll-smooth;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply text-white font-semibold tracking-tight;
+  }
+}
+
+@layer components {
+  .glass {
+    @apply bg-navy-900/40 backdrop-blur-md border border-white/5 shadow-xl;
+  }
+  
+  .glass-card {
+    @apply bg-navy-900/40 backdrop-blur-md border border-white/5 rounded-2xl shadow-xl transition-all duration-300 hover:border-brand/30 hover:bg-navy-900/60 hover:shadow-brand/5;
+  }
+
+  .nav-link-custom {
+    @apply text-navy-300 hover:text-white px-3 py-2 text-sm font-medium transition-colors duration-200;
+  }
+  
+  .nav-link-active {
+    @apply text-brand-light font-semibold border-b-2 border-brand-light px-3 py-2 text-sm transition-all duration-200;
+  }
+
+  .btn-primary-custom {
+    @apply inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-xl text-white bg-brand hover:bg-brand-dark transition-all duration-300 shadow-lg shadow-brand/20 hover:shadow-brand/40 hover:-translate-y-0.5;
+  }
+
+  .btn-secondary-custom {
+    @apply inline-flex items-center justify-center px-6 py-3 border border-white/10 text-base font-medium rounded-xl text-navy-200 bg-white/5 hover:bg-white/10 hover:text-white transition-all duration-300 backdrop-blur-sm hover:-translate-y-0.5;
+  }
+
+  .accent-gradient {
+    @apply bg-gradient-to-r from-brand-light via-brand to-brand-accent bg-clip-text text-transparent;
+  }
+  
+  .bg-gradient-radial {
+    background-image: radial-gradient(circle at top, rgba(37, 99, 235, 0.15) 0%, transparent 70%);
+  }
+}

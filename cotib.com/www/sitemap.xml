@@ -13,6 +13,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://cotib.com/ventures</loc>
+    <lastmod>2026-06-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://cotib.com/blog</loc>
     <lastmod>2026-04-08</lastmod>
     <changefreq>monthly</changefreq>

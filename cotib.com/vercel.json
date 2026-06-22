@@ -1,6 +1,6 @@
 {
   "framework": null,
-  "buildCommand": "echo 'Static site — no build step'",
+  "buildCommand": "npm run build",
   "outputDirectory": "www",
   "installCommand": "npm install",
   "cleanUrls": true,

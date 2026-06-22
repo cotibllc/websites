@@ -1,288 +1,242 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="description" content="COTIB LLC Blog — Insights on technology, IT strategy, cloud computing, cybersecurity, and the evolving digital workplace.">
+    <meta name="description" content="COTIB LLC Blog — Perspectives and technical thoughts on enterprise cloud, IT structures, databases, and emerging Web3 networks.">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="COTIB LLC">
     <meta property="og:title" content="COTIB LLC — Blog">
-    <meta property="og:description" content="Insights on technology, IT strategy, cloud computing, cybersecurity, and the evolving digital workplace from the team at COTIB LLC.">
+    <meta property="og:description" content="Technical perspectives and organizational thoughts on modern technology strategy from COTIB LLC.">
     <meta property="og:image" content="https://cotib.com/img/blog_head.jpg">
     <meta name="twitter:card" content="summary_large_image">
     <meta property="og:url" content="https://cotib.com/blog">
     <link rel="canonical" href="https://cotib.com/blog">
-    <title>COTIB LLC — Blog</title>
+    <title>COTIB LLC — Insights & Perspectives</title>
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Blog",
-      "name": "COTIB LLC Blog",
-      "url": "https://cotib.com/blog",
-      "description": "Insights on technology, IT strategy, cloud computing, cybersecurity, and the evolving digital workplace.",
-      "publisher": {
-        "@type": "Organization",
-        "name": "COTIB LLC",
-        "url": "https://cotib.com"
-      }
-    }
-    </script>
+    
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Compiled Tailwind CSS -->
+    <link href="css/tailwind.css" rel="stylesheet" />
+    
+    <!-- FontAwesome for icons -->
     <link href="fontawesome/css/all.min.css" rel="stylesheet" />
-    <link href="css/templatemo-business-oriented.css" rel="stylesheet" />
-    <style>
-        .blog-post {
-            margin-bottom: 4rem;
-            padding-bottom: 4rem;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        .blog-post:last-child {
-            border-bottom: none;
-        }
-        .blog-post h2 {
-            font-size: 1.75rem;
-        }
-        .cta-strip {
-            background: #0099FF;
-            color: #fff;
-            padding: 3rem 0;
-            text-align: center;
-        }
-        .cta-strip h3 { color: #fff; font-weight: 700; margin-bottom: 0.5rem; }
-        .cta-strip p { color: rgba(255,255,255,0.85); margin-bottom: 1.5rem; }
-        .cta-strip .btn {
-            background: #fff;
-            color: #0099FF;
-            font-weight: 600;
-            border-radius: 0;
-            padding: 0.75rem 2rem;
-            border: 2px solid #fff;
-        }
-        .cta-strip .btn:hover { background: transparent; color: #fff; }
-    </style>
 </head>
 
-<body>
-    <!-- Header / Logo -->
-    <div id="parallax-1" class="parallax-window" data-parallax="scroll" data-image-src="img/blog_head.jpg">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-12">
-                    <div class="tm-logo">
-                        <i class="fas fa-network-wired fa-4x mr-4"></i>
-                        <span class="text-uppercase tm-logo-text">COTIB LLC</span>
-                    </div>
+<body class="bg-navy-950 text-navy-100 antialiased font-sans">
+
+    <!-- Sticky Navigation -->
+    <header class="sticky top-0 z-50 w-full glass border-b border-white/10 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <a href="index.html" class="flex items-center group">
+                        <svg class="h-9 w-auto text-brand-light mr-3 transition-transform duration-300 group-hover:rotate-12" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M50 15L80 32.5V67.5L50 85L20 67.5V32.5L50 15Z" stroke="currentColor" stroke-width="4" stroke-linejoin="round"/>
+                            <circle cx="50" cy="15" r="6" fill="#22D3EE"/>
+                            <circle cx="80" cy="32.5" r="6" fill="currentColor"/>
+                            <circle cx="80" cy="67.5" r="6" fill="currentColor"/>
+                            <circle cx="50" cy="85" r="6" fill="#22D3EE"/>
+                            <circle cx="20" cy="67.5" r="6" fill="currentColor"/>
+                            <circle cx="20" cy="32.5" r="6" fill="currentColor"/>
+                            <circle cx="50" cy="50" r="10" fill="currentColor"/>
+                        </svg>
+                        <span class="text-2xl font-bold tracking-wider text-white font-sans">COTIB <span class="text-brand-light">LLC</span></span>
+                    </a>
+                </div>
+                
+                <!-- Desktop Nav Links -->
+                <nav class="hidden md:flex space-x-2">
+                    <a href="index.html" class="nav-link-custom">Home</a>
+                    <a href="services.html" class="nav-link-custom">Services</a>
+                    <a href="ventures.html" class="nav-link-custom">Ventures</a>
+                    <a href="blog.html" class="nav-link-active">Blog</a>
+                    <a href="about.html" class="nav-link-custom">About</a>
+                    <a href="contact.html" class="nav-link-custom">Contact</a>
+                </nav>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-navy-400 hover:text-white hover:bg-navy-900/60 focus:outline-none" aria-expanded="false">
+                        <span class="sr-only">Open main menu</span>
+                        <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Navigation -->
-    <div class="tm-nav-container-outer">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-12">
-                    <nav class="navbar navbar-expand-lg" id="tm-main-nav">
-                        <button class="navbar-toggler toggler-example" type="button" data-toggle="collapse"
-                            data-target="#navbar-nav" aria-controls="navbar-nav" aria-expanded="false"
-                            aria-label="Toggle navigation">
-                            <span class="dark-blue-text"><i class="fas fa-bars"></i></span>
-                        </button>
-                        <div class="collapse navbar-collapse tm-nav" id="navbar-nav">
-                            <ul class="navbar-nav ml-auto">
-                                <li class="nav-item">
-                                    <a class="nav-link tm-nav-link" href="index.html">Home</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link tm-nav-link" href="services.html">Services</a>
-                                </li>
-                                <li class="nav-item active">
-                                    <a class="nav-link tm-nav-link" href="blog.html">Blog <span class="sr-only">(current)</span></a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link tm-nav-link" href="about.html">About</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link tm-nav-link" href="contact.html">Contact</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </nav>
+        <!-- Mobile Navigation Panel -->
+        <div id="mobile-menu" class="hidden md:hidden glass border-t border-white/5 bg-navy-950/95 absolute w-full left-0 px-4 pt-2 pb-6 space-y-2 shadow-2xl">
+            <a href="index.html" class="block px-4 py-3 rounded-lg text-base font-medium text-navy-300 hover:text-white hover:bg-white/5">Home</a>
+            <a href="services.html" class="block px-4 py-3 rounded-lg text-base font-medium text-navy-300 hover:text-white hover:bg-white/5">Services</a>
+            <a href="ventures.html" class="block px-4 py-3 rounded-lg text-base font-medium text-navy-300 hover:text-white hover:bg-white/5">Ventures</a>
+            <a href="blog.html" class="block px-4 py-3 rounded-lg text-base font-medium text-brand-light bg-navy-900/40">Blog</a>
+            <a href="about.html" class="block px-4 py-3 rounded-lg text-base font-medium text-navy-300 hover:text-white hover:bg-white/5">About</a>
+            <a href="contact.html" class="block px-4 py-3 rounded-lg text-base font-medium text-navy-300 hover:text-white hover:bg-white/5">Contact</a>
+        </div>
+    </header>
+
+    <!-- Page Title Hero -->
+    <section class="py-16 md:py-24 relative overflow-hidden bg-gradient-radial">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(34,211,238,0.05)_0%,transparent_50%)]"></div>
+        <div class="absolute right-0 top-1/4 w-80 h-80 bg-brand/5 rounded-full blur-[128px] -z-10"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative text-center space-y-4">
+            <h1 class="text-4xl sm:text-5xl font-extrabold text-white tracking-tight">Insights & Perspectives</h1>
+            <div class="h-1 w-24 bg-brand mx-auto rounded"></div>
+            <p class="text-lg text-navy-300 font-light max-w-2xl mx-auto">
+                Architectural breakdowns, operational guidelines, and editorial perspectives on technology management.
+            </p>
+        </div>
+    </section>
+
+    <!-- Blog Posts Content -->
+    <section class="py-12 pb-24">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+            
+            <!-- Post 1: Information Technology is Dead -->
+            <article class="glass rounded-2xl border border-white/5 p-8 md:p-12 space-y-6">
+                <span class="text-xs font-semibold text-brand-light tracking-widest uppercase">Editorial</span>
+                <h2 class="text-2xl md:text-3xl font-bold text-white tracking-tight">Information Technology is Dead</h2>
+                <div class="h-0.5 w-12 bg-brand rounded"></div>
+                <div class="text-navy-300 text-sm md:text-base font-light space-y-4 leading-relaxed">
+                    <p>
+                        For the last few years, a growing movement of practitioners has retired the phrase "Information Technology" in day-to-day discussions. Instead, terms like "Technology" or "Digital" dominate. While it may sound like semantic nitpicking, this transition represents a fundamental shift in business operations.
+                    </p>
+                    <h4 class="text-lg font-semibold text-white pt-2">IT as a Core Business Enabler</h4>
+                    <p>
+                        The legacy role of IT was administrative—managing cables, setting up desk computers, hosting servers. In the modern era, technology is the business itself. The new "IT" is a business enabler that converts manual models into agile, cloud-native digital organizations.
+                    </p>
+                    <h4 class="text-lg font-semibold text-white pt-2">Technology Skills vs. Domain Logic</h4>
+                    <p>
+                        Many organizations confuse pure engineering skills with business process execution. Knowing how to write a script or provision a virtual server doesn't equate to knowing how to optimize accounting workflows, speed up sales, or manage global supply chain data. True tech advisors bridge these gaps, leveraging automated infrastructure to streamline core domain operations.
+                    </p>
                 </div>
+            </article>
+
+            <!-- Post 2: What is Web3? -->
+            <article class="glass rounded-2xl border border-white/5 p-8 md:p-12 space-y-6">
+                <span class="text-xs font-semibold text-brand-accent tracking-widest uppercase">Architecture Guide</span>
+                <h2 class="text-2xl md:text-3xl font-bold text-white tracking-tight">What is Web3?</h2>
+                <div class="h-0.5 w-12 bg-brand rounded"></div>
+                <div class="text-navy-300 text-sm md:text-base font-light space-y-4 leading-relaxed">
+                    <p>
+                        The web has evolved from read-only static text (Web1) to write-and-monetize centralized platforms (Web2). Web3 represents the transition to decentralized ownership structures, where identity, application code, and database resources reside on peer-to-peer networks rather than monolithic cloud giants.
+                    </p>
+                    <h4 class="text-lg font-semibold text-white pt-2">Decentralized User Identity</h4>
+                    <p>
+                        In Web2, your digital ID is leased from Facebook, Google, or Microsoft via OAuth. In Web3, users own their identity directly using public-key cryptography and secure digital wallets. This shifts control of sensitive personal details back to the user, allowing secure verification without reliance on intermediate databases.
+                    </p>
+                </div>
+            </article>
+
+            <!-- Post 3: Redis: Caching Database -->
+            <article class="glass rounded-2xl border border-white/5 p-8 md:p-12 space-y-6">
+                <span class="text-xs font-semibold text-purple-400 tracking-widest uppercase">Performance Optimization</span>
+                <h2 class="text-2xl md:text-3xl font-bold text-white tracking-tight">Redis: Caching Key-Value Database</h2>
+                <div class="h-0.5 w-12 bg-brand rounded"></div>
+                <div class="text-navy-300 text-sm md:text-base font-light space-y-4 leading-relaxed">
+                    <p>
+                        Application downtime is often rooted in database strain. When thousands of read queries hit relational databases simultaneously, latency spikes. Redis resolves this bottleneck as an in-memory, key-value data structure store, serving cached data at microsecond speeds.
+                    </p>
+                    <h4 class="text-lg font-semibold text-white pt-2">Speed, Persistence, and Scalability</h4>
+                    <p>
+                        Unlike pure transient caches, Redis supports data persistence, allowing recovery after restarts. Its native support for complex structures (hashes, lists, sets, sorted sets) coupled with cluster-sharding makes it an essential layer for high-throughput, low-latency architectures.
+                    </p>
+                </div>
+            </article>
+
+        </div>
+    </section>
+
+    <!-- Upwork / Strategy CTA Strip -->
+    <section class="py-16 bg-gradient-to-r from-brand/20 via-brand-dark/20 to-navy-950 border-y border-brand/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
+            <h2 class="text-3xl font-extrabold text-white tracking-tight">Need help planning your architecture strategy?</h2>
+            <p class="text-lg text-navy-300 font-light max-w-2xl mx-auto">
+                Schedule a strategy audit to review your database performance, cloud infrastructure, or team operations.
+            </p>
+            <div class="flex justify-center space-x-4 pt-2">
+                <a href="contact.html" class="btn-primary-custom">Book Free Strategy Call</a>
+                <a href="services.html" class="btn-secondary-custom">View My Services</a>
             </div>
         </div>
-    </div>
-
-    <!-- Blog Content -->
-    <div class="container-fluid mt-7 mb-6">
-        <div class="row">
-            <div class="col-lg-8 mb-lg-0 mb-5 pr-lg-5">
-
-                <h1 class="tm-title-gray mb-4">Insights &amp; Perspectives</h1>
-            <hr class="mb-5 tm-hr">
-            <p class="mb-6">Thoughts on technology, IT strategy, and the evolving digital workplace from the team at COTIB LLC.</p>
-
-            <div class="blog-post">
-                    <h2 class="tm-title-gray mb-4">Information Technology is Dead</h2>
-                    <hr class="mb-5 tm-hr">
-                    <p class="mb-5">Information technology is dead. It's time to change.
-
-                        That may sound like a bold statement but it's true. For the last few years, I've been part of a growing movement of people who are no longer using the term "Information Technology" in their day-to-day
-                        discussions about technology. This includes our customers, our partners, and even ourselves as a team at COTIB LLC.
-                        Instead, we use phrases such as "Technology" or "Digital". Let's talk about why that is and what it means for your business!
-                    </p>
-                    <h4 class="tm-title-gray mb-4">IT is Dead, Long Live Digital and the Business</h4>
-                    <hr class="mb-5 tm-hr">
-                    <p class="mb-5">IT is dead. Long live Digital! The role of IT has been transformed by the digital revolution, and it's time to realize that IT is no longer just a function that manages networks, systems,
-                        and devices. The new IT should be seen as a business enabler that can transform an organization into a digital business—one that innovates, is agile, and agile in its mission-critical operations.
-
-                        That transformation requires both technology and change management initiatives: rethinking processes; adopting new tools; moving from silos to cross-functional teams for problem-solving; increasing
-                        collaboration across departments; enhancing security and privacy protection; using data analytics effectively; making better use of cloud services and platforms such as mobile apps.</p>
-                    <h4 class="tm-title-gray mb-4">Technology Skills are not the same as Business Process Domain Skills</h4>
-                    <hr class="mb-5 tm-hr">
-                    <p class="mb-5">There are two primary reasons why technology skills are not the same as business process domain skills:
-
-                        The first reason is that most people confuse technology and business processes. They think "technology" means "computers," and that if they know computers well then they can do IT. But this isn't true.
-                        A computer is just one tool among many used by IT professionals—and it's not even their most important tool! Their most important tools are actually human beings who have specific knowledge in certain
-                        areas like accounting, sales operations, manufacturing or financial services.
-
-                        Business process domain experts need to understand how their industry works so they can create a new way of doing things using this new technology—or at least improve upon existing processes through
-                        more efficient use of existing technologies. This often involves developing new computer systems and applications but also involves making changes to existing company policies and practices related to
-                        employee training programs on how best to use those technologies.</p>
-                    <h4 class="tm-title-gray mb-4">Information Technology is dead. If you use that term to describe yourself or your team, it's time to change.</h4>
-                    <hr class="mb-5 tm-hr">
-                    <p class="mb-5">The term IT has been around for a while, but it's time to retire it. As we move into an era where the majority of business processes are digital and cloud-based, it's clear that what we call information technology is no longer just about computers. IT is dead.
-
-                        The reason: Information Technology (IT) is not synonymous with "digital" or "cloud computing" or "business process domain skills." The world has changed and so must our language.</p>
-                    <h4 class="tm-title-gray mb-4">Conclusion</h4>
-                    <hr class="mb-5 tm-hr">
-                    <p class="mb-0">Information Technology is dead. This phrase has been used so many times that it's not even funny anymore. But we need to stop using this term and instead focus on how technology can help us solve business problems, build better products and services for our customers and make more money for our companies.</p>
-                </div>
-
-                <div class="blog-post">
-                    <h2 class="tm-title-gray mb-4">What is Web3?</h2>
-                    <hr class="mb-5 tm-hr">
-                    <p class="mb-5">The internet was built on the idea that information should be free and available to everyone. But lately, we've seen that this is not always true. Centralized
-                        companies like Facebook and Google are gaining control over our data and using it for their own benefit. While they make huge profits off our data, at the same time they're
-                        selling us short by selling us out to advertisers who have no qualms about invading our privacy for their own ends. Web3 changes all that: It's a decentralized web that puts
-                        users back in control of their own data — not only because it decentralizes user identity but also because it decentralizes databases and storage systems so nothing gets
-                        centralized again.
-                    </p>
-                    <h4 class="tm-title-gray mb-4">Web3 is the decentralized web</h4>
-                    <hr class="mb-5 tm-hr">
-                    <p class="mb-5">The contemporary internet is defined by centralized application and data ownership, which means any data you use on the web can be censored, manipulated or stolen. With a
-                        decentralized web, applications and data are stored on computers all over the world instead of being owned by one company or organization—making it impossible for any central
-                        authority to control your information. This also means you don't have to rely on Google or Facebook for information about you; that information would belong to you instead.
-
-                        The decentralized web is still in its infancy, but it's already starting to come into being. The most high-profile example of a decentralized application (dapp) is Ethereum,
-                        which allows users to create their own applications that run on the blockchain.</p>
-                    <h4 class="tm-title-gray mb-4">Web3 decentralizes the use of data</h4>
-                    <hr class="mb-5 tm-hr">
-                    <p class="mb-5">Data is the new oil. It's a commodity, to be bought and sold like any other valuable resource. In the same way that oil was once used to power cars, data is now being used to
-                        power artificial intelligence (AI), machine learning and other algorithms that have become central to our lives as consumers, citizens and workers.
-
-                        The ability to monetize data has created an ecosystem of big tech companies that are able to use it for profit-making purposes — Google uses your search history so it can serve you more relevant
-                        ads; Facebook tracks your browsing habits in order to serve up targeted ads based on what you like or dislike; Amazon learns from your shopping habits so it can recommend products you might want next time around.</p>
-                    <h4 class="tm-title-gray mb-4">Web3 is a peer-to-peer network</h4>
-                    <hr class="mb-5 tm-hr">
-                    <p class="mb-5">Since Web3 is a peer-to-peer network, it's decentralized. This means that every computer on the network is connected to one another, so users can access information at the same time
-                        and there are no central servers or single points of failure.
-
-                        This means that no single entity controls the network, and users have complete control of their data. Users can also interact with each other directly, which gives them more control over their
-                        interactions than they would have if they were using a centralized system.</p>
-                    <h4 class="tm-title-gray mb-4">Web3 decentralizes the internet</h4>
-                    <hr class="mb-5 tm-hr">
-                    <p class="mb-5">Decentralizing the internet is about making it more secure, private and transparent. The web we use today is controlled by large companies that use our data to profit from us. By decentralizing the internet, you can own your data and keep it private from anyone who might want to see it or sell it without your consent.
-
-                        Decentralized applications run on an open source platform where software developers can write code without having to seek approval from a central authority. This allows for greater transparency since anyone can review the code of any app before using it on their device.</p>
-                    <h4 class="tm-title-gray mb-4">Web3 decentralizes user identity</h4>
-                    <hr class="mb-5 tm-hr">
-                    <p class="mb-5">User identity is a key component of the web. The current internet model puts user identity and personal data in the hands of large corporations like Google and Facebook, who control the information you share about yourself online. Web3 decentralizes user identity by putting this information back in your hands and making it accessible to anyone.
-
-                        Through a combination of public key cryptography and the power of Ethereum, users can securely store their identity data on the blockchain. Users can then use this information to sign into applications, share data with trusted parties, or prove ownership of certain assets.</p>
-                    <h4 class="tm-title-gray mb-4">The web isn't just evolving — it's transforming into something totally new and decentralized</h4>
-                    <hr class="mb-5 tm-hr">
-                    <p class="mb-0">It's not just the web that's transforming. The whole internet is decentralizing, going peer-to-peer, becoming more secure, private and censorship resistant.
-
-                        The Internet was designed for peer-to-peer communication. When it was first built, there were no centralized servers or providers. The internet was a decentralized network of computers that connected directly to each other without the use of any central authority. This design allowed people all over the world to communicate directly with each other without having to go through an intermediary — and it's that foundational design that Web3 aims to restore.</p>
-                </div>
-
-                <div class="blog-post">
-                    <h2 class="tm-title-gray mb-4">Redis: Your Caching Key-Value Database</h2>
-                    <hr class="mb-5 tm-hr">
-                    <p class="mb-5">Have you ever developed a web application? If yes, do you remember the feeling you felt when your app was down and there was no way to
-                        access your data? Of course, this is happening only with badly designed applications or worst-case scenario applications. You can definitely use
-                        other tools for caching like Varnish or Memcached, but Redis is the fastest caching tool on the market.
-                    </p>
-                    <h4 class="tm-title-gray mb-4">Redis is open source</h4>
-                    <hr class="mb-5 tm-hr">
-                    <p class="mb-5">Redis is the leading open source, in-memory data structure store. Hundreds of enterprises, startups and developers use Redis to build
-                        and power a wide variety of apps and services. Their customers include industry leaders such as Adobe, Twitter, Cisco, Square and Yandex.</p>
-                    <h4 class="tm-title-gray mb-4">Redis supports data persistence</h4>
-                    <hr class="mb-5 tm-hr">
-                    <p class="mb-5">Redis is an in-memory data structure store that persists on disk. This allows for very fast performance, but also the ability
-                        to recover quickly from a restart or power failure. Because Redis is fast and persistent, developers are using it for everything from small applications to big web sites.</p>
-                    <h4 class="tm-title-gray mb-4">Redis has great scalability</h4>
-                    <hr class="mb-5 tm-hr">
-                    <p class="mb-5">Redis is highly scalable. It can handle thousands of requests per second, even for very large datasets. Redis supports sharding and replication, which allow
-                        users to scale out their deployments over multiple servers.</p>
-                    <h4 class="tm-title-gray mb-4">Redis is fast</h4>
-                    <hr class="mb-5 tm-hr">
-                    <p class="mb-5">Redis is very fast and can process 100,000s of requests per second. It's also very lightweight, which means that it uses little CPU, memory and disk space on your server.</p>
-                    <h4 class="tm-title-gray mb-4">Redis has great client support</h4>
-                    <hr class="mb-5 tm-hr">
-                    <p class="mb-0">Redis has native support for many different programming languages and frameworks. It's also very easy to use from the command line, which means that you can integrate it into your own scripts or build a simple API on top of it. There are a number of reasons why developers are choosing to use Redis, including that it is free, open source, and flexible — fast, lightweight, and easy to integrate into any application.</p>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
-    <!-- CTA Strip -->
-    <div class="cta-strip">
-        <div class="container-fluid">
-            <h3>Have a technology challenge?</h3>
-            <p>Let's talk about how COTIB can help your organization.</p>
-            <a href="contact.html" class="btn">Book a Free Consultation</a>
-        </div>
-    </div>
+    </section>
 
     <!-- Footer -->
-    <footer class="container-fluid">
-        <div class="row align-items-center">
-            <p class="col-lg-6 col-md-8 mb-5 mb-md-0">
-                Copyright &copy; 2026 <span class="tm-text-primary">COTIB LLC</span> &mdash; New York City
-            </p>
-            <div class="col-lg-6 col-md-4 text-right">
-                <a href="https://www.youtube.com/@theitxp" target="_blank" rel="noopener" class="tm-social-link" title="The IT XP on YouTube">
-                    <i class="fab fa-youtube fa-2x tm-social-icon"></i>
-                </a>
-                <a href="https://twitter.com/theitxp" target="_blank" rel="noopener" class="tm-social-link" title="The IT XP on Twitter">
-                    <i class="fab fa-twitter fa-2x tm-social-icon"></i>
-                </a>
-                <a href="https://www.instagram.com/corphardcore/" target="_blank" rel="noopener" class="tm-social-link" title="Corporate Hardcore on Instagram">
-                    <i class="fab fa-instagram fa-2x tm-social-icon"></i>
-                </a>
-                <a href="https://www.tiktok.com/@corphardcore" target="_blank" rel="noopener" class="tm-social-link" title="Corporate Hardcore on TikTok">
-                    <i class="fab fa-tiktok fa-2x tm-social-icon"></i>
-                </a>
+    <footer class="bg-navy-950 border-t border-white/5 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- Branding -->
+                <div class="space-y-4 col-span-1 md:col-span-2">
+                    <a href="index.html" class="flex items-center group">
+                        <svg class="h-7 w-auto text-brand-light mr-3" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M50 15L80 32.5V67.5L50 85L20 67.5V32.5L50 15Z" stroke="currentColor" stroke-width="4" stroke-linejoin="round"/>
+                            <circle cx="50" cy="15" r="6" fill="#22D3EE"/>
+                            <circle cx="80" cy="32.5" r="6" fill="currentColor"/>
+                            <circle cx="80" cy="67.5" r="6" fill="currentColor"/>
+                            <circle cx="50" cy="85" r="6" fill="#22D3EE"/>
+                            <circle cx="20" cy="67.5" r="6" fill="currentColor"/>
+                            <circle cx="20" cy="32.5" r="6" fill="currentColor"/>
+                            <circle cx="50" cy="50" r="10" fill="currentColor"/>
+                        </svg>
+                        <span class="text-xl font-bold tracking-wider text-white">COTIB <span class="text-brand-light">LLC</span></span>
+                    </a>
+                    <p class="text-sm text-navy-400 max-w-sm">
+                        Fractional technology leadership and architecture strategy helping scaling businesses build robust technology foundations. Based in New York City.
+                    </p>
+                </div>
+                
+                <!-- Quick links -->
+                <div>
+                    <h4 class="text-sm font-semibold text-white uppercase tracking-wider mb-4">Services</h4>
+                    <ul class="space-y-2 text-sm text-navy-400">
+                        <li><a href="services.html#cto" class="hover:text-white transition-colors">Fractional CTO</a></li>
+                        <li><a href="services.html#ai" class="hover:text-white transition-colors">AI Platforms</a></li>
+                        <li><a href="services.html#finops" class="hover:text-white transition-colors">FinOps & Savings</a></li>
+                        <li><a href="services.html#security" class="hover:text-white transition-colors">Cloud Security</a></li>
+                    </ul>
+                </div>
+
+                <!-- Navigation links -->
+                <div>
+                    <h4 class="text-sm font-semibold text-white uppercase tracking-wider mb-4">Company</h4>
+                    <ul class="space-y-2 text-sm text-navy-400">
+                        <li><a href="about.html" class="hover:text-white transition-colors">About</a></li>
+                        <li><a href="ventures.html" class="hover:text-white transition-colors">Media Ventures</a></li>
+                        <li><a href="blog.html" class="hover:text-white transition-colors">Blog</a></li>
+                        <li><a href="contact.html" class="hover:text-white transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="mt-12 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center text-sm text-navy-500">
+                <p>&copy; 2026 COTIB LLC. All rights reserved. New York City, NY.</p>
+                <div class="flex space-x-6 mt-4 md:mt-0">
+                    <a href="https://www.linkedin.com/in/charles-b-technologist/" target="_blank" rel="noopener" class="hover:text-white transition-colors"><i class="fab fa-linkedin fa-lg"></i></a>
+                    <a href="https://techleadshift.substack.com" target="_blank" rel="noopener" class="hover:text-white transition-colors"><i class="fas fa-newspaper fa-lg"></i></a>
+                    <a href="https://www.youtube.com/@theitxp" target="_blank" rel="noopener" class="hover:text-white transition-colors"><i class="fab fa-youtube fa-lg"></i></a>
+                </div>
             </div>
         </div>
     </footer>
 
-    <script src="js/jquery-3.4.1.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/parallax.min.js"></script>
-    <script src="js/tooplate-script.js"></script>
+    <!-- Vanilla Javascript for Mobile Menu -->
     <script>
-        $(document).ready(function () {
-            $('#parallax-1').parallax({ imageSrc: 'img/blog_head.jpg' });
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
         });
     </script>
 </body>

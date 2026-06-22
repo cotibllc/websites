@@ -1,276 +1,310 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="description" content="Contact COTIB LLC — Reach out for technology consulting, content partnerships, or general inquiries. Based in New York City.">
+    <meta name="description" content="Contact COTIB LLC — Schedule a free strategy call or send an inquiry for Fractional CTO, FinOps consulting, or platform engineering.">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="COTIB LLC">
     <meta property="og:title" content="COTIB LLC — Contact">
-    <meta property="og:description" content="Book a free consultation with COTIB LLC. Reach out for technology consulting, content partnerships, or general inquiries.">
+    <meta property="og:description" content="Reach out for fractional CTO engagements, cloud infrastructure strategy, or general technical inquiries.">
     <meta property="og:image" content="https://cotib.com/img/biz-oriented-header.jpg">
     <meta name="twitter:card" content="summary_large_image">
     <meta property="og:url" content="https://cotib.com/contact">
     <link rel="canonical" href="https://cotib.com/contact">
-    <title>COTIB LLC — Contact</title>
+    <title>COTIB LLC — Contact & Consultation</title>
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "ContactPage",
-      "name": "Contact COTIB LLC",
-      "url": "https://cotib.com/contact",
-      "description": "Book a free consultation with COTIB LLC. Reach out for technology consulting, content partnerships, or general inquiries."
-    }
-    </script>
+    
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Compiled Tailwind CSS -->
+    <link href="css/tailwind.css" rel="stylesheet" />
+    
+    <!-- FontAwesome for icons -->
     <link href="fontawesome/css/all.min.css" rel="stylesheet" />
-    <link href="css/templatemo-business-oriented.css" rel="stylesheet" />
+
+    <!-- Cloudflare Turnstile -->
     <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
-    <style>
-        .contact-info-item {
-            display: flex;
-            align-items: flex-start;
-            margin-bottom: 1.5rem;
-        }
-        .contact-info-item i {
-            color: #0099FF;
-            font-size: 1.25rem;
-            margin-right: 1rem;
-            margin-top: 3px;
-            min-width: 24px;
-        }
-        .contact-info-item strong {
-            display: block;
-            color: #333;
-            margin-bottom: 0.15rem;
-        }
-        .form-note {
-            font-size: 0.85rem;
-            color: #999;
-            margin-top: 0.5rem;
-        }
-    </style>
 </head>
 
-<body>
-    <!-- Header / Logo -->
-    <div id="parallax-1" class="parallax-window" data-parallax="scroll" data-image-src="img/biz-oriented-header.jpg">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-12">
-                    <div class="tm-logo">
-                        <i class="fas fa-network-wired fa-4x mr-4"></i>
-                        <span class="text-uppercase tm-logo-text">COTIB LLC</span>
-                    </div>
+<body class="bg-navy-950 text-navy-100 antialiased font-sans">
+
+    <!-- Sticky Navigation -->
+    <header class="sticky top-0 z-50 w-full glass border-b border-white/10 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <a href="index.html" class="flex items-center group">
+                        <svg class="h-9 w-auto text-brand-light mr-3 transition-transform duration-300 group-hover:rotate-12" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M50 15L80 32.5V67.5L50 85L20 67.5V32.5L50 15Z" stroke="currentColor" stroke-width="4" stroke-linejoin="round"/>
+                            <circle cx="50" cy="15" r="6" fill="#22D3EE"/>
+                            <circle cx="80" cy="32.5" r="6" fill="currentColor"/>
+                            <circle cx="80" cy="67.5" r="6" fill="currentColor"/>
+                            <circle cx="50" cy="85" r="6" fill="#22D3EE"/>
+                            <circle cx="20" cy="67.5" r="6" fill="currentColor"/>
+                            <circle cx="20" cy="32.5" r="6" fill="currentColor"/>
+                            <circle cx="50" cy="50" r="10" fill="currentColor"/>
+                        </svg>
+                        <span class="text-2xl font-bold tracking-wider text-white font-sans">COTIB <span class="text-brand-light">LLC</span></span>
+                    </a>
+                </div>
+                
+                <!-- Desktop Nav Links -->
+                <nav class="hidden md:flex space-x-2">
+                    <a href="index.html" class="nav-link-custom">Home</a>
+                    <a href="services.html" class="nav-link-custom">Services</a>
+                    <a href="ventures.html" class="nav-link-custom">Ventures</a>
+                    <a href="blog.html" class="nav-link-custom">Blog</a>
+                    <a href="about.html" class="nav-link-custom">About</a>
+                    <a href="contact.html" class="nav-link-active">Contact</a>
+                </nav>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-navy-400 hover:text-white hover:bg-navy-900/60 focus:outline-none" aria-expanded="false">
+                        <span class="sr-only">Open main menu</span>
+                        <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Navigation -->
-    <div class="tm-nav-container-outer">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-12">
-                    <nav class="navbar navbar-expand-lg" id="tm-main-nav">
-                        <button class="navbar-toggler toggler-example" type="button" data-toggle="collapse"
-                            data-target="#navbar-nav" aria-controls="navbar-nav" aria-expanded="false"
-                            aria-label="Toggle navigation">
-                            <span class="dark-blue-text"><i class="fas fa-bars"></i></span>
-                        </button>
-                        <div class="collapse navbar-collapse tm-nav" id="navbar-nav">
-                            <ul class="navbar-nav ml-auto">
-                                <li class="nav-item">
-                                    <a class="nav-link tm-nav-link" href="index.html">Home</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link tm-nav-link" href="services.html">Services</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link tm-nav-link" href="blog.html">Blog</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link tm-nav-link" href="about.html">About</a>
-                                </li>
-                                <li class="nav-item active">
-                                    <a class="nav-link tm-nav-link" href="contact.html">Contact <span class="sr-only">(current)</span></a>
-                                </li>
-                            </ul>
-                        </div>
-                    </nav>
-                </div>
-            </div>
+        <!-- Mobile Navigation Panel -->
+        <div id="mobile-menu" class="hidden md:hidden glass border-t border-white/5 bg-navy-950/95 absolute w-full left-0 px-4 pt-2 pb-6 space-y-2 shadow-2xl">
+            <a href="index.html" class="block px-4 py-3 rounded-lg text-base font-medium text-navy-300 hover:text-white hover:bg-white/5">Home</a>
+            <a href="services.html" class="block px-4 py-3 rounded-lg text-base font-medium text-navy-300 hover:text-white hover:bg-white/5">Services</a>
+            <a href="ventures.html" class="block px-4 py-3 rounded-lg text-base font-medium text-navy-300 hover:text-white hover:bg-white/5">Ventures</a>
+            <a href="blog.html" class="block px-4 py-3 rounded-lg text-base font-medium text-navy-300 hover:text-white hover:bg-white/5">Blog</a>
+            <a href="about.html" class="block px-4 py-3 rounded-lg text-base font-medium text-navy-300 hover:text-white hover:bg-white/5">About</a>
+            <a href="contact.html" class="block px-4 py-3 rounded-lg text-base font-medium text-brand-light bg-navy-900/40">Contact</a>
         </div>
-    </div>
+    </header>
 
-    <div class="container-fluid mt-7 mb-7">
-        <div class="row">
-            <!-- Contact Form -->
-            <div class="col-lg-7 mb-lg-0 mb-6">
-                <section class="tm-contact-form-box mb-7">
-                    <h1 class="tm-title-gray mb-4">Book a Free Consultation</h1>
-                    <hr class="mb-5 tm-hr">
-                    <p class="mb-5">Whether you're looking for technology consulting, interested in a content partnership, or just have a question — we'd love to hear from you. Fill out the form below and we'll get back to you within one business day.</p>
+    <!-- Page Title Hero -->
+    <section class="py-16 md:py-24 relative overflow-hidden bg-gradient-radial">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(34,211,238,0.05)_0%,transparent_50%)]"></div>
+        <div class="absolute right-0 top-1/4 w-80 h-80 bg-brand/5 rounded-full blur-[128px] -z-10"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative text-center space-y-4">
+            <h1 class="text-4xl sm:text-5xl font-extrabold text-white tracking-tight">Book a Strategy Call</h1>
+            <div class="h-1 w-24 bg-brand mx-auto rounded"></div>
+            <p class="text-lg text-navy-300 font-light max-w-2xl mx-auto">
+                Let's discuss your current platform bottlenecks, cloud spending, or engineering team organization.
+            </p>
+        </div>
+    </section>
 
-                    <div id="form-success" style="display:none;" class="alert alert-success rounded-0 mb-4">
-                        <strong>Message sent!</strong> We'll be in touch within one business day.
+    <!-- Contact Form & Info -->
+    <section class="py-12 pb-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+                
+                <!-- Contact Form Card -->
+                <div class="lg:col-span-7 glass border border-white/5 rounded-2xl p-8 shadow-2xl space-y-6">
+                    <h2 class="text-2xl font-bold text-white">Send a Message</h2>
+                    <p class="text-navy-400 text-sm font-light">
+                        Fill out the form below. I typically respond to all fractional leadership and advisory inquiries within one business day.
+                    </p>
+
+                    <!-- Success Alert -->
+                    <div id="form-success" style="display:none;" class="p-4 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 rounded-xl text-sm font-medium">
+                        <i class="fas fa-check-circle mr-2"></i> Message sent successfully! I will be in touch shortly.
                     </div>
-                    <div id="form-error" style="display:none;" class="alert alert-danger rounded-0 mb-4"></div>
 
-                    <form id="contact-form" class="tm-contact-form" novalidate>
-                        <div class="form-group">
-                            <input type="text" id="f-name" class="form-control rounded-0" placeholder="Your Name *" required />
+                    <!-- Error Alert -->
+                    <div id="form-error" style="display:none;" class="p-4 bg-red-500/10 border border-red-500/20 text-red-400 rounded-xl text-sm font-medium"></div>
+
+                    <!-- Contact Form -->
+                    <form id="contact-form" class="space-y-4" novalidate>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label for="f-name" class="block text-xs font-semibold text-navy-400 uppercase tracking-wider mb-2">Your Name *</label>
+                                <input type="text" id="f-name" class="w-full bg-navy-950 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-navy-600 focus:outline-none focus:border-brand/50 transition-colors" placeholder="Jane Doe" required />
+                            </div>
+                            <div>
+                                <label for="f-email" class="block text-xs font-semibold text-navy-400 uppercase tracking-wider mb-2">Your Email *</label>
+                                <input type="email" id="f-email" class="w-full bg-navy-950 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-navy-600 focus:outline-none focus:border-brand/50 transition-colors" placeholder="jane@company.com" required />
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <input type="email" id="f-email" class="form-control rounded-0" placeholder="Your Email *" required />
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label for="f-organization" class="block text-xs font-semibold text-navy-400 uppercase tracking-wider mb-2">Organization</label>
+                                <input type="text" id="f-organization" class="w-full bg-navy-950 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-navy-600 focus:outline-none focus:border-brand/50 transition-colors" placeholder="Acme Corp" />
+                            </div>
+                            <div>
+                                <label for="f-phone" class="block text-xs font-semibold text-navy-400 uppercase tracking-wider mb-2">Phone Number</label>
+                                <input type="tel" id="f-phone" class="w-full bg-navy-950 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-navy-600 focus:outline-none focus:border-brand/50 transition-colors" placeholder="+1 (555) 000-0000" />
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <input type="text" id="f-organization" class="form-control rounded-0" placeholder="Organization (optional)" />
-                        </div>
-                        <div class="form-group">
-                            <input type="tel" id="f-phone" class="form-control rounded-0" placeholder="Phone Number (optional)" />
-                        </div>
-                        <div class="form-group">
-                            <select id="f-service" class="form-control rounded-0">
-                                <option value="">— Service of Interest —</option>
-                                <option value="Cloud Computing">Cloud Computing</option>
-                                <option value="Cybersecurity">Cybersecurity</option>
-                                <option value="DevOps">DevOps</option>
-                                <option value="On-Premises Infrastructure">On-Premises Infrastructure</option>
-                                <option value="Content Partnership">Content Partnership</option>
-                                <option value="General Inquiry">General Inquiry</option>
+
+                        <div>
+                            <label for="f-service" class="block text-xs font-semibold text-navy-400 uppercase tracking-wider mb-2">Service of Interest</label>
+                            <select id="f-service" class="w-full bg-navy-950 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-brand/50 transition-colors">
+                                <option value="" class="bg-navy-950 text-navy-400">— Select an Area —</option>
+                                <option value="Fractional CTO & Advisory" class="bg-navy-950">Fractional CTO & Strategy</option>
+                                <option value="AI Platform Integration" class="bg-navy-950">AI Platform Integration</option>
+                                <option value="FinOps & Cost Control" class="bg-navy-950">FinOps & Cost Control</option>
+                                <option value="Platform Engineering & DevOps" class="bg-navy-950">Platform Engineering & Scale</option>
+                                <option value="Content Partnership" class="bg-navy-950">Content Partnership</option>
+                                <option value="General Inquiry" class="bg-navy-950">General Inquiry</option>
                             </select>
                         </div>
-                        <div class="form-group">
-                            <textarea rows="6" id="f-message" class="form-control rounded-0" placeholder="Tell us about your project or question... *" required></textarea>
+
+                        <div>
+                            <label for="f-message" class="block text-xs font-semibold text-navy-400 uppercase tracking-wider mb-2">Project Outline or Question *</label>
+                            <textarea id="f-message" rows="5" class="w-full bg-navy-950 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-navy-600 focus:outline-none focus:border-brand/50 transition-colors" placeholder="Briefly describe your environment size, cloud provider, and current scaling bottlenecks..." required></textarea>
                         </div>
-                        <div class="form-group">
+
+                        <!-- Turnstile Widget -->
+                        <div class="py-2">
                             <div class="cf-turnstile" data-sitekey="0x4AAAAAAC2VHJDJh24KBJBW"></div>
                         </div>
-                        <div class="form-group mb-0">
-                            <button type="submit" id="submit-btn" class="btn btn-primary rounded-0 d-block">Book Free Consultation</button>
-                        </div>
-                        <p class="form-note">We typically respond within one business day.</p>
+
+                        <button type="submit" id="submit-btn" class="w-full btn-primary-custom py-3 px-6 rounded-xl font-semibold">
+                            Book Free Consultation
+                        </button>
                     </form>
-                </section>
-            </div>
-
-            <!-- Contact Info -->
-            <div class="col-lg-5">
-                <h3 class="tm-title-gray mb-4">Contact Information</h3>
-                <hr class="mb-5 tm-hr">
-
-                <div class="contact-info-item">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <div>
-                        <strong>Location</strong>
-                        <p class="mb-0">New York City, NY</p>
-                    </div>
                 </div>
 
-                <div class="contact-info-item">
-                    <i class="fas fa-clock"></i>
-                    <div>
-                        <strong>Response Time</strong>
-                        <p class="mb-0">Within one business day</p>
+                <!-- Contact Sidebar / Map -->
+                <div class="lg:col-span-5 space-y-8">
+                    <div class="glass border border-white/5 rounded-2xl p-8 shadow-2xl space-y-6 text-left">
+                        <h3 class="text-xl font-bold text-white">Contact Info</h3>
+                        
+                        <div class="space-y-4">
+                            <div class="flex items-start">
+                                <i class="fas fa-map-marker-alt text-brand-light mt-1 mr-4 text-base"></i>
+                                <div>
+                                    <strong class="block text-white text-sm">Location</strong>
+                                    <span class="text-navy-400 text-sm font-light">New York City, NY</span>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-clock text-brand-light mt-1 mr-4 text-base"></i>
+                                <div>
+                                    <strong class="block text-white text-sm">Response Target</strong>
+                                    <span class="text-navy-400 text-sm font-light">Within one business day</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr class="border-white/5">
+
+                        <!-- Brand Follow Links -->
+                        <div class="space-y-4">
+                            <h4 class="text-sm font-bold text-white uppercase tracking-wider">Follow My Brands</h4>
+                            
+                            <div class="flex items-center space-x-3 text-sm text-navy-400">
+                                <i class="fas fa-chart-line text-brand-light w-5"></i>
+                                <div>
+                                    <span class="text-white font-medium mr-2">Tech Lead Shift:</span>
+                                    <a href="https://techleadshift.substack.com" target="_blank" rel="noopener" class="text-brand-light hover:underline"><i class="fas fa-newspaper mr-1"></i>Substack</a>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-3 text-sm text-navy-400">
+                                <i class="fas fa-microphone-alt text-brand-accent w-5"></i>
+                                <div>
+                                    <span class="text-white font-medium mr-2">The IT XP:</span>
+                                    <a href="https://www.youtube.com/@theitxp" target="_blank" rel="noopener" class="text-brand-accent hover:underline"><i class="fab fa-youtube mr-1"></i>YouTube</a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
 
-                <hr class="my-4">
-
-                <h5 class="mb-4" style="color:#333; font-weight:700;">Follow Our Brands</h5>
-
-                <div class="contact-info-item">
-                    <i class="fas fa-microphone-alt"></i>
-                    <div>
-                        <strong>The IT XP</strong>
-                        <p class="mb-1">
-                            <a href="https://www.youtube.com/@theitxp" target="_blank" rel="noopener" class="tm-text-primary-link mr-3"><i class="fab fa-youtube mr-1"></i>YouTube</a>
-                            <a href="https://twitter.com/theitxp" target="_blank" rel="noopener" class="tm-text-primary-link"><i class="fab fa-twitter mr-1"></i>Twitter</a>
-                        </p>
-                    </div>
-                </div>
-
-                <div class="contact-info-item">
-                    <i class="fas fa-briefcase"></i>
-                    <div>
-                        <strong>Corporate Hardcore</strong>
-                        <p class="mb-1">
-                            <a href="https://www.youtube.com/@corphardcore" target="_blank" rel="noopener" class="tm-text-primary-link mr-3"><i class="fab fa-youtube mr-1"></i>YouTube</a>
-                            <a href="https://www.instagram.com/corphardcore/" target="_blank" rel="noopener" class="tm-text-primary-link mr-3"><i class="fab fa-instagram mr-1"></i>Instagram</a>
-                            <a href="https://www.tiktok.com/@corphardcore" target="_blank" rel="noopener" class="tm-text-primary-link"><i class="fab fa-tiktok mr-1"></i>TikTok</a>
-                        </p>
-                    </div>
-                </div>
-
-                <div class="contact-info-item">
-                    <i class="fas fa-chart-line"></i>
-                    <div>
-                        <strong>Tech Lead Shift</strong>
-                        <p class="mb-1">
-                            <a href="https://techleadshift.substack.com" target="_blank" rel="noopener" class="tm-text-primary-link mr-3"><i class="fas fa-newspaper mr-1"></i>Substack</a>
-                            <a href="https://www.linkedin.com/in/charles-b-technologist/" target="_blank" rel="noopener" class="tm-text-primary-link"><i class="fab fa-linkedin mr-1"></i>LinkedIn</a>
-                        </p>
-                    </div>
-                </div>
-
-                <hr class="my-4">
-
-                <!-- NYC Map -->
-                <div class="mapouter">
-                    <div class="gmap_canvas">
-                        <iframe width="100%" height="300"
-                            src="https://maps.google.com/maps?q=New+York+City,+NY&t=&z=12&ie=UTF8&iwloc=&output=embed"
+                    <!-- NYC Map -->
+                    <div class="rounded-2xl overflow-hidden border border-white/10 shadow-2xl relative h-64 bg-navy-900">
+                        <iframe width="100%" height="100%"
+                            src="https://maps.google.com/maps?q=New+York+City,+NY&t=&z=11&ie=UTF8&iwloc=&output=embed"
                             frameborder="0" scrolling="no" marginheight="0" marginwidth="0"
-                            title="COTIB LLC - New York City"></iframe>
+                            title="COTIB LLC - New York City" class="opacity-80 grayscale invert"></iframe>
                     </div>
                 </div>
+
             </div>
         </div>
-    </div>
+    </section>
 
     <!-- Footer -->
-    <footer class="container-fluid">
-        <div class="row align-items-center">
-            <p class="col-lg-6 col-md-8 mb-5 mb-md-0">
-                Copyright &copy; 2026 <span class="tm-text-primary">COTIB LLC</span> &mdash; New York City
-            </p>
-            <div class="col-lg-6 col-md-4 text-right">
-                <a href="https://www.youtube.com/@theitxp" target="_blank" rel="noopener" class="tm-social-link" title="The IT XP on YouTube">
-                    <i class="fab fa-youtube fa-2x tm-social-icon"></i>
-                </a>
-                <a href="https://twitter.com/theitxp" target="_blank" rel="noopener" class="tm-social-link" title="The IT XP on Twitter">
-                    <i class="fab fa-twitter fa-2x tm-social-icon"></i>
-                </a>
-                <a href="https://www.instagram.com/corphardcore/" target="_blank" rel="noopener" class="tm-social-link" title="Corporate Hardcore on Instagram">
-                    <i class="fab fa-instagram fa-2x tm-social-icon"></i>
-                </a>
-                <a href="https://www.tiktok.com/@corphardcore" target="_blank" rel="noopener" class="tm-social-link" title="Corporate Hardcore on TikTok">
-                    <i class="fab fa-tiktok fa-2x tm-social-icon"></i>
-                </a>
+    <footer class="bg-navy-950 border-t border-white/5 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- Branding -->
+                <div class="space-y-4 col-span-1 md:col-span-2">
+                    <a href="index.html" class="flex items-center group">
+                        <svg class="h-7 w-auto text-brand-light mr-3" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M50 15L80 32.5V67.5L50 85L20 67.5V32.5L50 15Z" stroke="currentColor" stroke-width="4" stroke-linejoin="round"/>
+                            <circle cx="50" cy="15" r="6" fill="#22D3EE"/>
+                            <circle cx="80" cy="32.5" r="6" fill="currentColor"/>
+                            <circle cx="80" cy="67.5" r="6" fill="currentColor"/>
+                            <circle cx="50" cy="85" r="6" fill="#22D3EE"/>
+                            <circle cx="20" cy="67.5" r="6" fill="currentColor"/>
+                            <circle cx="20" cy="32.5" r="6" fill="currentColor"/>
+                            <circle cx="50" cy="50" r="10" fill="currentColor"/>
+                        </svg>
+                        <span class="text-xl font-bold tracking-wider text-white">COTIB <span class="text-brand-light">LLC</span></span>
+                    </a>
+                    <p class="text-sm text-navy-400 max-w-sm">
+                        Fractional technology leadership and architecture strategy helping scaling businesses build robust technology foundations. Based in New York City.
+                    </p>
+                </div>
+                
+                <!-- Quick links -->
+                <div>
+                    <h4 class="text-sm font-semibold text-white uppercase tracking-wider mb-4">Services</h4>
+                    <ul class="space-y-2 text-sm text-navy-400">
+                        <li><a href="services.html#cto" class="hover:text-white transition-colors">Fractional CTO</a></li>
+                        <li><a href="services.html#ai" class="hover:text-white transition-colors">AI Platforms</a></li>
+                        <li><a href="services.html#finops" class="hover:text-white transition-colors">FinOps & Savings</a></li>
+                        <li><a href="services.html#security" class="hover:text-white transition-colors">Cloud Security</a></li>
+                    </ul>
+                </div>
+
+                <!-- Navigation links -->
+                <div>
+                    <h4 class="text-sm font-semibold text-white uppercase tracking-wider mb-4">Company</h4>
+                    <ul class="space-y-2 text-sm text-navy-400">
+                        <li><a href="about.html" class="hover:text-white transition-colors">About</a></li>
+                        <li><a href="ventures.html" class="hover:text-white transition-colors">Media Ventures</a></li>
+                        <li><a href="blog.html" class="hover:text-white transition-colors">Blog</a></li>
+                        <li><a href="contact.html" class="hover:text-white transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="mt-12 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center text-sm text-navy-500">
+                <p>&copy; 2026 COTIB LLC. All rights reserved. New York City, NY.</p>
+                <div class="flex space-x-6 mt-4 md:mt-0">
+                    <a href="https://www.linkedin.com/in/charles-b-technologist/" target="_blank" rel="noopener" class="hover:text-white transition-colors"><i class="fab fa-linkedin fa-lg"></i></a>
+                    <a href="https://techleadshift.substack.com" target="_blank" rel="noopener" class="hover:text-white transition-colors"><i class="fas fa-newspaper fa-lg"></i></a>
+                    <a href="https://www.youtube.com/@theitxp" target="_blank" rel="noopener" class="hover:text-white transition-colors"><i class="fab fa-youtube fa-lg"></i></a>
+                </div>
             </div>
         </div>
     </footer>
 
-    <script src="js/jquery-3.4.1.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/parallax.min.js"></script>
-    <script src="js/tooplate-script.js"></script>
+    <!-- Mobile Menu script and Contact Submission -->
     <script>
-        $(document).ready(function () {
-            $('#parallax-1').parallax({ imageSrc: 'img/biz-oriented-header.jpg' });
+        // Mobile Menu toggle
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
         });
 
+        // Contact form submission
         document.getElementById('contact-form').addEventListener('submit', async function (e) {
             e.preventDefault();
 
-            const btn = document.getElementById('submit-btn');
+            const submitBtn = document.getElementById('submit-btn');
             const successEl = document.getElementById('form-success');
             const errorEl = document.getElementById('form-error');
             const turnstileToken = document.querySelector('[name="cf-turnstile-response"]')?.value;
@@ -284,8 +318,8 @@
                 return;
             }
 
-            btn.disabled = true;
-            btn.textContent = 'Sending...';
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Sending...';
 
             try {
                 const res = await fetch('/api/contact', {
@@ -318,8 +352,8 @@
                 errorEl.textContent = 'Network error. Please check your connection and try again.';
                 errorEl.style.display = 'block';
             } finally {
-                btn.disabled = false;
-                btn.textContent = 'Book Free Consultation';
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Book Free Consultation';
             }
         });
     </script>
