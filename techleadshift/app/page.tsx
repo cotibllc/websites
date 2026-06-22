@@ -2,6 +2,8 @@ import ContactForm from "@/components/ContactForm";
 
 const SUBSTACK_URL = "https://techleadshift.substack.com";
 
+export const revalidate = 3600;
+
 type SeriesArticle = {
   number: string;
   title: string;
@@ -203,7 +205,7 @@ export default async function HomePage() {
               <h2 className="section-headline">Charles Betancourt</h2>
               <div className="about-body">
                 <p>
-                  Nearly three decades of building, breaking, and leading technology systems. <strong>Now writing about what happens to leadership when some of your team members aren't human.</strong>
+                  Nearly three decades of building, breaking, and leading technology systems. <strong>Now writing about what happens to leadership when some of your team members aren&apos;t human.</strong>
                 </p>
                 <p>
                   Tech Lead Shift is not academic research. It is practitioner observation. Every
