@@ -12,9 +12,6 @@ const nextConfig: NextConfig = {
   experimental: {
     optimizePackageImports: ["lucide-react"],
   },
-  turbopack: {
-    root: path.resolve(__dirname),
-  },
   async headers() {
     return [
       {

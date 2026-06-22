@@ -29,7 +29,7 @@
 
 @keyframes tickerScroll {
   from { transform: translateX(0); }
-  to:   { transform: translateX(-50%); }
+  to   { transform: translateX(-50%); }
 }
 @keyframes navFlicker {
   0%, 88%, 90%, 92%, 94%, 100% { opacity: 1; }
