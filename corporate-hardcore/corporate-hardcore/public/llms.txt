@@ -1,0 +1,15 @@
+# Corporate Hardcore
+
+> Observational satire for corporate lifers — documenting corporate culture, meetings, jargon, and the characters who inhabit office life. A COTIB LLC media brand.
+
+## Core Pages
+
+- [Homepage (/)](https://www.corphardcore.com/): Overview of the Corporate Hardcore brand.
+- [Blog (/blog)](https://www.corphardcore.com/blog): Satirical essays on corporate life. Posts live at /blog/<slug>.
+- [Glossary (/glossary)](https://www.corphardcore.com/glossary): The corporate jargon glossary. Term deep-dives live at /blog/jargon/<term>.
+- [Episodes (/episodes)](https://www.corphardcore.com/episodes): Video episodes.
+- [Characters (/characters)](https://www.corphardcore.com/characters): The recurring corporate archetypes.
+- [About (/about)](https://www.corphardcore.com/about): What Corporate Hardcore is and why it exists.
+- [Company (/company)](https://www.corphardcore.com/company): The fictional company behind the satire.
+- [Merch (/merch)](https://www.corphardcore.com/merch): Merchandise.
+- [Contact (/contact)](https://www.corphardcore.com/contact): Get in touch.

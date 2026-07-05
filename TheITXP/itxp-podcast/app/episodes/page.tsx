@@ -7,6 +7,7 @@ export const revalidate = 7200;
 export const metadata: Metadata = {
   title: "Episodes",
   description: "All episodes of The IT XP podcast, organized by season.",
+  alternates: { canonical: "/episodes" },
 };
 
 export default async function EpisodesPage() {

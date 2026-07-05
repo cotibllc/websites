@@ -1,0 +1,15 @@
+# The IT XP
+
+> A podcast for IT professionals, hosted by Chuck Betancourt — pulling back the curtain on what it's really like to work in Information Technology. Career insights, real talk, and hard-won experience points, produced by COTIB LLC.
+
+## Core Pages
+
+- [Homepage (/)](https://www.theitxp.com/): Latest podcast episodes and videos.
+- [Episodes (/episodes)](https://www.theitxp.com/episodes): All episodes, organized by season. Individual episodes live at /<episode-slug>.
+- [About (/about)](https://www.theitxp.com/about): About the show and its focus on IT careers, cloud, and on-premises technology work.
+- [Contact (/contact)](https://www.theitxp.com/contact): Collaboration, guest, and co-host inquiries.
+
+## Listen
+
+- [RSS Feed](https://theitxp.libsyn.com/rss)
+- [Apple Podcasts](https://podcasts.apple.com/us/podcast/the-it-xp/id1330172385)

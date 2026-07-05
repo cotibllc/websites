@@ -85,4 +85,4 @@ Disallow: /
 User-agent: *
 Allow: /
 
-Sitemap: https://earnedescape.agency/sitemap.xml
+Sitemap: https://www.techleadshift.com/sitemap.xml

@@ -27,6 +27,37 @@
     
     <!-- FontAwesome for fallback icons -->
     <link href="fontawesome/css/all.min.css" rel="stylesheet" />
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ProfessionalService",
+      "name": "COTIB LLC",
+      "url": "https://cotib.com/",
+      "image": "https://cotib.com/img/biz-oriented-header.jpg",
+      "description": "Fractional CTO and AI infrastructure strategy consultancy. Enterprise cloud transformations, AI/ML platform infrastructure, FinOps optimization, and platform engineering advisory for public and private sector clients.",
+      "areaServed": "US",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "New York",
+        "addressRegion": "NY",
+        "addressCountry": "US"
+      },
+      "founder": {
+        "@type": "Person",
+        "name": "Charles Betancourt",
+        "jobTitle": "Principal Consultant"
+      },
+      "knowsAbout": [
+        "Fractional CTO services",
+        "Cloud infrastructure strategy",
+        "AI/ML platform infrastructure",
+        "FinOps",
+        "Platform engineering"
+      ]
+    }
+    </script>
 </head>
 
 <body class="bg-navy-950 text-navy-100 antialiased font-sans">
@@ -37,7 +68,7 @@
             <div class="flex items-center justify-between h-20">
                 <!-- Logo -->
                 <div class="flex items-center">
-                    <a href="index.html" class="flex items-center group">
+                    <a href="/" class="flex items-center group">
                         <svg class="h-9 w-auto text-brand-light mr-3 transition-transform duration-300 group-hover:rotate-12" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M50 15L80 32.5V67.5L50 85L20 67.5V32.5L50 15Z" stroke="currentColor" stroke-width="4" stroke-linejoin="round"/>
                             <circle cx="50" cy="15" r="6" fill="#22D3EE"/>
@@ -60,11 +91,11 @@
                 
                 <!-- Desktop Nav Links -->
                 <nav class="hidden md:flex space-x-2">
-                    <a href="index.html" class="nav-link-active">Home</a>
-                    <a href="services.html" class="nav-link-custom">Services</a>
-                    <a href="ventures.html" class="nav-link-custom">Ventures</a>
-                    <a href="about.html" class="nav-link-custom">About</a>
-                    <a href="contact.html" class="nav-link-custom">Contact</a>
+                    <a href="/" class="nav-link-active">Home</a>
+                    <a href="/services" class="nav-link-custom">Services</a>
+                    <a href="/ventures" class="nav-link-custom">Ventures</a>
+                    <a href="/about" class="nav-link-custom">About</a>
+                    <a href="/contact" class="nav-link-custom">Contact</a>
                 </nav>
 
                 <!-- Mobile Menu Button -->
@@ -81,11 +112,11 @@
 
         <!-- Mobile Navigation Panel -->
         <div id="mobile-menu" class="hidden md:hidden glass border-t border-white/5 bg-navy-950/95 absolute w-full left-0 px-4 pt-2 pb-6 space-y-2 shadow-2xl">
-            <a href="index.html" class="block px-4 py-3 rounded-lg text-base font-medium text-brand-light bg-navy-900/40">Home</a>
-            <a href="services.html" class="block px-4 py-3 rounded-lg text-base font-medium text-navy-300 hover:text-white hover:bg-white/5">Services</a>
-            <a href="ventures.html" class="block px-4 py-3 rounded-lg text-base font-medium text-navy-300 hover:text-white hover:bg-white/5">Ventures</a>
-            <a href="about.html" class="block px-4 py-3 rounded-lg text-base font-medium text-navy-300 hover:text-white hover:bg-white/5">About</a>
-            <a href="contact.html" class="block px-4 py-3 rounded-lg text-base font-medium text-navy-300 hover:text-white hover:bg-white/5">Contact</a>
+            <a href="/" class="block px-4 py-3 rounded-lg text-base font-medium text-brand-light bg-navy-900/40">Home</a>
+            <a href="/services" class="block px-4 py-3 rounded-lg text-base font-medium text-navy-300 hover:text-white hover:bg-white/5">Services</a>
+            <a href="/ventures" class="block px-4 py-3 rounded-lg text-base font-medium text-navy-300 hover:text-white hover:bg-white/5">Ventures</a>
+            <a href="/about" class="block px-4 py-3 rounded-lg text-base font-medium text-navy-300 hover:text-white hover:bg-white/5">About</a>
+            <a href="/contact" class="block px-4 py-3 rounded-lg text-base font-medium text-navy-300 hover:text-white hover:bg-white/5">Contact</a>
         </div>
     </header>
 
@@ -132,13 +163,13 @@
                     </div>
 
                     <div class="flex flex-wrap gap-4 pt-4">
-                        <a href="contact.html" class="btn-primary-custom">
+                        <a href="/contact" class="btn-primary-custom">
                             Book a Strategy Call
                             <svg class="ml-2 -mr-1 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                             </svg>
                         </a>
-                        <a href="services.html" class="btn-secondary-custom">Explore Services</a>
+                        <a href="/services" class="btn-secondary-custom">Explore Services</a>
                     </div>
                 </div>
 
@@ -216,7 +247,7 @@
                                 <a href="https://www.linkedin.com/in/charles-b-technologist/" target="_blank" rel="noopener" class="hover:text-white transition-colors duration-200">
                                     <i class="fab fa-linkedin fa-lg"></i>
                                 </a>
-                                <a href="about.html" class="hover:text-white transition-colors duration-200 text-xs flex items-center">
+                                <a href="/about" class="hover:text-white transition-colors duration-200 text-xs flex items-center">
                                     View Full Bio <i class="fas fa-arrow-right ml-1"></i>
                                 </a>
                             </div>
@@ -238,7 +269,7 @@
                         As a fractional leader, I step into growing organizations to establish clean architectures, automate DevOps pipelines, implement enterprise AI policies, and deliver substantial FinOps savings without the drag of hiring full-time executives.
                     </p>
                     <div class="pt-2">
-                        <a href="about.html" class="btn-secondary-custom px-5 py-2.5 text-sm">Read Philosophy & Path</a>
+                        <a href="/about" class="btn-secondary-custom px-5 py-2.5 text-sm">Read Philosophy & Path</a>
                     </div>
                 </div>
             </div>
@@ -268,7 +299,7 @@
                         <h3 class="text-lg font-bold text-white mb-2">Fractional CTO & Advisory</h3>
                         <p class="text-navy-400 text-sm font-light">Technical roadmapping, platform architecture governance, tool selection, vendor negotiation, and technical due diligence for boards.</p>
                     </div>
-                    <a href="services.html#cto" class="text-brand-light hover:text-white transition-colors duration-200 text-xs font-semibold mt-6 inline-flex items-center">
+                    <a href="/services#cto" class="text-brand-light hover:text-white transition-colors duration-200 text-xs font-semibold mt-6 inline-flex items-center">
                         Learn More <i class="fas fa-chevron-right ml-1"></i>
                     </a>
                 </div>
@@ -284,7 +315,7 @@
                         <h3 class="text-lg font-bold text-white mb-2">AI Platform Engineering</h3>
                         <p class="text-navy-400 text-sm font-light">Azure OpenAI deployment models, internal LLM orchestration networks, custom AI workflow bots (Teams), and governance policies.</p>
                     </div>
-                    <a href="services.html#ai" class="text-brand-light hover:text-white transition-colors duration-200 text-xs font-semibold mt-6 inline-flex items-center">
+                    <a href="/services#ai" class="text-brand-light hover:text-white transition-colors duration-200 text-xs font-semibold mt-6 inline-flex items-center">
                         Learn More <i class="fas fa-chevron-right ml-1"></i>
                     </a>
                 </div>
@@ -300,7 +331,7 @@
                         <h3 class="text-lg font-bold text-white mb-2">FinOps & Cost Control</h3>
                         <p class="text-navy-400 text-sm font-light">Budget monitoring implementation, right-sizing algorithms, continuous governance frameworks, and cost reduction without impacting SLAs.</p>
                     </div>
-                    <a href="services.html#finops" class="text-brand-light hover:text-white transition-colors duration-200 text-xs font-semibold mt-6 inline-flex items-center">
+                    <a href="/services#finops" class="text-brand-light hover:text-white transition-colors duration-200 text-xs font-semibold mt-6 inline-flex items-center">
                         Learn More <i class="fas fa-chevron-right ml-1"></i>
                     </a>
                 </div>
@@ -316,14 +347,14 @@
                         <h3 class="text-lg font-bold text-white mb-2">Cloud Security & SecOps</h3>
                         <p class="text-navy-400 text-sm font-light">Zero-Trust infrastructure architecture, compliance mapping (SOC2/HIPAA), identity governance, and threat mitigation frameworks.</p>
                     </div>
-                    <a href="services.html#security" class="text-brand-light hover:text-white transition-colors duration-200 text-xs font-semibold mt-6 inline-flex items-center">
+                    <a href="/services#security" class="text-brand-light hover:text-white transition-colors duration-200 text-xs font-semibold mt-6 inline-flex items-center">
                         Learn More <i class="fas fa-chevron-right ml-1"></i>
                     </a>
                 </div>
             </div>
             
             <div class="pt-6">
-                <a href="services.html" class="btn-secondary-custom">View Detailed Engagement Model</a>
+                <a href="/services" class="btn-secondary-custom">View Detailed Engagement Model</a>
             </div>
         </div>
     </section>
@@ -355,7 +386,7 @@
                             <span class="text-navy-600">|</span>
                             <a href="https://techleadshift.substack.com" target="_blank" rel="noopener" class="text-navy-300 hover:text-white transition-all">Substack</a>
                             <span class="text-navy-600">|</span>
-                            <a href="ventures.html" class="text-navy-400 hover:text-white transition-all">Venture Strategy</a>
+                            <a href="/ventures" class="text-navy-400 hover:text-white transition-all">Venture Strategy</a>
                         </div>
                     </div>
                 </div>
@@ -375,7 +406,7 @@
                             <span class="text-navy-600">|</span>
                             <a href="https://www.youtube.com/@theitxp" target="_blank" rel="noopener" class="text-navy-300 hover:text-white transition-all">YouTube</a>
                             <span class="text-navy-600">|</span>
-                            <a href="ventures.html" class="text-navy-400 hover:text-white transition-all">Explore Brand</a>
+                            <a href="/ventures" class="text-navy-400 hover:text-white transition-all">Explore Brand</a>
                         </div>
                     </div>
                 </div>
@@ -391,7 +422,7 @@
                 Let's talk about alignment, architecture strategy, and how to structure your team for maximum efficiency.
             </p>
             <div class="flex justify-center space-x-4 pt-2">
-                <a href="contact.html" class="btn-primary-custom">Book Free Strategy Call</a>
+                <a href="/contact" class="btn-primary-custom">Book Free Strategy Call</a>
                 <a href="https://www.linkedin.com/in/charles-b-technologist/" target="_blank" rel="noopener" class="btn-secondary-custom">
                     Connect on LinkedIn
                 </a>
@@ -405,7 +436,7 @@
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
                 <!-- Branding -->
                 <div class="space-y-4 col-span-1 md:col-span-2">
-                    <a href="index.html" class="flex items-center group">
+                    <a href="/" class="flex items-center group">
                         <svg class="h-7 w-auto text-brand-light mr-3" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M50 15L80 32.5V67.5L50 85L20 67.5V32.5L50 15Z" stroke="currentColor" stroke-width="4" stroke-linejoin="round"/>
                             <circle cx="50" cy="15" r="6" fill="#22D3EE"/>
@@ -427,10 +458,10 @@
                 <div>
                     <h4 class="text-sm font-semibold text-white uppercase tracking-wider mb-4">Services</h4>
                     <ul class="space-y-2 text-sm text-navy-400">
-                        <li><a href="services.html#cto" class="hover:text-white transition-colors">Fractional CTO</a></li>
-                        <li><a href="services.html#ai" class="hover:text-white transition-colors">AI Platforms</a></li>
-                        <li><a href="services.html#finops" class="hover:text-white transition-colors">FinOps & Savings</a></li>
-                        <li><a href="services.html#security" class="hover:text-white transition-colors">Cloud Security</a></li>
+                        <li><a href="/services#cto" class="hover:text-white transition-colors">Fractional CTO</a></li>
+                        <li><a href="/services#ai" class="hover:text-white transition-colors">AI Platforms</a></li>
+                        <li><a href="/services#finops" class="hover:text-white transition-colors">FinOps & Savings</a></li>
+                        <li><a href="/services#security" class="hover:text-white transition-colors">Cloud Security</a></li>
                     </ul>
                 </div>
 
@@ -438,9 +469,9 @@
                 <div>
                     <h4 class="text-sm font-semibold text-white uppercase tracking-wider mb-4">Company</h4>
                     <ul class="space-y-2 text-sm text-navy-400">
-                        <li><a href="about.html" class="hover:text-white transition-colors">About</a></li>
-                        <li><a href="ventures.html" class="hover:text-white transition-colors">Media Ventures</a></li>
-                        <li><a href="contact.html" class="hover:text-white transition-colors">Contact</a></li>
+                        <li><a href="/about" class="hover:text-white transition-colors">About</a></li>
+                        <li><a href="/ventures" class="hover:text-white transition-colors">Media Ventures</a></li>
+                        <li><a href="/contact" class="hover:text-white transition-colors">Contact</a></li>
                     </ul>
                 </div>
             </div>

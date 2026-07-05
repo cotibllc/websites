@@ -3,8 +3,27 @@ import { getVideos, CHANNEL_URL } from "@/lib/youtube";
 import EpisodeCard from "@/components/EpisodeCard";
 import VideoCard from "@/components/VideoCard";
 import Link from "next/link";
+import type { Metadata } from "next";
 
 export const revalidate = 7200;
+
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+};
+
+const podcastJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "PodcastSeries",
+  name: "The IT XP",
+  url: "https://www.theitxp.com",
+  description:
+    "A podcast for IT professionals — pulling back the curtain on what it's really like to work in Information Technology.",
+  webFeed: "https://theitxp.libsyn.com/rss",
+  author: {
+    "@type": "Person",
+    name: "Chuck Betancourt",
+  },
+};
 
 export default async function HomePage() {
   const [episodes, videos] = await Promise.all([getEpisodes(), getVideos()]);
@@ -13,6 +32,10 @@ export default async function HomePage() {
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-12">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(podcastJsonLd) }}
+      />
       {/* Hero */}
       <section className="mb-14 text-center">
         <h1 className="font-condensed font-bold text-5xl md:text-6xl tracking-tight uppercase leading-none mb-4">

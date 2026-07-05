@@ -1,0 +1,11 @@
+# Tech Lead Shift
+
+> A research-backed leadership series by Charles Betancourt exploring what leadership competencies are required to manage hybrid teams of human workers and autonomous AI agents — and how current frameworks fail to address them. A COTIB LLC media brand.
+
+## Core Pages
+
+- [Homepage (/)](https://www.techleadshift.com/): The Tech Lead Shift landing page — research overview and series signup.
+
+## Related
+
+- [COTIB LLC](https://cotib.com): Technology consulting company behind Tech Lead Shift.

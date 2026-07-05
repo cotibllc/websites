@@ -1,0 +1,18 @@
+# COTIB LLC
+
+> New York City-based technology consulting company offering Fractional CTO services, AI infrastructure strategy, cloud optimization, and platform engineering advisory for public and private sector clients. Led by Principal Consultant Charles Betancourt.
+
+## Core Pages
+
+- [Homepage (/)](https://cotib.com/): Overview of COTIB LLC — Fractional CTO and technology strategy services.
+- [Services (/services)](https://cotib.com/services): Fractional CTO, cloud infrastructure strategy, production AI integration, FinOps optimization, and platform engineering advisory.
+- [Media Ventures (/ventures)](https://cotib.com/ventures): Newsletter, podcasts, and digital shows covering technology leadership, IT strategy, and corporate culture — including The IT XP, Corporate Hardcore, and Tech Lead Shift.
+- [About (/about)](https://cotib.com/about): Charles Betancourt — fractional technology leader, cloud infrastructure advisor, and AI platform architect.
+- [Contact (/contact)](https://cotib.com/contact): Schedule a free strategy call or send an inquiry.
+
+## Related Brands
+
+- [The IT XP](https://www.theitxp.com): Podcast for experienced IT professionals.
+- [Tech Lead Shift](https://www.techleadshift.com): Research-backed leadership series on managing hybrid AI/human teams.
+- [Corporate Hardcore](https://www.corphardcore.com): Observational satire on corporate culture.
+- [Earned Escape](https://earnedescape.agency): Travel advisory brand (COTIB Adventures LLC).

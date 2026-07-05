@@ -18,9 +18,18 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const episode = await getEpisodeBySlug(slug);
   if (!episode) return {};
+  const description = episode.description.replace(/<[^>]*>/g, "").slice(0, 160);
   return {
     title: episode.title,
-    description: episode.description.replace(/<[^>]*>/g, "").slice(0, 160),
+    description,
+    alternates: { canonical: `/${episode.slug}` },
+    openGraph: {
+      title: episode.title,
+      description,
+      type: "article",
+      url: `/${episode.slug}`,
+      publishedTime: new Date(episode.pubDate).toISOString(),
+    },
   };
 }
 
@@ -35,8 +44,37 @@ export default async function EpisodePage({ params }: Props) {
     day: "numeric",
   });
 
+  const episodeJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "PodcastEpisode",
+    name: episode.title,
+    url: `https://www.theitxp.com/${episode.slug}`,
+    datePublished: new Date(episode.pubDate).toISOString(),
+    description: episode.description.replace(/<[^>]*>/g, "").slice(0, 300),
+    associatedMedia: {
+      "@type": "MediaObject",
+      contentUrl: episode.enclosureUrl,
+    },
+    partOfSeries: {
+      "@type": "PodcastSeries",
+      name: "The IT XP",
+      url: "https://www.theitxp.com",
+    },
+    ...(episode.season > 0 && {
+      partOfSeason: {
+        "@type": "PodcastSeason",
+        seasonNumber: episode.season,
+      },
+      episodeNumber: episode.episodeNumber,
+    }),
+  };
+
   return (
     <article className="max-w-3xl mx-auto px-4 py-12">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(episodeJsonLd) }}
+      />
       {/* Meta badges */}
       <div className="flex flex-wrap items-center gap-3 mb-6">
         {episode.season > 0 && (
