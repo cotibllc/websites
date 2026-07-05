@@ -128,20 +128,29 @@ router.post('/api/guide', async (req, res) => {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { name, email, turnstileToken } = req.body || {};
+  const { name, email, turnstileToken, website } = req.body || {};
+
+  // Honeypot: real users never fill this hidden field. Pretend success so
+  // bots don't learn they were caught.
+  if (website) {
+    return res.status(200).json({ success: true });
+  }
 
   if (!name?.trim() || !email?.trim()) {
     return res.status(400).json({ error: 'Please provide both your name and email address.' });
   }
 
+  // Turnstile fails closed in production; only dev may run without the secret.
   const secret = process.env.TURNSTILE_SECRET_KEY;
-  const hasTurnstile = !!secret;
-
-  if (hasTurnstile && !turnstileToken) {
-    return res.status(400).json({ error: 'Please complete the security check.' });
+  if (!secret && process.env.NODE_ENV === 'production') {
+    console.error('TURNSTILE_SECRET_KEY not set in production – rejecting submission');
+    return res.status(500).json({ error: 'Unable to complete security check.' });
   }
 
-  if (hasTurnstile) {
+  if (secret) {
+    if (!turnstileToken) {
+      return res.status(400).json({ error: 'Please complete the security check.' });
+    }
     try {
       const verifyRes = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
         method: 'POST',
@@ -155,6 +164,8 @@ router.post('/api/guide', async (req, res) => {
     } catch (err) {
       return res.status(500).json({ error: 'Unable to complete security check.' });
     }
+  } else {
+    console.warn('TURNSTILE_SECRET_KEY not set – skipping Turnstile verification (dev only)');
   }
 
   const notifyHtml = `
@@ -219,21 +230,30 @@ router.post('/api/plan', async (req, res) => {
     message,
     supportTier,
     turnstileToken,
+    website,
   } = req.body || {};
+
+  // Honeypot: real users never fill this hidden field. Pretend success so
+  // bots don't learn they were caught.
+  if (website) {
+    return res.status(200).json({ success: true });
+  }
 
   if (!name?.trim() || !email?.trim() || !message?.trim()) {
     return res.status(400).json({ error: 'Please fill in all required fields.' });
   }
 
-  // Verify Cloudflare Turnstile only when secret is configured
+  // Turnstile fails closed in production; only dev may run without the secret.
   const secret = process.env.TURNSTILE_SECRET_KEY;
-  const hasTurnstile = !!secret;
-
-  if (hasTurnstile && !turnstileToken) {
-    return res.status(400).json({ error: 'Please complete the security check.' });
+  if (!secret && process.env.NODE_ENV === 'production') {
+    console.error('TURNSTILE_SECRET_KEY not set in production – rejecting submission');
+    return res.status(500).json({ error: 'Unable to complete security check. Please try again.' });
   }
 
-  if (hasTurnstile) {
+  if (secret) {
+    if (!turnstileToken) {
+      return res.status(400).json({ error: 'Please complete the security check.' });
+    }
     let verifyData;
     try {
       const verifyRes = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {

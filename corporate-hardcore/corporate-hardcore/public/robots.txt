@@ -1,5 +1,5 @@
-# AI crawler policy: allow search and AI search/answer engines (index + cite),
-# block AI model training and autonomous AI agents.
+# AI crawler policy: allow search, AI search/answer engines (index + cite),
+# and AI agents acting on a user's behalf; block AI model training.
 # Content Signals spec: https://contentsignals.org/
 
 # As a condition of accessing this website, you agree to abide by the
@@ -68,18 +68,18 @@ Disallow: /
 User-agent: PanguBot
 Disallow: /
 
-# --- AI agents acting on a user's behalf: blocked ---
+# --- AI agents acting on a user's behalf: allowed ---
 User-agent: ChatGPT-User
-Disallow: /
+Allow: /
 
 User-agent: Claude-User
-Disallow: /
+Allow: /
 
 User-agent: Perplexity-User
-Disallow: /
+Allow: /
 
 User-agent: Meta-ExternalFetcher
-Disallow: /
+Allow: /
 
 # --- Everyone else (Googlebot, Bingbot, etc.): allowed ---
 User-agent: *

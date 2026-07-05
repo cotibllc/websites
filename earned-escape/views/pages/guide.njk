@@ -49,6 +49,12 @@
           <input type="email" id="g-email" name="email" required autocomplete="email" />
         </div>
 
+        <!-- Honeypot: hidden from real users, bots fill it and get silently dropped -->
+        <div style="position:absolute;left:-9999px;top:-9999px;" aria-hidden="true">
+          <label for="g-website">Website</label>
+          <input type="text" id="g-website" name="website" tabindex="-1" autocomplete="off" />
+        </div>
+
           {% if site.turnstileSiteKey %}
           <div class="form-group">
             <div class="cf-turnstile" data-sitekey="{{ site.turnstileSiteKey }}" data-theme="auto"></div>
@@ -106,7 +112,7 @@
           const res = await fetch('/api/guide', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ name, email, turnstileToken })
+            body: JSON.stringify({ name, email, turnstileToken, website: document.getElementById('g-website').value })
           });
 
           const data = await res.json();

@@ -171,6 +171,7 @@ if (planForm) {
         message: document.getElementById('f-message')?.value.trim(),
         supportTier: (document.querySelector('input[name="supportTier"]:checked') || {}).value,
         turnstileToken,
+        website: document.getElementById('f-website')?.value,
       };
 
       const res = await fetch('/api/plan', {
