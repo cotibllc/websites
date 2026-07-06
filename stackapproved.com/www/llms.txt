@@ -1,0 +1,13 @@
+# StackApproved
+
+> UGC-style video ad production for B2B SaaS and AI brands, fronted by a real enterprise practitioner — Chuck Betancourt, 15+ years enterprise IT, $150M in cloud spend signed off. Talking-head, screen-demo, and founder-style ad formats for LinkedIn, Meta, TikTok, and YouTube. A COTIB LLC brand.
+
+## Core Pages
+
+- [Homepage (/)](https://stackapproved.com/): Overview, portfolio, offers (Hook Bundle, Monthly Retainer, Creative Partner), and brief submission.
+
+## Related Brands
+
+- [COTIB LLC](https://cotib.com): Parent company — Fractional CTO and technology strategy consulting.
+- [The IT XP](https://www.theitxp.com): Podcast for experienced IT professionals.
+- [Tech Lead Shift](https://www.techleadshift.com): Research-backed leadership series on managing hybrid AI/human teams.

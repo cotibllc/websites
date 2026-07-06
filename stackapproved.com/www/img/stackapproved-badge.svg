@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 260" role="img" aria-label="StackApproved badge">
+  <!-- Stamp badge for video end-cards. All-green #22C55E on transparent; works on dark or light. -->
+  <rect x="16" y="16" width="1208" height="228" rx="52" fill="none" stroke="#22C55E" stroke-width="14"/>
+  <text x="90" y="170" font-family="'JetBrains Mono','SFMono-Regular',Menlo,Consolas,monospace" font-size="110" font-weight="500" fill="#22C55E">stackapproved</text>
+  <path d="M1000 128 L1036 166 L1096 84" fill="none" stroke="#22C55E" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

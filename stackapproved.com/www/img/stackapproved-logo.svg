@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1320 220" role="img" aria-label="StackApproved logo">
+  <!-- Primary wordmark, for dark surfaces. Brand palette: green #22C55E, white wordmark. -->
+  <g font-family="'JetBrains Mono','SFMono-Regular',Menlo,Consolas,monospace" font-size="120" font-weight="500">
+    <text x="40" y="152" fill="#22C55E">[</text>
+    <text x="208" y="152" fill="#22C55E">]</text>
+    <text x="330" y="152" fill="#FFFFFF">stackapproved</text>
+  </g>
+  <path d="M118 112 L152 148 L206 72" fill="none" stroke="#22C55E" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

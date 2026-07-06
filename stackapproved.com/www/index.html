@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="StackApproved — UGC-style video ads for B2B SaaS and AI brands, fronted by a real enterprise practitioner. 15+ years enterprise IT, $150M in cloud spend signed off.">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="StackApproved">
+    <meta property="og:title" content="StackApproved — UGC Ads for B2B SaaS & AI Brands">
+    <meta property="og:description" content="Ad creative your buyers actually believe. UGC-style video ads fronted by a real enterprise practitioner — not an actor reading a script.">
+    <meta property="og:image" content="https://stackapproved.com/img/og.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta property="og:url" content="https://stackapproved.com/">
+    <link rel="canonical" href="https://stackapproved.com/">
+    <title>StackApproved — UGC Ads for B2B SaaS & AI Brands</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <!-- Compiled Tailwind CSS -->
+    <link href="css/tailwind.css" rel="stylesheet" />
+
+    <!-- Cloudflare Turnstile -->
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ProfessionalService",
+      "name": "StackApproved",
+      "url": "https://stackapproved.com/",
+      "image": "https://stackapproved.com/img/og.png",
+      "description": "UGC-style video ad production for B2B SaaS and AI brands, fronted by a real enterprise practitioner. Talking-head, screen-demo, and founder-style formats for LinkedIn, Meta, TikTok, and YouTube.",
+      "areaServed": "US",
+      "parentOrganization": {
+        "@type": "Organization",
+        "name": "COTIB LLC",
+        "url": "https://cotib.com/"
+      },
+      "founder": {
+        "@type": "Person",
+        "name": "Charles Betancourt",
+        "jobTitle": "Creator & Principal"
+      },
+      "knowsAbout": [
+        "UGC video advertising",
+        "B2B SaaS marketing",
+        "Performance creative",
+        "AI tools",
+        "Enterprise IT"
+      ]
+    }
+    </script>
+</head>
+
+<body class="bg-gradient-radial">
+
+    <!-- Navigation -->
+    <header class="fixed top-0 inset-x-0 z-50 bg-ink-950/80 backdrop-blur-md border-b border-white/5">
+        <nav class="mx-auto max-w-6xl flex items-center justify-between px-6 py-4">
+            <a href="#" class="flex items-center" aria-label="StackApproved home">
+                <img src="img/stackapproved-logo.svg" alt="StackApproved" class="h-7 w-auto">
+            </a>
+            <div class="hidden md:flex items-center gap-1">
+                <a href="#work" class="nav-link-custom">Work</a>
+                <a href="#why" class="nav-link-custom">Why</a>
+                <a href="#how" class="nav-link-custom">How</a>
+                <a href="#offers" class="nav-link-custom">Offers</a>
+                <a href="#about" class="nav-link-custom">About</a>
+            </div>
+            <a href="#contact" class="btn-primary-custom !px-4 !py-2 !text-sm">Send a brief</a>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero -->
+        <section class="pt-36 pb-24 px-6">
+            <div class="mx-auto max-w-6xl grid lg:grid-cols-2 gap-16 items-center">
+                <div>
+                    <p class="eyebrow mb-4">[✓] approved by a real practitioner</p>
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl leading-tight mb-6">
+                        UGC ads your buyers <span class="text-brand">actually believe.</span>
+                    </h1>
+                    <p class="text-lg text-ink-400 mb-8 max-w-xl">
+                        Native-feel video ads for B2B SaaS and AI brands — fronted by someone who spent
+                        15 years on the buying side, not an actor reading a script.
+                    </p>
+                    <div class="flex flex-wrap gap-4 mb-12">
+                        <a href="#contact" class="btn-primary-custom">Send a brief</a>
+                        <a href="#work" class="btn-secondary-custom">See the work</a>
+                    </div>
+                    <dl class="grid grid-cols-3 gap-6 max-w-lg">
+                        <div>
+                            <dt class="font-mono text-2xl sm:text-3xl text-brand font-bold">15+</dt>
+                            <dd class="text-sm text-ink-500 mt-1">years enterprise IT</dd>
+                        </div>
+                        <div>
+                            <dt class="font-mono text-2xl sm:text-3xl text-brand font-bold">$150M</dt>
+                            <dd class="text-sm text-ink-500 mt-1">cloud spend signed off</dd>
+                        </div>
+                        <div>
+                            <dt class="font-mono text-2xl sm:text-3xl text-brand font-bold">$15M</dt>
+                            <dd class="text-sm text-ink-500 mt-1">savings delivered</dd>
+                        </div>
+                    </dl>
+                </div>
+                <div class="terminal-window" aria-hidden="true">
+                    <div class="terminal-bar">
+                        <span class="terminal-dot bg-red-500/70"></span>
+                        <span class="terminal-dot bg-yellow-500/70"></span>
+                        <span class="terminal-dot bg-brand/70"></span>
+                        <span class="ml-3 font-mono text-xs text-ink-500">stackapproved — brief.sh</span>
+                    </div>
+                    <div class="p-6 font-mono text-sm leading-7">
+                        <p><span class="text-brand">$</span> <span class="text-ink-300">send_brief --product your-saas</span></p>
+                        <p class="text-ink-500">→ discovery call booked&nbsp;&nbsp;<span class="text-brand">[✓]</span></p>
+                        <p class="text-ink-500">→ 3 hooks scripted&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-brand">[✓]</span></p>
+                        <p class="text-ink-500">→ filmed &amp; captioned&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-brand">[✓]</span></p>
+                        <p class="text-ink-500">→ delivered in 5 days&nbsp;&nbsp;&nbsp;<span class="text-brand">[✓]</span></p>
+                        <p class="mt-3"><span class="text-brand">$</span> <span class="text-ink-300">run_ads</span> <span class="text-brand animate-pulse">▊</span></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Work -->
+        <section id="work" class="py-24 px-6 border-t border-white/5">
+            <div class="mx-auto max-w-6xl">
+                <p class="eyebrow mb-3">// work</p>
+                <h2 class="text-3xl sm:text-4xl mb-4">The portfolio</h2>
+                <p class="text-ink-400 max-w-2xl mb-12">
+                    First spec-ad slate is in production — talking-head, screen-demo, and founder-style
+                    formats for tools with real production miles on them. Landing August 2026.
+                </p>
+                <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Portfolio placeholders: replace each card with a <video> embed as spec ads ship -->
+                    <div class="glass-card aspect-[9/16] max-h-96 flex flex-col items-center justify-center gap-3 p-6">
+                        <span class="font-mono text-brand text-lg">[ ]</span>
+                        <p class="font-mono text-sm text-ink-500 text-center">talking-head hook ad<br>— in production</p>
+                    </div>
+                    <div class="glass-card aspect-[9/16] max-h-96 flex flex-col items-center justify-center gap-3 p-6">
+                        <span class="font-mono text-brand text-lg">[ ]</span>
+                        <p class="font-mono text-sm text-ink-500 text-center">screen demo + face<br>— in production</p>
+                    </div>
+                    <div class="glass-card aspect-[9/16] max-h-96 flex flex-col items-center justify-center gap-3 p-6 sm:col-span-2 lg:col-span-1">
+                        <span class="font-mono text-brand text-lg">[ ]</span>
+                        <p class="font-mono text-sm text-ink-500 text-center">problem → agitate → solve<br>— in production</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Why -->
+        <section id="why" class="py-24 px-6 border-t border-white/5">
+            <div class="mx-auto max-w-6xl">
+                <p class="eyebrow mb-3">// why stackapproved</p>
+                <h2 class="text-3xl sm:text-4xl mb-12">Ad creative fatigues. Credibility doesn't.</h2>
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="glass-card p-8">
+                        <p class="font-mono text-brand mb-4">[✓] real practitioner</p>
+                        <h3 class="text-xl mb-3">The face your buyer trusts</h3>
+                        <p class="text-ink-400 text-sm leading-6">
+                            Every video is fronted by someone who has evaluated hundreds of tools the way
+                            your prospects do — in production, on real budgets. Skeptical technical
+                            audiences can tell the difference.
+                        </p>
+                    </div>
+                    <div class="glass-card p-8">
+                        <p class="font-mono text-brand mb-4">[✓] built for testing</p>
+                        <h3 class="text-xl mb-3">Hooks, not just videos</h3>
+                        <p class="text-ink-400 text-sm leading-6">
+                            Every concept ships with multiple hook variations so your ad account has
+                            something to test — because the hook is where B2B creative wins or dies.
+                        </p>
+                    </div>
+                    <div class="glass-card p-8">
+                        <p class="font-mono text-brand mb-4">[✓] b2b native</p>
+                        <h3 class="text-xl mb-3">Formats that fit the feed</h3>
+                        <p class="text-ink-400 text-sm leading-6">
+                            LinkedIn-native talking head, screen-demo with picture-in-picture, and
+                            founder-style content — captioned, cut for 9:16 / 1:1 / 16:9, delivered
+                            ready to launch.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- How -->
+        <section id="how" class="py-24 px-6 border-t border-white/5">
+            <div class="mx-auto max-w-6xl">
+                <p class="eyebrow mb-3">// how it works</p>
+                <h2 class="text-3xl sm:text-4xl mb-12">Brief to launch in five days</h2>
+                <ol class="grid md:grid-cols-3 gap-6">
+                    <li class="glass-card p-8">
+                        <p class="font-mono text-4xl text-brand font-bold mb-4">01</p>
+                        <h3 class="text-xl mb-3">Brief &amp; angle call</h3>
+                        <p class="text-ink-400 text-sm leading-6">
+                            Send the brief. On a 15-minute call we look at your live ads together and I
+                            bring three hook angles for your product — useful whether or not we work together.
+                        </p>
+                    </li>
+                    <li class="glass-card p-8">
+                        <p class="font-mono text-4xl text-brand font-bold mb-4">02</p>
+                        <h3 class="text-xl mb-3">Script &amp; film</h3>
+                        <p class="text-ink-400 text-sm leading-6">
+                            I script in your product's language (I speak it), film native-feel takes, and
+                            cut hook variations per concept.
+                        </p>
+                    </li>
+                    <li class="glass-card p-8">
+                        <p class="font-mono text-4xl text-brand font-bold mb-4">03</p>
+                        <h3 class="text-xl mb-3">Delivered ready to run</h3>
+                        <p class="text-ink-400 text-sm leading-6">
+                            Captioned masters in every aspect ratio, clean filenames, organized folder,
+                            and a walkthrough of why each hook targets who it targets. Five business days standard.
+                        </p>
+                    </li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- Offers -->
+        <section id="offers" class="py-24 px-6 border-t border-white/5">
+            <div class="mx-auto max-w-6xl">
+                <p class="eyebrow mb-3">// offers</p>
+                <h2 class="text-3xl sm:text-4xl mb-4">Start small, scale what works</h2>
+                <p class="text-ink-400 max-w-2xl mb-12">
+                    Per-video projects or monthly retainers. Rates on inquiry — send a brief and get a
+                    same-day quote.
+                </p>
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="glass-card p-8 flex flex-col">
+                        <p class="font-mono text-brand text-sm mb-2">test</p>
+                        <h3 class="text-2xl mb-3">Hook Bundle</h3>
+                        <p class="text-ink-400 text-sm leading-6 flex-1">
+                            One concept, three hook variations. The low-risk way to find out what a
+                            credible face does to your CTR.
+                        </p>
+                        <a href="#contact" class="btn-secondary-custom mt-6">Inquire</a>
+                    </div>
+                    <div class="glass-card p-8 flex flex-col border-brand/40">
+                        <p class="font-mono text-brand text-sm mb-2">growth · most popular</p>
+                        <h3 class="text-2xl mb-3">Monthly Retainer</h3>
+                        <p class="text-ink-400 text-sm leading-6 flex-1">
+                            Eight videos a month across two concepts — a steady pipeline of fresh
+                            creative so your winners never fatigue without a successor.
+                        </p>
+                        <a href="#contact" class="btn-primary-custom mt-6">Inquire</a>
+                    </div>
+                    <div class="glass-card p-8 flex flex-col">
+                        <p class="font-mono text-brand text-sm mb-2">scale</p>
+                        <h3 class="text-2xl mb-3">Creative Partner</h3>
+                        <p class="text-ink-400 text-sm leading-6 flex-1">
+                            Twelve videos a month plus a monthly creative-performance call — hook-rate
+                            and CTR review against your account data.
+                        </p>
+                        <a href="#contact" class="btn-secondary-custom mt-6">Inquire</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About -->
+        <section id="about" class="py-24 px-6 border-t border-white/5">
+            <div class="mx-auto max-w-6xl grid lg:grid-cols-2 gap-16 items-center">
+                <div>
+                    <p class="eyebrow mb-3">// about</p>
+                    <h2 class="text-3xl sm:text-4xl mb-6">The guy your CTO calls</h2>
+                    <p class="text-ink-400 leading-7 mb-4">
+                        I'm Chuck Betancourt. I spent 15+ years running enterprise IT — cloud
+                        infrastructure, AI platforms, and the budgets behind them. I've signed off on
+                        $150M in cloud spend and cut $15M of it without breaking anything.
+                    </p>
+                    <p class="text-ink-400 leading-7 mb-8">
+                        Now I make the ads for the tools I'd have bought. When I say "I'd run this in
+                        production," your buyers believe it — because I have.
+                    </p>
+                    <div class="flex flex-wrap gap-3">
+                        <span class="chip">b2b saas</span>
+                        <span class="chip">ai tools</span>
+                        <span class="chip">ugc ads</span>
+                    </div>
+                </div>
+                <div class="glass-card p-8">
+                    <!-- Swap for a real photo card during the portfolio sprint -->
+                    <p class="font-mono text-sm text-ink-500 mb-6">also on camera at:</p>
+                    <ul class="space-y-4">
+                        <li>
+                            <a href="https://www.theitxp.com" class="group flex items-baseline gap-3" target="_blank" rel="noopener">
+                                <span class="font-mono text-brand">→</span>
+                                <span>
+                                    <span class="text-white group-hover:text-brand transition-colors font-medium">The IT XP</span>
+                                    <span class="block text-sm text-ink-500">Podcast for experienced IT professionals</span>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.techleadshift.com" class="group flex items-baseline gap-3" target="_blank" rel="noopener">
+                                <span class="font-mono text-brand">→</span>
+                                <span>
+                                    <span class="text-white group-hover:text-brand transition-colors font-medium">Tech Lead Shift</span>
+                                    <span class="block text-sm text-ink-500">Research-backed series on leading AI/human teams</span>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://cotib.com" class="group flex items-baseline gap-3" target="_blank" rel="noopener">
+                                <span class="font-mono text-brand">→</span>
+                                <span>
+                                    <span class="text-white group-hover:text-brand transition-colors font-medium">COTIB LLC</span>
+                                    <span class="block text-sm text-ink-500">Fractional CTO &amp; technology strategy</span>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact -->
+        <section id="contact" class="py-24 px-6 border-t border-white/5">
+            <div class="mx-auto max-w-2xl">
+                <p class="eyebrow mb-3">// contact</p>
+                <h2 class="text-3xl sm:text-4xl mb-4">Send a brief</h2>
+                <p class="text-ink-400 mb-10">
+                    Tell me about your product and what your ad account needs. You'll get a reply within
+                    one business day — with three hook ideas, whether or not we end up working together.
+                </p>
+                <form id="brief-form" class="space-y-5" novalidate>
+                    <div class="grid sm:grid-cols-2 gap-5">
+                        <div>
+                            <label for="name" class="block text-sm font-medium text-ink-300 mb-2">Name *</label>
+                            <input type="text" id="name" name="name" required autocomplete="name" class="field-custom">
+                        </div>
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-ink-300 mb-2">Work email *</label>
+                            <input type="email" id="email" name="email" required autocomplete="email" class="field-custom">
+                        </div>
+                    </div>
+                    <div class="grid sm:grid-cols-2 gap-5">
+                        <div>
+                            <label for="company" class="block text-sm font-medium text-ink-300 mb-2">Company / product</label>
+                            <input type="text" id="company" name="company" autocomplete="organization" class="field-custom">
+                        </div>
+                        <div>
+                            <label for="interest" class="block text-sm font-medium text-ink-300 mb-2">Interested in</label>
+                            <select id="interest" name="interest" class="field-custom">
+                                <option value="">Not sure yet</option>
+                                <option>Hook Bundle (test)</option>
+                                <option>Monthly Retainer (growth)</option>
+                                <option>Creative Partner (scale)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="message" class="block text-sm font-medium text-ink-300 mb-2">The brief *</label>
+                        <textarea id="message" name="message" rows="5" required class="field-custom"
+                            placeholder="What's the product, who's the buyer, and where are the ads running?"></textarea>
+                    </div>
+                    <!-- Honeypot: hidden from real users; bots that fill it get silently dropped -->
+                    <div class="hidden" aria-hidden="true">
+                        <label for="website">Website</label>
+                        <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+                    </div>
+                    <div class="cf-turnstile" data-sitekey="TURNSTILE_SITE_KEY_PLACEHOLDER" data-theme="dark"></div>
+                    <button type="submit" id="submit-btn" class="btn-primary-custom w-full sm:w-auto">Send the brief</button>
+                    <p id="form-status" class="text-sm hidden" role="status"></p>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-white/5 py-12 px-6">
+        <div class="mx-auto max-w-6xl flex flex-col sm:flex-row items-center justify-between gap-6">
+            <div class="flex items-center gap-4">
+                <img src="img/stackapproved-badge.svg" alt="" class="h-8 w-auto" aria-hidden="true">
+                <p class="text-sm text-ink-500">© 2026 COTIB LLC. StackApproved is a COTIB LLC brand.</p>
+            </div>
+            <div class="flex items-center gap-5 font-mono text-sm">
+                <a href="https://www.linkedin.com/company/stackapproved" class="text-ink-400 hover:text-brand transition-colors" target="_blank" rel="noopener">linkedin</a>
+                <a href="https://cotib.com" class="text-ink-400 hover:text-brand transition-colors" target="_blank" rel="noopener">cotib.com</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js" defer></script>
+</body>
+
+</html>

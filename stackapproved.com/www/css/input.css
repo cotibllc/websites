@@ -1,0 +1,78 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-light: #4ADE80;
+  --color-brand: #22C55E;
+  --color-brand-dark: #16A34A;
+
+  --color-ink-50: #FAFAFA;
+  --color-ink-100: #F4F4F5;
+  --color-ink-200: #E4E4E7;
+  --color-ink-300: #D4D4D8;
+  --color-ink-400: #A1A1AA;
+  --color-ink-500: #71717A;
+  --color-ink-600: #52525B;
+  --color-ink-700: #3F3F46;
+  --color-ink-800: #27272A;
+  --color-ink-900: #18181B;
+  --color-ink-950: #0A0A0A;
+
+  --font-sans: 'Space Grotesk', 'system-ui', 'sans-serif';
+  --font-mono: 'JetBrains Mono', 'SFMono-Regular', 'Menlo', 'monospace';
+}
+
+@layer base {
+  body {
+    @apply bg-ink-950 text-ink-200 antialiased font-sans scroll-smooth;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply text-white font-semibold tracking-tight;
+  }
+}
+
+@layer components {
+  .glass-card {
+    @apply bg-ink-900/50 backdrop-blur-md border border-white/5 rounded-2xl shadow-xl transition-all duration-300 hover:border-brand/30 hover:bg-ink-900/70;
+  }
+
+  .nav-link-custom {
+    @apply text-ink-400 hover:text-white px-3 py-2 text-sm font-medium transition-colors duration-200;
+  }
+
+  .btn-primary-custom {
+    @apply inline-flex items-center justify-center px-6 py-3 text-base font-semibold rounded-xl text-ink-950 bg-brand hover:bg-brand-light transition-all duration-300 shadow-lg shadow-brand/20 hover:shadow-brand/40 hover:-translate-y-0.5;
+  }
+
+  .btn-secondary-custom {
+    @apply inline-flex items-center justify-center px-6 py-3 border border-white/10 text-base font-medium rounded-xl text-ink-200 bg-white/5 hover:bg-white/10 hover:text-white transition-all duration-300 backdrop-blur-sm hover:-translate-y-0.5;
+  }
+
+  .chip {
+    @apply inline-flex items-center rounded-full border border-brand/50 px-4 py-1 font-mono text-sm text-brand;
+  }
+
+  .eyebrow {
+    @apply font-mono text-sm text-brand tracking-widest uppercase;
+  }
+
+  .terminal-window {
+    @apply rounded-2xl border border-white/10 bg-ink-900/80 shadow-2xl overflow-hidden;
+  }
+
+  .terminal-bar {
+    @apply flex items-center gap-2 px-4 py-3 border-b border-white/5 bg-ink-900;
+  }
+
+  .terminal-dot {
+    @apply h-3 w-3 rounded-full;
+  }
+
+  .field-custom {
+    @apply w-full rounded-xl border border-white/10 bg-ink-900/60 px-4 py-3 text-ink-100 placeholder-ink-500 focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand transition-colors;
+  }
+
+  .bg-gradient-radial {
+    background-image: radial-gradient(circle at top, rgba(34, 197, 94, 0.12) 0%, transparent 70%);
+  }
+}
