@@ -8,7 +8,7 @@
     "watch:css": "npx tailwindcss -i ./www/css/input.css -o ./www/css/tailwind.css --watch",
     "dev": "concurrently \"npm run watch:css\" \"vercel dev\"",
     "build": "npm run build:css",
-    "deploy": "npm run build && vercel --prod"
+    "deploy": "npm run build && cd .. && vercel --prod"
   },
   "dependencies": {
     "resend": "^4.0.0"

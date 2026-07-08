@@ -2,9 +2,8 @@ const { Resend } = require('resend');
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-const TO_EMAIL = 'charles.betancourt@cotib.com';
-// Switch to no-reply@stackapproved.com once the domain is verified in Resend.
-const FROM_EMAIL = 'StackApproved <no-reply@cotib.com>';
+const TO_EMAIL = 'chuck@stackapproved.com';
+const FROM_EMAIL = 'StackApproved <no-reply@stackapproved.com>';
 
 function escapeHtml(str) {
     if (!str) return '';
