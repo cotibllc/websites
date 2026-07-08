@@ -17,3 +17,5 @@
 
 # Large binary assets (photos, etc.)
 **/photos-to-use/
+.vercel
+.env*
