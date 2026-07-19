@@ -18,7 +18,7 @@ Ten articles. One argument: current leadership frameworks were built for an all-
 3. Delegation Drift *(Live)*
 4. Why AI Will Expose Bad Management Faster Than Ever *(Live)*
 5. The new leadership skill: systems thinking *(Scheduled)*
-6. The end of productivity theater *(Scheduled)*
+6. The end of productivity theater *(Live)*
 
 **Act II — The Transformation (Articles 7–10)**
 7. Middle management in the age of AI
