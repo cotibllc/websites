@@ -133,6 +133,44 @@
             <a href="/plan" id="quiz-cta-link" class="btn btn--gold">Design My Escape</a>
             <button id="quiz-restart-btn" class="quiz-restart-btn">Restart Quiz</button>
           </div>
+
+          <div class="quiz-results__email-box" style="margin-top: 32px; padding-top: 28px; border-top: 1px solid rgba(248, 245, 238, 0.1); max-width: 420px; margin-left: auto; margin-right: auto;">
+            <p style="color: var(--off-white); opacity: 0.85; margin-bottom: 16px; font-size: 0.95rem;">Want these results (and the planning tips that go with them) sent to your inbox?</p>
+
+            <div id="quiz-email-success" class="plan-alert plan-alert--success" style="display:none;">Sent! Check your inbox.</div>
+            <div id="quiz-email-error" class="plan-alert plan-alert--error" style="display:none;"></div>
+
+            <form id="quiz-email-form" class="plan-form" novalidate>
+              <div class="form-group">
+                <label for="q-name">First name</label>
+                <input type="text" id="q-name" name="name" required autocomplete="given-name" />
+              </div>
+              <div class="form-group">
+                <label for="q-email">Email address</label>
+                <input type="email" id="q-email" name="email" required autocomplete="email" />
+              </div>
+
+              <!-- Honeypot: hidden from real users, bots fill it and get silently dropped -->
+              <div style="position:absolute;left:-9999px;top:-9999px;" aria-hidden="true">
+                <label for="q-website">Website</label>
+                <input type="text" id="q-website" name="website" tabindex="-1" autocomplete="off" />
+              </div>
+
+              {% if site.turnstileSiteKey %}
+              <div class="form-group">
+                <!-- Deliberately NOT class="cf-turnstile": this box starts
+                     display:none (inside #quiz-results), and Turnstile's
+                     implicit auto-render (scanning .cf-turnstile at script
+                     load) doesn't size/render correctly in a hidden element.
+                     quiz.js explicitly calls turnstile.render() on this once
+                     the results card becomes visible. -->
+                <div id="quiz-turnstile-widget" data-sitekey="{{ site.turnstileSiteKey }}" data-theme="auto"></div>
+              </div>
+              {% endif %}
+
+              <button type="submit" id="quiz-email-submit-btn" class="btn btn--purple">Email Me My Results</button>
+            </form>
+          </div>
         </div>
       </div>
 

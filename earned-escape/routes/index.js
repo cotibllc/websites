@@ -17,6 +17,115 @@ function escapeHtml(str) {
     .replace(/"/g, '&quot;');
 }
 
+// Strips CR/LF so untrusted input can't inject extra headers when it's
+// interpolated into an email `subject` or `replyTo`. Also caps length so a
+// direct API caller (bypassing the browser forms) can't push arbitrarily
+// large strings into outbound emails.
+function sanitizeForHeader(str, maxLen = 200) {
+  if (!str) return '';
+  return String(str).replace(/[\r\n]+/g, ' ').slice(0, maxLen).trim();
+}
+
+// Verifies a Cloudflare Turnstile token. Fails closed in production when no
+// secret is configured. Shared by /api/plan, /api/guide, and /api/quiz.
+// Returns { ok: true } or { ok: false, status, error } for the route to
+// return directly.
+async function verifyTurnstile(turnstileToken) {
+  const secret = process.env.TURNSTILE_SECRET_KEY;
+  if (!secret) {
+    if (process.env.NODE_ENV === 'production') {
+      console.error('TURNSTILE_SECRET_KEY not set in production – rejecting submission');
+      return { ok: false, status: 500, error: 'Unable to complete security check.' };
+    }
+    console.warn('TURNSTILE_SECRET_KEY not set – skipping Turnstile verification (dev only)');
+    return { ok: true };
+  }
+
+  if (!turnstileToken) {
+    return { ok: false, status: 400, error: 'Please complete the security check.' };
+  }
+
+  try {
+    const verifyRes = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ secret, response: turnstileToken }),
+    });
+    const verifyData = await verifyRes.json();
+    if (!verifyData.success) {
+      return { ok: false, status: 400, error: 'Security check failed. Please refresh the page and try again.' };
+    }
+    return { ok: true };
+  } catch (err) {
+    console.error('Turnstile verify error:', err);
+    return { ok: false, status: 500, error: 'Unable to complete security check.' };
+  }
+}
+
+// Adds a contact to the Resend Audience if RESEND_AUDIENCE_ID is configured.
+// Shared by /api/plan, /api/guide, and /api/quiz so every lead capture point
+// feeds the same list.
+async function addToResendAudience(resend, name, email) {
+  const audienceId = process.env.RESEND_AUDIENCE_ID;
+  if (!audienceId) {
+    console.log('RESEND_AUDIENCE_ID not set – skipping contact registration');
+    return;
+  }
+  try {
+    const nameParts = name.trim().split(/\s+/);
+    const firstName = nameParts[0] || '';
+    const lastName = nameParts.slice(1).join(' ') || '';
+    await resend.contacts.create({
+      email: email.trim(),
+      firstName,
+      lastName,
+      unsubscribed: false,
+      audienceId,
+    });
+  } catch (contactErr) {
+    console.error('Failed to add contact to Resend Audience:', contactErr);
+  }
+}
+
+// Guide nurture sequence, emails 2 and 3 (email 1 is the immediate PDF
+// delivery already sent from POST /api/guide). Copy source: vault
+// Earned-Escape/Website/Copy/Lead_Magnet_5_Mistakes.md.
+function guideNurtureEmail2Html(name) {
+  return `
+<!DOCTYPE html>
+<html>
+<body style="font-family: system-ui, -apple-system, sans-serif; color: #222; max-width: 560px; margin: 0 auto; padding: 32px 24px; line-height: 1.6;">
+  <p style="margin: 0 0 16px; color: #0D0821;">Hi ${escapeHtml(name)},</p>
+  <p style="margin: 0 0 16px;">I hope you found the cruiser's guide helpful! Since you're likely still in the research phase, here's a piece of advice that usually surprises first-time cruisers.</p>
+  <p style="margin: 0 0 16px;">A lot of people think their first decision should be picking a destination, like "the Bahamas" or "the Western Caribbean." In reality, <strong>your first decision should be the ship.</strong> On modern cruise lines like Royal Caribbean, the ship <em>is</em> the destination. The experience on an older, smaller ship is fundamentally different from a massive Oasis-class ship, even sailing to the exact same ports.</p>
+  <p style="margin: 0 0 16px;">Are you currently leaning toward a specific cruise line, or still wide open? Just reply, I read every email.</p>
+  <p style="margin: 20px 0 0; color: #0D0821;">Warmly,<br>Chuck<br><span style="font-size: 13px; color: #666;">Earned Escape by COTIB Adventures LLC</span></p>
+  <hr style="margin: 32px 0 16px; border: none; border-top: 1px solid #eee;">
+  <p style="font-size: 11px; color: #999; margin: 0 0 4px;">Earned Escape is operated by COTIB Adventures LLC and is an affiliate of Castle Dreams Travel.</p>
+  <p style="font-size: 11px; color: #999; margin: 0;">Rather not get these follow-up emails? Just reply "unsubscribe" and I'll take you off the list.</p>
+</body>
+</html>`;
+}
+
+function guideNurtureEmail3Html(name) {
+  return `
+<!DOCTYPE html>
+<html>
+<body style="font-family: system-ui, -apple-system, sans-serif; color: #222; max-width: 560px; margin: 0 auto; padding: 32px 24px; line-height: 1.6;">
+  <p style="margin: 0 0 16px; color: #0D0821;">Hi ${escapeHtml(name)},</p>
+  <p style="margin: 0 0 16px;">Planning a cruise can quickly turn from exciting to overwhelming once you start looking at deck plans, beverage packages, and dining reservations.</p>
+  <p style="margin: 0 0 16px;">I built Earned Escape specifically to take that mental load off of families. You shouldn't need a spreadsheet just to figure out how to feed your family on vacation.</p>
+  <p style="margin: 0 0 16px;">If you're starting to feel stuck, or just want a second set of eyes on an itinerary you're considering, let's hop on a quick 30-minute planning call. Zero pressure, no fee.</p>
+  <p style="margin: 24px 0;"><a href="https://earnedescape.agency/plan" style="display:inline-block; padding:12px 24px; background:#2A164E; color:#fff; text-decoration:none; border-radius:4px;">Reserve My Planning Call</a></p>
+  <p style="margin: 0 0 16px;">Either way, I hope you have an incredible trip. You've earned it.</p>
+  <p style="margin: 20px 0 0; color: #0D0821;">Best,<br>Chuck<br><span style="font-size: 13px; color: #666;">Earned Escape by COTIB Adventures LLC</span></p>
+  <hr style="margin: 32px 0 16px; border: none; border-top: 1px solid #eee;">
+  <p style="font-size: 11px; color: #999; margin: 0 0 4px;">Earned Escape is operated by COTIB Adventures LLC and is an affiliate of Castle Dreams Travel.</p>
+  <p style="font-size: 11px; color: #999; margin: 0;">Rather not get these follow-up emails? Just reply "unsubscribe" and I'll take you off the list.</p>
+</body>
+</html>`;
+}
+
 router.get('/', (req, res) => {
   res.render('pages/index.njk', {
     site,
@@ -131,8 +240,9 @@ router.post('/api/guide', async (req, res) => {
   const { name, email, turnstileToken, website } = req.body || {};
 
   // Honeypot: real users never fill this hidden field. Pretend success so
-  // bots don't learn they were caught.
-  if (website) {
+  // bots don't learn they were caught. Trim first so autofill/extensions that
+  // leave only whitespace in the hidden field don't false-positive a real user.
+  if (website?.trim()) {
     return res.status(200).json({ success: true });
   }
 
@@ -140,32 +250,9 @@ router.post('/api/guide', async (req, res) => {
     return res.status(400).json({ error: 'Please provide both your name and email address.' });
   }
 
-  // Turnstile fails closed in production; only dev may run without the secret.
-  const secret = process.env.TURNSTILE_SECRET_KEY;
-  if (!secret && process.env.NODE_ENV === 'production') {
-    console.error('TURNSTILE_SECRET_KEY not set in production – rejecting submission');
-    return res.status(500).json({ error: 'Unable to complete security check.' });
-  }
-
-  if (secret) {
-    if (!turnstileToken) {
-      return res.status(400).json({ error: 'Please complete the security check.' });
-    }
-    try {
-      const verifyRes = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ secret, response: turnstileToken }),
-      });
-      const verifyData = await verifyRes.json();
-      if (!verifyData.success) {
-        return res.status(400).json({ error: 'Security check failed. Please refresh the page and try again.' });
-      }
-    } catch (err) {
-      return res.status(500).json({ error: 'Unable to complete security check.' });
-    }
-  } else {
-    console.warn('TURNSTILE_SECRET_KEY not set – skipping Turnstile verification (dev only)');
+  const turnstileResult = await verifyTurnstile(turnstileToken);
+  if (!turnstileResult.ok) {
+    return res.status(turnstileResult.status).json({ error: turnstileResult.error });
   }
 
   const notifyHtml = `
@@ -195,7 +282,7 @@ router.post('/api/guide', async (req, res) => {
       from: FROM_EMAIL,
       to: TO_EMAIL,
       replyTo: email,
-      subject: '[Earned Escape] Guide Downloaded: ' + name,
+      subject: '[Earned Escape] Guide Downloaded: ' + sanitizeForHeader(name),
       html: notifyHtml,
     });
 
@@ -207,10 +294,147 @@ router.post('/api/guide', async (req, res) => {
       html: deliverHtml,
     });
 
+    // 3. Add to the Resend Audience so this lead is reachable for future sends
+    await addToResendAudience(resend, name, email);
+
+    // 4. Schedule the rest of the guide nurture sequence (day 3 + day 7).
+    // Independent sends, run in parallel. Skipped in dev/preview if
+    // RESEND_API_KEY isn't a live key, but scheduling failures should never
+    // block the guide delivery above.
+    try {
+      const day3 = new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString();
+      const day7 = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString();
+
+      await Promise.all([
+        resend.emails.send({
+          from: FROM_EMAIL,
+          to: email,
+          subject: 'Quick question about your cruise plans...',
+          html: guideNurtureEmail2Html(name),
+          scheduledAt: day3,
+        }),
+        resend.emails.send({
+          from: FROM_EMAIL,
+          to: email,
+          subject: "Let's get the logistics out of the way",
+          html: guideNurtureEmail3Html(name),
+          scheduledAt: day7,
+        }),
+      ]);
+    } catch (scheduleErr) {
+      console.error('Failed to schedule guide nurture emails:', scheduleErr);
+    }
+
     return res.status(200).json({ success: true });
   } catch (err) {
     console.error('Guide API error:', err);
     return res.status(500).json({ error: 'Something went wrong. Please try again.' });
+  }
+});
+
+// POST /api/quiz – emails the "Help Me Design My Escape" quiz results to the
+// lead and registers them as a contact. The quiz is scored client-side
+// (public/js/quiz.js) and normally only sends the fixed set of option-button
+// labels, but this endpoint is a public URL, so free-text fields are still
+// length-capped and header-sanitized below in case it's called directly.
+router.post('/api/quiz', async (req, res) => {
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method not allowed' });
+  }
+
+  const {
+    name,
+    email,
+    turnstileToken,
+    website,
+    resultTitle,
+    resultDesc,
+    paceLabel,
+    partyLabel,
+    tripType,
+    supportTier,
+  } = req.body || {};
+
+  // Honeypot: real users never fill this hidden field. Pretend success so
+  // bots don't learn they were caught. Trim first so autofill/extensions that
+  // leave only whitespace in the hidden field don't false-positive a real user.
+  if (website?.trim()) {
+    return res.status(200).json({ success: true });
+  }
+
+  if (!name?.trim() || !email?.trim()) {
+    return res.status(400).json({ error: 'Please provide both your name and email address.' });
+  }
+
+  const turnstileResult = await verifyTurnstile(turnstileToken);
+  if (!turnstileResult.ok) {
+    return res.status(turnstileResult.status).json({ error: turnstileResult.error });
+  }
+
+  const safeTitle = sanitizeForHeader(resultTitle) || 'Your Custom Escape';
+  const safeDesc = (resultDesc || '').trim().slice(0, 600);
+
+  const notifyHtml = `
+  <div style="font-family: sans-serif; padding: 20px;">
+    <h2>New Quiz Result</h2>
+    <p><strong>Name:</strong> ${escapeHtml(name)}</p>
+    <p><strong>Email:</strong> ${escapeHtml(email)}</p>
+    <p><strong>Result:</strong> ${escapeHtml(safeTitle)}</p>
+    <p><strong>Trip type:</strong> ${escapeHtml(tripType) || '<em>Not set</em>'}</p>
+    <p><strong>Pace:</strong> ${escapeHtml(paceLabel) || '<em>Not set</em>'}</p>
+    <p><strong>Party:</strong> ${escapeHtml(partyLabel) || '<em>Not set</em>'}</p>
+    <p><strong>Support tier:</strong> ${escapeHtml(supportTier) || '<em>Not set</em>'}</p>
+    <p><em>Submitted via the homepage "Design My Escape" quiz.</em></p>
+  </div>`;
+
+  const resultsHtml = `
+<!DOCTYPE html>
+<html>
+<body style="font-family: system-ui, -apple-system, sans-serif; color: #222; max-width: 560px; margin: 0 auto; padding: 32px 24px; line-height: 1.6;">
+  <p style="margin: 0 0 16px; color: #0D0821;">Hi ${escapeHtml(name)},</p>
+  <p style="margin: 0 0 16px;">Here's what your answers pointed to:</p>
+  <div style="background: #f8f7f2; padding: 18px; border-top: 4px solid #C9A84C; margin: 0 0 20px;">
+    <p style="margin: 0 0 8px; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: #666; font-weight: 600;">${escapeHtml(safeTitle)}</p>
+    <p style="margin: 0; color: #222;">${escapeHtml(safeDesc)}</p>
+  </div>
+  <p style="margin: 0 0 16px;">Preferred pace: <strong>${escapeHtml(paceLabel) || 'Not set'}</strong><br>Travel party: <strong>${escapeHtml(partyLabel) || 'Not set'}</strong></p>
+  <p style="margin: 0 0 16px;">Want to turn this into an actual itinerary? Let's hop on a free 30-minute planning call, zero pressure.</p>
+  <p style="margin: 24px 0;"><a href="https://earnedescape.agency/plan" style="display:inline-block; padding:12px 24px; background:#2A164E; color:#fff; text-decoration:none; border-radius:4px;">Reserve My Planning Call</a></p>
+  <p style="margin: 20px 0 0; color: #0D0821;">Talk soon,<br>Chuck<br><span style="font-size: 13px; color: #666;">Earned Escape by COTIB Adventures LLC</span></p>
+  <hr style="margin: 32px 0 16px; border: none; border-top: 1px solid #eee;">
+  <p style="font-size: 11px; color: #999; margin: 0;">Earned Escape is operated by COTIB Adventures LLC and is an affiliate of Castle Dreams Travel.</p>
+</body>
+</html>`;
+
+  try {
+    const resend = new Resend(process.env.RESEND_API_KEY);
+
+    // 1 & 2. Notify Chuck and send results to the lead — independent sends, run in parallel.
+    await Promise.all([
+      resend.emails.send({
+        from: FROM_EMAIL,
+        to: TO_EMAIL,
+        replyTo: email,
+        subject: `[Earned Escape] Quiz Result: ${safeTitle} – ${sanitizeForHeader(name)}`,
+        html: notifyHtml,
+      }),
+      resend.emails.send({
+        from: FROM_EMAIL,
+        to: email,
+        subject: `Your custom escape: ${safeTitle}`,
+        html: resultsHtml,
+      }),
+    ]);
+
+    // 3. Add to the Resend Audience so this lead is reachable for future sends
+    await addToResendAudience(resend, name, email);
+
+    return res.status(200).json({ success: true });
+  } catch (err) {
+    console.error('Resend error (quiz):', err);
+    return res.status(500).json({
+      error: 'Something went wrong sending your results. Please try again.',
+    });
   }
 });
 
@@ -234,8 +458,9 @@ router.post('/api/plan', async (req, res) => {
   } = req.body || {};
 
   // Honeypot: real users never fill this hidden field. Pretend success so
-  // bots don't learn they were caught.
-  if (website) {
+  // bots don't learn they were caught. Trim first so autofill/extensions that
+  // leave only whitespace in the hidden field don't false-positive a real user.
+  if (website?.trim()) {
     return res.status(200).json({ success: true });
   }
 
@@ -243,38 +468,9 @@ router.post('/api/plan', async (req, res) => {
     return res.status(400).json({ error: 'Please fill in all required fields.' });
   }
 
-  // Turnstile fails closed in production; only dev may run without the secret.
-  const secret = process.env.TURNSTILE_SECRET_KEY;
-  if (!secret && process.env.NODE_ENV === 'production') {
-    console.error('TURNSTILE_SECRET_KEY not set in production – rejecting submission');
-    return res.status(500).json({ error: 'Unable to complete security check. Please try again.' });
-  }
-
-  if (secret) {
-    if (!turnstileToken) {
-      return res.status(400).json({ error: 'Please complete the security check.' });
-    }
-    let verifyData;
-    try {
-      const verifyRes = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          secret,
-          response: turnstileToken,
-        }),
-      });
-      verifyData = await verifyRes.json();
-    } catch (err) {
-      console.error('Turnstile verify error:', err);
-      return res.status(500).json({ error: 'Unable to complete security check. Please try again.' });
-    }
-
-    if (!verifyData.success) {
-      return res.status(400).json({ error: 'Security check failed. Please refresh the page and try again.' });
-    }
-  } else {
-    console.warn('TURNSTILE_SECRET_KEY not set – skipping Turnstile verification (dev only)');
+  const turnstileResult = await verifyTurnstile(turnstileToken);
+  if (!turnstileResult.ok) {
+    return res.status(turnstileResult.status).json({ error: turnstileResult.error });
   }
 
   const htmlEmail = `
@@ -339,7 +535,7 @@ router.post('/api/plan', async (req, res) => {
       from: FROM_EMAIL,
       to: TO_EMAIL,
       replyTo: email,
-      subject: `[Earned Escape] Planning Call: ${tripType || 'General'} – ${name}`,
+      subject: `[Earned Escape] Planning Call: ${sanitizeForHeader(tripType) || 'General'} – ${sanitizeForHeader(name)}`,
       html: htmlEmail,
     });
 
@@ -374,28 +570,7 @@ router.post('/api/plan', async (req, res) => {
     });
 
     // 3. Add contact to Resend Audience if configured
-    const audienceId = process.env.RESEND_AUDIENCE_ID;
-    if (audienceId) {
-      try {
-        const nameParts = name.trim().split(/\s+/);
-        const firstName = nameParts[0] || '';
-        const lastName = nameParts.slice(1).join(' ') || '';
-
-        await resend.contacts.create({
-          email: email.trim(),
-          firstName,
-          lastName,
-          unsubscribed: false,
-          audienceId,
-        });
-      } catch (contactErr) {
-        console.error('Failed to add contact to Resend Audience:', contactErr);
-      }
-    } else {
-      console.log('RESEND_AUDIENCE_ID not set – skipping contact registration');
-    }
-
-
+    await addToResendAudience(resend, name, email);
 
     return res.status(200).json({ success: true });
   } catch (err) {

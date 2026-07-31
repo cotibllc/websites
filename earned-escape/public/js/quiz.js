@@ -17,6 +17,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const ctaLink = document.getElementById('quiz-cta-link');
 
   let currentStepIndex = 0; // 0 to 3
+  let turnstileWidgetId = null; // set once the quiz-results Turnstile widget is explicitly rendered
+  let emailRequestId = 0; // bumped on restart so an in-flight /api/quiz response can't clobber a fresh attempt's UI
   const answers = {
     setting: null,      // cruise, parks, adventure, resort
     tripType: null,     // Royal Caribbean, Walt Disney World, Other
@@ -77,9 +79,34 @@ document.addEventListener('DOMContentLoaded', () => {
     for (const key in answers) {
       answers[key] = null;
     }
+
+    // Invalidate any in-flight /api/quiz request so its response can't
+    // overwrite the reset UI below after this click.
+    emailRequestId += 1;
+
     // Hide results, show questions
     resultsCard.style.display = 'none';
     questionsWrapper.style.display = 'block';
+
+    // Reset the "email me my results" form back to its initial state
+    const emailForm = document.getElementById('quiz-email-form');
+    const emailSuccess = document.getElementById('quiz-email-success');
+    const emailError = document.getElementById('quiz-email-error');
+    if (emailForm) {
+      emailForm.reset();
+      emailForm.style.display = 'block';
+      const btn = document.getElementById('quiz-email-submit-btn');
+      if (btn) {
+        btn.textContent = 'Email Me My Results';
+        btn.disabled = false;
+      }
+    }
+    if (emailSuccess) emailSuccess.style.display = 'none';
+    if (emailError) emailError.style.display = 'none';
+    if (turnstileWidgetId !== null && window.turnstile) {
+      window.turnstile.reset(turnstileWidgetId);
+    }
+
     goToStep(0);
   });
 
@@ -142,6 +169,10 @@ document.addEventListener('DOMContentLoaded', () => {
     resultsDetailPace.textContent = answers.paceLabel;
     resultsDetailParty.textContent = answers.partyLabel;
 
+    // Stash for the "email me my results" form below
+    answers.resultTitle = title;
+    answers.resultDesc = desc;
+
     // Generate pre-filled message
     let prefillTripType = answers.tripType;
     if (answers.tripTypeTag) {
@@ -163,5 +194,115 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     ctaLink.href = `/plan?${queryParams.toString()}#plan-form-section`;
+    answers.resultTripType = prefillTripType;
+
+    renderQuizTurnstile();
+  }
+
+  // The quiz-results Turnstile widget lives inside a box that's display:none
+  // until showResults() runs, so it's deliberately excluded from Turnstile's
+  // implicit auto-render scan (see quiz.njk) and rendered explicitly here,
+  // once the container is actually visible. window.turnstile may not have
+  // loaded yet (the script tag is async/defer), so retry briefly.
+  function renderQuizTurnstile(attemptsLeft = 20) {
+    if (turnstileWidgetId !== null) return; // already rendered
+    const container = document.getElementById('quiz-turnstile-widget');
+    if (!container) return; // no site key configured, nothing to render
+
+    if (window.turnstile) {
+      turnstileWidgetId = window.turnstile.render(container, {
+        sitekey: container.dataset.sitekey,
+        theme: container.dataset.theme || 'auto',
+      });
+    } else if (attemptsLeft > 0) {
+      setTimeout(() => renderQuizTurnstile(attemptsLeft - 1), 250);
+    }
+  }
+
+  // "Email me my results" form
+  const emailForm = document.getElementById('quiz-email-form');
+  if (emailForm) {
+    const emailSubmitBtn = document.getElementById('quiz-email-submit-btn');
+    const emailSuccess = document.getElementById('quiz-email-success');
+    const emailError = document.getElementById('quiz-email-error');
+
+    emailForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      emailError.style.display = 'none';
+      emailError.textContent = '';
+
+      const name = document.getElementById('q-name').value.trim();
+      const email = document.getElementById('q-email').value.trim();
+      const website = document.getElementById('q-website').value;
+      const turnstileToken = emailForm.querySelector('[name="cf-turnstile-response"]')?.value;
+
+      const hasTurnstileWidget = !!document.getElementById('quiz-turnstile-widget');
+      if (hasTurnstileWidget && !turnstileToken) {
+        emailError.textContent = 'Please complete the security check before submitting.';
+        emailError.style.display = 'block';
+        return;
+      }
+
+      if (!name || !email) {
+        emailError.textContent = 'Please provide both your first name and email address.';
+        emailError.style.display = 'block';
+        return;
+      }
+
+      const originalBtnText = emailSubmitBtn.textContent;
+      emailSubmitBtn.textContent = 'Sending...';
+      emailSubmitBtn.disabled = true;
+
+      const requestId = emailRequestId;
+
+      try {
+        const res = await fetch('/api/quiz', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name,
+            email,
+            turnstileToken,
+            website,
+            resultTitle: answers.resultTitle,
+            resultDesc: answers.resultDesc,
+            paceLabel: answers.paceLabel,
+            partyLabel: answers.partyLabel,
+            tripType: answers.resultTripType,
+            supportTier: answers.supportTier,
+          }),
+        });
+
+        // The user may have hit "Restart Quiz" while this request was in
+        // flight; if so, don't let this stale response touch the (already
+        // reset) UI for a new attempt.
+        if (requestId !== emailRequestId) return;
+
+        let data = {};
+        try {
+          data = await res.json();
+        } catch (parseErr) {
+          // Non-JSON response (e.g. a proxy/500 HTML page) — fall through
+          // to the generic error message below.
+        }
+
+        if (!res.ok) {
+          throw new Error(data.error || 'Failed to send your results.');
+        }
+
+        emailForm.style.display = 'none';
+        emailSuccess.style.display = 'block';
+      } catch (err) {
+        if (requestId !== emailRequestId) return;
+        emailError.textContent = err.message || 'Something went wrong. Please try again.';
+        emailError.style.display = 'block';
+        emailSubmitBtn.textContent = originalBtnText;
+        emailSubmitBtn.disabled = false;
+        if (turnstileWidgetId !== null && window.turnstile) {
+          window.turnstile.reset(turnstileWidgetId);
+        }
+      }
+    });
   }
 });
