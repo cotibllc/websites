@@ -140,8 +140,8 @@ router.get('/about', (req, res) => {
   res.render('pages/about.njk', {
     site,
     bodyClass: 'dest-page',
-    title: 'The COTIB Story | Earned Escape',
-    description: 'After decades of exploring the world and 30 years in corporate IT, I built Earned Escape to help families plan the kind of trips they deserve.',
+    title: 'Meet Chuck | Family & Luxury Travel Advisor | Earned Escape',
+    description: 'After decades of exploring the world and 30 years in corporate IT, Chuck Betancourt built Earned Escape to plan elevated family vacations and luxury escapes with the same precision.',
     canonical: '/about',
   });
 });
@@ -194,7 +194,7 @@ router.get('/plan', (req, res) => {
   res.render('pages/plan.njk', {
     site,
     title: 'Vacation Planning Call | Earned Escape',
-    description: 'Book a free 30-minute vacation planning call with Chuck. Personal, no-pressure guidance for Royal Caribbean, Disney Cruise Line, Walt Disney World, and Universal vacations.',
+    description: 'Book a free 30-minute planning call with Chuck. Personal, no-pressure guidance for elevated family vacations and luxury escapes - Royal Caribbean, Disney Cruise Line, Walt Disney World, and Universal.',
     canonical: '/plan',
   });
 });
