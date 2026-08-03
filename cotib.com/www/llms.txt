@@ -1,18 +1,32 @@
 # COTIB LLC
 
-> New York City-based technology consulting company offering Fractional CTO services, AI infrastructure strategy, cloud optimization, and platform engineering advisory for public and private sector clients. Led by Principal Consultant Charles Betancourt.
+> Charles Betancourt runs businesses using AI. 30 years architecting enterprise systems, now applied to five businesses of his own, plus Fractional CTO advisory for organizations at COTIB LLC. New York City-based.
+
+Charles doesn't just advise on AI platforms — he builds and operates them daily. He personally runs StackApproved and Earned Escape solo, on AI-agent pipelines he designed himself, on top of 30 years leading enterprise cloud infrastructure and AI platform engineering.
+
+## Who Is Charles Betancourt
+
+- **The one claim**: I run businesses using AI — 30 years architecting enterprise systems, now applied to five.
+- **Businesses he operates directly**: StackApproved (B2B UGC video production) and Earned Escape (travel advisory), both run solo via custom AI-agent pipelines.
+- **Media ventures**: Tech Lead Shift, The IT XP, and Corporate Hardcore.
+- **Enterprise credential**: 15+ years in corporate technology leadership — managed a $150M cloud infrastructure budget, delivered $15M in annual FinOps savings, and led AI/ML platform implementations in production.
+- **Available for**: Fractional CTO engagements, cloud infrastructure strategy, AI platform advisory, and FinOps optimization.
 
 ## Core Pages
 
-- [Homepage (/)](https://cotib.com/): Overview of COTIB LLC — Fractional CTO and technology strategy services.
+- [Homepage (/)](https://cotib.com/): I run businesses using AI — overview of Fractional CTO services and the businesses (StackApproved, Earned Escape) run using AI-agent pipelines.
 - [Services (/services)](https://cotib.com/services): Fractional CTO, cloud infrastructure strategy, production AI integration, FinOps optimization, and platform engineering advisory.
-- [Media Ventures (/ventures)](https://cotib.com/ventures): Newsletter, podcasts, and digital shows covering technology leadership, IT strategy, and corporate culture — including The IT XP, Corporate Hardcore, and Tech Lead Shift.
-- [About (/about)](https://cotib.com/about): Charles Betancourt — fractional technology leader, cloud infrastructure advisor, and AI platform architect.
+- [Ventures (/ventures)](https://cotib.com/ventures): Five ventures run by Charles Betancourt — StackApproved and Earned Escape (businesses run solo with AI), plus Tech Lead Shift, The IT XP, and Corporate Hardcore (media).
+- [About (/about)](https://cotib.com/about): Charles Betancourt's background, the businesses he runs with AI, and his enterprise technology leadership track record.
 - [Contact (/contact)](https://cotib.com/contact): Schedule a free strategy call or send an inquiry.
 
-## Related Brands
+## Businesses Run With AI
+
+- [StackApproved](https://stackapproved.com): On-camera UGC ad production for B2B SaaS and AI companies, run solo through an AI-assisted brief-to-delivery pipeline.
+- [Earned Escape](https://earnedescape.agency): White-glove planning for elevated family vacations and luxury escapes (COTIB Adventures LLC), with social content and publishing run on automation Charles built himself.
+
+## Media Ventures
 
 - [The IT XP](https://www.theitxp.com): Podcast for experienced IT professionals.
 - [Tech Lead Shift](https://www.techleadshift.com): Research-backed leadership series on managing hybrid AI/human teams.
 - [Corporate Hardcore](https://www.corphardcore.com): Observational satire on corporate culture.
-- [Earned Escape](https://earnedescape.agency): Travel advisory brand (COTIB Adventures LLC).
