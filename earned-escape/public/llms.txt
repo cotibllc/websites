@@ -1,19 +1,25 @@
 # Earned Escape
 
-> Premium travel planning and advisory services for cruises and family vacations, operated by COTIB Adventures LLC and affiliated with Castle Dreams Travel.
+> White-glove planning for elevated family vacations and luxury escapes - Royal Caribbean, Disney, and beyond. Operated by COTIB Adventures LLC and affiliated with Castle Dreams Travel.
 
-Earned Escape is built on a lifetime of travel experience combined with 30 years of corporate IT systems engineering precision. We help families, couples, and milestone travelers plan effortless, elevated, and memorable vacations.
+Earned Escape is built on a lifetime of travel experience combined with 30 years of corporate IT systems engineering precision. We plan two kinds of trips with the same level of care: elevated, multi-generational family vacations and more exclusive, bucket-list luxury escapes. There is no planning fee - support is provided at no added cost to the traveler.
+
+## Who We Serve
+
+- **Elevated Family Vacations**: Multi-generational family trips, milestone celebrations, and first-time cruisers who want a smoother, more elevated experience - Disney, Universal, and Royal Caribbean family travel.
+- **Luxury & Bucket-List Escapes**: Premium cabins, higher-end itineraries, and once-in-a-lifetime experiences for travelers seeking a more exclusive trip.
+- **Support models**: Full-Service Planning (hands-on, start to finish) or Advisory / Light-Touch Support (strategy and second opinion while the traveler books directly). No planning fee either way.
 
 ## Core Pages
 
-- [Homepage (/)](https://earnedescape.agency/): Overview of services, personal travel story, and our interactive travel vibe selector.
-- [About Us (/about)](https://earnedescape.agency/about): The COTIB Story. Founder Chuck Betancourt's background: traveling the world since age six, 30 years of corporate IT systems planning applied to travel, and the vision of COTIB Adventures LLC as a family legacy.
-- [Plan Your Escape (/plan)](https://earnedescape.agency/plan): Book a free 30-minute Vacation Planning Call with Chuck via Google Calendar. Leads auto-ingest into Tern CRM.
+- [Homepage (/)](https://earnedescape.agency/): Overview of both family and luxury planning pathways, personal travel story, and our interactive travel vibe selector.
+- [About Us (/about)](https://earnedescape.agency/about): The COTIB Story. Founder Chuck Betancourt's background: traveling the world since age six, 30 years of corporate IT systems planning applied to travel, credentials and experience, and the vision of COTIB Adventures LLC as a family legacy.
+- [Plan Your Escape (/plan)](https://earnedescape.agency/plan): Book a free 30-minute Vacation Planning Call with Chuck via Google Calendar. Covers both family and luxury trip planning. Leads auto-ingest into Tern CRM.
 - [Compliance (/compliance)](https://earnedescape.agency/compliance): Licensing, business registration (New Jersey), and official affiliate disclosures as an independent contractor of Castle Dreams Travel.
 
 ## Destinations & Planning Guides
 
-- [Royal Caribbean (/royal-caribbean)](https://earnedescape.agency/royal-caribbean): Cruise planning shaped by firsthand sailings. Tips on stateroom selection, cruise classes, and itinerary planning.
-- [Disney Cruise Line (/disney-cruise-line)](https://earnedescape.agency/disney-cruise-line): Family-first Disney Cruise Line planning. Details on ships (like the Disney Fantasy), onboard rotations, and honest comparisons with other cruise lines.
+- [Royal Caribbean (/royal-caribbean)](https://earnedescape.agency/royal-caribbean): Cruise planning shaped by firsthand sailings, from family staterooms to premium suites. Tips on stateroom selection, cruise classes, and itinerary planning.
+- [Disney Cruise Line (/disney-cruise-line)](https://earnedescape.agency/disney-cruise-line): Disney Cruise Line planning for families and multigenerational groups. Details on ships (like the Disney Fantasy), onboard rotations, and honest comparisons with other cruise lines.
 - [Walt Disney World (/disney-world)](https://earnedescape.agency/disney-world): Walt Disney World planning guide. Recommends a resort-first layout, rope drop strategies, selective Lightning Lane usage, and monorail resort insights.
 - [Universal Orlando (/universal)](https://earnedescape.agency/universal): Vacation planning for Universal Orlando and the new Epic Universe theme park, featuring hotel recommendations and park strategy.
