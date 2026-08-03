@@ -139,10 +139,11 @@ router.get('/', (req, res) => {
 router.get('/about', (req, res) => {
   res.render('pages/about.njk', {
     site,
-    bodyClass: 'dest-page',
+    bodyClass: 'dest-page about-page',
     title: 'Meet Chuck | Family & Luxury Travel Advisor | Earned Escape',
     description: 'After decades of exploring the world and 30 years in corporate IT, Chuck Betancourt built Earned Escape to plan elevated family vacations and luxury escapes with the same precision.',
     canonical: '/about',
+    ogImage: '/images/photos/chuck-betancourt-headshot-square.jpg',
   });
 });
 

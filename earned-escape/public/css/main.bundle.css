@@ -3407,8 +3407,18 @@ body.dest-page .reveal {
   border-radius: 8px;
   border: 1px solid rgba(201, 168, 76, 0.2);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-  aspect-ratio: 4/3;
+  aspect-ratio: 1 / 1;
   object-fit: cover;
+  object-position: center top;
+}
+
+.author-bio__more {
+  margin-top: 28px;
+}
+
+/* Hide self-link when the bio already sits on /about */
+.dest-page.about-page .author-bio__more {
+  display: none;
 }
 
 .author-bio__name {
