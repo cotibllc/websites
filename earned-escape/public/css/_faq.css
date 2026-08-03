@@ -1,0 +1,51 @@
+/* FAQ section (Plan page) */
+.plan-faq {
+  padding: var(--section-pad-y) var(--section-pad-x);
+  background: #fff;
+  border-top: 1px solid rgba(201, 168, 76, 0.1);
+}
+
+.plan-faq__header {
+  max-width: var(--content-max-width);
+  margin: 0 auto 40px;
+  text-align: center;
+}
+
+.plan-faq__headline {
+  font-size: clamp(26px, 3.2vw, 36px);
+  color: var(--navy);
+  margin-bottom: 12px;
+}
+
+.plan-faq__list {
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  display: grid;
+  gap: 28px;
+}
+
+.plan-faq__item {
+  border-bottom: 1px solid rgba(201, 168, 76, 0.14);
+  padding-bottom: 28px;
+}
+
+.plan-faq__item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.plan-faq__question {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--navy);
+  margin-bottom: 10px;
+}
+
+.plan-faq__answer {
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 300;
+  color: rgba(11, 31, 58, 0.75);
+  line-height: 1.7;
+}

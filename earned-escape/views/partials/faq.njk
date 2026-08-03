@@ -1,0 +1,61 @@
+{% set faqs = [
+  {
+    "q": "Is there a fee for using Earned Escape's travel planning service?",
+    "a": "No. Earned Escape provides full white-glove travel planning at zero added cost to you. You pay the same price for your cruise or vacation whether you book it yourself or through Earned Escape."
+  },
+  {
+    "q": "What's the difference between Full-Service Planning and Advisory / Light-Touch Support?",
+    "a": "Full-Service Planning means Chuck handles everything from research through booking coordination, staterooms, dining, and excursions. Advisory / Light-Touch Support is for travelers who want an expert second opinion and strategy while booking directly themselves. You can choose either, or decide after your planning call."
+  },
+  {
+    "q": "Does Earned Escape only plan family vacations?",
+    "a": "No. Earned Escape plans two kinds of trips with the same level of care: elevated, multi-generational family vacations and more exclusive, bucket-list luxury escapes, including premium cabins and higher-end itineraries."
+  },
+  {
+    "q": "Which cruise lines and destinations does Earned Escape specialize in?",
+    "a": "Primarily Royal Caribbean, Disney Cruise Line, Walt Disney World, and Universal Orlando, along with additional luxury and bucket-list travel planning beyond those destinations."
+  },
+  {
+    "q": "Is Earned Escape a licensed travel agency?",
+    "a": "Earned Escape operates under COTIB Adventures LLC and is an affiliate of Castle Dreams Travel, giving clients the personal attention of a boutique planner backed by an established agency's industry relationships and support."
+  },
+  {
+    "q": "How do I get started?",
+    "a": "Book a free 30-minute Vacation Planning Call. There is no pressure and no obligation, and you will get a clear next step whether or not you decide to work together."
+  }
+] %}
+
+<section class="plan-faq" id="faq">
+  <div class="plan-faq__header">
+    <p class="section-eyebrow">Common Questions</p>
+    <h2 class="plan-faq__headline">Frequently asked questions.</h2>
+  </div>
+
+  <div class="plan-faq__list">
+    {% for item in faqs %}
+    <div class="plan-faq__item">
+      <h3 class="plan-faq__question">{{ item.q }}</h3>
+      <p class="plan-faq__answer">{{ item.a }}</p>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {% for item in faqs %}
+    {
+      "@type": "Question",
+      "name": {{ item.q | dump | safe }},
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": {{ item.a | dump | safe }}
+      }
+    }{% if not loop.last %},{% endif %}
+    {% endfor %}
+  ]
+}
+</script>
