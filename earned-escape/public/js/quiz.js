@@ -271,6 +271,7 @@ document.addEventListener('DOMContentLoaded', () => {
             partyLabel: answers.partyLabel,
             tripType: answers.resultTripType,
             supportTier: answers.supportTier,
+            setting: answers.setting,
           }),
         });
 
