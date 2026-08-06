@@ -20,7 +20,7 @@ const turnstileSiteKey = (process.env.TURNSTILE_SITE_KEY && !process.env.TURNSTI
 module.exports = {
   siteUrl,
   // Bump when static assets change (cache-bust CDN after deploy)
-  assetVersion: '20260612-dest-logos',
+  assetVersion: '20260803-quiz-email',
   // ── BRAND
   brand: {
     name: 'Earned Escape',
@@ -72,9 +72,9 @@ module.exports = {
 
   // ── SEO
   seo: {
-    title: "Earned Escape | Luxury Cruise Travel Agency & Family Vacations",
+    title: "Earned Escape | White-Glove Family & Luxury Travel Planning",
     description:
-      "Earned Escape is a luxury cruise travel agency specializing in Disney Cruise Line, Royal Caribbean, Walt Disney World, and Universal vacations planned with a personal touch.",
+      "White-glove planning for elevated family vacations and luxury escapes - Royal Caribbean, Disney, and beyond. Personal travel planning for multi-gen family cruises and more exclusive escapes, at zero planning fee.",
     ogImage: '/images/og/og-default.png',
     twitterHandle: '@earned_escape',
   },

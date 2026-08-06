@@ -139,10 +139,11 @@ router.get('/', (req, res) => {
 router.get('/about', (req, res) => {
   res.render('pages/about.njk', {
     site,
-    bodyClass: 'dest-page',
-    title: 'The COTIB Story | Earned Escape',
-    description: 'After decades of exploring the world and 30 years in corporate IT, I built Earned Escape to help families plan the kind of trips they deserve.',
+    bodyClass: 'dest-page about-page',
+    title: 'Meet Chuck | Family & Luxury Travel Advisor | Earned Escape',
+    description: 'After decades of exploring the world and 30 years in corporate IT, Chuck Betancourt built Earned Escape to plan elevated family vacations and luxury escapes with the same precision.',
     canonical: '/about',
+    ogImage: '/images/photos/chuck-betancourt-headshot-square.jpg',
   });
 });
 
@@ -194,7 +195,7 @@ router.get('/plan', (req, res) => {
   res.render('pages/plan.njk', {
     site,
     title: 'Vacation Planning Call | Earned Escape',
-    description: 'Book a free 30-minute vacation planning call with Chuck. Personal, no-pressure guidance for Royal Caribbean, Disney Cruise Line, Walt Disney World, and Universal vacations.',
+    description: 'Book a free 30-minute planning call with Chuck. Personal, no-pressure guidance for elevated family vacations and luxury escapes - Royal Caribbean, Disney Cruise Line, Walt Disney World, and Universal.',
     canonical: '/plan',
   });
 });
@@ -332,6 +333,124 @@ router.post('/api/guide', async (req, res) => {
   }
 });
 
+// Setting-specific planning tips for quiz results email. Keys match
+// data-value on the homepage quiz (cruise | parks | adventure | resort).
+const QUIZ_TIPS = {
+  cruise: {
+    heading: '3 cruise-planning tips tailored to you',
+    tips: [
+      'Pick the ship before the itinerary. On modern Royal Caribbean ships especially, the vessel is the vacation.',
+      'Stateroom location matters as much as category. Mid-ship, higher decks usually ride smoother and cut walk time to venues.',
+      'Lock dining and must-do reservations early. Specialty dining and popular excursions sell out well before sailing day.',
+    ],
+    moreUrl: 'https://earnedescape.agency/royal-caribbean',
+    moreLabel: 'Explore Royal Caribbean planning',
+  },
+  parks: {
+    heading: '3 park-planning tips tailored to you',
+    tips: [
+      'Choose the resort first, then the park days. Where you sleep shapes transportation, rest, and how early you can start.',
+      'Protect your mornings. Rope drop (or a smart first-hour plan) still beats buying your way out of every line.',
+      'Be selective with paid line-skipping. Lightning Lane / Express works best on a few high-demand attractions, not every ride.',
+    ],
+    moreUrl: 'https://earnedescape.agency/disney-world',
+    moreLabel: 'Explore Disney World planning',
+  },
+  adventure: {
+    heading: '3 adventure-planning tips tailored to you',
+    tips: [
+      'Build one "must-see" block per day and protect recovery time. Bucket-list trips fall apart when every hour is packed.',
+      'Treat multi-city logistics like a project plan: flights, transfers, and hotel check-in windows are where stress hides.',
+      'Leave white space for the unexpected. The best moments on China-style itineraries are often the ones you did not schedule.',
+    ],
+    moreUrl: 'https://earnedescape.agency/about',
+    moreLabel: 'See how I plan complex trips',
+  },
+  resort: {
+    heading: '3 resort-planning tips tailored to you',
+    tips: [
+      'Room category and location change the whole stay. Ocean view, quiet wing, or near the adult pool is often worth more than an upgrade label.',
+      'Decide early what "all-inclusive" means for you: drinks, a la carte dining, kids clubs, and transfer packages vary widely.',
+      'Seasonality drives price and vibe. Shoulder seasons often deliver the same resort with fewer crowds and better value.',
+    ],
+    moreUrl: 'https://earnedescape.agency/plan',
+    moreLabel: 'Plan a resort escape with me',
+  },
+};
+
+function quizTipsForSetting(setting) {
+  return QUIZ_TIPS[setting] || QUIZ_TIPS.cruise;
+}
+
+function quizResultsEmailHtml({
+  name,
+  safeTitle,
+  safeDesc,
+  paceLabel,
+  partyLabel,
+  supportTier,
+  tripType,
+  setting,
+}) {
+  const tipPack = quizTipsForSetting(setting);
+  const tipItems = tipPack.tips
+    .map(
+      (tip) =>
+        `<li style="margin: 0 0 10px; padding-left: 4px;">${escapeHtml(tip)}</li>`
+    )
+    .join('');
+
+  return `
+<!DOCTYPE html>
+<html>
+<body style="font-family: system-ui, -apple-system, sans-serif; color: #222; max-width: 560px; margin: 0 auto; padding: 32px 24px; line-height: 1.6;">
+  <p style="margin: 0 0 16px; color: #0D0821;">Hi ${escapeHtml(name)},</p>
+  <p style="margin: 0 0 16px;">Here's what your answers pointed to, plus a few planning tips so you can keep the momentum going.</p>
+  <div style="background: #f8f7f2; padding: 18px; border-top: 4px solid #C9A84C; margin: 0 0 20px;">
+    <p style="margin: 0 0 8px; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: #666; font-weight: 600;">${escapeHtml(safeTitle)}</p>
+    <p style="margin: 0; color: #222;">${escapeHtml(safeDesc)}</p>
+  </div>
+  <p style="margin: 0 0 8px;"><strong>Your snapshot</strong></p>
+  <ul style="margin: 0 0 20px; padding-left: 18px; color: #333;">
+    <li style="margin: 0 0 6px;">Preferred pace: <strong>${escapeHtml(paceLabel) || 'Not set'}</strong></li>
+    <li style="margin: 0 0 6px;">Travel party: <strong>${escapeHtml(partyLabel) || 'Not set'}</strong></li>
+    <li style="margin: 0 0 6px;">Trip focus: <strong>${escapeHtml(tripType) || 'Not set'}</strong></li>
+    <li style="margin: 0 0 6px;">Support style: <strong>${escapeHtml(supportTier) || 'Not set'}</strong></li>
+  </ul>
+  <p style="margin: 0 0 8px;"><strong>${escapeHtml(tipPack.heading)}</strong></p>
+  <ol style="margin: 0 0 20px; padding-left: 18px; color: #333;">
+    ${tipItems}
+  </ol>
+  <p style="margin: 0 0 12px;"><a href="${tipPack.moreUrl}" style="color: #2A164E; font-weight: 600;">${escapeHtml(tipPack.moreLabel)} &rarr;</a></p>
+  <p style="margin: 0 0 16px;">Want to turn this into an actual itinerary? Let's hop on a free 30-minute planning call. Zero pressure, no planning fee.</p>
+  <p style="margin: 24px 0;"><a href="https://earnedescape.agency/plan" style="display:inline-block; padding:12px 24px; background:#2A164E; color:#fff; text-decoration:none; border-radius:4px;">Reserve My Planning Call</a></p>
+  <p style="margin: 20px 0 0; color: #0D0821;">Talk soon,<br>Chuck<br><span style="font-size: 13px; color: #666;">Earned Escape by COTIB Adventures LLC</span></p>
+  <hr style="margin: 32px 0 16px; border: none; border-top: 1px solid #eee;">
+  <p style="font-size: 11px; color: #999; margin: 0 0 4px;">Earned Escape is operated by COTIB Adventures LLC and is an affiliate of Castle Dreams Travel.</p>
+  <p style="font-size: 11px; color: #999; margin: 0;">Rather not get follow-up emails? Just reply "unsubscribe" and I'll take you off the list.</p>
+</body>
+</html>`;
+}
+
+function quizNurtureEmailHtml(name, safeTitle) {
+  return `
+<!DOCTYPE html>
+<html>
+<body style="font-family: system-ui, -apple-system, sans-serif; color: #222; max-width: 560px; margin: 0 auto; padding: 32px 24px; line-height: 1.6;">
+  <p style="margin: 0 0 16px; color: #0D0821;">Hi ${escapeHtml(name)},</p>
+  <p style="margin: 0 0 16px;">A few days ago you took the Design My Escape quiz and landed on <strong>${escapeHtml(safeTitle)}</strong>.</p>
+  <p style="margin: 0 0 16px;">Most people get stuck right after that moment, comparing options in too many tabs and second-guessing dates, ships, or resorts. That is exactly when a short planning call helps: we narrow the field, map a realistic pace, and decide what is worth booking now versus later.</p>
+  <p style="margin: 0 0 16px;">If you want a second set of eyes, grab a free 30-minute call. Zero pressure, no planning fee.</p>
+  <p style="margin: 24px 0;"><a href="https://earnedescape.agency/plan" style="display:inline-block; padding:12px 24px; background:#2A164E; color:#fff; text-decoration:none; border-radius:4px;">Reserve My Planning Call</a></p>
+  <p style="margin: 0 0 16px;">Either way, keep the tips from your results email handy when you research. You've earned a trip that actually feels easy.</p>
+  <p style="margin: 20px 0 0; color: #0D0821;">Best,<br>Chuck<br><span style="font-size: 13px; color: #666;">Earned Escape by COTIB Adventures LLC</span></p>
+  <hr style="margin: 32px 0 16px; border: none; border-top: 1px solid #eee;">
+  <p style="font-size: 11px; color: #999; margin: 0 0 4px;">Earned Escape is operated by COTIB Adventures LLC and is an affiliate of Castle Dreams Travel.</p>
+  <p style="font-size: 11px; color: #999; margin: 0;">Rather not get these follow-up emails? Just reply "unsubscribe" and I'll take you off the list.</p>
+</body>
+</html>`;
+}
+
 // POST /api/quiz – emails the "Help Me Design My Escape" quiz results to the
 // lead and registers them as a contact. The quiz is scored client-side
 // (public/js/quiz.js) and normally only sends the fixed set of option-button
@@ -353,6 +472,7 @@ router.post('/api/quiz', async (req, res) => {
     partyLabel,
     tripType,
     supportTier,
+    setting,
   } = req.body || {};
 
   // Honeypot: real users never fill this hidden field. Pretend success so
@@ -366,6 +486,11 @@ router.post('/api/quiz', async (req, res) => {
     return res.status(400).json({ error: 'Please provide both your name and email address.' });
   }
 
+  const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
+  if (!emailOk) {
+    return res.status(400).json({ error: 'Please enter a valid email address.' });
+  }
+
   const turnstileResult = await verifyTurnstile(turnstileToken);
   if (!turnstileResult.ok) {
     return res.status(turnstileResult.status).json({ error: turnstileResult.error });
@@ -373,6 +498,13 @@ router.post('/api/quiz', async (req, res) => {
 
   const safeTitle = sanitizeForHeader(resultTitle) || 'Your Custom Escape';
   const safeDesc = (resultDesc || '').trim().slice(0, 600);
+  const safePace = sanitizeForHeader(paceLabel, 120);
+  const safeParty = sanitizeForHeader(partyLabel, 120);
+  const safeTrip = sanitizeForHeader(tripType, 160);
+  const safeTier = sanitizeForHeader(supportTier, 120);
+  const safeSetting = ['cruise', 'parks', 'adventure', 'resort'].includes(setting)
+    ? setting
+    : 'cruise';
 
   const notifyHtml = `
   <div style="font-family: sans-serif; padding: 20px;">
@@ -380,33 +512,33 @@ router.post('/api/quiz', async (req, res) => {
     <p><strong>Name:</strong> ${escapeHtml(name)}</p>
     <p><strong>Email:</strong> ${escapeHtml(email)}</p>
     <p><strong>Result:</strong> ${escapeHtml(safeTitle)}</p>
-    <p><strong>Trip type:</strong> ${escapeHtml(tripType) || '<em>Not set</em>'}</p>
-    <p><strong>Pace:</strong> ${escapeHtml(paceLabel) || '<em>Not set</em>'}</p>
-    <p><strong>Party:</strong> ${escapeHtml(partyLabel) || '<em>Not set</em>'}</p>
-    <p><strong>Support tier:</strong> ${escapeHtml(supportTier) || '<em>Not set</em>'}</p>
+    <p><strong>Setting:</strong> ${escapeHtml(safeSetting)}</p>
+    <p><strong>Trip type:</strong> ${escapeHtml(safeTrip) || '<em>Not set</em>'}</p>
+    <p><strong>Pace:</strong> ${escapeHtml(safePace) || '<em>Not set</em>'}</p>
+    <p><strong>Party:</strong> ${escapeHtml(safeParty) || '<em>Not set</em>'}</p>
+    <p><strong>Support tier:</strong> ${escapeHtml(safeTier) || '<em>Not set</em>'}</p>
     <p><em>Submitted via the homepage "Design My Escape" quiz.</em></p>
   </div>`;
 
-  const resultsHtml = `
-<!DOCTYPE html>
-<html>
-<body style="font-family: system-ui, -apple-system, sans-serif; color: #222; max-width: 560px; margin: 0 auto; padding: 32px 24px; line-height: 1.6;">
-  <p style="margin: 0 0 16px; color: #0D0821;">Hi ${escapeHtml(name)},</p>
-  <p style="margin: 0 0 16px;">Here's what your answers pointed to:</p>
-  <div style="background: #f8f7f2; padding: 18px; border-top: 4px solid #C9A84C; margin: 0 0 20px;">
-    <p style="margin: 0 0 8px; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: #666; font-weight: 600;">${escapeHtml(safeTitle)}</p>
-    <p style="margin: 0; color: #222;">${escapeHtml(safeDesc)}</p>
-  </div>
-  <p style="margin: 0 0 16px;">Preferred pace: <strong>${escapeHtml(paceLabel) || 'Not set'}</strong><br>Travel party: <strong>${escapeHtml(partyLabel) || 'Not set'}</strong></p>
-  <p style="margin: 0 0 16px;">Want to turn this into an actual itinerary? Let's hop on a free 30-minute planning call, zero pressure.</p>
-  <p style="margin: 24px 0;"><a href="https://earnedescape.agency/plan" style="display:inline-block; padding:12px 24px; background:#2A164E; color:#fff; text-decoration:none; border-radius:4px;">Reserve My Planning Call</a></p>
-  <p style="margin: 20px 0 0; color: #0D0821;">Talk soon,<br>Chuck<br><span style="font-size: 13px; color: #666;">Earned Escape by COTIB Adventures LLC</span></p>
-  <hr style="margin: 32px 0 16px; border: none; border-top: 1px solid #eee;">
-  <p style="font-size: 11px; color: #999; margin: 0;">Earned Escape is operated by COTIB Adventures LLC and is an affiliate of Castle Dreams Travel.</p>
-</body>
-</html>`;
+  const resultsHtml = quizResultsEmailHtml({
+    name: name.trim(),
+    safeTitle,
+    safeDesc,
+    paceLabel: safePace,
+    partyLabel: safeParty,
+    supportTier: safeTier,
+    tripType: safeTrip,
+    setting: safeSetting,
+  });
 
   try {
+    if (!process.env.RESEND_API_KEY) {
+      console.error('RESEND_API_KEY not set – cannot send quiz results');
+      return res.status(500).json({
+        error: 'Something went wrong sending your results. Please try again.',
+      });
+    }
+
     const resend = new Resend(process.env.RESEND_API_KEY);
 
     // 1 & 2. Notify Chuck and send results to the lead — independent sends, run in parallel.
@@ -414,13 +546,13 @@ router.post('/api/quiz', async (req, res) => {
       resend.emails.send({
         from: FROM_EMAIL,
         to: TO_EMAIL,
-        replyTo: email,
+        replyTo: email.trim(),
         subject: `[Earned Escape] Quiz Result: ${safeTitle} – ${sanitizeForHeader(name)}`,
         html: notifyHtml,
       }),
       resend.emails.send({
         from: FROM_EMAIL,
-        to: email,
+        to: email.trim(),
         subject: `Your custom escape: ${safeTitle}`,
         html: resultsHtml,
       }),
@@ -428,6 +560,21 @@ router.post('/api/quiz', async (req, res) => {
 
     // 3. Add to the Resend Audience so this lead is reachable for future sends
     await addToResendAudience(resend, name, email);
+
+    // 4. Day-3 nurture: soft planning-call CTA referencing their result.
+    // Scheduling failures must not fail the immediate results delivery.
+    try {
+      const day3 = new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString();
+      await resend.emails.send({
+        from: FROM_EMAIL,
+        to: email.trim(),
+        subject: 'Still thinking about that escape?',
+        html: quizNurtureEmailHtml(name.trim(), safeTitle),
+        scheduledAt: day3,
+      });
+    } catch (scheduleErr) {
+      console.error('Failed to schedule quiz nurture email:', scheduleErr);
+    }
 
     return res.status(200).json({ success: true });
   } catch (err) {

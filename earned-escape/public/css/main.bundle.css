@@ -686,6 +686,110 @@ em {
 }
 
 /* ==========================================================================
+   Imported: _pathways.css
+   ========================================================================== */
+
+.pathways {
+  background-color: var(--ink);
+  padding: var(--section-pad-y) var(--section-pad-x);
+}
+
+.pathways__inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+.pathways__header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.pathways__headline {
+  font-size: clamp(32px, 4vw, 48px);
+  color: var(--white);
+  margin: 0 auto;
+  max-width: var(--content-max-width);
+}
+
+.pathways__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+@media (max-width: 767px) {
+  .pathways__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.pathway-card {
+  position: relative;
+  padding: 40px 36px;
+  border: 1px solid rgba(201, 168, 76, 0.2);
+  background: rgba(201, 168, 76, 0.03);
+  transition: border-color var(--transition-base), background-color var(--transition-base), transform var(--transition-base);
+}
+
+.pathway-card:hover {
+  border-color: rgba(201, 168, 76, 0.45);
+  background: rgba(201, 168, 76, 0.06);
+  transform: translateY(-4px);
+}
+
+.pathway-card__icon {
+  width: 48px;
+  height: 48px;
+  border: 1px solid rgba(201, 168, 76, 0.25);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.pathway-card__eyebrow {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 12px;
+}
+
+.pathway-card__title {
+  font-family: var(--font-display);
+  font-size: clamp(22px, 2.4vw, 28px);
+  font-weight: 500;
+  color: var(--white);
+  margin-bottom: 16px;
+}
+
+.pathway-card__desc {
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(248, 245, 238, 0.75);
+  margin-bottom: 24px;
+}
+
+.pathway-card__link {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--gold-light);
+  text-decoration: none;
+  transition: color var(--transition-base);
+}
+
+.pathway-card__link:hover {
+  color: var(--gold);
+}
+
+
+/* ==========================================================================
    Imported: _about.css
    ========================================================================== */
 
@@ -1970,6 +2074,50 @@ body.dest-page .reveal {
   }
 }
 
+/* Credentials & Experience list (About page) */
+.dest-credentials {
+  background: var(--warm-bg);
+  padding: 0 var(--section-pad-x) var(--section-pad-y);
+}
+
+.dest-credentials__inner {
+  max-width: 72ch;
+  margin: 0 auto;
+}
+
+.dest-credentials__list {
+  list-style: none;
+  padding: 0;
+  margin: 28px 0 0;
+  display: grid;
+  gap: 18px;
+}
+
+.dest-credentials__list li {
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 300;
+  color: rgba(11, 31, 58, 0.8);
+  line-height: 1.6;
+  padding-left: 28px;
+  position: relative;
+}
+
+.dest-credentials__list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 8px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--gold);
+}
+
+.dest-credentials__list strong {
+  color: var(--navy-deep);
+}
+
 
 /* ==========================================================================
    Imported: _guides.css
@@ -2980,6 +3128,63 @@ body.dest-page .reveal {
 
 
 /* ==========================================================================
+   Imported: _faq.css
+   ========================================================================== */
+
+/* FAQ section (Plan page) */
+.plan-faq {
+  padding: var(--section-pad-y) var(--section-pad-x);
+  background: #fff;
+  border-top: 1px solid rgba(201, 168, 76, 0.1);
+}
+
+.plan-faq__header {
+  max-width: var(--content-max-width);
+  margin: 0 auto 40px;
+  text-align: center;
+}
+
+.plan-faq__headline {
+  font-size: clamp(26px, 3.2vw, 36px);
+  color: var(--navy);
+  margin-bottom: 12px;
+}
+
+.plan-faq__list {
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  display: grid;
+  gap: 28px;
+}
+
+.plan-faq__item {
+  border-bottom: 1px solid rgba(201, 168, 76, 0.14);
+  padding-bottom: 28px;
+}
+
+.plan-faq__item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.plan-faq__question {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--navy);
+  margin-bottom: 10px;
+}
+
+.plan-faq__answer {
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 300;
+  color: rgba(11, 31, 58, 0.75);
+  line-height: 1.7;
+}
+
+
+/* ==========================================================================
    Imported: _quiz.css
    ========================================================================== */
 
@@ -3259,8 +3464,18 @@ body.dest-page .reveal {
   border-radius: 8px;
   border: 1px solid rgba(201, 168, 76, 0.2);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-  aspect-ratio: 4/3;
+  aspect-ratio: 1 / 1;
   object-fit: cover;
+  object-position: center top;
+}
+
+.author-bio__more {
+  margin-top: 28px;
+}
+
+/* Hide self-link when the bio already sits on /about */
+.dest-page.about-page .author-bio__more {
+  display: none;
 }
 
 .author-bio__name {

@@ -529,3 +529,47 @@ body.dest-page .reveal {
     grid-template-columns: 1fr;
   }
 }
+
+/* Credentials & Experience list (About page) */
+.dest-credentials {
+  background: var(--warm-bg);
+  padding: 0 var(--section-pad-x) var(--section-pad-y);
+}
+
+.dest-credentials__inner {
+  max-width: 72ch;
+  margin: 0 auto;
+}
+
+.dest-credentials__list {
+  list-style: none;
+  padding: 0;
+  margin: 28px 0 0;
+  display: grid;
+  gap: 18px;
+}
+
+.dest-credentials__list li {
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 300;
+  color: rgba(11, 31, 58, 0.8);
+  line-height: 1.6;
+  padding-left: 28px;
+  position: relative;
+}
+
+.dest-credentials__list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 8px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--gold);
+}
+
+.dest-credentials__list strong {
+  color: var(--navy-deep);
+}
