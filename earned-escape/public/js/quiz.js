@@ -225,9 +225,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const emailSubmitBtn = document.getElementById('quiz-email-submit-btn');
     const emailSuccess = document.getElementById('quiz-email-success');
     const emailError = document.getElementById('quiz-email-error');
+    let emailSubmitInFlight = false;
 
     emailForm.addEventListener('submit', async (e) => {
       e.preventDefault();
+
+      // Guards against a double POST (e.g. Enter-key submit racing a button
+      // click) — a Turnstile token is single-use, so a second concurrent
+      // submit would fail its security check even though the first succeeded.
+      if (emailSubmitInFlight) return;
+      emailSubmitInFlight = true;
 
       emailError.style.display = 'none';
       emailError.textContent = '';
@@ -241,12 +248,14 @@ document.addEventListener('DOMContentLoaded', () => {
       if (hasTurnstileWidget && !turnstileToken) {
         emailError.textContent = 'Please complete the security check before submitting.';
         emailError.style.display = 'block';
+        emailSubmitInFlight = false;
         return;
       }
 
       if (!name || !email) {
         emailError.textContent = 'Please provide both your first name and email address.';
         emailError.style.display = 'block';
+        emailSubmitInFlight = false;
         return;
       }
 
@@ -277,7 +286,10 @@ document.addEventListener('DOMContentLoaded', () => {
         // The user may have hit "Restart Quiz" while this request was in
         // flight; if so, don't let this stale response touch the (already
         // reset) UI for a new attempt.
-        if (requestId !== emailRequestId) return;
+        if (requestId !== emailRequestId) {
+          emailSubmitInFlight = false;
+          return;
+        }
 
         let data = {};
         try {
@@ -293,12 +305,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
         emailForm.style.display = 'none';
         emailSuccess.style.display = 'block';
+        emailSubmitInFlight = false;
       } catch (err) {
-        if (requestId !== emailRequestId) return;
+        if (requestId !== emailRequestId) {
+          emailSubmitInFlight = false;
+          return;
+        }
         emailError.textContent = err.message || 'Something went wrong. Please try again.';
         emailError.style.display = 'block';
         emailSubmitBtn.textContent = originalBtnText;
         emailSubmitBtn.disabled = false;
+        emailSubmitInFlight = false;
         if (turnstileWidgetId !== null && window.turnstile) {
           window.turnstile.reset(turnstileWidgetId);
         }
