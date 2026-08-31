@@ -17,12 +17,12 @@ Ten articles. One argument: current leadership frameworks were built for an all-
 2. Managing the Invisible Worker *(Live)*
 3. Delegation Drift *(Live)*
 4. Why AI Will Expose Bad Management Faster Than Ever *(Live)*
-5. The new leadership skill: systems thinking *(Scheduled)*
-6. The end of productivity theater *(Live)*
+5. The New Leadership Skill: Systems Thinking *(Live)*
+6. The End of Productivity Theater *(Live)*
 
 **Act II — The Transformation (Articles 7–10)**
-7. Middle management in the age of AI
-8. Why culture matters more when machines work for you
+7. Middle Management in the Age of AI: The Empathy Premium *(Live)*
+8. AI Will Scale Whatever Culture You Already Have *(Live)*
 9. The accountability problem no one is ready for
 10. The future leader is a system architect
 
