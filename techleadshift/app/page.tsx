@@ -38,25 +38,30 @@ const actOneArticles: SeriesArticle[] = [
   },
   {
     number: "05",
-    title: "The new leadership skill: systems thinking",
+    title: "The New Leadership Skill: Systems Thinking",
     status: "Live",
     href: `${SUBSTACK_URL}/p/the-new-leadership-skill-systems`,
   },
   {
     number: "06",
-    title: "The end of productivity theater",
-    status: "Scheduled",
+    title: "The End of Productivity Theater",
+    status: "Live",
+    href: `${SUBSTACK_URL}/p/the-end-of-productivity-theater`,
   },
 ];
 
 const actTwoArticles: SeriesArticle[] = [
   {
     number: "07",
-    title: "Middle management in the age of AI",
+    title: "Middle Management in the Age of AI: The Empathy Premium",
+    status: "Live",
+    href: `${SUBSTACK_URL}/p/middle-management-in-the-age-of-ai`,
   },
   {
     number: "08",
-    title: "Why culture matters more when machines work for you",
+    title: "AI Will Scale Whatever Culture You Already Have",
+    status: "Live",
+    href: `${SUBSTACK_URL}/p/ai-will-scale-whatever-culture-you`,
   },
   {
     number: "09",
