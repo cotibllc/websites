@@ -165,6 +165,7 @@ if (planForm) {
         name: document.getElementById('f-name')?.value.trim(),
         email: document.getElementById('f-email')?.value.trim(),
         phone: document.getElementById('f-phone')?.value.trim(),
+        contactPreference: document.getElementById('f-contact')?.value,
         dates: document.getElementById('f-dates')?.value.trim(),
         tripType: document.getElementById('f-trip-type')?.value,
         travelers: document.getElementById('f-travelers')?.value.trim(),

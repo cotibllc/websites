@@ -1,6 +1,9 @@
 .pathways {
-  background-color: var(--ink);
-  padding: var(--section-pad-y) var(--section-pad-x);
+  scroll-margin-top: 76px;
+  background: #eef3f2;
+  color: #243332;
+  padding: 56px var(--section-pad-x) 64px;
+  letter-spacing: 0;
 }
 
 .pathways__inner {
@@ -9,90 +12,84 @@
 }
 
 .pathways__header {
-  text-align: center;
-  margin-bottom: 48px;
+  margin-bottom: 36px;
 }
 
 .pathways__headline {
-  font-size: clamp(32px, 4vw, 48px);
-  color: var(--white);
-  margin: 0 auto;
-  max-width: var(--content-max-width);
+  font-size: 34px;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: 0;
+  margin: 0 0 12px;
+}
+
+.pathways__intro {
+  max-width: 66ch;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.7;
+  margin: 0;
 }
 
 .pathways__grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 24px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 32px;
 }
 
-@media (max-width: 767px) {
-  .pathways__grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-.pathway-card {
-  position: relative;
-  padding: 40px 36px;
-  border: 1px solid rgba(201, 168, 76, 0.2);
-  background: rgba(201, 168, 76, 0.03);
-  transition: border-color var(--transition-base), background-color var(--transition-base), transform var(--transition-base);
-}
-
-.pathway-card:hover {
-  border-color: rgba(201, 168, 76, 0.45);
-  background: rgba(201, 168, 76, 0.06);
-  transform: translateY(-4px);
-}
-
-.pathway-card__icon {
-  width: 48px;
-  height: 48px;
-  border: 1px solid rgba(201, 168, 76, 0.25);
-  border-radius: 50%;
+.pathway {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 24px;
+  flex-direction: column;
+  min-width: 0;
+  padding-top: 22px;
+  border-top: 2px solid #39766f;
 }
 
-.pathway-card__eyebrow {
-  font-family: var(--font-body);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 12px;
-}
+.pathway:nth-child(2) { border-color: #9e7b2e; }
+.pathway:nth-child(3) { border-color: #76448a; }
 
-.pathway-card__title {
-  font-family: var(--font-display);
-  font-size: clamp(22px, 2.4vw, 28px);
+.pathway__title {
+  font-size: 24px;
   font-weight: 500;
-  color: var(--white);
-  margin-bottom: 16px;
+  line-height: 1.25;
+  letter-spacing: 0;
+  margin: 0 0 16px;
 }
 
-.pathway-card__desc {
-  font-family: var(--font-body);
-  font-size: 15px;
-  line-height: 1.7;
-  color: rgba(248, 245, 238, 0.75);
-  margin-bottom: 24px;
+.pathway__desc, .pathway__detail {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.75;
+  margin: 0 0 18px;
 }
 
-.pathway-card__link {
-  font-family: var(--font-body);
+.pathway__detail {
+  font-size: 12px;
+  color: #4f625e;
+}
+
+.pathway__link {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  gap: 10px;
+  min-height: 44px;
+  margin-top: auto;
   font-size: 13px;
   font-weight: 600;
-  letter-spacing: 0.04em;
-  color: var(--gold-light);
-  text-decoration: none;
-  transition: color var(--transition-base);
+  color: #512e5f;
+  text-decoration: underline;
+  text-underline-offset: 4px;
 }
 
-.pathway-card__link:hover {
-  color: var(--gold);
+.pathway__link:hover { color: #244f49; }
+.pathway__link:focus-visible { outline: 2px solid #512e5f; outline-offset: 4px; }
+
+@media (max-width: 767px) {
+  .pathways { padding-top: 32px; padding-bottom: 40px; }
+  .pathways__headline { font-size: 28px; }
+  .pathways__header { margin-bottom: 28px; }
+  .pathways__grid { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+  .pathway { padding-top: 18px; }
+  .pathway__title { font-size: 23px; }
 }

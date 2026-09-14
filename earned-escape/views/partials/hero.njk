@@ -1,40 +1,31 @@
-<section class="hero" id="hero">
-  <canvas class="hero__starfield" id="starfield-canvas" aria-hidden="true"></canvas>
-
-  <div class="hero__horizon-glow" aria-hidden="true"></div>
-  <div class="hero__horizon-line" aria-hidden="true"></div>
-
-  <div class="hero__content">
-
-
-    <p class="hero__eyebrow animate-fade-up" style="animation-delay:0.2s">
-      Family &amp; Luxury Travel Planning
-    </p>
-
-    <h1 class="hero__headline animate-fade-up" style="animation-delay:0.4s">
-      White-glove planning for<br>
-      <em>elevated family vacations</em><br>
-      <span class="hero__headline--outline">and luxury escapes.</span>
-    </h1>
-
-    <p class="hero__sub animate-fade-up" style="animation-delay:0.6s">
-      Royal Caribbean, Disney, and beyond &ndash; the trip you've been dreaming about, planned
-      beautifully, whether it's a multi-gen family cruise or a more exclusive escape.
-    </p>
-
-    <div class="hero__ctas animate-fade-up" style="animation-delay:0.8s">
-      <a href="{{ site.links.consultation }}" class="btn btn--gold">
-        Start Your Escape
-      </a>
-      <a href="#quiz-section" class="btn btn--outline">
-        Find Your Vibe
-      </a>
+<section class="hero" id="hero" aria-labelledby="hero-heading">
+  <div class="hero__scene">
+    <picture class="hero__photo">
+      <source type="image/webp" srcset="/images/photos/utopia-home-1200.webp 1200w, /images/photos/utopia-home-2000.webp 2000w" sizes="100vw">
+      <img src="/images/photos/utopia-home-2000.jpg" width="2000" height="1066"
+        alt="Royal Caribbean's Utopia of the Seas docked in Nassau, photographed by Chuck"
+        fetchpriority="high">
+    </picture>
+    <div class="hero__content">
+      <p class="hero__eyebrow">Earned Escape</p>
+      <h1 class="hero__headline" id="hero-heading">Royal Caribbean<br>Cruise Planning</h1>
+    </div>
+    <p class="hero__caption">Utopia of the Seas, Nassau &middot; From my travels</p>
+  </div>
+  <div class="hero__intro">
+    <div class="hero__intro-inner">
+      <img class="hero__portrait" src="/images/photos/chuck-cruise-portrait.webp"
+        alt="Chuck smiling aboard a cruise ship" width="160" height="200">
+      <div class="hero__bio">
+        <h2>I'm Chuck.</h2>
+        <p>I help families choose the ship, itinerary, and cabins that fit everyone traveling.
+          I also plan Disney Cruise Line vacations.</p>
+        <p class="hero__affiliation">An affiliate of {{ site.brand.parentAgency }}</p>
+      </div>
+      <div class="hero__booking">
+        <a href="{{ site.links.consultation }}" class="btn btn--gold">Plan Your Cruise</a>
+        <p>No planning fee when you book your cruise through me.</p>
+      </div>
     </div>
   </div>
-
-  <div class="hero__scroll animate-fade-up" style="animation-delay:1.2s" aria-hidden="true">
-    <span class="hero__scroll-line"></span>
-    <span class="hero__scroll-label">Explore</span>
-  </div>
-
 </section>

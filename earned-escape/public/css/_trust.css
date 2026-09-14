@@ -1,91 +1,63 @@
 .trust {
-  background: var(--navy-deep);
-  padding: var(--section-pad-y) var(--section-pad-x);
-  border-top: 1px solid rgba(201, 168, 76, 0.1);
+  background: #f7f4ee;
+  color: #243332;
+  padding: 64px var(--section-pad-x);
+  scroll-margin-top: 76px;
+  letter-spacing: 0;
 }
 
 .trust__inner {
   max-width: var(--max-width);
   margin: 0 auto;
-}
-
-.trust__header {
-  text-align: center;
-  max-width: var(--content-max-width);
-  margin: 0 auto 48px;
-}
-
-.trust__headline {
-  font-size: clamp(36px, 4vw, 56px);
-  color: var(--white);
-  margin-bottom: 18px;
-}
-
-.trust__intro {
-  font-family: var(--font-body);
-  font-size: 15px;
-  font-weight: 300;
-  line-height: 1.8;
-  color: rgba(248, 245, 238, 0.58);
-}
-
-.trust__grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2px;
-  margin-bottom: 40px;
+  grid-template-columns: minmax(0, 1fr) minmax(220px, .55fr);
+  gap: 72px;
+  align-items: center;
 }
 
-.trust-card {
-  background: rgba(248, 245, 238, 0.03);
-  border: 1px solid rgba(201, 168, 76, 0.12);
-  padding: 32px 28px;
-}
-
-.trust-card--highlight {
-  grid-column: 1 / -1;
-  border-color: rgba(201, 168, 76, 0.3);
-}
-
-.trust-card__eyebrow {
-  display: inline-block;
-  margin-bottom: 18px;
-  font-family: var(--font-body);
-  font-size: 11px;
+.trust__copy h2 {
+  max-width: 18ch;
+  margin: 0 0 24px;
+  font-size: 36px;
   font-weight: 500;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: rgba(201, 168, 76, 0.74);
+  line-height: 1.2;
+  letter-spacing: 0;
 }
 
-.trust-card__title {
-  font-size: 28px;
-  color: var(--white);
-  margin-bottom: 14px;
-  line-height: 1.15;
-}
-
-.trust-card__body {
-  font-family: var(--font-body);
+.trust__copy p:not(.section-eyebrow) {
+  max-width: 62ch;
+  margin: 0 0 16px;
   font-size: 14px;
-  font-weight: 300;
+  font-weight: 400;
   line-height: 1.8;
-  color: rgba(248, 245, 238, 0.54);
 }
 
-.trust__planning {
-  margin-top: 40px;
-  padding-top: 40px;
-  border-top: 1px solid rgba(201, 168, 76, 0.18);
+.trust__action {
+  padding-left: 32px;
+  border-left: 1px solid #d8c99e;
 }
 
-.trust__planning .section-eyebrow {
-  color: rgba(201, 168, 76, 0.74);
+.trust__action-label {
+  margin: 0 0 18px;
+  font: 500 20px/1.35 var(--font-display);
 }
 
-@media (max-width: 899px) {
-  .trust__grid {
-    grid-template-columns: 1fr;
-  }
+.trust__action .btn {
+  justify-content: center;
+  width: 100%;
+  letter-spacing: 0;
 }
 
+.trust__action-note {
+  margin: 14px 0 0;
+  font: 400 11px/1.6 var(--font-body);
+  color: #52635f;
+  text-align: center;
+}
+
+@media (max-width: 767px) {
+  .trust { padding-top: 40px; padding-bottom: 40px; }
+  .trust__inner { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+  .trust__copy h2 { font-size: 29px; }
+  .trust__action { padding: 24px 0 0; border-left: 0; border-top: 1px solid #d8c99e; }
+}

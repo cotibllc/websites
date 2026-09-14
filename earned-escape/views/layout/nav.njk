@@ -62,10 +62,10 @@
             <li><a href="/universal" class="nav-link">Universal Orlando</a></li>
           </ul>
         </li>
-        <li><a href="/#quiz-section" class="nav-link">Find Your Vibe</a></li>
+        <li><a href="/royal-caribbean" class="nav-link">Royal Caribbean</a></li>
       </ul>
       <a href="{{ site.links.consultation }}" class="btn btn--gold btn--sm nav-cta">
-        Start Your Escape
+        {% if bodyClass == 'home' %}Plan Your Cruise{% else %}Start Your Escape{% endif %}
       </a>
     </div>
   </div>
