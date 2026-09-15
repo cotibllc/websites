@@ -11,9 +11,8 @@ const urls = [
   { loc: '/disney-cruise-line', priority: '0.85', changefreq: 'monthly' },
   { loc: '/disney-world', priority: '0.8', changefreq: 'monthly' },
   { loc: '/universal', priority: '0.8', changefreq: 'monthly' },
-  // Home section anchors (still valid for deep links)
-  { loc: '/#about', priority: '0.7', changefreq: 'monthly' },
-  { loc: '/#quiz-section', priority: '0.7', changefreq: 'monthly' },
+  { loc: '/about', priority: '0.7', changefreq: 'monthly' },
+  { loc: '/compliance', priority: '0.4', changefreq: 'yearly' },
 ];
 
 const today = new Date().toISOString().split('T')[0];
