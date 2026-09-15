@@ -1,52 +1,16 @@
-<section class="trust" id="why-book">
+<section class="trust" id="why-book" aria-labelledby="support-heading">
   <div class="trust__inner">
-    <div class="trust__header">
-      <p class="section-eyebrow">Why Travelers Book</p>
-      <h2 class="trust__headline">
-        Reassurance that feels<br>
-        as <em>personal as the trip.</em>
-      </h2>
-      <p class="trust__intro">
-        Booking with {{ site.brand.owner }} means working with a real advisor who knows these vacations firsthand and stays involved well beyond the first conversation.
-      </p>
+    <div class="trust__copy">
+      <p class="section-eyebrow">What happens when you book through me</p>
+      <h2 id="support-heading">A named advisor who stays with the details.</h2>
+      <p>I work through the decisions with you, coordinate the booking, and stay available as the trip takes shape. You get one person who knows why your ship, cabin, and itinerary were chosen.</p>
+      <p>As an affiliate of {{ site.brand.parentAgency }}, I can book Royal Caribbean and Disney Cruise Line at the supplier's available fare. There is no planning fee when you book your cruise through me.</p>
+      <p>After booking, I can keep an eye on eligible price changes and help you understand what is worth adjusting before you sail. The exact options depend on the cruise and its terms.</p>
     </div>
-
-    <div class="trust__grid">
-      <article class="trust-card">
-        <span class="trust-card__eyebrow">Personalized</span>
-        <h3 class="trust-card__title">Recommendations built around your travelers</h3>
-        <p class="trust-card__body">
-          Every suggestion is shaped around your pace, priorities, and budget - not whatever happens to be easiest to book.
-        </p>
-      </article>
-
-      <article class="trust-card">
-        <span class="trust-card__eyebrow">Firsthand</span>
-        <h3 class="trust-card__title">Guidance grounded in real travel experience</h3>
-        <p class="trust-card__body">
-          From Royal Caribbean and Disney Cruise Line to Walt Disney World and Universal, the advice comes from being there and planning for real families.
-        </p>
-      </article>
-
-      <article class="trust-card">
-        <span class="trust-card__eyebrow">Supported</span>
-        <h3 class="trust-card__title">A real person in your corner before you go</h3>
-        <p class="trust-card__body">
-          You are not left to sort through details alone. You get planning support, practical answers, and someone invested in the trip going smoothly.
-        </p>
-      </article>
-
-      <article class="trust-card trust-card--highlight">
-        <span class="trust-card__eyebrow">Same Rates, More Value</span>
-        <h3 class="trust-card__title">Everything a big booking site offers, plus more</h3>
-        <p class="trust-card__body">
-          As an affiliate of Castle Dreams Travel, I have the same supplier relationships the large agencies do, so I can match or beat their rates and add on perks like onboard credit or cabin upgrades. I also keep watching for price drops after you book and rebook you to capture the savings, something a call center won't do for you. All at no added cost, since I'm paid by the cruise line or resort, not by you.
-        </p>
-      </article>
+    <div class="trust__action">
+      <p class="trust__action-label">Ready to work through your options?</p>
+      <a href="{{ site.links.consultation }}" class="btn btn--gold">Plan Your Cruise</a>
+      <p class="trust__action-note">A 30-minute conversation · No pressure · Tailored guidance</p>
     </div>
-
-    {% set embedded = true %}
-    {% include "partials/cta-strip.njk" %}
-    {% set embedded = false %}
   </div>
 </section>

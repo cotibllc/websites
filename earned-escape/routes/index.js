@@ -194,8 +194,8 @@ router.get('/universal', (req, res) => {
 router.get('/plan', (req, res) => {
   res.render('pages/plan.njk', {
     site,
-    title: 'Vacation Planning Call | Earned Escape',
-    description: 'Book a free 30-minute planning call with Chuck. Personal, no-pressure guidance for elevated family vacations and luxury escapes - Royal Caribbean, Disney Cruise Line, Walt Disney World, and Universal.',
+    title: 'Royal Caribbean Cruise Planning Call | Earned Escape',
+    description: 'Book a free 30-minute Royal Caribbean cruise planning call with Chuck. Get clear guidance on ships, cabins, itineraries, and the next booking step.',
     canonical: '/plan',
   });
 });
@@ -595,6 +595,7 @@ router.post('/api/plan', async (req, res) => {
     name,
     email,
     phone,
+    contactPreference,
     dates,
     tripType,
     travelers,
@@ -647,6 +648,10 @@ router.post('/api/plan', async (req, res) => {
     <tr>
       <td style="padding: 10px 14px; font-weight: 600; border-bottom: 1px solid #eee; color: #0D0821;">Travel Window</td>
       <td style="padding: 10px 14px; border-bottom: 1px solid #eee;">${escapeHtml(dates) || '<em style="color:#999">Not specified</em>'}</td>
+    </tr>
+    <tr style="background: #f8f7f2;">
+      <td style="padding: 10px 14px; font-weight: 600; border-bottom: 1px solid #eee; color: #0D0821;">Preferred Contact</td>
+      <td style="padding: 10px 14px; border-bottom: 1px solid #eee;">${escapeHtml(contactPreference) || '<em style="color:#999">Not specified</em>'}</td>
     </tr>
     <tr style="background: #f8f7f2;">
       <td style="padding: 10px 14px; font-weight: 600; border-bottom: 1px solid #eee; color: #0D0821;">Trip Type</td>
