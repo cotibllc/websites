@@ -65,7 +65,9 @@ const actTwoArticles: SeriesArticle[] = [
   },
   {
     number: "09",
-    title: "The accountability problem no one is ready for",
+    title: "You Still Own What You Ship",
+    status: "Live",
+    href: `${SUBSTACK_URL}/p/you-still-own-what-you-ship`,
   },
   {
     number: "10",
