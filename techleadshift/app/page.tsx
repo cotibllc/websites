@@ -1,14 +1,15 @@
-import ContactForm from "@/components/ContactForm";
-
 const SUBSTACK_URL = "https://techleadshift.substack.com";
+const ART8_URL = `${SUBSTACK_URL}/p/ai-will-scale-whatever-culture-you`;
+const ART9_URL = "https://techleadshift.substack.com/p/you-still-own-what-you-ship";
 
 export const revalidate = 3600;
 
 type SeriesArticle = {
   number: string;
   title: string;
-  status?: "Live" | "Scheduled";
+  status?: "Live" | "Scheduled" | "October" | "Research";
   href?: string;
+  noPublicLink?: boolean;
 };
 
 const actOneArticles: SeriesArticle[] = [
@@ -61,18 +62,15 @@ const actTwoArticles: SeriesArticle[] = [
     number: "08",
     title: "AI Will Scale Whatever Culture You Already Have",
     status: "Live",
-    href: `${SUBSTACK_URL}/p/ai-will-scale-whatever-culture-you`,
+    href: ART8_URL,
   },
   {
     number: "09",
     title: "You Still Own What You Ship",
     status: "Live",
-    href: `${SUBSTACK_URL}/p/you-still-own-what-you-ship`,
+    href: ART9_URL,
   },
-  {
-    number: "10",
-    title: "The future leader is a system architect",
-  },
+  { number: "10", title: "The future leader is a system architect", status: "October", noPublicLink: true },
 ];
 
 type SubstackPost = { title: string; link: string };
@@ -112,16 +110,20 @@ function hydrateArticlesFromFeed(
   postsByTitle: Map<string, SubstackPost>
 ): SeriesArticle[] {
   return articles.map((article) => {
+    if (article.noPublicLink) {
+      return { ...article, href: undefined };
+    }
     const match = postsByTitle.get(normalizeTitle(article.title));
     if (!match) return article;
-    return { ...article, status: "Live", href: match.link };
+    return { ...article, status: "Live" as const, href: match.link };
   });
 }
 
 function renderSeriesArticle(article: SeriesArticle) {
-  const articleTitle = article.href ? (
+  const href = article.noPublicLink ? undefined : article.href;
+  const articleTitle = href ? (
     <a
-      href={article.href}
+      href={href}
       target="_blank"
       rel="noopener noreferrer"
       className="article-link"
@@ -132,6 +134,11 @@ function renderSeriesArticle(article: SeriesArticle) {
     article.title
   );
 
+  const scheduled =
+    article.status === "Scheduled" ||
+    article.status === "October" ||
+    article.status === "Research";
+
   return (
     <li key={article.number}>
       <span className="article-num">{article.number}</span>
@@ -139,7 +146,7 @@ function renderSeriesArticle(article: SeriesArticle) {
       {article.status && (
         <span
           className={`article-status${
-            article.status === "Scheduled" ? " article-status--scheduled" : ""
+            scheduled ? " article-status--scheduled" : ""
           }`}
         >
           {article.status}
@@ -159,21 +166,18 @@ export default async function HomePage() {
 
   return (
     <>
-      {/* HERO */}
+      {/* HERO — Direction A masthead */}
       <section id="home">
         <div className="container" style={{ position: "relative", zIndex: 1 }}>
           <div className="hero-rule">
             <div className="hero-rule-line"></div>
-            <span className="hero-eyebrow">A research-backed leadership series</span>
+            <span className="hero-eyebrow">SILICON LABOR</span>
           </div>
           <h1 className="hero-headline">
-            The first AI leadership crisis<br />
-            won&apos;t be <em>technical.</em><br />
-            It will be cultural.
+            Manage the machine, not the sentiment.
           </h1>
           <p className="hero-sub">
-            What leadership competencies are required to manage hybrid teams of human workers
-            and autonomous AI agents, and how do current frameworks fail to address them?
+            The first AI leadership crisis won&apos;t be technical. It will be cultural.
           </p>
           <div className="hero-cta-group">
             <a
@@ -182,67 +186,40 @@ export default async function HomePage() {
               rel="noopener noreferrer"
               className="btn-primary"
             >
-              Read the Series
+              Read on Substack
             </a>
-            <a href="#about" className="btn-secondary">About Charles</a>
+            <a href="#about" className="text-link">
+              About Charles
+            </a>
           </div>
         </div>
         <div className="hero-watermark">Shift</div>
       </section>
 
-      {/* THESIS STRIP */}
-      <div className="thesis-strip">
-        <div className="thesis-inner">
-          <p className="thesis-quote">
-            &ldquo;The frameworks we&apos;ve been using were built for an all-human workforce.
-            That assumption is already broken. Most of us just haven&apos;t named it yet.&rdquo;
-          </p>
-          <span className="thesis-attr">
-            Tech Lead Shift<br />Article II
+      {/* PROOF STRIP */}
+      <div className="proof-strip">
+        <div className="proof-inner">
+          <a
+            href={ART8_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="proof-item"
+          >
+            AI scales whatever culture you already have
+          </a>
+          <a
+            href={ART9_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="proof-item"
+          >
+            You still own what you ship
+          </a>
+          <span className="proof-item proof-item--plain">
+            Manage the machine, not the sentiment
           </span>
         </div>
       </div>
-
-      {/* ABOUT */}
-      <section id="about">
-        <div className="container">
-          <div className="section-label">About</div>
-          <div className="about-grid">
-            <div>
-              <h2 className="section-headline">Charles Betancourt</h2>
-              <div className="about-body">
-                <p>
-                  Nearly three decades of building, breaking, and leading technology systems. <strong>Now writing about what happens to leadership when some of your team members aren&apos;t human.</strong>
-                </p>
-                <p>
-                  Tech Lead Shift is not academic research. It is practitioner observation. Every
-                  article starts with something real that happened during a week of leading technology
-                  teams, and pulls back to the pattern it reveals.
-                </p>
-                <p>
-                  The central question driving this series: what do leaders actually need to know to
-                  manage a workforce where some workers are human and some are not?
-                </p>
-                <p>Writing about leadership, AI, and the humans caught in between.</p>
-              </div>
-            </div>
-            <div className="about-stats">
-              <div className="stat-item">
-                <div className="stat-number">18+</div>
-                <div className="stat-label">Years of technology leadership</div>
-              </div>
-              <div className="stat-item">
-                <div className="stat-number">10</div>
-                <div className="stat-label">Article research series in progress</div>
-              </div>
-              <div className="stat-item">
-                <div className="stat-number">Wed</div>
-                <div className="stat-label">New articles every four weeks</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* SERIES */}
       <section id="series">
@@ -318,11 +295,62 @@ export default async function HomePage() {
               </div>
             </div>
             <div>
-              <div className="section-label">Speaking &amp; Consulting</div>
-              <h2 className="section-headline" style={{ fontSize: "1.75rem" }}>Work with Charles</h2>
-              <ContactForm />
+              <div className="section-label">Work</div>
+              <h2 className="section-headline" style={{ fontSize: "1.75rem" }}>
+                Work with Charles
+              </h2>
+              <p style={{ color: "var(--ink-muted)", fontWeight: 300, lineHeight: 1.8, marginBottom: "1.25rem" }}>
+                Consulting and speaking on hybrid human/agent teams, culture, and accountability.
+              </p>
+              <a href="/work" className="text-link">
+                Open inquiry form
+              </a>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* ABOUT */}
+      <section id="about">
+        <div className="container">
+          <div className="section-label">About</div>
+          <div className="about-grid">
+            <div>
+              <h2 className="section-headline">Charles Betancourt</h2>
+              <div className="about-body">
+                <p>
+                  18+ years of technology leadership. <strong>Now writing about what happens to leadership when some of your team members aren&apos;t human.</strong>
+                </p>
+                <p>
+                  Tech Lead Shift is not academic research. It is practitioner observation. Every
+                  article starts with something real that happened during a week of leading technology
+                  teams, and pulls back to the pattern it reveals.
+                </p>
+                <p>
+                  The central question driving this series: what do leaders actually need to know to
+                  manage a workforce where some workers are human and some are not?
+                </p>
+                <p>Writing about leadership, AI, and the humans caught in between.</p>
+              </div>
+            </div>
+            <div className="about-stats">
+              <div className="stat-item">
+                <div className="stat-number">18+</div>
+                <div className="stat-label">Years of technology leadership</div>
+              </div>
+              <div className="stat-item">
+                <div className="stat-number">10</div>
+                <div className="stat-label">Article research series in progress</div>
+              </div>
+              <div className="stat-item">
+                <div className="stat-number">Wed</div>
+                <div className="stat-label">New articles every four weeks</div>
+              </div>
+            </div>
+          </div>
+          <p className="work-home-link">
+            <a href="/work" className="text-link">Work with Charles</a>
+          </p>
         </div>
       </section>
 
@@ -409,3 +437,4 @@ export default async function HomePage() {
     </>
   );
 }
+
