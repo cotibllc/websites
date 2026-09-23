@@ -326,10 +326,7 @@ export default async function HomePage() {
                   article starts with something real that happened during a week of leading technology
                   teams, and pulls back to the pattern it reveals.
                 </p>
-                <p>
-                  The central question driving this series: what do leaders actually need to know to
-                  manage a workforce where some workers are human and some are not?
-                </p>
+
                 <p>Writing about leadership, AI, and the humans caught in between.</p>
               </div>
             </div>

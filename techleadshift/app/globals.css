@@ -746,3 +746,79 @@ a.proof-item:hover {
     grid-template-columns: 1fr;
   }
 }
+
+/* POLISH — mobile overflow / wrap (issue #1) */
+html,
+body {
+  overflow-x: clip;
+  max-width: 100%;
+}
+
+.nav-links {
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  row-gap: 0.35rem;
+}
+
+.nav-links a,
+.nav-links li {
+  white-space: nowrap;
+}
+
+.footer-links {
+  flex-wrap: wrap;
+  justify-content: center;
+  row-gap: 0.5rem;
+  column-gap: 1.25rem;
+  max-width: 100%;
+}
+
+.footer-links li {
+  flex: 0 0 auto;
+}
+
+.footer-links a {
+  white-space: nowrap;
+  display: inline-block;
+}
+
+.work-series-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 0.75rem;
+}
+
+.work-series-links .text-link {
+  white-space: nowrap;
+}
+
+@media (max-width: 700px) {
+  nav {
+    height: auto;
+    min-height: 64px;
+    padding: 0.75rem 1.25rem;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+  }
+
+  .nav-links {
+    gap: 0.75rem 1rem;
+  }
+
+  .footer-inner {
+    width: 100%;
+    max-width: 100%;
+    overflow: visible;
+  }
+
+  .footer-links {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .proof-strip {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+}

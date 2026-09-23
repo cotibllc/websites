@@ -20,8 +20,8 @@ export default function WorkPage() {
           Quiet consulting and speaking for leaders building hybrid teams of humans and
           AI agents - culture, accountability, and systems, not demos.
         </p>
-        <p className="work-lede">
-          Prefer the series first?{" "}
+        <p className="work-lede">Prefer the series first?</p>
+        <div className="work-series-links">
           <a
             href={SUBSTACK_URL}
             target="_blank"
@@ -30,11 +30,10 @@ export default function WorkPage() {
           >
             Read on Substack
           </a>
-          {" | "}
           <a href="/#series" className="text-link">
             The Series
           </a>
-        </p>
+        </div>
         <div className="work-form-wrap">
           <ContactForm />
         </div>
