@@ -27,17 +27,17 @@ const dmMono = DM_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Tech Lead Shift — Charles Betancourt",
+  title: "Tech Lead Shift — Manage the machine, not the sentiment",
   description:
-    "What leadership competencies are required to manage hybrid teams of human workers and autonomous AI agents, and how do current frameworks fail to address them?",
+    "Manage the machine, not the sentiment. A research series on Silicon Labor — leading hybrid teams of humans and AI agents, culture, and accountability.",
   metadataBase: new URL("https://www.techleadshift.com"),
   alternates: {
     canonical: "/",
   },
   openGraph: {
-    title: "Tech Lead Shift — Charles Betancourt",
+    title: "Tech Lead Shift — Manage the machine, not the sentiment",
     description:
-      "What leadership competencies are required to manage hybrid teams of human workers and autonomous AI agents, and how do current frameworks fail to address them?",
+      "Manage the machine, not the sentiment. A research series on Silicon Labor — leading hybrid teams of humans and AI agents, culture, and accountability.",
     siteName: "Tech Lead Shift",
     type: "website",
     url: "https://www.techleadshift.com",
@@ -52,9 +52,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Tech Lead Shift — Charles Betancourt",
+    title: "Tech Lead Shift — Manage the machine, not the sentiment",
     description:
-      "What leadership competencies are required to manage hybrid teams of human workers and autonomous AI agents, and how do current frameworks fail to address them?",
+      "Manage the machine, not the sentiment. A research series on Silicon Labor — leading hybrid teams of humans and AI agents, culture, and accountability.",
     images: ["/opengraph-image"],
   },
 };
