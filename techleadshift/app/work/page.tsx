@@ -30,7 +30,7 @@ export default function WorkPage() {
           >
             Read on Substack
           </a>
-          {" · "}
+          <span aria-hidden="true"> · </span>
           <a href="/#series" className="text-link">
             The Series
           </a>
