@@ -1,0 +1,77 @@
+{% set faqs = [
+  {
+    "q": "Why book Royal Caribbean with you instead of the cruise line site?",
+    "a": "The fare is the same. What changes is the help: ship and cabin matched to your people, then post-booking support for price drops, cabin changes, excursions, dining, and the rest of the week. I am an independent advisor and Castle Dreams Travel affiliate."
+  },
+  {
+    "q": "Do you charge a planning fee?",
+    "a": "No. Planning is included. You pay the cruise fare and any add-ons you choose."
+  },
+  {
+    "q": "How do you choose the right ship?",
+    "a": "Wonder of the Seas on one itinerary is not the same product as Anthem of the Seas on another. I match ship class to ports, pace, kids or no kids, and how much of the week you want the ship itself to be the destination."
+  },
+  {
+    "q": "How do you choose the right cabin?",
+    "a": "Interior, ocean view, balcony, or suite depends on how you use the room. On Caribbean port-heavy weeks an interior can be smart money. Alaska and sea-day-heavy trips often justify more space and a view. I will also steer you off noisy or awkward locations when I know them."
+  },
+  {
+    "q": "What happens after I book?",
+    "a": "I keep watching the booking with you: price-drop monitoring, cabin changes when something better opens, excursion and specialty dining guidance, and general trip support until you are home."
+  },
+  {
+    "q": "Do you watch for price drops after booking?",
+    "a": "Yes. When a drop is real and a rebook helps, I help you capture it under the line's rules. Not every fare move is worth touching; I will say so."
+  },
+  {
+    "q": "Should we buy the beverage package?",
+    "a": "Run the math for your group before you buy it. If you barely drink, skip it. If you do, it is often worth it on colder or indoor-heavy weeks like Alaska."
+  },
+  {
+    "q": "Ship excursions or third-party?",
+    "a": "It depends on the port and the risk you want. Some third-party operators are solid and cost less. Some ship excursions are worth the premium for timing and peace of mind. I help you pick per port, not from a generic rule."
+  },
+  {
+    "q": "Are specialty dining packages worth it?",
+    "a": "Specialty restaurants can be excellent, and the main dining room is better than most first-timers expect. Many families do better buying one or two dinners à la carte than locking a full package. We will decide from your group and your sea days."
+  },
+  {
+    "q": "Is Royal Caribbean a good first cruise for a family or multi-gen group?",
+    "a": "It is the line I recommend most often for that job. The ships give every age something to do, and the product works when the ship and cabin fit the people. Start with who is sailing. Then we pick the week."
+  }
+] %}
+
+<section class="plan-faq" id="faq">
+  <div class="plan-faq__header">
+    <p class="section-eyebrow">Common Questions</p>
+    <h2 class="plan-faq__headline">Frequently asked questions.</h2>
+  </div>
+
+  <div class="plan-faq__list">
+    {% for item in faqs %}
+    <div class="plan-faq__item">
+      <h3 class="plan-faq__question">{{ item.q }}</h3>
+      <p class="plan-faq__answer">{{ item.a }}</p>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {% for item in faqs %}
+    {
+      "@type": "Question",
+      "name": {{ item.q | dump | safe }},
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": {{ item.a | dump | safe }}
+      }
+    }{% if not loop.last %},{% endif %}
+    {% endfor %}
+  ]
+}
+</script>
