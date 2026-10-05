@@ -7,6 +7,8 @@ export interface Character {
   clearanceLevel: string;
   knownFor: string;
   badgeNumber: string;
+  /** Public path under /cast; omit or null → ID PHOTO PENDING */
+  headshot?: string | null;
 }
 
 export interface TickerMessage {
@@ -43,6 +45,7 @@ export const characters: Character[] = [
     clearanceLevel: 'STANDARD',
     knownFor: 'Has not moved desks in 14 years.',
     badgeNumber: '00847',
+    headshot: '/cast/chuck-morrison.png',
   },
   {
     id: 'hr-jill',
@@ -53,6 +56,7 @@ export const characters: Character[] = [
     clearanceLevel: 'STANDARD',
     knownFor: 'Replies to complaints with a survey.',
     badgeNumber: '00203',
+    headshot: '/cast/jill-farber.png',
   },
   {
     id: 'ceo-joe',
@@ -63,6 +67,7 @@ export const characters: Character[] = [
     clearanceLevel: 'EXECUTIVE',
     knownFor: 'Revenue up 23%. Headcount down 15%.',
     badgeNumber: '00001',
+    headshot: '/cast/joe-harrison.png',
   },
   {
     id: 'dana-chen',
@@ -73,6 +78,7 @@ export const characters: Character[] = [
     clearanceLevel: 'STANDARD',
     knownFor: 'Answers every question with "it depends."',
     badgeNumber: '00612',
+    headshot: '/cast/dana-chen.png',
   },
   {
     id: 'carl-dietrich',
@@ -83,6 +89,7 @@ export const characters: Character[] = [
     clearanceLevel: 'STANDARD',
     knownFor: 'Has been in a 9am–5pm meeting since 2019.',
     badgeNumber: '00318',
+    headshot: '/cast/carl-dietrich.png',
   },
 ];
 
