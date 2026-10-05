@@ -67,7 +67,7 @@ export const characters: Character[] = [
   {
     id: 'dana-chen',
     name: 'Dana Chen',
-    title: 'Senior Developer',
+    title: 'Gen-Z Innovation Intern',
     department: 'Information Technology',
     yearsOfService: '6',
     clearanceLevel: 'STANDARD',

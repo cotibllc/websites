@@ -75,7 +75,7 @@ const leadership: {
   },
   {
     name: "Dana Chen",
-    title: "Senior Developer",
+    title: "Gen-Z Innovation Intern",
     initials: "DC",
     quote: "Happy to circle back on that.",
     href: null,
