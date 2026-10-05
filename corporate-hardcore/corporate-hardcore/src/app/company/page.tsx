@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { MapPin, Building2, Calendar, Users, ExternalLink } from "lucide-react";
+import CastAvatar from "@/components/CastAvatar";
 
 export const metadata = {
   title: "Synergy Corp | Corporate Hardcore",
@@ -51,6 +52,7 @@ const leadership: {
   initials: string;
   quote: string;
   href: string | null;
+  headshot: string;
 }[] = [
   {
     name: "Joe Harrison",
@@ -58,6 +60,7 @@ const leadership: {
     initials: "JH",
     quote: "We're not just a company. We're a journey.",
     href: null,
+    headshot: "/cast/joe-harrison.png",
   },
   {
     name: "Jill Farber",
@@ -65,6 +68,7 @@ const leadership: {
     initials: "JF",
     quote: "People are our greatest asset. That's why we track them so carefully.",
     href: null,
+    headshot: "/cast/jill-farber.png",
   },
   {
     name: "Chuck Morrison",
@@ -72,6 +76,7 @@ const leadership: {
     initials: "CM",
     quote: "The system is down. I'm aware.",
     href: "/about",
+    headshot: "/cast/chuck-morrison.png",
   },
   {
     name: "Dana Chen",
@@ -79,6 +84,7 @@ const leadership: {
     initials: "DC",
     quote: "Happy to circle back on that.",
     href: null,
+    headshot: "/cast/dana-chen.png",
   },
   {
     name: "Carl Dietrich",
@@ -86,15 +92,20 @@ const leadership: {
     initials: "CD",
     quote: "I can't speak to that without reviewing the applicable policy.",
     href: null,
+    headshot: "/cast/carl-dietrich.png",
   },
 ];
 
 function LeadershipCard({ person }: { person: (typeof leadership)[number] }) {
   const card = (
     <div className="flex items-start gap-3 rounded-lg border border-border-light p-4 bg-bg-main hover:border-linkedin-blue/40 transition h-full">
-      <div className="w-12 h-12 rounded-full bg-linkedin-blue/10 flex items-center justify-center flex-shrink-0">
-        <span className="text-linkedin-blue font-bold text-sm">{person.initials}</span>
-      </div>
+      <CastAvatar
+        src={person.headshot}
+        initials={person.initials}
+        alt={person.name}
+        size={48}
+        className="w-12 h-12"
+      />
       <div className="min-w-0">
         <p className="font-semibold text-sm text-text-primary">{person.name}</p>
         <p className="text-xs text-text-secondary leading-snug">{person.title}</p>
@@ -343,9 +354,13 @@ export default function CompanyPage() {
                 href="/about"
                 className="flex items-center gap-3 py-1.5 hover:opacity-80 transition"
               >
-                <div className="w-9 h-9 rounded-full bg-linkedin-blue/10 flex items-center justify-center flex-shrink-0">
-                  <span className="text-linkedin-blue font-bold text-xs">CM</span>
-                </div>
+                <CastAvatar
+                  src="/cast/chuck-morrison.png"
+                  initials="CM"
+                  alt="Chuck Morrison"
+                  size={36}
+                  className="w-9 h-9"
+                />
                 <div>
                   <p className="text-sm font-medium text-text-primary">Chuck Morrison</p>
                   <p className="text-xs text-text-secondary">IT Manager</p>
