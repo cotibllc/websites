@@ -60,29 +60,29 @@ const leadership: {
     href: null,
   },
   {
-    name: "Jill Brennan",
-    title: "Chief Human Resources Officer",
-    initials: "JB",
+    name: "Jill Farber",
+    title: "People Partner",
+    initials: "JF",
     quote: "People are our greatest asset. That's why we track them so carefully.",
     href: null,
   },
   {
     name: "Chuck Morrison",
-    title: "Director of Information Technology",
+    title: "IT Manager",
     initials: "CM",
     quote: "The system is down. I'm aware.",
     href: "/about",
   },
   {
     name: "Dana Chen",
-    title: "Associate Analyst, Strategic Initiatives",
+    title: "Senior Developer",
     initials: "DC",
     quote: "Happy to circle back on that.",
     href: null,
   },
   {
     name: "Carl Dietrich",
-    title: "Senior Compliance Administrator",
+    title: "VP of Operations",
     initials: "CD",
     quote: "I can't speak to that without reviewing the applicable policy.",
     href: null,
@@ -348,7 +348,7 @@ export default function CompanyPage() {
                 </div>
                 <div>
                   <p className="text-sm font-medium text-text-primary">Chuck Morrison</p>
-                  <p className="text-xs text-text-secondary">Director of IT</p>
+                  <p className="text-xs text-text-secondary">IT Manager</p>
                 </div>
               </Link>
             </section>

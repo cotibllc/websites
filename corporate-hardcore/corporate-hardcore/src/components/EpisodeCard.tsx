@@ -77,7 +77,7 @@ export default function EpisodeCard({ video, episodeNumber, status, featured = f
           rel="noopener noreferrer"
           className="inline-block mt-2 font-mono text-[10px] tracking-widest uppercase text-synergy-navy hover:text-synergy-amber transition-colors"
         >
-          WATCH NOW →
+          WATCH →
         </a>
       </div>
     </article>

@@ -112,7 +112,7 @@ export default function GlossaryPage() {
                 now documenting what these phrases actually mean, not what they pretend to mean.
               </p>
               <p className="font-sans text-xs text-synergy-muted leading-relaxed mt-3">
-                New term published weekly. Each entry includes a field statistic, a real
+                New terms are filed when the language changes. Each entry includes a field statistic, a real
                 overheard quote, usage examples, and an FAQ for the people still Googling these
                 at 11pm before a review cycle.
               </p>
@@ -123,7 +123,7 @@ export default function GlossaryPage() {
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
                   <span className="font-sans text-xs text-synergy-muted">Frequency</span>
-                  <span className="font-mono text-[10px] text-synergy-dark">Weekly</span>
+                  <span className="font-mono text-[10px] text-synergy-dark">As observed</span>
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="font-sans text-xs text-synergy-muted">Source</span>
