@@ -67,12 +67,12 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="text-lg font-semibold mb-2">Newsletter</h2>
+              <h2 className="text-lg font-semibold mb-2">Field Notes distribution</h2>
               <p>
-                By subscribing to the Corporate Hardcore newsletter, you consent to receive
-                periodic email communications. You may unsubscribe at any time using the link
-                provided in every email. We will not use your email address for any purpose
-                other than sending the newsletter.
+                If you join the Field Notes distribution list, you consent to receive email when
+                a Field Note is filed. Notes are filed monthly as part of recurring arcs. You may
+                ask to be removed at any time at the contact address below. Distribution is not
+                acknowledgment.
               </p>
             </section>
 

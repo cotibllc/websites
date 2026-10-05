@@ -12,6 +12,12 @@ const nextConfig: NextConfig = {
   experimental: {
     optimizePackageImports: ["lucide-react"],
   },
+  async redirects() {
+    return [
+      { source: "/episodes", destination: "/field-memos", permanent: true },
+      { source: "/episodes/:path*", destination: "/field-memos", permanent: true },
+    ];
+  },
   async headers() {
     return [
       {

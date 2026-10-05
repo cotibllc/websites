@@ -32,7 +32,7 @@ export default function PrivacyPage() {
               <h2 className="text-lg font-semibold mb-2">What data we collect</h2>
               <ul className="list-disc pl-5 space-y-2">
                 <li>
-                  <strong>Email address</strong> — if you subscribe to the newsletter or
+                  <strong>Email address</strong> — if you join the Field Notes distribution list or
                   submit a contact form.
                 </li>
                 <li>
@@ -50,7 +50,7 @@ export default function PrivacyPage() {
             <section>
               <h2 className="text-lg font-semibold mb-2">How we use your data</h2>
               <ul className="list-disc pl-5 space-y-2">
-                <li>To send you the Corporate Hardcore newsletter (if subscribed).</li>
+                <li>To send you Field Notes when filed (if on the distribution list).</li>
                 <li>To respond to contact form submissions.</li>
                 <li>To maintain and improve the site.</li>
               </ul>
@@ -62,7 +62,7 @@ export default function PrivacyPage() {
               <p>We use the following third-party services that may process your data:</p>
               <ul className="list-disc pl-5 space-y-2 mt-2">
                 <li>
-                  <strong>Kit (formerly ConvertKit)</strong> — email newsletter delivery.
+                  <strong>Kit (formerly ConvertKit)</strong> — email delivery for the Field Notes distribution list.
                   Subscriber data is stored on Kit&apos;s servers. See{" "}
                   <a href="https://kit.com/privacy" target="_blank" rel="noopener noreferrer" className="text-linkedin-blue hover:underline">
                     Kit&apos;s privacy policy
@@ -89,7 +89,7 @@ export default function PrivacyPage() {
             <section>
               <h2 className="text-lg font-semibold mb-2">Data retention</h2>
               <p>
-                Newsletter subscriber data is retained until you unsubscribe. Contact form
+                Distribution-list data is retained until you ask to be removed. Contact form
                 submissions are retained only as long as necessary to respond. You may request
                 deletion at any time.
               </p>
@@ -111,8 +111,8 @@ export default function PrivacyPage() {
                 <li><strong>Right to object</strong> — object to processing based on legitimate interests.</li>
               </ul>
               <p className="mt-3">
-                Our legal basis for processing newsletter subscriber data is <strong>consent</strong> (Article 6(1)(a) GDPR).
-                You may withdraw consent at any time by unsubscribing.
+                Our legal basis for processing distribution-list data is <strong>consent</strong> (Article 6(1)(a) GDPR).
+                You may withdraw consent at any time by contacting us.
               </p>
               <p className="mt-2">
                 To exercise any of these rights, contact us at{" "}
