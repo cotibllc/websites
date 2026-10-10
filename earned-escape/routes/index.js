@@ -101,7 +101,7 @@ function guideNurtureEmail2Html(name) {
   <p style="margin: 0 0 16px;">Are you currently leaning toward a specific cruise line, or still wide open? Just reply, I read every email.</p>
   <p style="margin: 20px 0 0; color: #0D0821;">Warmly,<br>Chuck<br><span style="font-size: 13px; color: #666;">Earned Escape by COTIB Adventures LLC</span></p>
   <hr style="margin: 32px 0 16px; border: none; border-top: 1px solid #eee;">
-  <p style="font-size: 11px; color: #999; margin: 0 0 4px;">Earned Escape is operated by COTIB Adventures LLC and is an affiliate of Castle Dreams Travel.</p>
+  <p style="font-size: 13px; color: #555; margin: 0 0 4px;">Earned Escape is operated by COTIB Adventures LLC and is an affiliate of Castle Dreams Travel through Charles Betancourt, Independent Advisor.</p>
   <p style="font-size: 11px; color: #999; margin: 0;">Rather not get these follow-up emails? Just reply "unsubscribe" and I'll take you off the list.</p>
 </body>
 </html>`;
@@ -120,7 +120,7 @@ function guideNurtureEmail3Html(name) {
   <p style="margin: 0 0 16px;">Either way, I hope you have an incredible trip. You've earned it.</p>
   <p style="margin: 20px 0 0; color: #0D0821;">Best,<br>Chuck<br><span style="font-size: 13px; color: #666;">Earned Escape by COTIB Adventures LLC</span></p>
   <hr style="margin: 32px 0 16px; border: none; border-top: 1px solid #eee;">
-  <p style="font-size: 11px; color: #999; margin: 0 0 4px;">Earned Escape is operated by COTIB Adventures LLC and is an affiliate of Castle Dreams Travel.</p>
+  <p style="font-size: 13px; color: #555; margin: 0 0 4px;">Earned Escape is operated by COTIB Adventures LLC and is an affiliate of Castle Dreams Travel through Charles Betancourt, Independent Advisor.</p>
   <p style="font-size: 11px; color: #999; margin: 0;">Rather not get these follow-up emails? Just reply "unsubscribe" and I'll take you off the list.</p>
 </body>
 </html>`;
@@ -205,7 +205,7 @@ router.get('/compliance', (req, res) => {
     site,
     bodyClass: 'dest-page',
     title: 'Compliance & Disclosures | Earned Escape',
-    description: 'Affiliate disclosure, business registration, and transparency about how Earned Escape operates as an affiliate of Castle Dreams Travel.',
+    description: 'Affiliate disclosure, business registration, and transparency about how Earned Escape operates as an affiliate of Castle Dreams Travel through Charles Betancourt, Independent Advisor.',
     canonical: '/compliance',
   });
 });
@@ -272,7 +272,7 @@ router.post('/api/guide', async (req, res) => {
     <p>If you only take one thing away from the guide, pay close attention to <strong>Mistake #2</strong>. It is the single biggest money-waster I see on family sailings.</p>
     <p>Give it a read, and if you have any questions, just reply to this email.</p>
     <p>Talk soon,<br>Chuck Betancourt<br>Earned Escape by COTIB Adventures LLC</p>
-    <p style="font-size: 11px; color: #999; margin-top: 40px;">Earned Escape is an affiliate of Castle Dreams Travel.</p>
+    <p style="font-size: 13px; color: #555; margin-top: 40px;">Earned Escape is an affiliate of Castle Dreams Travel through Charles Betancourt, Independent Advisor.</p>
   </div>`;
 
   try {
@@ -426,7 +426,7 @@ function quizResultsEmailHtml({
   <p style="margin: 24px 0;"><a href="https://earnedescape.agency/plan" style="display:inline-block; padding:12px 24px; background:#2A164E; color:#fff; text-decoration:none; border-radius:4px;">Reserve My Planning Call</a></p>
   <p style="margin: 20px 0 0; color: #0D0821;">Talk soon,<br>Chuck<br><span style="font-size: 13px; color: #666;">Earned Escape by COTIB Adventures LLC</span></p>
   <hr style="margin: 32px 0 16px; border: none; border-top: 1px solid #eee;">
-  <p style="font-size: 11px; color: #999; margin: 0 0 4px;">Earned Escape is operated by COTIB Adventures LLC and is an affiliate of Castle Dreams Travel.</p>
+  <p style="font-size: 13px; color: #555; margin: 0 0 4px;">Earned Escape is operated by COTIB Adventures LLC and is an affiliate of Castle Dreams Travel through Charles Betancourt, Independent Advisor.</p>
   <p style="font-size: 11px; color: #999; margin: 0;">Rather not get follow-up emails? Just reply "unsubscribe" and I'll take you off the list.</p>
 </body>
 </html>`;
@@ -445,7 +445,7 @@ function quizNurtureEmailHtml(name, safeTitle) {
   <p style="margin: 0 0 16px;">Either way, keep the tips from your results email handy when you research. You've earned a trip that actually feels easy.</p>
   <p style="margin: 20px 0 0; color: #0D0821;">Best,<br>Chuck<br><span style="font-size: 13px; color: #666;">Earned Escape by COTIB Adventures LLC</span></p>
   <hr style="margin: 32px 0 16px; border: none; border-top: 1px solid #eee;">
-  <p style="font-size: 11px; color: #999; margin: 0 0 4px;">Earned Escape is operated by COTIB Adventures LLC and is an affiliate of Castle Dreams Travel.</p>
+  <p style="font-size: 13px; color: #555; margin: 0 0 4px;">Earned Escape is operated by COTIB Adventures LLC and is an affiliate of Castle Dreams Travel through Charles Betancourt, Independent Advisor.</p>
   <p style="font-size: 11px; color: #999; margin: 0;">Rather not get these follow-up emails? Just reply "unsubscribe" and I'll take you off the list.</p>
 </body>
 </html>`;
@@ -708,8 +708,8 @@ router.post('/api/plan', async (req, res) => {
   <span style="font-size: 13px; color: #666;">Earned Escape by COTIB Adventures LLC</span></p>
 
   <hr style="margin: 32px 0 16px; border: none; border-top: 1px solid #eee;">
-  <p style="font-size: 11px; color: #999; margin: 0;">
-    Earned Escape is operated by COTIB Adventures LLC and is an affiliate of Castle Dreams Travel.
+  <p style="font-size: 13px; color: #555; margin: 0;">
+    Earned Escape is operated by COTIB Adventures LLC and is an affiliate of Castle Dreams Travel through Charles Betancourt, Independent Advisor.
   </p>
 </body>
 </html>`;
