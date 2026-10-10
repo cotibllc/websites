@@ -10,7 +10,7 @@ const consultationUrl = optionalUrl(process.env.CONSULTATION_URL) || '/plan';
 const rcGuideUrl = optionalUrl(process.env.RC_GUIDE_URL);
 const disneyGuideUrl = optionalUrl(process.env.DISNEY_GUIDE_URL);
 const universalUrl = optionalUrl(process.env.UNIVERSAL_PAGE_URL) || `${siteUrl}/?tab=parks#destinations`;
-const facebookUrl = optionalUrl(process.env.FACEBOOK_URL);
+const facebookUrl = optionalUrl(process.env.FACEBOOK_URL) || 'https://www.facebook.com/profile.php?id=61570748012625';
 const tiktokUrl = optionalUrl(process.env.TIKTOK_URL);
 
 const turnstileSiteKey = (process.env.TURNSTILE_SITE_KEY && !process.env.TURNSTILE_SITE_KEY.startsWith('YOUR_'))
