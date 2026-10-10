@@ -97,8 +97,8 @@
 
 .footer-bottom__copy {
   font-family: var(--font-body);
-  font-size: 11px;
-  color: rgba(248, 245, 238, 0.25);
+  font-size: 13px;
+  color: rgba(248, 245, 238, 0.8);
 }
 
 .footer-bottom__domains {
