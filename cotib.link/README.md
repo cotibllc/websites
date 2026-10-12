@@ -1,6 +1,6 @@
 # cotib.link
 
-Static link hub for every COTIB Adventures brand. No build step.
+Static link hub for every COTIB brand. No build step.
 
 - Files: `index.html`, `styles.css`, `favicon.svg`, `vercel.json`.
 - Look follows cotib.com: navy base, brand blue and cyan accents, Outfit and Inter fonts.
