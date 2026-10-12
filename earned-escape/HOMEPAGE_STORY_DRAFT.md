@@ -1,3 +1,5 @@
+> NOTE (2026-10-12): Supplier lists in this draft that name Disney next to Royal Caribbean or Universal are superseded by the Castle Dreams Disney rule. Disney must not appear next to any other supplier. Do not reuse that copy.
+
 # Earned Escape — Homepage Story Draft (Phase 1)
 
 **Focus:** Major rewrite of the "About" section + supporting homepage story elements.

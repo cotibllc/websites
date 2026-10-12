@@ -28,6 +28,16 @@
         >
           <span>&#x1F6A2;</span> Cruise Voyages
         </button>
+        <button
+          class="dest-tab"
+          data-panel="disney"
+          role="tab"
+          aria-selected="false"
+          aria-controls="panel-disney"
+          id="tab-disney"
+        >
+          <span>&#x2728;</span> Disney
+        </button>
       </div>
     </div>
 
@@ -56,6 +66,42 @@
           </div>
         </article>
 
+      </div>
+    </div>
+
+    <!-- Parks Panel -->
+    <div class="dest-panel dest-panel--active" id="panel-parks" role="tabpanel" aria-labelledby="tab-parks">
+      <div class="dest-grid">
+
+        <article class="dest-card dest-card--uni">
+          <div class="dest-card__bg"></div>
+          <div class="dest-card__overlay"></div>
+          <span class="dest-card__domain">earnedescape.vacations</span>
+          <div class="dest-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" width="24" height="24">
+              <circle cx="20" cy="20" r="18" stroke="#C9A84C" stroke-width="1.5" fill="none" opacity="0.6"/>
+              <path d="M14 28 L14 18 Q14 12 20 12 Q26 12 26 18 L26 28" stroke="#C9A84C" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+              <line x1="11" y1="28" x2="29" y2="28" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="dest-card__content">
+            <p class="dest-card__eyebrow">Universal Resorts</p>
+            <h3 class="dest-card__title">Epic Universe Awaits</h3>
+            <p class="dest-card__desc">Epic Universe, Islands of Adventure, Universal Studios. The thrill-seeker's destination just got significantly bigger. I'll build a plan that captures it all without the overwhelm.</p>
+            <a href="/universal" class="dest-card__link">
+              Explore Universal Orlando &rarr;
+            </a>
+          </div>
+        </article>
+
+      </div>
+    </div>
+
+    <!-- Disney Panel (kept separate from other suppliers per Castle Dreams rule) -->
+    <div class="dest-panel" id="panel-disney" role="tabpanel" aria-labelledby="tab-disney" hidden>
+      <p class="dest-panel__label">Disney</p>
+      <div class="dest-grid">
+
         <article class="dest-card dest-card--dcl">
           <div class="dest-card__bg"></div>
           <div class="dest-card__overlay"></div>
@@ -70,19 +116,12 @@
           <div class="dest-card__content">
             <p class="dest-card__eyebrow">Disney Cruise Line</p>
             <h3 class="dest-card__title">Magic on the Open Ocean</h3>
-            <p class="dest-card__desc">Disney storytelling meets world-class cruising. Perfect for families and multigenerational groups – the service, the characters, and the attention to detail are unlike anything else at sea.</p>
+            <p class="dest-card__desc">Disney storytelling meets world-class cruising. Perfect for families and multigenerational groups. The service, the characters, and the attention to detail are unlike anything else at sea.</p>
             <a href="/disney-cruise-line" class="dest-card__link">
               Explore Disney Cruise Line &rarr;
             </a>
           </div>
         </article>
-
-      </div>
-    </div>
-
-    <!-- Parks Panel -->
-    <div class="dest-panel dest-panel--active" id="panel-parks" role="tabpanel" aria-labelledby="tab-parks">
-      <div class="dest-grid">
 
         <article class="dest-card dest-card--wdw">
           <div class="dest-card__bg"></div>
@@ -100,27 +139,6 @@
             <p class="dest-card__desc">Four parks, two water parks, Disney Springs, and a resort strategy that can make or break your trip. Let me handle the planning so you can be fully present for every moment of it.</p>
             <a href="/disney-world" class="dest-card__link">
               Explore Walt Disney World &rarr;
-            </a>
-          </div>
-        </article>
-
-        <article class="dest-card dest-card--uni">
-          <div class="dest-card__bg"></div>
-          <div class="dest-card__overlay"></div>
-          <span class="dest-card__domain">earnedescape.vacations</span>
-          <div class="dest-card__icon" aria-hidden="true">
-            <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" width="24" height="24">
-              <circle cx="20" cy="20" r="18" stroke="#C9A84C" stroke-width="1.5" fill="none" opacity="0.6"/>
-              <path d="M14 28 L14 18 Q14 12 20 12 Q26 12 26 18 L26 28" stroke="#C9A84C" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-              <line x1="11" y1="28" x2="29" y2="28" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/>
-            </svg>
-          </div>
-          <div class="dest-card__content">
-            <p class="dest-card__eyebrow">Universal Resorts</p>
-            <h3 class="dest-card__title">Epic Universe Awaits</h3>
-            <p class="dest-card__desc">Epic Universe, Islands of Adventure, Universal Studios – the thrill-seeker's destination just got significantly bigger. I'll build a plan that captures it all without the overwhelm.</p>
-            <a href="/universal" class="dest-card__link">
-              Explore Universal Orlando &rarr;
             </a>
           </div>
         </article>

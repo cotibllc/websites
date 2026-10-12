@@ -14,18 +14,29 @@
           >
         </a>
         <p class="footer-tagline">{{ site.brand.tagline }}</p>
-        <p class="footer-desc">Personal travel planning for Royal Caribbean, Disney Cruise Line, Walt Disney World, and Universal vacations, backed by {{ site.brand.parentAgency }} through Charles Betancourt, Independent Advisor.</p>
+        <p class="footer-desc">Luxury &amp; Family Travel · Sports Event Packages. Personal travel planning backed by {{ site.brand.parentAgency }} through Charles Betancourt, Independent Advisor.</p>
         <p class="footer-copy">&copy; 2026 {{ site.brand.business }}</p>
       </div>
 
       <!-- Destinations Column -->
       <div class="footer-col">
         <h4 class="footer-col__heading">Destinations</h4>
+        <p class="footer-group__label">Cruises</p>
         <ul class="footer-links">
           <li><a href="/royal-caribbean" class="footer-link">Royal Caribbean</a></li>
+        </ul>
+        <p class="footer-group__label">Theme parks</p>
+        <ul class="footer-links">
+          <li><a href="/universal" class="footer-link">Universal Orlando</a></li>
+        </ul>
+        <hr class="footer-group__divider">
+        <p class="footer-group__label">Disney</p>
+        <ul class="footer-links">
           <li><a href="/disney-cruise-line" class="footer-link">Disney Cruise Line</a></li>
           <li><a href="/disney-world" class="footer-link">Walt Disney World</a></li>
-          <li><a href="/universal" class="footer-link">Universal Orlando</a></li>
+          {% if site.links.disneyGuide %}
+          <li><a href="{{ site.links.disneyGuide }}" class="footer-link" target="_blank" rel="noopener noreferrer">Disney Quick-Start Guide</a></li>
+          {% endif %}
         </ul>
       </div>
 
@@ -35,9 +46,6 @@
         <ul class="footer-links">
           {% if site.links.rcGuide %}
           <li><a href="{{ site.links.rcGuide }}" class="footer-link" target="_blank" rel="noopener noreferrer">RC Beginner's Guide</a></li>
-          {% endif %}
-          {% if site.links.disneyGuide %}
-          <li><a href="{{ site.links.disneyGuide }}" class="footer-link" target="_blank" rel="noopener noreferrer">Disney Quick-Start Guide</a></li>
           {% endif %}
           <li><a href="{{ site.links.consultation }}" class="footer-link">Start Your Escape</a></li>
           <li><a href="/compliance" class="footer-link">Compliance & Disclosures</a></li>
