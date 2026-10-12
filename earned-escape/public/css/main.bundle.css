@@ -593,7 +593,7 @@ em {
 }
 
 .hero__bio p { font: 400 14px/1.65 var(--font-body); margin: 0; max-width: 55ch; }
-.hero__bio .hero__affiliation { margin-top: 10px; font-size: 11px; color: #5a4960; }
+.hero__bio .hero__affiliation { margin-top: 10px; font-size: 13px; font-weight: 600; color: #3d2b45; }
 .hero__booking .btn { width: 100%; justify-content: center; text-align: center; letter-spacing: 0; font-size: 13px; }
 .hero__booking p { font: 400 12px/1.6 var(--font-body); margin: 10px 0 0; text-align: center; }
 .hero a:focus-visible { outline: 3px solid #512e5f; outline-offset: 4px; }
@@ -2549,8 +2549,8 @@ body.dest-page .reveal {
 
 .footer-bottom__copy {
   font-family: var(--font-body);
-  font-size: 11px;
-  color: rgba(248, 245, 238, 0.25);
+  font-size: 13px;
+  color: rgba(248, 245, 238, 0.8);
 }
 
 .footer-bottom__domains {
