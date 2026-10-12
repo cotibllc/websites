@@ -1,12 +1,12 @@
 # Earned Escape
 
-> White-glove planning for elevated family vacations and luxury escapes - Royal Caribbean, Disney, and beyond. Operated by COTIB Adventures LLC and affiliated with Castle Dreams Travel through Charles Betancourt, Independent Advisor.
+> White-glove planning for elevated family vacations and luxury escapes. Luxury & Family Travel · Sports Event Packages. Operated by COTIB Adventures LLC and affiliated with Castle Dreams Travel through Charles Betancourt, Independent Advisor.
 
 Earned Escape is built on a lifetime of travel experience combined with 30 years of corporate IT systems engineering precision. We plan two kinds of trips with the same level of care: elevated, multi-generational family vacations and more exclusive, bucket-list luxury escapes. There is no planning fee - support is provided at no added cost to the traveler.
 
 ## Who We Serve
 
-- **Elevated Family Vacations**: Multi-generational family trips, milestone celebrations, and first-time cruisers who want a smoother, more elevated experience - Disney, Universal, and Royal Caribbean family travel.
+- **Elevated Family Vacations**: Multi-generational family trips, milestone celebrations, and first-time cruisers who want a smoother, more elevated experience.
 - **Luxury & Bucket-List Escapes**: Premium cabins, higher-end itineraries, and once-in-a-lifetime experiences for travelers seeking a more exclusive trip.
 - **Support models**: Full-Service Planning (hands-on, start to finish) or Advisory / Light-Touch Support (strategy and second opinion while the traveler books directly). No planning fee either way.
 
@@ -19,7 +19,16 @@ Earned Escape is built on a lifetime of travel experience combined with 30 years
 
 ## Destinations & Planning Guides
 
+### Cruises
+
 - [Royal Caribbean (/royal-caribbean)](https://earnedescape.agency/royal-caribbean): Cruise planning shaped by firsthand sailings, from family staterooms to premium suites. Tips on stateroom selection, cruise classes, and itinerary planning.
-- [Disney Cruise Line (/disney-cruise-line)](https://earnedescape.agency/disney-cruise-line): Disney Cruise Line planning for families and multigenerational groups. Details on ships (like the Disney Fantasy), onboard rotations, and honest comparisons with other cruise lines.
-- [Walt Disney World (/disney-world)](https://earnedescape.agency/disney-world): Walt Disney World planning guide. Recommends a resort-first layout, rope drop strategies, selective Lightning Lane usage, and monorail resort insights.
+
+### Theme parks
+
 - [Universal Orlando (/universal)](https://earnedescape.agency/universal): Vacation planning for Universal Orlando and the new Epic Universe theme park, featuring hotel recommendations and park strategy.
+
+### Disney
+
+- [Disney Cruise Line (/disney-cruise-line)](https://earnedescape.agency/disney-cruise-line): Disney Cruise Line planning for families and multigenerational groups. Details on ships (like the Disney Fantasy), onboard rotations, and how to tell if DCL fits your family.
+- [Walt Disney World (/disney-world)](https://earnedescape.agency/disney-world): Walt Disney World planning guide. Recommends a resort-first layout, rope drop strategies, selective Lightning Lane usage, and monorail resort insights.
+

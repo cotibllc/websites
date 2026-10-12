@@ -159,3 +159,11 @@
     grid-template-columns: 1fr;
   }
 }
+
+.guides__group-label {
+  margin: 40px 0 16px;
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #C9A84C;
+}

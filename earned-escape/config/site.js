@@ -74,7 +74,7 @@ module.exports = {
   seo: {
     title: "Earned Escape | White-Glove Family & Luxury Travel Planning",
     description:
-      "White-glove planning for elevated family vacations and luxury escapes - Royal Caribbean, Disney, and beyond. Personal travel planning for multi-gen family cruises and more exclusive escapes, at zero planning fee.",
+      "White-glove planning for elevated family vacations and luxury escapes. Luxury & Family Travel · Sports Event Packages. Personal travel planning for multi-gen family cruises and more exclusive escapes, at zero planning fee.",
     ogImage: '/images/og/og-default.png',
     twitterHandle: '@earned_escape',
   },

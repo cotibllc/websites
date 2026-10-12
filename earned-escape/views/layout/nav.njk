@@ -27,7 +27,7 @@
       >
       {% elif destination == 'universal' %}
       <img
-        src="/images/logo/ee-disney-logo.png?v={{ site.assetVersion }}"
+        src="/images/logo/ee-profile-logo.png?v={{ site.assetVersion }}"
         alt="Universal Orlando"
         width="140"
         height="140"
@@ -53,16 +53,20 @@
     <div class="nav-menu" id="nav-menu">
       <ul class="nav-links">
         <li><a href="/about" class="nav-link">About</a></li>
+        <li><a href="/royal-caribbean" class="nav-link">Royal Caribbean</a></li>
         <li class="nav-dropdown">
           <a href="#" class="nav-link nav-dropdown-toggle" aria-haspopup="true" aria-expanded="false">Destinations <span class="nav-caret">▾</span></a>
           <ul class="nav-dropdown-menu">
+            <li class="nav-dropdown-label" aria-hidden="true">Cruises</li>
             <li><a href="/royal-caribbean" class="nav-link">Royal Caribbean</a></li>
+            <li class="nav-dropdown-label" aria-hidden="true">Theme parks</li>
+            <li><a href="/universal" class="nav-link">Universal Orlando</a></li>
+            <li class="nav-dropdown-divider" role="separator"></li>
+            <li class="nav-dropdown-label" aria-hidden="true">Disney</li>
             <li><a href="/disney-cruise-line" class="nav-link">Disney Cruise Line</a></li>
             <li><a href="/disney-world" class="nav-link">Walt Disney World</a></li>
-            <li><a href="/universal" class="nav-link">Universal Orlando</a></li>
           </ul>
         </li>
-        <li><a href="/royal-caribbean" class="nav-link">Royal Caribbean</a></li>
       </ul>
       <a href="{{ site.links.consultation }}" class="btn btn--gold btn--sm nav-cta">
         {% if bodyClass == 'home' %}Plan Your Cruise{% else %}Start Your Escape{% endif %}
