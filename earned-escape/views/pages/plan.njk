@@ -9,7 +9,7 @@
         Start with the right<br><em>cruise decisions.</em>
       </h1>
       <p class="plan-hero__sub">
-        In 30 minutes, we'll talk through your dates, travelers, budget, and priorities, then narrow the ship, itinerary, and cabin choices that fit. Disney Cruise Line planning is available too. No pressure. No obligation.
+        In 30 minutes, we'll talk through your dates, travelers, budget, and priorities, then narrow the ship, itinerary, and cabin choices that fit. Theme park and family trip planning is available too. No pressure. No obligation.
       </p>
       <div class="plan-hero__meta">
         Earned Escape by {{ site.brand.business }} &nbsp;•&nbsp; Charles Betancourt, Independent Advisor, affiliate of {{ site.brand.parentAgency }}
@@ -139,13 +139,21 @@
         <div class="form-group">
           <label for="f-trip-type">Type of trip *</label>
           <select id="f-trip-type" name="tripType" required>
-            <option value=""> –  Select one  – </option>
-            <option value="Royal Caribbean">Royal Caribbean</option>
-            <option value="Disney Cruise Line">Disney Cruise Line</option>
-            <option value="Walt Disney World">Walt Disney World</option>
-            <option value="Universal Orlando">Universal Orlando / Epic Universe</option>
-            <option value="Luxury / Bucket-List Escape">Luxury / Bucket-List Escape</option>
-            <option value="Other">Other or combination of trips</option>
+            <option value="">Select one</option>
+            <optgroup label="Cruises">
+              <option value="Royal Caribbean">Royal Caribbean</option>
+            </optgroup>
+            <optgroup label="Theme parks">
+              <option value="Universal Orlando">Universal Orlando / Epic Universe</option>
+            </optgroup>
+            <optgroup label="Disney">
+              <option value="Disney Cruise Line">Disney Cruise Line</option>
+              <option value="Walt Disney World">Walt Disney World</option>
+            </optgroup>
+            <optgroup label="Other">
+              <option value="Luxury / Bucket-List Escape">Luxury / Bucket-List Escape</option>
+              <option value="Other">Other or combination of trips</option>
+            </optgroup>
           </select>
         </div>
 

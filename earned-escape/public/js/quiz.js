@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let emailRequestId = 0; // bumped on restart so an in-flight /api/quiz response can't clobber a fresh attempt's UI
   const answers = {
     setting: null,      // cruise, parks, adventure, resort
-    tripType: null,     // Royal Caribbean, Walt Disney World, Other
+    tripType: null,     // trip type value from /plan select
     tripTypeTag: null,  // Grand Adventure, Luxury Resort
     travelLabel: null,  // Ocean & Cruise Voyages, etc.
     travelers: null,    // travelers string
@@ -152,10 +152,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (setting === 'cruise') {
       title = `${answers.partyLabel} Cruise Voyage`;
-      desc = `A bespoke ocean cruise vacation with Royal Caribbean or Disney Cruise Line, personalized to your style. Chuck's deep cruise expertise will help you select the ideal class of ship, stateroom location, and dining rotation for a seamless voyage.`;
+      desc = `A bespoke ocean cruise vacation, personalized to your style. Chuck's deep cruise expertise will help you select the ideal class of ship, stateroom location, and dining rotation for a seamless voyage.`;
     } else if (setting === 'parks') {
       title = `${answers.partyLabel} Park Adventure`;
-      desc = `An immersive, magical escape to Walt Disney World or Universal Orlando/Epic Universe. Chuck will handle the complex planning details – from resort selections and transport logistics to Lightning Lane and dining strategies – so you can focus on the fun.`;
+      desc = `An immersive, magical escape to the Orlando theme parks. Chuck will handle the complex planning details, from resort selections and transport logistics to line-skip and dining strategies, so you can focus on the fun.`;
     } else if (setting === 'adventure') {
       title = `Grand Bucket-List Adventure`;
       desc = `A highly customized international journey, like exploring Beijing, the Great Wall of China, Xi'an, Chongqing, or Singapore. Drawing on Chuck's firsthand travel experience, we'll design a high-precision, unforgettable itinerary.`;

@@ -351,7 +351,7 @@ const QUIZ_TIPS = {
     tips: [
       'Choose the resort first, then the park days. Where you sleep shapes transportation, rest, and how early you can start.',
       'Protect your mornings. Rope drop (or a smart first-hour plan) still beats buying your way out of every line.',
-      'Be selective with paid line-skipping. Lightning Lane / Express works best on a few high-demand attractions, not every ride.',
+      'Be selective with paid line-skipping. It works best on a few high-demand attractions, not every ride.',
     ],
     moreUrl: 'https://earnedescape.agency/disney-world',
     moreLabel: 'Explore Disney World planning',

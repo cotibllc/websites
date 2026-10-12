@@ -165,3 +165,17 @@
     grid-column: auto;
   }
 }
+
+/* Supplier groups (Disney kept in its own labeled group) */
+.footer-group__label {
+  margin: 12px 0 6px;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0.75;
+}
+.footer-group__divider {
+  border: 0;
+  border-top: 1px solid rgba(201, 168, 76, 0.35);
+  margin: 14px 0 4px;
+}
