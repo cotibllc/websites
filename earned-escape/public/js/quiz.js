@@ -152,10 +152,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (setting === 'cruise') {
       title = `${answers.partyLabel} Cruise Voyage`;
-      desc = `A bespoke ocean cruise vacation, personalized to your style. Chuck's deep cruise expertise will help you select the ideal class of ship, stateroom location, and dining rotation for a seamless voyage.`;
+      desc = `A cruise built around your style. Chuck helps you pick the right ship, cabin spot, and dining plan for a smooth trip.`;
     } else if (setting === 'parks') {
       title = `${answers.partyLabel} Park Adventure`;
-      desc = `An immersive, magical escape to the Orlando theme parks. Chuck will handle the complex planning details, from resort selections and transport logistics to line-skip and dining strategies, so you can focus on the fun.`;
+      desc = `A fun escape to the Orlando theme parks. Chuck handles the hard parts: hotels, getting around, ride passes, and meals. You get to enjoy the fun.`;
     } else if (setting === 'adventure') {
       title = `Grand Bucket-List Adventure`;
       desc = `A highly customized international journey, like exploring Beijing, the Great Wall of China, Xi'an, Chongqing, or Singapore. Drawing on Chuck's firsthand travel experience, we'll design a high-precision, unforgettable itinerary.`;
