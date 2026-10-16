@@ -25,6 +25,7 @@ Earned Escape is built on a lifetime of travel experience combined with 30 years
 
 ### Theme parks
 
+- [Theme parks (/theme-parks)](https://earnedescape.agency/theme-parks): Hub page that links each theme park and Disney planning page in its own section.
 - [Universal Orlando (/universal)](https://earnedescape.agency/universal): Vacation planning for Universal Orlando and the new Epic Universe theme park, featuring hotel recommendations and park strategy.
 
 ### Disney
