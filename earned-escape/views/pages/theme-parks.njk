@@ -1,0 +1,42 @@
+{% extends "layout/base.njk" %}
+
+{% block content %}
+
+<section class="dest-story" id="top" aria-labelledby="theme-parks-heading">
+  <div class="dest-story__inner">
+    <div class="dest-story__text">
+      <p class="section-eyebrow">Theme parks</p>
+      <h1 class="dest-story__headline" id="theme-parks-heading">Theme park <em>planning.</em></h1>
+      <p class="dest-story__body">Theme park trips go better with a plan. I help you choose the right dates, hotel, and park days for your group, then build each day around what your family actually wants to do.</p>
+      <p class="dest-story__body">There is no planning fee. Pick a destination below to see how I help.</p>
+    </div>
+  </div>
+</section>
+
+<section class="dest-story" id="universal" aria-labelledby="universal-heading">
+  <div class="dest-story__inner">
+    <div class="dest-story__text">
+      <p class="section-eyebrow">Universal</p>
+      <h2 class="dest-story__headline" id="universal-heading">Universal Orlando</h2>
+      <p class="dest-story__body">Hotel choice, park days, and how to fit Epic Universe into your trip.</p>
+      <a href="/universal" class="btn btn--gold">Universal Orlando planning</a>
+    </div>
+  </div>
+</section>
+
+<section class="dest-story" id="disney" aria-labelledby="disney-heading">
+  <div class="dest-story__inner">
+    <div class="dest-story__text">
+      <p class="section-eyebrow">Disney</p>
+      <h2 class="dest-story__headline" id="disney-heading">Disney</h2>
+      <p class="dest-story__body">Planning help for a Disney vacation, from park days to sailings.</p>
+      <p class="dest-story__body"><a href="/disney-world">Walt Disney World planning</a></p>
+      <p class="dest-story__body"><a href="/disney-cruise-line">Disney Cruise Line planning</a></p>
+      {% if site.links.disneyGuide %}
+      <p class="dest-story__body"><a href="{{ site.links.disneyGuide }}" target="_blank" rel="noopener noreferrer">Disney Quick-Start Guide</a></p>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% endblock %}

@@ -180,6 +180,16 @@ router.get('/disney-cruise-line', (req, res) => {
   });
 });
 
+router.get('/theme-parks', (req, res) => {
+  res.render('pages/theme-parks.njk', {
+    site,
+    bodyClass: 'dest-page',
+    title: 'Theme Park Planning | Earned Escape',
+    description: 'Theme park trip planning with Earned Escape. Choose a destination to see how Chuck helps families plan it.',
+    canonical: '/theme-parks',
+  });
+});
+
 router.get('/universal', (req, res) => {
   res.render('pages/universal.njk', {
     site,
