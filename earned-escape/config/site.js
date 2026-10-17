@@ -31,6 +31,8 @@ module.exports = {
     parentAgency: 'Castle Dreams Travel',
     parentAgencyUrl: 'https://castledreamstravel.com',
     cotibUrl: 'https://cotib.com',
+    // CAN-SPAM postal address, used in the site footer and every marketing email.
+    mailingAddress: '155 Willowbrook Blvd, Ste 110 #2800, Wayne NJ 07470, United States',
   },
 
   // ── DOMAINS

@@ -3,6 +3,11 @@ const router = express.Router();
 const site = require('../config/site');
 
 const { Resend } = require('resend');
+const { getResend } = require('../lib/resend-client');
+const { getGuide, DEFAULT_GUIDE_TYPE } = require('../config/guides');
+const { getTemplates, listUnsubscribeHeaders } = require('../lib/guide-emails');
+const { createToken, verifyToken } = require('../lib/unsubscribe-token');
+const leadStore = require('../lib/lead-store');
 
 
 const TO_EMAIL = 'cbetancourt@castledreamstravel.com';
@@ -87,44 +92,7 @@ async function addToResendAudience(resend, name, email) {
   }
 }
 
-// Guide nurture sequence, emails 2 and 3 (email 1 is the immediate PDF
-// delivery already sent from POST /api/guide). Copy source: vault
-// Earned-Escape/Website/Copy/Lead_Magnet_5_Mistakes.md.
-function guideNurtureEmail2Html(name) {
-  return `
-<!DOCTYPE html>
-<html>
-<body style="font-family: system-ui, -apple-system, sans-serif; color: #222; max-width: 560px; margin: 0 auto; padding: 32px 24px; line-height: 1.6;">
-  <p style="margin: 0 0 16px; color: #0D0821;">Hi ${escapeHtml(name)},</p>
-  <p style="margin: 0 0 16px;">I hope you found the cruiser's guide helpful! Since you're likely still in the research phase, here's a piece of advice that usually surprises first-time cruisers.</p>
-  <p style="margin: 0 0 16px;">A lot of people think their first decision should be picking a destination, like "the Bahamas" or "the Western Caribbean." In reality, <strong>your first decision should be the ship.</strong> On modern cruise lines like Royal Caribbean, the ship <em>is</em> the destination. The experience on an older, smaller ship is fundamentally different from a massive Oasis-class ship, even sailing to the exact same ports.</p>
-  <p style="margin: 0 0 16px;">Are you currently leaning toward a specific cruise line, or still wide open? Just reply, I read every email.</p>
-  <p style="margin: 20px 0 0; color: #0D0821;">Warmly,<br>Chuck<br><span style="font-size: 13px; color: #666;">Earned Escape by COTIB Adventures LLC</span></p>
-  <hr style="margin: 32px 0 16px; border: none; border-top: 1px solid #eee;">
-  <p style="font-size: 13px; color: #555; margin: 0 0 4px;">Earned Escape is operated by COTIB Adventures LLC and is an affiliate of Castle Dreams Travel through Charles Betancourt, Independent Advisor.</p>
-  <p style="font-size: 11px; color: #999; margin: 0;">Rather not get these follow-up emails? Just reply "unsubscribe" and I'll take you off the list.</p>
-</body>
-</html>`;
-}
-
-function guideNurtureEmail3Html(name) {
-  return `
-<!DOCTYPE html>
-<html>
-<body style="font-family: system-ui, -apple-system, sans-serif; color: #222; max-width: 560px; margin: 0 auto; padding: 32px 24px; line-height: 1.6;">
-  <p style="margin: 0 0 16px; color: #0D0821;">Hi ${escapeHtml(name)},</p>
-  <p style="margin: 0 0 16px;">Planning a cruise can quickly turn from exciting to overwhelming once you start looking at deck plans, beverage packages, and dining reservations.</p>
-  <p style="margin: 0 0 16px;">I built Earned Escape specifically to take that mental load off of families. You shouldn't need a spreadsheet just to figure out how to feed your family on vacation.</p>
-  <p style="margin: 0 0 16px;">If you're starting to feel stuck, or just want a second set of eyes on an itinerary you're considering, let's hop on a quick 30-minute planning call. Zero pressure, no fee.</p>
-  <p style="margin: 24px 0;"><a href="https://earnedescape.agency/plan" style="display:inline-block; padding:12px 24px; background:#2A164E; color:#fff; text-decoration:none; border-radius:4px;">Reserve My Planning Call</a></p>
-  <p style="margin: 0 0 16px;">Either way, I hope you have an incredible trip. You've earned it.</p>
-  <p style="margin: 20px 0 0; color: #0D0821;">Best,<br>Chuck<br><span style="font-size: 13px; color: #666;">Earned Escape by COTIB Adventures LLC</span></p>
-  <hr style="margin: 32px 0 16px; border: none; border-top: 1px solid #eee;">
-  <p style="font-size: 13px; color: #555; margin: 0 0 4px;">Earned Escape is operated by COTIB Adventures LLC and is an affiliate of Castle Dreams Travel through Charles Betancourt, Independent Advisor.</p>
-  <p style="font-size: 11px; color: #999; margin: 0;">Rather not get these follow-up emails? Just reply "unsubscribe" and I'll take you off the list.</p>
-</body>
-</html>`;
-}
+// Guide email templates (delivery, day 3, day 7) live in lib/guide-emails.js.
 
 router.get('/', (req, res) => {
   res.render('pages/index.njk', {
@@ -141,7 +109,7 @@ router.get('/about', (req, res) => {
     site,
     bodyClass: 'dest-page about-page',
     title: 'Meet Chuck | Family & Luxury Travel Advisor | Earned Escape',
-    description: 'After decades of exploring the world and 30 years in corporate IT, Chuck Betancourt built Earned Escape to plan elevated family vacations and luxury escapes with the same precision.',
+    description: 'After decades of exploring the world and 25+ years in corporate IT, Chuck Betancourt built Earned Escape to plan elevated family vacations and luxury escapes with the same precision.',
     canonical: '/about',
     ogImage: '/images/photos/chuck-betancourt-headshot-square.jpg',
   });
@@ -221,9 +189,11 @@ router.get('/compliance', (req, res) => {
 });
 
 router.get('/guide', (req, res) => {
+  const guide = getGuide(DEFAULT_GUIDE_TYPE);
   res.render('pages/guide.njk', {
     site,
-    bodyClass: 'dest-page',
+    guide,
+    bodyClass: 'dest-page guide-page',
     title: '5 Mistakes First-Time Cruisers Make | Earned Escape',
     description: 'Get the free guide on how to avoid the hidden failure points that ruin family vacations.',
     canonical: '/guide',
@@ -242,13 +212,10 @@ router.get('/links', (req, res) => {
   });
 });
 
-// POST /api/guide – handles the free guide lead capture
+// POST /api/guide: free guide lead capture. guideType selects the guide
+// (config/guides.js); it defaults to 'rc' and only enabled guides are accepted.
 router.post('/api/guide', async (req, res) => {
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
-  }
-
-  const { name, email, turnstileToken, website } = req.body || {};
+  const { name, email, turnstileToken, website, guideType } = req.body || {};
 
   // Honeypot: real users never fill this hidden field. Pretend success so
   // bots don't learn they were caught. Trim first so autofill/extensions that
@@ -261,86 +228,184 @@ router.post('/api/guide', async (req, res) => {
     return res.status(400).json({ error: 'Please provide both your name and email address.' });
   }
 
+  const guide = getGuide(guideType || DEFAULT_GUIDE_TYPE);
+  const templates = guide && getTemplates(guide.id);
+  if (!guide || !templates) {
+    return res.status(400).json({ error: 'That guide is not available.' });
+  }
+
   const turnstileResult = await verifyTurnstile(turnstileToken);
   if (!turnstileResult.ok) {
     return res.status(turnstileResult.status).json({ error: turnstileResult.error });
   }
 
+  const leadEmail = email.trim();
   const notifyHtml = `
   <div style="font-family: sans-serif; padding: 20px;">
     <h2>New Guide Download</h2>
     <p><strong>Name:</strong> ${escapeHtml(name)}</p>
-    <p><strong>Email:</strong> ${escapeHtml(email)}</p>
-    <p><em>They requested the "5 Mistakes" guide via earnedescape.agency/guide</em></p>
-  </div>`;
-
-  const deliverHtml = `
-  <div style="font-family: sans-serif; max-width: 600px; padding: 20px;">
-    <p>Hi ${escapeHtml(name)},</p>
-    <p>Thanks for requesting the guide! As promised, here is the direct link to download <strong>5 Mistakes First-Time Cruisers Make (And How to Avoid Them)</strong>:</p>
-    <p><a href="https://earnedescape.agency/downloads/5-mistakes-first-time-cruisers-make.pdf" style="display:inline-block; padding:12px 24px; background:#2A164E; color:#fff; text-decoration:none; border-radius:4px;">Download The Guide</a></p>
-    <p>If you only take one thing away from the guide, pay close attention to <strong>Mistake #2</strong>. It is the single biggest money-waster I see on family sailings.</p>
-    <p>Give it a read, and if you have any questions, just reply to this email.</p>
-    <p>Talk soon,<br>Chuck Betancourt<br>Earned Escape by COTIB Adventures LLC</p>
-    <p style="font-size: 13px; color: #555; margin-top: 40px;">Earned Escape is an affiliate of Castle Dreams Travel through Charles Betancourt, Independent Advisor.</p>
+    <p><strong>Email:</strong> ${escapeHtml(leadEmail)}</p>
+    <p><strong>Guide:</strong> ${escapeHtml(guide.title)} (${escapeHtml(guide.id)})</p>
+    <p><em>Requested via earnedescape.agency${escapeHtml(guide.pagePath)}</em></p>
   </div>`;
 
   try {
-    const resend = new Resend(process.env.RESEND_API_KEY);
+    const resend = getResend();
 
     // 1. Notify Chuck
     await resend.emails.send({
       from: FROM_EMAIL,
       to: TO_EMAIL,
-      replyTo: email,
+      replyTo: leadEmail,
       subject: '[Earned Escape] Guide Downloaded: ' + sanitizeForHeader(name),
       html: notifyHtml,
     });
 
-    // 2. Deliver PDF to lead
-    await resend.emails.send({
-      from: FROM_EMAIL,
-      to: email,
-      subject: "Here's your guide! (Plus the one mistake that drives me crazy)",
-      html: deliverHtml,
-    });
-
-    // 3. Add to the Resend Audience so this lead is reachable for future sends
-    await addToResendAudience(resend, name, email);
-
-    // 4. Schedule the rest of the guide nurture sequence (day 3 + day 7).
-    // Independent sends, run in parallel. Skipped in dev/preview if
-    // RESEND_API_KEY isn't a live key, but scheduling failures should never
-    // block the guide delivery above.
+    // 2. Schedule the follow-ups (day 7 first, then day 3) so each later
+    // email's unsubscribe token can carry the IDs still pending after it.
+    // Scheduling failures never block the guide delivery.
+    const scheduled = { day3: null, day7: null };
     try {
-      const day3 = new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString();
-      const day7 = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString();
+      const day3At = new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString();
+      const day7At = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString();
 
-      await Promise.all([
-        resend.emails.send({
-          from: FROM_EMAIL,
-          to: email,
-          subject: 'Quick question about your cruise plans...',
-          html: guideNurtureEmail2Html(name),
-          scheduledAt: day3,
-        }),
-        resend.emails.send({
-          from: FROM_EMAIL,
-          to: email,
-          subject: "Let's get the logistics out of the way",
-          html: guideNurtureEmail3Html(name),
-          scheduledAt: day7,
-        }),
-      ]);
+      const t7 = createToken({ email: leadEmail, guideType: guide.id });
+      const r7 = await resend.emails.send({
+        from: FROM_EMAIL,
+        to: leadEmail,
+        subject: templates.day7.subject,
+        html: templates.day7.html({ name, guide, token: t7 }),
+        headers: listUnsubscribeHeaders(t7),
+        scheduledAt: day7At,
+      });
+      if (r7?.error) throw r7.error;
+      scheduled.day7 = r7?.data?.id || null;
+
+      const t3 = createToken({ email: leadEmail, guideType: guide.id, scheduledIds: [scheduled.day7] });
+      const r3 = await resend.emails.send({
+        from: FROM_EMAIL,
+        to: leadEmail,
+        subject: templates.day3.subject,
+        html: templates.day3.html({ name, guide, token: t3 }),
+        headers: listUnsubscribeHeaders(t3),
+        scheduledAt: day3At,
+      });
+      if (r3?.error) throw r3.error;
+      scheduled.day3 = r3?.data?.id || null;
     } catch (scheduleErr) {
       console.error('Failed to schedule guide nurture emails:', scheduleErr);
     }
 
-    return res.status(200).json({ success: true });
+    // 3. Save the lead with its scheduled email IDs so unsubscribe can cancel them.
+    try {
+      leadStore.upsertLead(leadEmail, {
+        name: sanitizeForHeader(name, 100),
+        guideType: guide.id,
+        unsubscribed: false,
+        unsubscribedAt: null,
+        scheduledEmailIds: scheduled,
+      });
+    } catch (storeErr) {
+      console.error('Failed to save guide lead:', storeErr);
+    }
+
+    // 4. Deliver the PDF to the lead
+    const td = createToken({ email: leadEmail, guideType: guide.id, scheduledIds: [scheduled.day3, scheduled.day7] });
+    await resend.emails.send({
+      from: FROM_EMAIL,
+      to: leadEmail,
+      subject: templates.delivery.subject,
+      html: templates.delivery.html({ name, guide, token: td }),
+      headers: listUnsubscribeHeaders(td),
+    });
+
+    // 5. Add to the Resend Audience so this lead is reachable for future sends
+    await addToResendAudience(resend, name, leadEmail);
+
+    return res.status(200).json({ success: true, guideType: guide.id, pdfPath: guide.pdfPath });
   } catch (err) {
     console.error('Guide API error:', err);
     return res.status(500).json({ error: 'Something went wrong. Please try again.' });
   }
+});
+
+// Unsubscribe. GET shows a confirm button (so link scanners that prefetch
+// URLs don't unsubscribe anyone); POST does the work. POST also serves RFC
+// 8058 one-click requests from mail clients (List-Unsubscribe-Post).
+router.get('/unsubscribe', (req, res) => {
+  const data = verifyToken(req.query.t);
+  res.set('X-Robots-Tag', 'noindex');
+  res.status(data ? 200 : 400).render('pages/unsubscribe.njk', {
+    site,
+    bodyClass: 'dest-page unsubscribe-page',
+    title: 'Unsubscribe | Earned Escape',
+    description: 'Manage Earned Escape emails.',
+    canonical: '/unsubscribe',
+    state: data ? 'confirm' : 'invalid',
+    token: data ? req.query.t : '',
+    email: data ? data.email : '',
+  });
+});
+
+router.post('/unsubscribe', async (req, res) => {
+  const token = req.body?.t || req.query.t;
+  const data = verifyToken(token);
+  const oneClick = req.body?.['List-Unsubscribe'] === 'One-Click';
+  const render = (status, state) => {
+    if (oneClick) return res.status(status).end();
+    res.set('X-Robots-Tag', 'noindex');
+    return res.status(status).render('pages/unsubscribe.njk', {
+      site,
+      bodyClass: 'dest-page unsubscribe-page',
+      title: 'Unsubscribe | Earned Escape',
+      description: 'Manage Earned Escape emails.',
+      canonical: '/unsubscribe',
+      state,
+      email: data ? data.email : '',
+    });
+  };
+  if (!data) return render(400, 'invalid');
+
+  const resend = getResend();
+  const lead = leadStore.getLead(data.email);
+  const storedIds = lead?.scheduledEmailIds ? Object.values(lead.scheduledEmailIds) : [];
+  const ids = [...new Set([...storedIds, ...data.scheduledIds].filter(Boolean))];
+
+  const cancelled = [];
+  const failed = [];
+  for (const id of ids) {
+    try {
+      const r = await resend.emails.cancel(id);
+      if (r?.error) throw r.error;
+      cancelled.push(id);
+    } catch (err) {
+      // Already sent or already cancelled emails can't be cancelled; that's fine.
+      failed.push(id);
+      console.error('Unsubscribe: could not cancel scheduled email', id, err?.message || err);
+    }
+  }
+
+  try {
+    leadStore.upsertLead(data.email, {
+      unsubscribed: true,
+      unsubscribedAt: new Date().toISOString(),
+      cancelledEmailIds: cancelled,
+    });
+  } catch (storeErr) {
+    console.error('Unsubscribe: failed to update lead store', storeErr);
+  }
+
+  const audienceId = process.env.RESEND_AUDIENCE_ID;
+  if (audienceId) {
+    try {
+      await resend.contacts.update({ email: data.email, audienceId, unsubscribed: true });
+    } catch (contactErr) {
+      console.error('Unsubscribe: failed to update Resend contact', contactErr);
+    }
+  }
+
+  console.log('Unsubscribe complete', JSON.stringify({ email: data.email, cancelled, failed }));
+  return render(200, 'done');
 });
 
 // Setting-specific planning tips for quiz results email. Keys match
