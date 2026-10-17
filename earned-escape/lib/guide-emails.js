@@ -1,5 +1,5 @@
 // Guide email templates: delivery (sent right away), day 3 and day 7.
-// Copy from EE Marketing (lead-emails.md, 2026-10-17). Every email shares the
+// Copy from EE Marketing (lead emails, 2026-10-17). Every email shares the
 // CAN-SPAM footer: business identity, postal address and a working
 // unsubscribe link.
 const site = require('../config/site');
@@ -56,7 +56,7 @@ ${inner}
 </body>
 </html>`;
 
-// Copy source: /workspace/ee-guide-copy-2026-10-17/lead-emails.md (EE Marketing, 2026-10-17).
+// Copy source: EE Marketing lead emails (2026-10-17).
 const TEMPLATES = {
   rc: {
     delivery: {
