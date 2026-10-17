@@ -9,3 +9,6 @@ dist/
 photos-to-use/
 
 # Compiled assets
+
+# Local guide lead store (dev and tests only)
+.data/

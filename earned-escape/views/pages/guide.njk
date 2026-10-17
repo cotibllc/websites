@@ -1,59 +1,70 @@
 {% extends "layout/base.njk" %}
 
 {% block content %}
-  <!-- Hero / Intro -->
-  <section class="plan-hero">
-    <div class="plan-hero__inner">
-      <p class="section-eyebrow">Free PDF Guide</p>
-      <h1 class="plan-hero__headline">
+  <section class="guide-hero" aria-labelledby="guide-heading">
+    <div class="guide-hero__inner">
+      <p class="guide-hero__eyebrow">Free PDF Guide</p>
+      <h1 class="guide-hero__headline" id="guide-heading">
         5 Mistakes First-Time<br><em>Cruisers Make</em>
       </h1>
-      <p class="plan-hero__sub">
+      <p class="guide-hero__sub">
         Learn the hidden failure points that ruin family vacations, and how to pick the right ship, dining strategy, and logistics so you can actually relax.
       </p>
     </div>
   </section>
 
-  <!-- The form -->
-  <section class="plan-form" id="plan-form-section">
-    <div class="plan-form__inner">
-      <h2>Where should I send it?</h2>
-      <p class="plan-form__lead">
-        Enter your info below and I'll send the PDF directly to your inbox.
-      </p>
+  <section class="guide-main" id="plan-form-section">
+    <div class="guide-main__inner">
 
-      <div id="guide-success" class="plan-success-container" style="display:none;">
-        <div class="plan-alert plan-alert--success" style="margin-bottom: 32px;">
-          <strong>Thank you!</strong> Check your inbox.
-        </div>
-        <div class="plan-booking-cta" style="text-align: center; padding: 40px 20px; background: rgba(38, 19, 74, 0.4); border: 1px solid rgba(201, 168, 76, 0.2); border-radius: 12px; max-width: 600px; margin: 0 auto;">
-          <h3 style="color: var(--white); font-family: var(--font-display); font-size: 1.8rem; margin-bottom: 12px;">Download it now</h3>
-          <p style="color: var(--off-white); opacity: 0.8; margin-bottom: 28px; line-height: 1.5;">
-            You don't have to wait for the email. You can download the guide directly right now:
-          </p>
-          <a href="/downloads/5-mistakes-first-time-cruisers-make.pdf" target="_blank" rel="noopener noreferrer" class="btn btn--gold" style="display: inline-block; padding: 14px 32px; font-weight: 600;">
-            Download PDF &rarr;
-          </a>
+      <div class="guide-main__about">
+        <figure class="guide-cover">
+          <img src="{{ guide.coverPath }}" width="{{ guide.coverWidth }}" height="{{ guide.coverHeight }}" alt="Cover of the free guide: {{ guide.fullTitle }}" class="guide-cover__img" decoding="async">
+        </figure>
+
+        <div class="guide-inside">
+          <h2 class="guide-inside__heading">What's inside</h2>
+          <p class="guide-inside__lead">The five mistakes I see first-time cruisers make most, and the fix for each.</p>
+          <p class="guide-inside__lead">Picking the port before the ship, winging dining, overpacking, guessing at the beverage package math, and flying in on sailing day.</p>
+          <p class="guide-inside__lead">Includes a dining tier table, a packing list, and the break-even math on drinks. Free, 6 pages, sent straight to your inbox.</p>
         </div>
       </div>
-      <div id="guide-error" class="plan-alert plan-alert--error" style="display:none;"></div>
 
-      <form id="guide-form" class="plan-form" novalidate>
-        <div class="form-group">
-          <label for="g-name">Your first name *</label>
-          <input type="text" id="g-name" name="name" required autocomplete="given-name" />
-        </div>
+      <div class="guide-main__form">
+        <h2 class="guide-form__heading">Where should I send it?</h2>
+        <p class="guide-form__lead">
+          Enter your info below and I'll send the PDF directly to your inbox.
+        </p>
 
-        <div class="form-group">
-          <label for="g-email">Email address *</label>
-          <input type="email" id="g-email" name="email" required autocomplete="email" />
+        <div id="guide-success" class="guide-success" hidden>
+          <div class="plan-alert plan-alert--success">
+            <strong>Thank you!</strong> Check your inbox.
+          </div>
+          <div class="guide-success__card">
+            <h3>Download it now</h3>
+            <p>You don't have to wait for the email. You can download the guide directly right now:</p>
+            <a href="{{ guide.pdfPath }}" id="guide-pdf-link" target="_blank" rel="noopener noreferrer" class="btn btn--gold">Download PDF &rarr;</a>
+          </div>
         </div>
+        <div id="guide-error" class="plan-alert plan-alert--error" hidden></div>
 
-        <!-- Honeypot: hidden from real users, bots fill it and get silently dropped -->
-        <div style="position:absolute;left:-9999px;top:-9999px;" aria-hidden="true">
-          <label for="g-website">Website</label>
-          <input type="text" id="g-website" name="website" tabindex="-1" autocomplete="off" />
-        </div>
+        <form id="guide-form" class="guide-form" novalidate>
+          <input type="hidden" name="guideType" id="g-guide-type" value="{{ guide.id }}">
+
+          <div class="form-group">
+            <label for="g-name">Your first name *</label>
+            <input type="text" id="g-name" name="name" required autocomplete="given-name" />
+          </div>
+
+          <div class="form-group">
+            <label for="g-email">Email address *</label>
+            <input type="email" id="g-email" name="email" required autocomplete="email" />
+          </div>
+
+          <!-- Honeypot: hidden from real users, bots fill it and get silently dropped -->
+          <div style="position:absolute;left:-9999px;top:-9999px;" aria-hidden="true">
+            <label for="g-website">Website</label>
+            <input type="text" id="g-website" name="website" tabindex="-1" autocomplete="off" />
+          </div>
 
           {% if site.turnstileSiteKey %}
           <div class="form-group">
@@ -62,9 +73,9 @@
           {% endif %}
 
           <button type="submit" id="guide-submit-btn" class="btn btn--purple">Send Me The Guide</button>
-          
+
           <p class="form-note">
-            By requesting this guide, you'll also receive occasional travel tips from Chuck.
+            By requesting this guide, you'll also receive occasional travel tips from Chuck. You can unsubscribe from any email.
           </p>
 
           <p class="form-affiliation">
@@ -72,6 +83,8 @@
           </p>
         </form>
       </div>
+
+    </div>
   </section>
 
   <script>
@@ -86,7 +99,7 @@
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
         
-        errorDiv.style.display = 'none';
+        errorDiv.hidden = true;
         errorDiv.textContent = '';
         
         const name = document.getElementById('g-name').value;
@@ -100,7 +113,7 @@
 
         if (!name || !email) {
           errorDiv.textContent = 'Please provide both your name and email address.';
-          errorDiv.style.display = 'block';
+          errorDiv.hidden = false;
           return;
         }
 
@@ -112,7 +125,7 @@
           const res = await fetch('/api/guide', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ name, email, turnstileToken, website: document.getElementById('g-website').value })
+            body: JSON.stringify({ name, email, turnstileToken, guideType: document.getElementById('g-guide-type').value, website: document.getElementById('g-website').value })
           });
 
           const data = await res.json();
@@ -121,12 +134,13 @@
             throw new Error(data.error || 'Failed to submit request');
           }
 
+          if (data.pdfPath) document.getElementById('guide-pdf-link').href = data.pdfPath;
           form.style.display = 'none';
-          successDiv.style.display = 'block';
+          successDiv.hidden = false;
 
         } catch (err) {
           errorDiv.textContent = err.message;
-          errorDiv.style.display = 'block';
+          errorDiv.hidden = false;
           submitBtn.textContent = originalBtnText;
           submitBtn.disabled = false;
         }
