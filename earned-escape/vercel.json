@@ -7,6 +7,10 @@
       "includeFiles": "{views/**,linktree/**,public/**}"
     }
   },
+  "redirects": [
+    { "source": "/plan", "destination": "https://app.tern.travel/public/forms/gavAix0aLb2kpNxgR-T-zw/responses/new", "permanent": false },
+    { "source": "/plan/", "destination": "https://app.tern.travel/public/forms/gavAix0aLb2kpNxgR-T-zw/responses/new", "permanent": false }
+  ],
   "rewrites": [
     {
       "source": "/(.*)",
