@@ -20,7 +20,7 @@ const turnstileSiteKey = (process.env.TURNSTILE_SITE_KEY && !process.env.TURNSTI
 module.exports = {
   siteUrl,
   // Bump when static assets change (cache-bust CDN after deploy)
-  assetVersion: '20261015-perf',
+  assetVersion: '20261018-china',
   // ── BRAND
   brand: {
     name: 'Earned Escape',
@@ -32,7 +32,7 @@ module.exports = {
     parentAgencyUrl: 'https://castledreamstravel.com',
     cotibUrl: 'https://cotib.com',
     // CAN-SPAM postal address, used in the site footer and every marketing email.
-    mailingAddress: '155 Willowbrook Blvd, Ste 110 #2800, Wayne NJ 07470, United States',
+    mailingAddress: '155 Willowbrook Blvd, Ste 110 #8741, Wayne NJ 07470, United States',
   },
 
   // ── DOMAINS

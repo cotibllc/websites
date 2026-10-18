@@ -1,0 +1,256 @@
+{% extends "layout/base.njk" %}
+
+{% block content %}
+
+{#
+  /china: answer first, the gated China Entry Checklist beside it.
+  Copy: EE Marketing page.md and checklist.md (ee-china-copy-2026-10),
+  facts last checked October 18, 2026. Used verbatim.
+
+  Markers: none open in the final copy (page.md 2026-10-18 15:59:06 ET,
+  checklist.md 15:59:26 ET). Internal notes, StoryScope gates and the
+  internal experience source (source 14) are not published.
+#}
+
+<section class="china-hero" id="top" aria-labelledby="china-heading">
+  <div class="china-hero__inner">
+
+    <div class="china-answer">
+      <p class="section-eyebrow china-answer__eyebrow">China entry for US travelers</p>
+      <h1 class="china-answer__question" id="china-heading">Can I visit China from the US?</h1>
+      <div class="china-answer__block">
+        <p class="china-answer__lead"><strong>Yes.</strong> If your trip continues from China to a third country or region, a US passport can use China's 240-hour visa-free transit: enter through one of 65 designated ports with a confirmed onward ticket and stay up to 10 days in the permitted areas. That's how I went in August. For a longer trip, or a round trip that starts and ends in the US, get a tourist visa, which is how I went in January.</p>
+        <p class="china-answer__note">US passports are not on China's 30-day visa-free list. Without a qualifying onward ticket, you need a visa.</p>
+      </div>
+    </div>
+
+    <aside class="china-gate" id="checklist" aria-labelledby="checklist-heading">
+      <p class="china-gate__eyebrow">Free one-page checklist</p>
+      <h2 class="china-gate__heading" id="checklist-heading">Get the China entry checklist</h2>
+      <p class="china-gate__lead">{{ checklist.gateBlurb }}</p>
+
+      {% if guide %}
+      <div id="guide-success" class="guide-success" hidden>
+        <div class="plan-alert plan-alert--success">
+          <strong>Thank you!</strong> Check your inbox.
+        </div>
+        <div class="guide-success__card">
+          <h3>Download it now</h3>
+          <p>You don't have to wait for the email. Download the checklist right now:</p>
+          <a href="{{ guide.pdfPath }}" id="guide-pdf-link" target="_blank" rel="noopener noreferrer" class="btn btn--gold">Download PDF &rarr;</a>
+        </div>
+      </div>
+      <div id="guide-error" class="plan-alert plan-alert--error" role="alert" hidden></div>
+
+      <form id="guide-form" class="guide-form" novalidate>
+        <input type="hidden" name="guideType" id="g-guide-type" value="{{ guide.id }}">
+
+        <div class="form-group">
+          <label for="g-email">Email</label>
+          <input type="email" id="g-email" name="email" required autocomplete="email" inputmode="email" />
+        </div>
+
+        <!-- Honeypot: hidden from real users, bots fill it and get silently dropped -->
+        <div style="position:absolute;left:-9999px;top:-9999px;" aria-hidden="true">
+          <label for="g-website">Website</label>
+          <input type="text" id="g-website" name="website" tabindex="-1" autocomplete="off" />
+        </div>
+
+        {% if site.turnstileSiteKey %}
+        <div class="form-group">
+          <div class="cf-turnstile" data-sitekey="{{ site.turnstileSiteKey }}" data-theme="auto"></div>
+        </div>
+        {% endif %}
+
+        <button type="submit" id="guide-submit-btn" class="btn btn--gold">Send me the checklist</button>
+
+        <p class="form-note">
+          By requesting this checklist, you'll also receive occasional travel tips from Chuck. You can unsubscribe from any email.
+        </p>
+      </form>
+      {% else %}
+      <a href="/plan" class="btn btn--gold" data-cta="china-gate-plan">Plan your China trip</a>
+      {% endif %}
+    </aside>
+
+    <div class="china-hero__plan">
+      <a href="/plan" class="btn btn--outline" data-cta="china-hero-plan">Plan your China trip</a>
+    </div>
+
+  </div>
+</section>
+
+<section class="china-body" id="two-ways-in" aria-labelledby="ways-heading">
+  <div class="china-body__inner">
+    <h2 class="china-body__h2" id="ways-heading">Two ways in for a US passport</h2>
+    <p>In August I used the 240-hour transit myself. In January I went in on a tourist visa.</p>
+
+    <h3 class="china-body__h3">1. The 240-hour visa-free transit</h3>
+    <p>China's National Immigration Administration (NIA) lists the United States among the 57 countries eligible. The conditions it sets:</p>
+    <ul class="china-body__list">
+      <li>You hold an ordinary passport.</li>
+      <li>You are transiting through China to a <strong>third country or region</strong>, with an onward ticket that has a confirmed seat and departure date.</li>
+      <li>You enter through one of the 65 designated ports in 24 provinces, regions and municipalities.</li>
+      <li>You stay inside the permitted areas for no more than 10 days. You can cross between provinces inside those areas.</li>
+      <li>You are there for travel, business, visits or family. Work, study and news reporting still need a visa.</li>
+    </ul>
+    <p>The 10 days are counted from midnight after the day you arrive.</p>
+    <p><strong>What "third country or region" means in practice:</strong> the place you fly on to has to be different from where you came from. US to China to the US does not qualify. US to China, then on to Tokyo or Hong Kong, can. The Hong Kong high-speed rail operator notes that Hong Kong, Macao and Taiwan count as onward destinations. If your routing is unusual, confirm it with the NIA hotline (12367, or +86 12367 from outside China) before you book.</p>
+    <p><strong>Ports on the cities I've traveled:</strong> Beijing Capital and Beijing Daxing, Xi'an Xianyang, Chongqing Jiangbei, and Chengdu Shuangliu and Chengdu Tianfu are all on NIA's list. So are Shanghai Pudong and Hongqiao. Approval is decided at the port, and border officers can still refuse entry.</p>
+
+    <h3 class="china-body__h3">2. A tourist visa (L visa)</h3>
+    <p>The State Department says that in general you must apply for a visa before you travel to China, and most US citizens may apply for a 10-year multiple-entry tourist visa. Use one if your trip runs longer than 10 days, starts and ends in the US with no third stop, or you want room to change plans. What the Chinese Embassy in the US lists for an L visa:</p>
+    <ul class="china-body__list">
+      <li>Apply online in the China Online Visa Application (COVA) system, to the Chinese Embassy or Consulate-General that covers the state you live in.</li>
+      <li>Upload your passport bio page and a blank visa page (passport valid more than 6 months, with at least 2 blank visa pages), proof of US residence such as a driver's license or utility bill, and your most recent Chinese visa if you have one.</li>
+      <li>Since January 1, 2024, US tourist visa applicants no longer need to submit a round-trip ticket, hotel booking, itinerary or invitation letter.</li>
+      <li>COVA only accepts applications for entry dates within the next 90 days.</li>
+      <li>After the online review shows "Passport to be submitted," you or an agent hand in your passport and the barcode page at the visa office. Regular processing averages 4 business days from passport submission, express 3. Fees are on the Embassy's fee page.</li>
+    </ul>
+
+    <h3 class="china-body__h3">What US passports are not on</h3>
+    <p>China lets nationals of 50 countries enter visa-free for up to 30 days. The United States is not one of them. If you read "China is visa-free now" online, that list is usually what the writer means.</p>
+  </div>
+</section>
+
+{# SPARK: Situation, Problem, Action, Result, Key Takeaway #}
+<section class="china-story" id="first-trip" aria-labelledby="story-heading">
+  <div class="china-story__inner">
+    <div class="china-story__text">
+      <h2 class="china-story__headline" id="story-heading">My two China trips, and what I'd change about the usual advice</h2>
+      <p class="china-story__body">I've been to China twice in 2026.</p>
+      <dl class="china-trips">
+        <div class="china-trips__trip">
+          <dt>January 2026</dt>
+          <dd>In January I spent 12 days in Beijing, Xi'an and Chongqing on a tourist visa.</dd>
+        </div>
+        <div class="china-trips__trip china-trips__trip--story">
+          <dt>August 2026</dt>
+          <dd>In August I went back solo on the 240-hour transit for Chongqing and Wulong.</dd>
+        </div>
+      </dl>
+      <p class="china-story__body">The story below is from the August trip.</p>
+      <p class="china-story__body"><strong>Situation.</strong> The usual first-China advice is Beijing or Shanghai.</p>
+      <p class="china-story__body"><strong>Problem.</strong> That route keeps you in the cities everyone has already photographed, and it would have cost me the day that stuck.</p>
+      <p class="china-story__body"><strong>Action.</strong> I went to Chongqing instead. I stayed at the Hilton Chongqing New Liangjiang: upscale service, the same level I've gotten at the Regent Chongqing, at a noticeably lower rate. I gave Wulong a full day: Three Natural Bridges, which is a UNESCO World Heritage site, and the cliff walkways at Longshui Gorge Fissure. From Chongqing to Chengdu I rode high-speed rail business class, which came with a waiting lounge and staff guidance through the station.</p>
+      <p class="china-story__body"><strong>Result.</strong> Wulong was it. Photos don't do the karst scale justice, and riding down the cliff in a spinning glass elevator was the peak of the trip. In Chengdu I still made it to Jinli Ancient Street. Is business class worth it for every traveler on every leg? That depends on the trip.</p>
+      <p class="china-story__takeaway"><strong>Key takeaway.</strong> Build a first China trip around a few places that earn the day, not the list of cities you think you're supposed to see.</p>
+    </div>
+    <figure class="china-story__photo">
+      <img src="/images/china/wulong-gorge-walkway-480.webp" srcset="/images/china/wulong-gorge-walkway-480.webp 480w, /images/china/wulong-gorge-walkway-960.webp 960w" sizes="(min-width: 900px) 360px, 100vw" width="480" height="640" alt="Looking down a cliff walkway into a green karst gorge in Wulong, Chongqing" loading="lazy" decoding="async">
+      <figcaption>Wulong, Chongqing. Photo by Chuck.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="china-body" id="before-you-fly" aria-labelledby="fly-heading">
+  <div class="china-body__inner">
+    <h2 class="china-body__h2" id="fly-heading">Before you fly: the practical part</h2>
+    <p><strong>Paying.</strong> Most people in China pay by phone. Alipay and WeChat Pay both let you link a card issued outside China. Alipay supports Visa, Mastercard, JCB, Discover and Diners Club, with no Chinese bank account or phone number needed. WeChat Pay verifies you with your passport and works with your US number if it can get SMS codes. WeChat Pay waives its fee on single payments under 200 RMB and charges 3% above that. Neither app lets a foreign card send money to people. Set both up and test them at home. The State Department notes these apps may share data with Chinese authorities, and that some vendors can't make change for cash even though they are required to accept it.</p>
+    <p><strong>Phone and data.</strong> Check your carrier's China plan before you go. Verizon, for example, lists China on its TravelPass destinations. The State Department says to expect no privacy on networks in China, that using a VPN there is illegal in most cases, and to avoid public Wi-Fi. Many US social apps are blocked in China.</p>
+    <p><strong>Arrival card.</strong> NIA lets you fill in your arrival card online before you fly, and it is free. Use only the official site (s.nia.gov.cn) or the NIA 12367 app, because NIA warns about fake sites that charge a fee. You can also do it at the airport.</p>
+    <p><strong>Registration.</strong> Hotels register you with the police automatically. If you stay anywhere other than a hotel, you or your host must register within 24 hours of arrival, and that can now be done online through NIA 12367. Carry your passport at all times.</p>
+    <p><strong>Trains.</strong> I've ridden high-speed rail business class twice: Xi'an to Chongqing in January and Chongqing to Chengdu in August. You can buy tickets on China Railway's English 12306 site with your passport after a real-name check. Do it before you leave in case the check needs a manual review.</p>
+  </div>
+</section>
+
+<section class="china-inside" id="get-the-checklist" aria-labelledby="inside-heading">
+  <div class="china-inside__inner">
+    <h2 class="china-inside__headline" id="inside-heading">Get the China entry checklist</h2>
+    <p class="china-inside__lead">A one-page, printable list of everything above, with the official link next to each item. Enter your email and I'll send it over.</p>
+    <ol class="china-inside__list">
+      {% for s in checklist.sections %}<li>{{ s.heading | replace(r/^\d+\.\s*/, '') }}</li>{% endfor %}
+    </ol>
+    {% if guide %}
+    <a href="#checklist" class="btn btn--gold" data-cta="china-inside-gate">Send me the checklist</a>
+    {% endif %}
+  </div>
+</section>
+
+<section class="china-close" id="plan" aria-labelledby="plan-heading">
+  <div class="china-close__inner">
+    <h2 class="china-close__headline" id="plan-heading">Want a China trip built around the days that matter?</h2>
+    <p class="china-close__body">Tell me who's going, when, and what you want to see. I'll tell you whether the 240-hour transit or a tourist visa fits, and build the route around it.</p>
+    <a href="/plan" class="btn btn--gold" data-cta="china-close-plan">Plan your China trip</a>
+    <p class="china-close__fine">Rules change. Check NIA, the Chinese Embassy and your airline before you book or fly.</p>
+    <p class="china-close__fine">Earned Escape is run by Chuck (Charles Betancourt), Independent Advisor, an affiliate of Castle Dreams Travel.</p>
+
+    <details class="china-sources">
+      <summary>Sources (facts last checked October 18, 2026)</summary>
+      <ol>
+        <li>NIA, Visa-Free Transit Policies (2026-08-20): 57 countries incl. United States, 65 ports, 10 days, onward ticket to a third country or region, permitted activities, port table. <a href="https://en.nia.gov.cn/n147418/n147463/c183412/content.html" rel="noopener">en.nia.gov.cn</a></li>
+        <li>NIA, List of Countries Covered by Unilateral Visa Exemption Policies (as of 2026-02-17), 50 countries, United States not listed. <a href="https://en.nia.gov.cn/n147418/n147463/c183390/content.html" rel="noopener">en.nia.gov.cn</a></li>
+        <li>Beijing (Haidian) government FAQ on 240-hour transit: stay counted from 00:00 the day after entry, on-site approval, arrival card. <a href="https://en.bjhd.gov.cn/travelinginhaidian/faqs/202512/t20251210_4796677.shtml" rel="noopener">en.bjhd.gov.cn</a></li>
+        <li>MTR High Speed Rail (Hong Kong): Hong Kong, Macao and Taiwan count as onward destinations; destination must differ from departure. <a href="https://www.highspeed.mtr.com.hk/en/latest-news/240-hr-visa-freetransit-policy.html" rel="noopener">highspeed.mtr.com.hk</a></li>
+        <li>US State Department, China travel advisory and country information (Level 2, issued 2026-09-04): visa generally required, 10-year tourist visa, 24-hour registration, payments, VPN, Wi-Fi, privacy. <a href="https://travel.state.gov/en/international-travel/travel-advisories/china.html" rel="noopener">travel.state.gov</a></li>
+        <li>Embassy of the PRC in the US, Requirements and Procedures for Chinese Visa Application (L visa documents, Jan 1, 2024 simplification, 6 months / 2 blank pages, processing 4 and 3 business days, fee page link). <a href="https://us.china-embassy.gov.cn/eng/lsfw/zj/qz2021/202509/t20250920_11712385.htm" rel="noopener">us.china-embassy.gov.cn</a> and Guidelines for China Online Visa Application (COVA steps, 90-day entry window, jurisdiction, passport submission). <a href="https://us.china-embassy.gov.cn/eng/lsfw/zj/qz2021/202509/t20250920_11712388.htm" rel="noopener">us.china-embassy.gov.cn</a> COVA: <a href="http://consular.mfa.gov.cn/VISA/" rel="noopener">consular.mfa.gov.cn</a> (all re-fetched Oct 18, 2026)</li>
+        <li>Alipay+, Pay in the Chinese mainland (international cards). <a href="https://www.alipayplus.com/pay-in-the-chinese-mainland/" rel="noopener">alipayplus.com</a> and Ant Group card list: <a href="https://idocs.alipay.com/intl-website/intl-website/en/ant_group_mastercard_and_partners_extend_iternational_consumer_friendly_zones" rel="noopener">idocs.alipay.com</a></li>
+        <li>WeChat Help Center, How to Set Up International Cards for Weixin Pay (passport, SMS, fees). <a href="https://cs.help.wechat.com/hc/en-us/articles/11975770896271-How-to-Set-Up-International-Cards-for-Weixin-Pay" rel="noopener">cs.help.wechat.com</a></li>
+        <li>Verizon TravelPass countries (China listed). <a href="https://www.verizon.com/plans/travelpass-countries/" rel="noopener">verizon.com</a></li>
+        <li>NIA, Beware of Fraudulent Websites for Arrival Card Filling (online card is free; official URL). <a href="https://en.nia.gov.cn/n147418/n147463/c191530/content.html" rel="noopener">en.nia.gov.cn</a></li>
+        <li>NIA, Online Accommodation Registration for non-hotel stays (2026-09-21), Exit and Entry Administration Law Art. 39. <a href="https://en.nia.gov.cn/n147418/n147463/c237273/content.html" rel="noopener">en.nia.gov.cn</a></li>
+        <li>China Railway 12306 English registration and FAQ. <a href="https://www.12306.cn/en/register.html" rel="noopener">12306.cn register</a> and <a href="https://www.12306.cn/en/faq.html" rel="noopener">12306.cn FAQ</a></li>
+        <li>China Railway business-class station service at main HSR stations (lounge, guidance), as fact-checked in the Oct 17 HSR post package. <a href="https://kyfw.12306.cn/otn/gonggao/railwayService.html" rel="noopener">kyfw.12306.cn</a></li>
+      </ol>
+    </details>
+  </div>
+</section>
+
+{% if guide %}
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('guide-form');
+    const submitBtn = document.getElementById('guide-submit-btn');
+    const successDiv = document.getElementById('guide-success');
+    const errorDiv = document.getElementById('guide-error');
+    if (!form) return;
+
+    const emailOk = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      errorDiv.hidden = true;
+      errorDiv.textContent = '';
+
+      const email = document.getElementById('g-email').value.trim();
+      const tsInput = form.querySelector('[name="cf-turnstile-response"]');
+      const turnstileToken = tsInput ? tsInput.value : '';
+
+      if (!email) {
+        errorDiv.textContent = 'Please enter your email address.';
+        errorDiv.hidden = false;
+        return;
+      }
+      if (!emailOk(email)) {
+        errorDiv.textContent = 'Please enter a valid email address.';
+        errorDiv.hidden = false;
+        return;
+      }
+
+      const originalBtnText = submitBtn.textContent;
+      submitBtn.textContent = 'Sending...';
+      submitBtn.disabled = true;
+
+      try {
+        const res = await fetch('/api/guide', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, turnstileToken, guideType: document.getElementById('g-guide-type').value, website: document.getElementById('g-website').value })
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Failed to submit request');
+        if (data.pdfPath) document.getElementById('guide-pdf-link').href = data.pdfPath;
+        form.style.display = 'none';
+        successDiv.hidden = false;
+      } catch (err) {
+        errorDiv.textContent = err.message;
+        errorDiv.hidden = false;
+        submitBtn.textContent = originalBtnText;
+        submitBtn.disabled = false;
+      }
+    });
+  });
+</script>
+{% endif %}
+
+{% endblock %}
