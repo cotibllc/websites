@@ -25,7 +25,7 @@
     </div>
 
     <aside class="china-gate" id="checklist" aria-labelledby="checklist-heading">
-      <p class="china-gate__eyebrow">Free one-page checklist</p>
+      <p class="china-gate__eyebrow">Free printable checklist</p>
       <h2 class="china-gate__heading" id="checklist-heading">Get the China entry checklist</h2>
       <p class="china-gate__lead">{{ checklist.gateBlurb }}</p>
 
@@ -65,7 +65,7 @@
         <button type="submit" id="guide-submit-btn" class="btn btn--gold">Send me the checklist</button>
 
         <p class="form-note">
-          By requesting this checklist, you'll also receive occasional travel tips from Chuck. You can unsubscribe from any email.
+          I'll email you the checklist. You can unsubscribe from any email.
         </p>
       </form>
       {% else %}
@@ -157,7 +157,7 @@
 <section class="china-inside" id="get-the-checklist" aria-labelledby="inside-heading">
   <div class="china-inside__inner">
     <h2 class="china-inside__headline" id="inside-heading">Get the China entry checklist</h2>
-    <p class="china-inside__lead">A one-page, printable list of everything above, with the official link next to each item. Enter your email and I'll send it over.</p>
+    <p class="china-inside__lead">A printable list of everything above, with the official link next to each item. Enter your email and I'll send it over.</p>
     <ol class="china-inside__list">
       {% for s in checklist.sections %}<li>{{ s.heading | replace(r/^\d+\.\s*/, '') }}</li>{% endfor %}
     </ol>

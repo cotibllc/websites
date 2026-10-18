@@ -34,7 +34,7 @@ function footerHtml(token, disclosure) {
   <hr style="margin: 32px 0 16px; border: none; border-top: 1px solid #eee;">
   <p style="font-size: 13px; color: #555; margin: 0 0 4px;">${escapeHtml(disclosure)}</p>
   <p style="font-size: 12px; color: #777; margin: 0 0 4px;">${escapeHtml(site.brand.mailingAddress)}</p>
-  <p style="font-size: 12px; color: #777; margin: 0;">Rather not get these follow-up emails? <a href="${unsubscribeUrl(token)}" style="color: #555; text-decoration: underline;">Unsubscribe here</a>, or just reply "unsubscribe" and I'll take you off the list.</p>`;
+  <p style="font-size: 12px; color: #777; margin: 0;">Rather not get emails from Earned Escape? <a href="${unsubscribeUrl(token)}" style="color: #555; text-decoration: underline;">Unsubscribe here</a>, or just reply "unsubscribe" and I'll take you off the list.</p>`;
 }
 
 // RFC 2369 and RFC 8058 one-click unsubscribe headers for Resend.
@@ -116,10 +116,10 @@ ${footerHtml(token, DISCLOSURE.operated)}`);
   china: {
     delivery: {
       subject: 'Your China Entry Checklist',
-      preview: 'One page: visa or 240-hour transit, payments, phone and arrival, each with the official link.',
+      preview: 'Printable: visa or 240-hour transit, payments, phone and arrival, each with the official link.',
       html({ guide, token }) {
         return shell(this.preview, `
-  <p style="${P}">Here's your ${escapeHtml(guide.fullTitle)}. The printable one-page PDF is below, and the full list is in this email too.</p>
+  <p style="${P}">Here's your ${escapeHtml(guide.fullTitle)}. The printable PDF is below, and the full list is in this email too.</p>
   <p style="margin: 24px 0;"><a href="${publicBaseUrl()}${guide.pdfPath}" style="${BTN}">Download The Checklist</a></p>
   ${chinaChecklist.emailHtml()}
   <p style="margin: 24px 0;"><a href="${publicBaseUrl()}/plan" style="${BTN}">Plan your China trip</a></p>

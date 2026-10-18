@@ -6,7 +6,10 @@ const path = require('path');
 
 const src = process.argv[2];
 if (!src) { console.error('usage: build-data.js checklist.md'); process.exit(1); }
-const md = fs.readFileSync(src, 'utf8');
+// EE CoS ruling (2026-10-18): the checklist PDF is 2 pages, so the gate
+// blurb's page-count wording in checklist.md reads 'printable' on the site.
+// Drop this replace once EE Marketing updates checklist.md.
+const md = fs.readFileSync(src, 'utf8').replace(/my one-page entry checklist/g, 'my printable entry checklist');
 
 const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 // Inline markdown: **bold** and [text](url). Everything else is escaped text.
