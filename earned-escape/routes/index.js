@@ -8,6 +8,7 @@ const { getGuide, DEFAULT_GUIDE_TYPE } = require('../config/guides');
 const { getTemplates, listUnsubscribeHeaders } = require('../lib/guide-emails');
 const { createToken, verifyToken } = require('../lib/unsubscribe-token');
 const leadStore = require('../lib/lead-store');
+const chinaChecklist = require('../lib/china-checklist');
 
 
 const TO_EMAIL = 'cbetancourt@castledreamstravel.com';
@@ -201,6 +202,21 @@ router.get('/guide', (req, res) => {
   });
 });
 
+router.get('/china', (req, res) => {
+  res.render('pages/china.njk', {
+    site,
+    // The checklist form renders only while the china guide is enabled
+    // (config/guides.js); otherwise the gate falls back to /plan.
+    guide: getGuide('china'),
+    checklist: chinaChecklist.data,
+    bodyClass: 'dest-page china-page',
+    // Copy source: EE Marketing page.md (ee-china-copy-2026-10).
+    title: 'Can Americans Visit China Without a Visa? The 240-Hour Transit, Explained | Earned Escape',
+    description: "Yes, for up to 10 days, if you fly on to a third country or region. How China's 240-hour transit works for US passports, when you need a tourist visa instead, and the payment, phone and arrival steps to sort first.",
+    canonical: '/china',
+  });
+});
+
 router.get('/links', (req, res) => {
   // Use a minimal layout without the global header/footer
   res.render('pages/links.njk', {
@@ -224,12 +240,20 @@ router.post('/api/guide', async (req, res) => {
     return res.status(200).json({ success: true });
   }
 
-  if (!name?.trim() || !email?.trim()) {
-    return res.status(400).json({ error: 'Please provide both your name and email address.' });
-  }
-
   const guide = getGuide(guideType || DEFAULT_GUIDE_TYPE);
   const templates = guide && getTemplates(guide.id);
+
+  // Guides with requireName: false (for example 'china') take an email only.
+  const nameRequired = !guide || guide.requireName !== false;
+  if ((nameRequired && !name?.trim()) || !email?.trim()) {
+    return res.status(400).json({
+      error: nameRequired ? 'Please provide both your name and email address.' : 'Please enter your email address.',
+    });
+  }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim()) || email.trim().length > 254) {
+    return res.status(400).json({ error: 'Please enter a valid email address.' });
+  }
+
   if (!guide || !templates) {
     return res.status(400).json({ error: 'That guide is not available.' });
   }
@@ -243,7 +267,7 @@ router.post('/api/guide', async (req, res) => {
   const notifyHtml = `
   <div style="font-family: sans-serif; padding: 20px;">
     <h2>New Guide Download</h2>
-    <p><strong>Name:</strong> ${escapeHtml(name)}</p>
+    <p><strong>Name:</strong> ${escapeHtml(name) || '<em>Not asked</em>'}</p>
     <p><strong>Email:</strong> ${escapeHtml(leadEmail)}</p>
     <p><strong>Guide:</strong> ${escapeHtml(guide.title)} (${escapeHtml(guide.id)})</p>
     <p><em>Requested via earnedescape.agency${escapeHtml(guide.pagePath)}</em></p>
@@ -257,7 +281,7 @@ router.post('/api/guide', async (req, res) => {
       from: FROM_EMAIL,
       to: TO_EMAIL,
       replyTo: leadEmail,
-      subject: '[Earned Escape] Guide Downloaded: ' + sanitizeForHeader(name),
+      subject: '[Earned Escape] Guide Downloaded: ' + sanitizeForHeader(name || leadEmail),
       html: notifyHtml,
     });
 
@@ -265,35 +289,39 @@ router.post('/api/guide', async (req, res) => {
     // email's unsubscribe token can carry the IDs still pending after it.
     // Scheduling failures never block the guide delivery.
     const scheduled = { day3: null, day7: null };
-    try {
-      const day3At = new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString();
-      const day7At = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString();
+    // Guides without day 3 and day 7 templates (for example 'china') send the
+    // delivery email only.
+    if (templates.day3 && templates.day7) {
+      try {
+        const day3At = new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString();
+        const day7At = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString();
 
-      const t7 = createToken({ email: leadEmail, guideType: guide.id });
-      const r7 = await resend.emails.send({
-        from: FROM_EMAIL,
-        to: leadEmail,
-        subject: templates.day7.subject,
-        html: templates.day7.html({ name, guide, token: t7 }),
-        headers: listUnsubscribeHeaders(t7),
-        scheduledAt: day7At,
-      });
-      if (r7?.error) throw r7.error;
-      scheduled.day7 = r7?.data?.id || null;
+        const t7 = createToken({ email: leadEmail, guideType: guide.id });
+        const r7 = await resend.emails.send({
+          from: FROM_EMAIL,
+          to: leadEmail,
+          subject: templates.day7.subject,
+          html: templates.day7.html({ name, guide, token: t7 }),
+          headers: listUnsubscribeHeaders(t7),
+          scheduledAt: day7At,
+        });
+        if (r7?.error) throw r7.error;
+        scheduled.day7 = r7?.data?.id || null;
 
-      const t3 = createToken({ email: leadEmail, guideType: guide.id, scheduledIds: [scheduled.day7] });
-      const r3 = await resend.emails.send({
-        from: FROM_EMAIL,
-        to: leadEmail,
-        subject: templates.day3.subject,
-        html: templates.day3.html({ name, guide, token: t3 }),
-        headers: listUnsubscribeHeaders(t3),
-        scheduledAt: day3At,
-      });
-      if (r3?.error) throw r3.error;
-      scheduled.day3 = r3?.data?.id || null;
-    } catch (scheduleErr) {
-      console.error('Failed to schedule guide nurture emails:', scheduleErr);
+        const t3 = createToken({ email: leadEmail, guideType: guide.id, scheduledIds: [scheduled.day7] });
+        const r3 = await resend.emails.send({
+          from: FROM_EMAIL,
+          to: leadEmail,
+          subject: templates.day3.subject,
+          html: templates.day3.html({ name, guide, token: t3 }),
+          headers: listUnsubscribeHeaders(t3),
+          scheduledAt: day3At,
+        });
+        if (r3?.error) throw r3.error;
+        scheduled.day3 = r3?.data?.id || null;
+      } catch (scheduleErr) {
+        console.error('Failed to schedule guide nurture emails:', scheduleErr);
+      }
     }
 
     // 3. Save the lead with its scheduled email IDs so unsubscribe can cancel them.
@@ -320,7 +348,7 @@ router.post('/api/guide', async (req, res) => {
     });
 
     // 5. Add to the Resend Audience so this lead is reachable for future sends
-    await addToResendAudience(resend, name, leadEmail);
+    await addToResendAudience(resend, name || '', leadEmail);
 
     return res.status(200).json({ success: true, guideType: guide.id, pdfPath: guide.pdfPath });
   } catch (err) {

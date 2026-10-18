@@ -18,6 +18,19 @@ const GUIDES = {
     coverWidth: 600,
     coverHeight: 776,
   },
+  // China entry checklist, gated on /china. Email only form (no name field,
+  // per EE Marketing's copy). Delivery email only: no day 3 or day 7
+  // follow-ups until EE Marketing writes them. Copy and PDF are built from
+  // config/china-checklist.json (scripts/china-checklist/README.md).
+  china: {
+    id: 'china',
+    enabled: true,
+    requireName: false,
+    title: 'China Entry Checklist',
+    fullTitle: 'China Entry Checklist (US passport)',
+    pagePath: '/china',
+    pdfPath: '/downloads/china-entry-checklist.pdf',
+  },
 };
 
 function getGuide(type) {
