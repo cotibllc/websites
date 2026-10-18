@@ -1,0 +1,87 @@
+{% extends "layout/base.njk" %}
+
+{% block content %}
+
+{# /sports: Roadtrips event packages. Data and sources: config/sports-events.js #}
+
+<section class="sports-hero" id="top" aria-labelledby="sports-heading">
+  <div class="sports-hero__inner">
+    <p class="section-eyebrow">Sports Event Packages</p>
+    <h1 class="sports-hero__headline" id="sports-heading">Pick the date.<br><em>I'll build the trip around it.</em></h1>
+    <p class="sports-hero__sub">
+      Event travel packages through Roadtrips, a sports travel company in business since 1992. Hotel, event days, and on-site hosts on one itinerary, quoted and booked with me.
+    </p>
+    <a href="/plan" class="btn btn--gold" data-cta="sports-hero">Request a Quote</a>
+  </div>
+</section>
+
+<section class="sports-card" id="calendar" aria-labelledby="calendar-heading">
+  <div class="sports-card__inner">
+    <header class="sports-card__header">
+      <p class="section-eyebrow">The race card</p>
+      <h2 class="sports-card__headline" id="calendar-heading">On the Roadtrips calendar</h2>
+      <p class="sports-card__note">
+        Dates and starting prices as shown on roadtrips.com, checked {{ sports.checkedLabel }}. Every price is from, per person, double occupancy, and subject to change. Where Roadtrips does not include event tickets, the row says so.
+      </p>
+    </header>
+
+    <ol class="sports-card__list">
+      {% for ev in sports.events %}
+      <li class="sports-row" id="{{ ev.id }}">
+        <div class="sports-row__date" aria-hidden="true">
+          <span class="sports-row__day">{{ ev.month }}</span>
+          <span class="sports-row__year">{{ ev.year }}</span>
+        </div>
+        <div class="sports-row__main">
+          <p class="sports-row__sport">{{ ev.sport }}</p>
+          <h3 class="sports-row__name">{{ ev.name }}</h3>
+          <p class="sports-row__meta">{{ ev.dates }} &middot; {{ ev.place }}</p>
+          <p class="sports-row__note{% if ev.tickets == 'not-included' %} sports-row__note--flag{% endif %}">{{ ev.note }}</p>
+        </div>
+        <p class="sports-row__price">
+          <span class="sports-row__from">from</span>
+          <span class="sports-row__amount">{{ ev.from }}</span>
+          <span class="sports-row__basis">per person, double occupancy, subject to change</span>
+        </p>
+      </li>
+      {% endfor %}
+    </ol>
+
+    <div class="sports-card__foot">
+      <a href="/plan" class="btn btn--gold" data-cta="sports-calendar">Request a Quote</a>
+      <p class="sports-card__more">Don't see your event? Roadtrips covers more of the sports calendar than fits here. Ask me.</p>
+    </div>
+  </div>
+</section>
+
+{# SPARK: Situation, Problem, Action, Result, Key Takeaway #}
+<section class="sports-story" id="how-it-works" aria-labelledby="how-heading">
+  <div class="sports-story__inner">
+    <p class="section-eyebrow">How it works</p>
+    <h2 class="sports-story__headline" id="how-heading">The ticket is <em>one piece.</em></h2>
+    <p class="sports-story__body">
+      You already know the event. Maybe it is the Rose Bowl on New Year's Day, or the Derby on the first Saturday in May.
+    </p>
+    <p class="sports-story__body">
+      The hard part is everything around it. The hotel, the transfers, the seats, and the days before and after all have to line up on the same few dates, in a city everyone else is trying to reach that week.
+    </p>
+    <p class="sports-story__body">
+      I quote these trips through Roadtrips and handle the back and forth with their specialists. Their packages pair first-class hotels with on-site hosts and pre-travel support, and many include the event tickets. At the Indy 500, race day includes a motorcoach to the speedway with a police escort.
+    </p>
+    <p class="sports-story__body">
+      You get one written itinerary for the whole trip, with what is and is not included spelled out before you put down a deposit.
+    </p>
+    <p class="sports-story__takeaway">
+      Tell me the event and who is going. I'll take it from there.
+    </p>
+    <a href="/plan" class="btn btn--purple" data-cta="sports-story">Request a Quote</a>
+    <p class="sports-story__disclosure">
+      Earned Escape is operated by {{ site.brand.business }} and is an affiliate of {{ site.brand.parentAgency }} through Charles Betancourt, Independent Advisor.
+    </p>
+    <p class="sports-story__fine">
+      Packages are provided by Roadtrips. Event names are used only to describe the events. Earned Escape and Roadtrips are not affiliated with the events, leagues, or venues named on this page. Availability, inclusions, and pricing are confirmed on your quote.
+    </p>
+  </div>
+</section>
+
+{% endblock %}
