@@ -5,7 +5,7 @@ const data = require('../config/china-checklist.json');
 
 const BOX = '&#9744;';
 
-// Printable one-page HTML. Printed to public/downloads/china-entry-checklist.pdf
+// Printable HTML (2 pages, US Letter). 2 pages at 9.5pt, no section split across pages. Printed to public/downloads/china-entry-checklist.pdf
 // with headless Chrome (see scripts/china-checklist/README.md).
 function printHtml() {
   const items = (list) => list.map((it) => `<li><span class="box">${BOX}</span><div>${it.html}${it.sub.length ? `<ul>${items(it.sub)}</ul>` : ''}</div></li>`).join('');
@@ -15,26 +15,28 @@ function printHtml() {
 <meta charset="UTF-8">
 <title>${data.title}</title>
 <style>
-  @page { size: letter; margin: 0.32in 0.4in; }
+  @page { size: letter; margin: 0.5in 0.55in; }
   * { box-sizing: border-box; }
-  body { font-family: "Montserrat", "Inter", Arial, sans-serif; color: #1d1530; font-size: 6.6pt; line-height: 1.27; margin: 0; }
-  header { display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 2px solid #C9A84C; padding-bottom: 6px; margin-bottom: 7px; }
-  h1 { font-family: "Playfair Display", Georgia, serif; font-weight: 500; font-size: 15pt; color: #512E5F; margin: 0; line-height: 1.1; }
-  .brand { font-size: 7pt; letter-spacing: 0.14em; text-transform: uppercase; color: #9E7B2E; text-align: right; }
+  body { font-family: "Montserrat", "Inter", Arial, sans-serif; color: #1d1530; font-size: 9.5pt; line-height: 1.32; margin: 0; }
+  header { display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 2px solid #C9A84C; padding-bottom: 6px; margin-bottom: 8px; }
+  h1 { font-family: "Playfair Display", Georgia, serif; font-weight: 500; font-size: 19pt; color: #512E5F; margin: 0; line-height: 1.1; }
+  .brand { font-size: 8pt; letter-spacing: 0.14em; text-transform: uppercase; color: #9E7B2E; text-align: right; }
   .intro p { margin: 0 0 2px; }
-  .intro { margin-bottom: 7px; }
-  .cols { column-count: 2; column-gap: 0.24in; }
-  section { margin-bottom: 5px; }
-  h2 { font-family: "Playfair Display", Georgia, serif; font-weight: 500; font-size: 10pt; color: #512E5F; margin: 0 0 3px; padding-bottom: 2px; border-bottom: 1px solid #e3d6ea; }
+  .intro { margin-bottom: 8px; }
+  .cols { }
+  section { margin-bottom: 8px; break-inside: avoid; page-break-inside: avoid; }
+  h2 { font-family: "Playfair Display", Georgia, serif; font-weight: 500; font-size: 12.5pt; color: #512E5F; margin: 0 0 4px; padding-bottom: 2px; border-bottom: 1px solid #e3d6ea; break-after: avoid; page-break-after: avoid; }
+  .sec-intro { break-before: avoid; }
+  h2 + ul > li:first-child, .sec-intro + ul > li:first-child { break-before: avoid; }
   ul { list-style: none; margin: 0; padding: 0; }
-  li { display: flex; gap: 4px; margin: 0 0 2px; }
+  li { display: flex; gap: 5px; margin: 0 0 3px; break-inside: avoid; }
   li ul { margin-top: 2px; }
-  li li { margin-bottom: 1.5px; }
-  .sec-intro { margin: 0 0 3px; font-style: italic; }
-  .box { font-size: 9pt; line-height: 1; color: #76448A; flex: none; }
+  li li { margin-bottom: 2px; }
+  .sec-intro { margin: 0 0 4px; font-style: italic; }
+  .box { font-size: 11pt; line-height: 1; color: #76448A; flex: none; }
   a { color: #76448A; text-decoration: underline; }
   strong { font-weight: 700; }
-  footer { margin-top: 6px; border-top: 1px solid #C9A84C; padding-top: 5px; font-size: 7pt; }
+  footer { margin-top: 8px; border-top: 1px solid #C9A84C; padding-top: 6px; break-inside: avoid; }
   footer p { margin: 0 0 2px; }
 </style>
 </head>
