@@ -1,6 +1,7 @@
 import { MetadataRoute } from "next";
 import { getSortedPostsData } from "@/lib/blog";
 import { getSortedJargonData } from "@/lib/jargon";
+import { fieldMemos } from "@/data/field-memos";
 
 const BASE = "https://www.corphardcore.com";
 
@@ -36,5 +37,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.9,
   }));
 
-  return [...staticPages, ...postPages, ...jargonPages];
+  const memoPages: MetadataRoute.Sitemap = fieldMemos.flatMap((memo) =>
+    memo.slug
+      ? [{
+          url: `${BASE}/field-memos/${memo.slug}`,
+          lastModified: new Date(memo.published),
+          changeFrequency: "monthly" as const,
+          priority: 0.7,
+        }]
+      : []
+  );
+
+  return [...staticPages, ...postPages, ...memoPages, ...jargonPages];
 }
