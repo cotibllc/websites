@@ -24,6 +24,7 @@ export const fieldMemos: FieldMemoEntry[] = [
   },
   {
     videoId: "NK-V7YIE2U0",
+    slug: "circle-back-never-return",
     fmCode: "FM-01",
     status: "FILED",
     title: "Circle Back. Never Return. | Synergy Corp Field Memo",
