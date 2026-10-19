@@ -3,6 +3,7 @@
 // CAN-SPAM footer: business identity, postal address and a working
 // unsubscribe link.
 const site = require('../config/site');
+const chinaChecklist = require('./china-checklist');
 
 function escapeHtml(str) {
   if (!str) return '';
@@ -33,7 +34,7 @@ function footerHtml(token, disclosure) {
   <hr style="margin: 32px 0 16px; border: none; border-top: 1px solid #eee;">
   <p style="font-size: 13px; color: #555; margin: 0 0 4px;">${escapeHtml(disclosure)}</p>
   <p style="font-size: 12px; color: #777; margin: 0 0 4px;">${escapeHtml(site.brand.mailingAddress)}</p>
-  <p style="font-size: 12px; color: #777; margin: 0;">Rather not get these follow-up emails? <a href="${unsubscribeUrl(token)}" style="color: #555; text-decoration: underline;">Unsubscribe here</a>, or just reply "unsubscribe" and I'll take you off the list.</p>`;
+  <p style="font-size: 12px; color: #777; margin: 0;">Rather not get emails from Earned Escape? <a href="${unsubscribeUrl(token)}" style="color: #555; text-decoration: underline;">Unsubscribe here</a>, or just reply "unsubscribe" and I'll take you off the list.</p>`;
 }
 
 // RFC 2369 and RFC 8058 one-click unsubscribe headers for Resend.
@@ -104,6 +105,25 @@ ${footerHtml(token, DISCLOSURE.operated)}`);
   <p style="${P}">You'll come away with clear guidance on the ship, the cabin, and your next booking step.</p>
   <p style="${P}">Either way, I hope you have an incredible trip. You've earned it.</p>
   <p style="margin: 20px 0 0; color: #0D0821;">Best,<br>Chuck<br><span style="font-size: 13px; color: #666;">Earned Escape by COTIB Adventures LLC</span></p>
+${footerHtml(token, DISCLOSURE.operated)}`);
+      },
+    },
+  },
+  // China entry checklist. Delivery only. The checklist itself is EE
+  // Marketing's checklist.md verbatim (lib/china-checklist.js). The subject,
+  // preview and the one intro line are Web Design placeholders for EE
+  // Marketing to confirm. Footer is the shared CAN-SPAM footer.
+  china: {
+    delivery: {
+      subject: 'Your China Entry Checklist',
+      preview: 'Printable: visa or 240-hour transit, payments, phone and arrival, each with the official link.',
+      html({ guide, token }) {
+        return shell(this.preview, `
+  <p style="${P}">Here's your ${escapeHtml(guide.fullTitle)}. The printable PDF is below, and the full list is in this email too.</p>
+  <p style="margin: 24px 0;"><a href="${publicBaseUrl()}${guide.pdfPath}" style="${BTN}">Download The Checklist</a></p>
+  ${chinaChecklist.emailHtml()}
+  <p style="margin: 24px 0;"><a href="${publicBaseUrl()}/plan" style="${BTN}">Plan your China trip</a></p>
+  <p style="margin: 20px 0 0; color: #0D0821;">Chuck<br><span style="font-size: 13px; color: #666;">Earned Escape by COTIB Adventures LLC</span></p>
 ${footerHtml(token, DISCLOSURE.operated)}`);
       },
     },
