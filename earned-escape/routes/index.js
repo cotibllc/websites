@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const site = require('../config/site');
+const sportsEvents = require('../config/sports-events');
 
 const { Resend } = require('resend');
 
@@ -187,6 +188,17 @@ router.get('/theme-parks', (req, res) => {
     title: 'Theme Park Planning | Earned Escape',
     description: 'Theme park trip planning with Earned Escape. Choose a destination to see how Chuck helps families plan it.',
     canonical: '/theme-parks',
+  });
+});
+
+router.get('/sports', (req, res) => {
+  res.render('pages/sports.njk', {
+    site,
+    bodyClass: 'dest-page sports-page',
+    sports: sportsEvents,
+    title: 'Sports Event Travel Packages | Earned Escape',
+    description: 'Sports event travel packages through Roadtrips: Rose Bowl, Super Bowl, Masters, Kentucky Derby, Indy 500, Monaco Grand Prix, Wimbledon, Ryder Cup and more. Request a quote with Chuck.',
+    canonical: '/sports',
   });
 });
 
