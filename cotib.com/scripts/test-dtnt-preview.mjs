@@ -38,6 +38,16 @@ const bypass = process.env.VERCEL_BYPASS ? { 'x-vercel-protection-bypass': proce
 const results = [];
 const req = (path, opts = {}) => fetch(path.startsWith('http') ? path : base + path, { redirect: 'manual', ...opts, headers: { ...bypass, ...(opts.headers || {}) } });
 
+// Stop early with a clear message when Vercel Authentication is in front.
+{
+  const r = await req('/do-the-next-thing');
+  const loc = r.headers.get('location') || '';
+  if ([302, 307, 401, 403].includes(r.status) && (/vercel\.com\/(login|sso)|_vercel_sso/.test(loc) || r.status === 401 || r.status === 403)) {
+    console.error(`${base} is behind Vercel Authentication (status ${r.status}). Set VERCEL_BYPASS to a Protection Bypass for Automation secret, or run against production after merge.`);
+    process.exit(3);
+  }
+}
+
 async function check(id, name, fn) {
   try {
     const note = await fn();
@@ -80,7 +90,7 @@ console.log(`Level: ${live ? 'live (sends one real email to ' + emailArg + ')' :
 // ---------- Pages ----------
 await check('P1', 'landing page is up, sampler-first, no buy buttons', async () => {
   const r = await req('/do-the-next-thing');
-  expect(r.status === 200, `status ${r.status} (401 or 403 means Vercel Authentication; set VERCEL_BYPASS)`);
+  expect(r.status === 200, `status ${r.status}`);
   const h = await r.text();
   expect(/id="free-form"/.test(h), 'signup form missing');
   expect(!/type="checkbox"[^>]*checked/.test(h), 'consent box is pre-checked');
@@ -115,12 +125,12 @@ await check('F11.6b', 'missing Turnstile token is refused', async () => {
 await check('FORM1', 'bad email is refused', async () => {
   const r = await postSignup({ email: 'nope', consent: true, turnstileToken: 'x' });
   const d = await r.json().catch(() => ({}));
-  expect(r.status === 400 && /doesn't look right/.test(d.error || ''), `status ${r.status} ${d.error}`);
+  expect(r.status === 400 && /doesn't look right/.test(d.error || ''), `status ${r.status} ${JSON.stringify(d.error)}`);
 });
 await check('FORM2', 'unchecked consent box is refused', async () => {
   const r = await postSignup({ email: 'preview-test@example.com', consent: false, turnstileToken: 'x' });
   const d = await r.json().catch(() => ({}));
-  expect(r.status === 400 && /Check the box/.test(d.error || ''), `status ${r.status} ${d.error}`);
+  expect(r.status === 400 && /Check the box/.test(d.error || ''), `status ${r.status} ${JSON.stringify(d.error)}`);
 });
 await check('FORM3', 'a post from another site is refused', async () => {
   const r = await postSignup({ email: 'preview-test@example.com', consent: true, turnstileToken: 'x' }, { origin: 'https://evil.example' });
