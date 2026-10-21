@@ -70,7 +70,12 @@ const actTwoArticles: SeriesArticle[] = [
     status: "Live",
     href: ART9_URL,
   },
-  { number: "10", title: "The future leader is a system architect", status: "October", noPublicLink: true },
+  {
+    number: "10",
+    title: "The future leader is a systems architect",
+    status: "Live",
+    href: `${SUBSTACK_URL}/p/the-future-leader-is-a-systems-architect`,
+  },
 ];
 
 type SubstackPost = { title: string; link: string };
