@@ -73,6 +73,14 @@ async function setConsentProperties(email, props) {
   return r.data;
 }
 
+// Only called from confirm, after a fresh double opt-in click on a link that
+// was issued after the address unsubscribed. Contacts are never deleted.
+async function resubscribeContact(email) {
+  const r = await call('RESEND_FULL_API_KEY', 'PATCH', `/contacts/${encodeURIComponent(email)}`, { unsubscribed: false });
+  if (!r.ok) throw new Error(`Resend resubscribe failed (${r.status})`);
+  return r.data;
+}
+
 async function unsubscribeContact(email) {
   const r = await call('RESEND_FULL_API_KEY', 'PATCH', `/contacts/${encodeURIComponent(email)}`, { unsubscribed: true });
   if (r.status === 404) {
@@ -86,4 +94,4 @@ async function unsubscribeContact(email) {
   return r.data;
 }
 
-module.exports = { sendEmail, contactStatus, createContact, addToSegment, setConsentProperties, unsubscribeContact };
+module.exports = { sendEmail, contactStatus, createContact, addToSegment, setConsentProperties, resubscribeContact, unsubscribeContact };

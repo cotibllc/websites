@@ -157,7 +157,7 @@ const states = {
     state: 'unsubscribed',
     title: "You're unsubscribed",
     heading: "You're unsubscribed.",
-    paragraphs: [`We won't email <strong>${esc(email)}</strong> about Do the Next Thing again.`],
+    paragraphs: [`We won't email <strong>${esc(email)}</strong> about Do the Next Thing again unless you sign up and confirm again.`],
   }),
   unsubscribeInvalid: () => statePage({
     state: 'unsubscribe-invalid',

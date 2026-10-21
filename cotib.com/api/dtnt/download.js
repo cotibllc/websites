@@ -8,7 +8,7 @@ const { readToken } = require('../../lib/dtnt/tokens');
 const { states } = require('../../lib/dtnt/pages');
 const http = require('../../lib/dtnt/http');
 
-const PDF_PATH = path.join(__dirname, '..', '..', 'private', 'dtnt', 'do-the-next-thing-free-sampler-v1.pdf');
+const PDF_PATH = path.join(__dirname, '..', '..', 'private', 'dtnt', 'do-the-next-thing-free-sampler-v2.pdf');
 const DOWNLOAD_NAME = 'Do-the-Next-Thing-3-free-prompts.pdf';
 
 module.exports = async function handler(req, res) {

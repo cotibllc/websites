@@ -36,10 +36,23 @@ module.exports = async function handler(req, res) {
     contact = { status: 'unknown' };
   }
 
-  // Unsubscribed after asking: honor the unsubscribe, send nothing.
+  // Unsubscribed contacts stay unsubscribed unless this link was issued by a
+  // fresh signup after the unsubscribe (rs flag, set only by signup.js when
+  // it saw the contact as unsubscribed). An older confirm link from before
+  // the unsubscribe can't resubscribe anyone.
   if (contact.status === 'unsubscribed') {
-    http.log('dtnt.confirm.suppressed', { emailHash });
-    return send(400, states.confirmExpired());
+    if (!d.rs) {
+      http.log('dtnt.confirm.suppressed', { emailHash });
+      return send(400, states.confirmExpired());
+    }
+    try {
+      await resend.resubscribeContact(email);
+      contact = { ...contact, status: 'resubscribed' };
+      http.log('dtnt.confirm.resubscribed', { emailHash });
+    } catch (err) {
+      http.log('dtnt.confirm.resubscribe_failed', { emailHash, error: err.message });
+      return send(502, states.unsubscribeError());
+    }
   }
 
   const dl = createToken('download', { eh: emailHash }, DOWNLOAD_TTL_SECONDS);
@@ -53,7 +66,7 @@ module.exports = async function handler(req, res) {
   // New confirm: add to the segment. A failure here still delivers the file
   // (Worker addendum 21) and is logged so the list can be fixed by hand.
   try {
-    if (contact.status === 'other') await resend.addToSegment(contact.id);
+    if (contact.status === 'other' || contact.status === 'resubscribed') await resend.addToSegment(contact.id);
     else await resend.createContact(email);
   } catch (err) {
     http.log('dtnt.confirm.contact_failed', { emailHash, error: err.message });

@@ -20,7 +20,7 @@ Object.assign(process.env, ENV);
 const { startServer, createMockWorld } = require('./harness');
 const { createToken } = require('../lib/dtnt/tokens');
 const ROOT = path.join(__dirname, '..');
-const PDF = fs.readFileSync(path.join(ROOT, 'private', 'dtnt', 'do-the-next-thing-free-sampler-v1.pdf'));
+const PDF = fs.readFileSync(path.join(ROOT, 'private', 'dtnt', 'do-the-next-thing-free-sampler-v2.pdf'));
 const POSTAL = 'COTIB LLC, 155 Willowbrook Blvd, Ste 110 #2800, Wayne NJ 07470, United States';
 const DASHES = /[\u2013\u2014]|&ndash;|&mdash;/;
 
@@ -93,6 +93,13 @@ test('page: /do-the-next-thing/privacy names Vercel, not the Worker, KV or R2', 
   assert.match(html, /<strong>Vercel:<\/strong> hosts this page and runs the signup, confirm, download, and unsubscribe service \(serverless functions\)/);
   assert.match(html, /<strong>Cloudflare:<\/strong> provides Turnstile\./);
   assert.doesNotMatch(html, /Workers|\bKV\b|\bR2\b/);
+  // Only what the build does: no paid flow, no deletion or archive promises.
+  assert.doesNotMatch(html, /Stripe|Link, LLC|When you buy|Paid download|Order records|7 years|180 days|3 years|deleted from Resend|one-way code only|counters: 24 hours|fresh link/i);
+  assert.match(html, /keep your contact in Resend, marked unsubscribed, so we don't email you again\. We don't delete it\./);
+  assert.match(html, /only added back after you click a new confirm link/);
+  assert.match(html, /about 10 tries a minute from one connection\. That count is kept in memory for a minute and isn't saved\./);
+  assert.match(html, /Unconfirmed signups: we don't store them\./);
+  assert.match(html, /Effective <span class="tbd">\[launch date\]<\/span>\./);
   assert.match(html, new RegExp(POSTAL.replace(/[.#]/g, '\\$&')));
   assert.doesNotMatch(html, DASHES);
 });
@@ -211,13 +218,13 @@ test('F11.3 download link expires after 30 days', async () => {
 });
 
 test('F11.3 no guessable public URL for the PDF', async () => {
-  for (const p of ['/private/dtnt/do-the-next-thing-free-sampler-v1.pdf', '/do-the-next-thing-free-sampler-v1.pdf', '/dtnt/do-the-next-thing-free-sampler-v1.pdf', '/api/dtnt/download']) {
+  for (const p of ['/private/dtnt/do-the-next-thing-free-sampler-v2.pdf', '/do-the-next-thing-free-sampler-v2.pdf', '/dtnt/do-the-next-thing-free-sampler-v2.pdf', '/api/dtnt/download']) {
     const res = await get(p);
     assert.notEqual(res.status, 200, p);
   }
 });
 
-test('F11.4 unsubscribe from the confirm email: GET asks, POST suppresses, later signups get nothing', async () => {
+test('F11.4 unsubscribe from the confirm email: GET asks, POST marks the contact unsubscribed, old confirm link is dead', async () => {
   await signup(good());
   const link = unsubLink(world.emails[0]);
   const ask = await get(link);
@@ -230,14 +237,48 @@ test('F11.4 unsubscribe from the confirm email: GET asks, POST suppresses, later
   assert.match(await done.text(), /You're unsubscribed\./);
   assert.equal(world.contacts.get('reader@example.com').unsubscribed, true);
   const before = world.emails.length;
-  const again = await signup(good());
-  assert.equal(again.status, 200);
-  assert.match((await again.json()).message, /^Check your email\./, 'same reply, so the list stays private');
-  assert.equal(world.emails.length, before, 'suppressed: nothing sent');
-  // The old confirm link no longer adds them back.
+  // The confirm link from before the unsubscribe no longer adds them back.
   const c = await get(confirmLink(world.emails[0]));
   assert.equal(c.status, 400);
   assert.equal(world.emails.length, before);
+  assert.equal(world.contacts.get('reader@example.com').unsubscribed, true);
+});
+
+test('F11.4 re-signup after unsubscribe: stays unsubscribed until a fresh confirm click, never deleted', async () => {
+  const delivery = await confirmedReader();
+  const oldConfirm = confirmLink(world.emails[0]);
+  const t = new URL(unsubLink(delivery)).searchParams.get('t');
+  assert.equal((await get('/do-the-next-thing/free/unsubscribe', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: `t=${t}` })).status, 200);
+  const contact = () => world.contacts.get('reader@example.com');
+  assert.equal(contact().unsubscribed, true);
+  const id = contact().id;
+
+  // Signing up again sends only a confirm email and changes nothing in Resend.
+  const writesBefore = world.calls.filter((x) => x.host === 'api.resend.com' && x.path.startsWith('/contacts') && x.method !== 'GET').length;
+  const before = world.emails.length;
+  const again = await signup(good());
+  assert.equal(again.status, 200);
+  assert.match((await again.json()).message, /^Check your email\./, 'same reply, so the list stays private');
+  assert.equal(world.emails.length, before + 1);
+  assert.equal(world.emails.at(-1).subject, 'Confirm your email for the free Do the Next Thing prompts');
+  assert.equal(contact().unsubscribed, true, 're-signup alone does not resubscribe');
+  assert.equal(world.calls.filter((x) => x.host === 'api.resend.com' && x.path.startsWith('/contacts') && x.method !== 'GET').length, writesBefore, 'signup writes nothing to Resend');
+  const freshConfirm = confirmLink(world.emails.at(-1));
+
+  // A confirm link issued before the unsubscribe still can't flip it back.
+  assert.equal((await get(oldConfirm)).status, 400);
+  assert.equal(contact().unsubscribed, true);
+  assert.equal(world.emails.length, before + 1);
+
+  // The fresh double opt-in click resubscribes the same contact.
+  const res = await get(freshConfirm);
+  assert.equal(res.status, 200);
+  assert.match(await res.text(), /You're confirmed\./);
+  assert.equal(contact().id, id, 'same contact, not recreated');
+  assert.equal(contact().unsubscribed, false);
+  assert.ok(contact().segments.has('seg_mock_dtnt_free'));
+  assert.equal(world.emails.at(-1).subject, 'Your 3 free Do the Next Thing prompts');
+  assert.equal(world.calls.filter((x) => x.method === 'DELETE').length, 0, 'nothing is ever deleted');
 });
 
 test('F11.4 unsubscribe from the delivery email, including RFC 8058 one-click', async () => {

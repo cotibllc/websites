@@ -40,56 +40,41 @@
           <p class="eyebrow">a COTIB LLC product</p>
           <h1 id="title">Privacy notice: Do the Next Thing</h1>
           <div class="ticks" aria-hidden="true"></div>
-          <p class="lead">This notice explains what COTIB LLC collects when you use the Do the Next Thing page at cotib.com/do-the-next-thing, sign up for the free sampler, buy the Pack or the Setup Kit, or download your files. For our QuickBooks integration app, see <a href="/privacy">cotib.com/privacy</a>.</p>
+          <p class="lead">This notice explains what COTIB LLC collects when you use the Do the Next Thing page at cotib.com/do-the-next-thing, sign up for the free sampler, or download it. For our QuickBooks integration app, see <a href="/privacy">cotib.com/privacy</a>.</p>
 
           <h2>What we collect and why</h2>
-          <h3>When you buy:</h3>
-          <ul>
-            <li>Your email address, the product you bought, the amount, and the order and payment IDs. These come to us from Stripe and Link after checkout. We use them to deliver your files, send fresh download links, answer support requests, and handle refunds and payment disputes.</li>
-            <li>We don't receive or store your card number. Link and Stripe handle all payment details.</li>
-          </ul>
-          <h3>When you download:</h3>
-          <ul>
-            <li>The time of each download and a hashed version of your IP address (a one-way code, not the raw IP), kept with your order. We use this to deliver files, enforce the download limit, and show that files were delivered if a payment is disputed.</li>
-            <li>Download link tokens, stored only as one-way codes, with an expiry date and a download count.</li>
-          </ul>
           <h3>When you sign up for the free sampler:</h3>
           <ul>
-            <li>Your email address and your consent record: the version of the signup wording you agreed to, when you signed up, when you clicked the confirm link, and hashed versions of your IP address and browser details.</li>
+            <li>Your email address and your consent record: the version of the signup wording you agreed to, when you signed up, when you clicked the confirm link, and a hashed version of your IP address (a one-way code, not the raw IP).</li>
             <li>We use a two-step signup: we only add you to our list after you click the confirm link in your email.</li>
             <li>Signups are checked by Cloudflare Turnstile to stop bots. Turnstile processes data such as your IP address and browser signals to do this.</li>
-            <li>We use your email to send the sampler and up to 3 short emails about the paid Pack. You can unsubscribe any time.</li>
+            <li>We use your email to send the confirm link and the sampler. Your consent also covers up to 3 short emails about the paid Pack. We aren't sending those yet. You can unsubscribe any time.</li>
+            <li>To slow down repeat tries, the signup form allows about 10 tries a minute from one connection. That count is kept in memory for a minute and isn't saved.</li>
           </ul>
-          <p><strong>When you ask for a fresh link or email us:</strong> the email address you enter, a hashed counter to limit repeat requests, and anything you write to us.</p>
+          <p><strong>When you email us:</strong> your email address and anything you write to us.</p>
           <p>We don't sell your information, and we don't use it for advertising.</p>
 
           <h2>Who processes it for us</h2>
           <ul>
-            <li><strong>Stripe and Link (Sold through Link, LLC):</strong> payment, tax, receipts, and refunds. Link is the merchant of record for your payment and has its own privacy policy.</li>
-            <li><strong>Resend:</strong> sends our emails and stores the free-sampler email list.</li>
+            <li><strong>Resend:</strong> sends our emails and stores the free-sampler email list, including your consent record and whether you've unsubscribed.</li>
             <li><strong>Vercel:</strong> hosts this page and runs the signup, confirm, download, and unsubscribe service (serverless functions), and stores the sampler file.</li>
             <li><strong>Cloudflare:</strong> provides Turnstile.</li>
           </ul>
 
           <h2>How long we keep it</h2>
           <ul>
-            <li>Unconfirmed sampler signups: 48 hours.</li>
+            <li>Unconfirmed signups: we don't store them. The confirm link in your email works for 48 hours, and you're only added to our list if you click it.</li>
             <li>Free sampler download links: 30 days.</li>
-            <li>Paid download links: 7 days.</li>
-            <li>Repeat-request counters: 24 hours.</li>
-            <li>Sampler list membership: until you unsubscribe. Your contact is deleted from Resend 30 days after you unsubscribe.</li>
-            <li>Sampler consent record: while you're subscribed, then 3 years after you unsubscribe, without your raw email, so we can show consent if asked.</li>
-            <li>Unsubscribe list: kept indefinitely, as a one-way code only, so we never email you again.</li>
-            <li>Order records: 7 years after purchase.</li>
-            <li>Download times and hashed IPs: 180 days.</li>
-            <li>Our service logs never contain your raw email address or IP address.</li>
+            <li>Sampler list membership and consent record: kept on your contact in Resend for as long as the contact exists.</li>
+            <li>After you unsubscribe: we keep your contact in Resend, marked unsubscribed, so we don't email you again. We don't delete it. If you sign up again later, you're only added back after you click a new confirm link.</li>
+            <li>The log lines our signup service writes hold only one-way codes, never your raw email address or IP address.</li>
             <li>Resend email logs: 30 days.</li>
           </ul>
 
           <h2>Your choices and rights</h2>
           <ul>
             <li><strong>Unsubscribe:</strong> use the link in any of our emails. It takes effect right away.</li>
-            <li><strong>Access, correction, or deletion:</strong> email <a href="mailto:customerservice@cotib.com">customerservice@cotib.com</a>. We'll delete your sampler contact and records and keep only the one-way unsubscribe code. We may keep order records we need for tax, refunds, or disputes.</li>
+            <li><strong>Access, correction, or deletion:</strong> email <a href="mailto:customerservice@cotib.com">customerservice@cotib.com</a>. If you ask us to delete your sampler contact, we'll delete it from Resend. After that we no longer have a record that you unsubscribed, but you're still only added back if you sign up and click a new confirm link.</li>
             <li>Depending on where you live, you may have other rights over your data. Email us and we'll help.</li>
             <li><strong>Do Not Track:</strong> our pages don't change behavior based on Do Not Track signals. We don't track you across other sites.</li>
           </ul>

@@ -7,7 +7,7 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "functions": {
-    "api/dtnt/download.js": { "includeFiles": "private/dtnt/**" }
+    "api/dtnt/download.js": { "includeFiles": "private/dtnt/*.pdf" }
   },
   "rewrites": [
     { "source": "/do-the-next-thing/free", "destination": "/api/dtnt/signup" },

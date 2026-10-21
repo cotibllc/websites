@@ -88,10 +88,12 @@ module.exports = async function handler(req, res) {
   const emailHash = hashValue('email', email);
   const unsubscribeUrl = `${base}/do-the-next-thing/free/unsubscribe?t=${createToken('unsubscribe', { e: email }, null)}`;
 
-  // The Resend contact is the list of record: unsubscribed contacts get
-  // nothing, confirmed ones get a fresh delivery email (Worker addendum 21),
-  // everyone else gets a confirm link. If the lookup fails we fall back to a
-  // confirm email, which is transactional and needs a click to do anything.
+  // The Resend contact is the list of record. Confirmed contacts get a fresh
+  // delivery email (Worker addendum 21). Everyone else, including addresses
+  // that unsubscribed, gets a confirm link and nothing more. Signup never
+  // writes to Resend, so it can't flip an unsubscribed contact back: only a
+  // click on the new confirm link can (see confirm.js, the "rs" flag). If
+  // the lookup fails we fall back to a plain confirm email.
   let status = 'none';
   try {
     status = (await resend.contactStatus(email)).status;
@@ -100,9 +102,7 @@ module.exports = async function handler(req, res) {
   }
 
   try {
-    if (status === 'unsubscribed') {
-      http.log('dtnt.signup.suppressed', { emailHash });
-    } else if (status === 'subscribed') {
+    if (status === 'subscribed') {
       const dl = createToken('download', { eh: emailHash }, DOWNLOAD_TTL_SECONDS);
       const msg = deliveryEmail({ downloadUrl: `${base}/do-the-next-thing/free/dl/${dl}`, unsubscribeUrl, pageUrl: `${base}/do-the-next-thing` });
       await resend.sendEmail({ to: email, ...msg });
@@ -115,10 +115,12 @@ module.exports = async function handler(req, res) {
         sa: new Date().toISOString(),
         ih: ipHash,
         uh: hashValue('ua', http.header(req, 'user-agent')),
+        // Issued after an unsubscribe: only this link may resubscribe.
+        ...(status === 'unsubscribed' ? { rs: 1 } : {}),
       }, CONFIRM_TTL_SECONDS);
       const msg = confirmEmail({ confirmUrl: `${base}/do-the-next-thing/free/confirm?t=${t}`, unsubscribeUrl });
       await resend.sendEmail({ to: email, ...msg });
-      http.log('dtnt.signup.confirm_sent', { emailHash });
+      http.log('dtnt.signup.confirm_sent', { emailHash, afterUnsubscribe: status === 'unsubscribed' });
     }
   } catch (err) {
     http.log('dtnt.signup.send_failed', { emailHash, error: err.message });

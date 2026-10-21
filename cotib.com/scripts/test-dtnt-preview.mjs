@@ -147,7 +147,7 @@ await check('F11.3b', 'garbage download link is refused', async () => {
   expect(r.status === 404, `status ${r.status}`);
 });
 await check('F11.3c', 'no public URL serves the PDF', async () => {
-  for (const p of ['/private/dtnt/do-the-next-thing-free-sampler-v1.pdf', '/do-the-next-thing-free-sampler-v1.pdf', '/dtnt/do-the-next-thing-free-sampler-v1.pdf', '/do-the-next-thing/free/dl/']) {
+  for (const p of ['/private/dtnt/do-the-next-thing-free-sampler-v2.pdf', '/do-the-next-thing-free-sampler-v2.pdf', '/dtnt/do-the-next-thing-free-sampler-v2.pdf', '/do-the-next-thing/free/dl/']) {
     const r = await req(p);
     expect(r.status !== 200 || !/pdf/.test(r.headers.get('content-type') || ''), `${p} returned a PDF`);
   }
