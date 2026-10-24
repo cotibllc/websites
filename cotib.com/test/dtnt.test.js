@@ -99,7 +99,7 @@ test('page: /do-the-next-thing/privacy names Vercel, not the Worker, KV or R2', 
   assert.match(html, /only added back after you click a new confirm link/);
   assert.match(html, /about 10 tries a minute from one connection\. That count is kept in memory for a minute and isn't saved\./);
   assert.match(html, /Unconfirmed signups: we don't store them\./);
-  assert.match(html, /Effective <span class="tbd">\[launch date\]<\/span>\./);
+  assert.match(html, /Effective October 29, 2026\./);
   assert.match(html, new RegExp(POSTAL.replace(/[.#]/g, '\\$&')));
   assert.doesNotMatch(html, DASHES);
 });
