@@ -137,3 +137,15 @@ test("Field Notes keeps its original missing key and missing email responses", a
   assert.equal(noEmail.status, 400);
   assert.equal(kit.calls.length, 0);
 });
+
+test("DistributionList Field Notes payload {email} hits form 9272877 only", async () => {
+  const kit = mockFetch();
+  // Exact body the homepage DistributionList component sends.
+  const payload = JSON.parse(JSON.stringify({ email: "notes@example.com" }));
+  const r = await handleSubscribe(payload, { KIT_API_KEY: KEY }, kit.fn);
+  assert.equal(r.status, 200);
+  assert.deepEqual(r.body, { success: true });
+  assert.equal(kit.calls.length, 1);
+  assert.equal(kit.calls[0].url, "https://api.convertkit.com/v3/forms/9272877/subscribe");
+  assert.deepEqual(kit.calls[0].body, { api_key: KEY, email: "notes@example.com" });
+});
