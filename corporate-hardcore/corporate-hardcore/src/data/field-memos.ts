@@ -14,6 +14,15 @@ export interface FieldMemoEntry {
 
 export const fieldMemos: FieldMemoEntry[] = [
   {
+    videoId: "Y9lxK46WAmA",
+    slug: "growth-paths",
+    fmCode: "FM-03",
+    status: "FILED",
+    title: "Growth Paths · The Pre-Read | Synergy Corp Field Memo",
+    rub: "Synergy Assist wrote the pre-read. Dana organized the invite.",
+    published: "2026-10-26T00:00:00.000Z",
+  },
+  {
     videoId: "4oPLzS-t4Wg",
     slug: "autominutes-confidence-94",
     fmCode: "FM-02",

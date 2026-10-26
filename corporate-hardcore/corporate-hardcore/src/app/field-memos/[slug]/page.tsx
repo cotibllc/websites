@@ -17,15 +17,16 @@ export async function generateMetadata({ params }: Props) {
   const { slug } = await params;
   const memo = await getFieldMemoBody(slug);
   if (!memo) return { title: "Not Found" };
+  const canonical = memo.canonical ?? `/field-memos/${slug}`;
   return {
     title: memo.title,
     description: memo.description,
-    alternates: { canonical: `/field-memos/${slug}` },
+    alternates: { canonical },
     openGraph: {
       title: memo.title,
       description: memo.description,
       type: "article",
-      url: `/field-memos/${slug}`,
+      url: canonical,
       publishedTime: memo.date,
       authors: ["Chuck Morrison"],
     },
