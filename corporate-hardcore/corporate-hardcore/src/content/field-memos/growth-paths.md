@@ -23,4 +23,4 @@ I did not ask which page she got to.
 
 ---
 
-*Field Memo 03, Growth Paths · The Pre-Read, on file:* [YouTube Shorts](https://youtube.com/shorts/Y9lxK46WAmA)
+*Field Memo 03, Growth Paths · The Pre-Read, on file:* [YouTube Shorts](https://youtube.com/shorts/Y9lxK46WAmA) · [TikTok](https://www.tiktok.com/@corphardcore/video/7701019582173056269) · [Instagram Reels](https://www.instagram.com/reel/De9v8_iPvlo/) · [X](https://x.com/corphardcore/status/2114761528016826667)
