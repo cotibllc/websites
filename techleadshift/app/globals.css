@@ -469,7 +469,37 @@ footer :focus-visible {
   color: #fff;
 }
 
+/* Pressed links: darker ink and a 1px nudge, like the buttons. `top` moves inline links without shifting layout. */
+.nav-links li a:active,
+.text-link:active,
+.lead-title a:active,
+.row-title a:active {
+  color: var(--ink);
+  position: relative;
+  top: 1px;
+}
+
+.lead-title a:active,
+.lead-title a:hover:active,
+.row-title a:active,
+.row-title a:hover:active {
+  color: #10283f;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.nav-secondary a:active {
+  color: var(--ink) !important;
+}
+
+.footer-links a:active {
+  color: #fff;
+  position: relative;
+  top: 1px;
+}
+
 .btn-secondary:hover { color: var(--accent); }
+.btn-secondary:hover:active { color: #fff; }
 
 .nav-links a[aria-current="page"] {
   color: var(--accent);
