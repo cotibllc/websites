@@ -29,14 +29,14 @@ export const CORE_SERIES: readonly CoreSeriesEntry[] = [
 ];
 
 /**
- * "Start here" picks, in reading order: the prologue, then three articles
- * that make the argument for a new reader. See the PR for the reasoning.
+ * "Start here" shelf, in series order: the prologue, then Articles 1, 2 and 3.
+ * Chuck chose to let a new reader start the series from its beginning.
  */
 export const START_HERE_SLUGS: readonly string[] = [
   "the-leadership-gap-nobody-is-talking",
   "the-first-leadership-crisis-of-ai",
-  "ai-will-scale-whatever-culture-you",
-  "you-still-own-what-you-ship",
+  "managing-the-invisible-worker",
+  "delegation-drift",
 ];
 
 /** When the snapshot below was last checked against the feed. Shown in the fallback notice. */

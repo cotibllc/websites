@@ -19,10 +19,13 @@ describe("Core Series list", () => {
     assert.equal(seriesMark("a-post-after-the-series"), undefined);
   });
 
-  it("has Start here picks that are all in the series, prologue first", () => {
-    assert.equal(START_HERE_SLUGS.length, 4);
-    assert.equal(START_HERE_SLUGS[0], "the-leadership-gap-nobody-is-talking");
-    for (const slug of START_HERE_SLUGS) assert.ok(seriesMark(slug), slug);
+  it("has the Start here shelf in series order: prologue, then Nos. 1, 2, 3", () => {
+    assert.deepEqual(START_HERE_SLUGS.map((slug) => seriesMark(slug)?.label), [
+      "Core Series, prologue",
+      "Core Series, No. 1",
+      "Core Series, No. 2",
+      "Core Series, No. 3",
+    ]);
   });
 });
 

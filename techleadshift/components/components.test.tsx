@@ -62,14 +62,14 @@ describe("PostRow", () => {
 });
 
 describe("StartHere", () => {
-  it("lists the prologue and three picks, from the snapshot when the feed is down", () => {
+  it("lists the prologue, then Nos. 1, 2 and 3, from the snapshot when the feed is down", () => {
     const html = renderToStaticMarkup(<StartHere feedPosts={[]} />);
     const titles = [...html.matchAll(/<h3 class="row-title"><a[^>]*>([^<]*)<\/a>/g)].map((m) => m[1].replace(/&#x27;/g, "'"));
     assert.deepEqual(titles, [
       "The Leadership Gap Nobody Is Talking About",
       "The First Leadership Crisis of AI Won't Be Technical. It Will Be Cultural.",
-      "AI Will Scale Whatever Culture You Already Have",
-      "You Still Own What You Ship",
+      "Managing the Invisible Worker",
+      "Delegation Drift",
     ]);
     assert.deepEqual([...html.matchAll(/row--(major|compact)/g)].map((m) => m[1]), ["major", "compact", "compact", "compact"], "one large entry, three short rows");
     assert.match(text(html), /See all 11 in the archive/);
