@@ -12,6 +12,10 @@ const leadStore = require('../lib/lead-store');
 
 const TO_EMAIL = 'cbetancourt@castledreamstravel.com';
 const FROM_EMAIL = 'Chuck Betancourt <cbetancourt@castledreamstravel.com>';
+// Free-guide emails may send from earnedescape.agency (Castle Dreams guidelines,
+// Chuck 2026-10-26: only booking emails must come from castledreamstravel.com).
+// Replies still go to Chuck's Castle Dreams inbox.
+const GUIDE_FROM_EMAIL = 'Chuck Betancourt <guide@earnedescape.agency>';
 
 function escapeHtml(str) {
   if (!str) return '';
@@ -254,7 +258,7 @@ router.post('/api/guide', async (req, res) => {
 
     // 1. Notify Chuck
     await resend.emails.send({
-      from: FROM_EMAIL,
+      from: GUIDE_FROM_EMAIL,
       to: TO_EMAIL,
       replyTo: leadEmail,
       subject: '[Earned Escape] Guide Downloaded: ' + sanitizeForHeader(name),
@@ -271,7 +275,8 @@ router.post('/api/guide', async (req, res) => {
 
       const t7 = createToken({ email: leadEmail, guideType: guide.id });
       const r7 = await resend.emails.send({
-        from: FROM_EMAIL,
+        from: GUIDE_FROM_EMAIL,
+        replyTo: TO_EMAIL,
         to: leadEmail,
         subject: templates.day7.subject,
         html: templates.day7.html({ name, guide, token: t7 }),
@@ -283,7 +288,8 @@ router.post('/api/guide', async (req, res) => {
 
       const t3 = createToken({ email: leadEmail, guideType: guide.id, scheduledIds: [scheduled.day7] });
       const r3 = await resend.emails.send({
-        from: FROM_EMAIL,
+        from: GUIDE_FROM_EMAIL,
+        replyTo: TO_EMAIL,
         to: leadEmail,
         subject: templates.day3.subject,
         html: templates.day3.html({ name, guide, token: t3 }),
@@ -312,7 +318,8 @@ router.post('/api/guide', async (req, res) => {
     // 4. Deliver the PDF to the lead
     const td = createToken({ email: leadEmail, guideType: guide.id, scheduledIds: [scheduled.day3, scheduled.day7] });
     await resend.emails.send({
-      from: FROM_EMAIL,
+      from: GUIDE_FROM_EMAIL,
+      replyTo: TO_EMAIL,
       to: leadEmail,
       subject: templates.delivery.subject,
       html: templates.delivery.html({ name, guide, token: td }),
