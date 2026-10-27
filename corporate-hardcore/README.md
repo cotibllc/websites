@@ -55,6 +55,17 @@ npm run dev                  # http://localhost:3000
 
 ---
 
+### Tests and checks
+
+```bash
+npm run typecheck   # tsc --noEmit
+npm run lint        # eslint src
+npm test            # tsx --test src/lib/*.test.ts (Kit subscribe payloads)
+```
+
+Run these inside `corporate-hardcore/corporate-hardcore`.
+
+
 ## Content
 
 Blog posts live in `src/content/posts/` as Markdown files with gray-matter frontmatter. The `[slug]` dynamic route renders individual posts.

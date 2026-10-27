@@ -7,6 +7,8 @@ npm install
 npm run dev      # local development with nodemon on http://localhost:3000
 npm start        # production-style local server
 npm run build    # regenerates public/sitemap.xml from scripts/generate-sitemap.js
+npm test         # node:test smoke test of the Express app
+npm run check:syntax  # node --check on all JS (syntax only)
 ```
 
 ## Architecture

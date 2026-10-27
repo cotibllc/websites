@@ -10,6 +10,8 @@ Next.js 16 (App Router, TypeScript, Tailwind CSS) podcast website for **The IT X
 npm run dev      # Local dev server (http://localhost:3000)
 npm run build    # Production build (fetches live RSS feed)
 npm run lint     # ESLint
+npm run typecheck  # tsc --noEmit
+npm test         # smoke test (runs next build)
 ```
 
 ## Architecture

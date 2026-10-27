@@ -56,6 +56,16 @@ npm run dev                  # http://localhost:3000
 
 ---
 
+## Tests and checks
+
+```bash
+npm ci
+npm run typecheck   # tsc --noEmit
+npm run lint        # eslint
+npm test            # smoke test: runs next build (type checks and renders every static route)
+```
+
+
 ## Project Structure
 
 ```

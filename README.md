@@ -39,6 +39,22 @@ Mono-repo containing all web properties owned and operated by COTIB LLC and its 
 
 ---
 
+## Checks (typecheck, lint, test)
+
+There is no root `package.json`. Run checks inside each site folder:
+
+```bash
+cd <site>        # e.g. techleadshift
+npm ci
+npm run typecheck   # TypeScript sites: corporate-hardcore, TheITXP, techleadshift
+npm run lint        # sites that have it
+npm test            # every Node site has a real test; see AGENTS.md for what each one covers
+```
+
+`AGENTS.md` has the exact commands per site. Pull requests use `.github/pull_request_template.md`.
+
+---
+
 ## Environment Variables
 
 Each project with a `.env.example` file requires a `.env.local` before running locally. See the individual project README for required variables.

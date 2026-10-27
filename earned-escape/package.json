@@ -7,7 +7,9 @@
   "scripts": {
     "start": "node server.js",
     "dev": "nodemon server.js",
-    "build": "node scripts/bundle-css.js && node scripts/generate-sitemap.js"
+    "build": "node scripts/bundle-css.js && node scripts/generate-sitemap.js",
+    "check:syntax": "node --check app.js && node --check server.js && find api config lib routes scripts test \\( -name '*.js' -o -name '*.mjs' \\) -print0 | xargs -0 -n1 node --check",
+    "test": "node --test test/"
   },
   "dependencies": {
     "compression": "^1.7.4",

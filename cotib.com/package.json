@@ -11,7 +11,9 @@
     "deploy": "npm run build && vercel --prod",
     "test:dtnt": "node --test test/dtnt.test.js",
     "test:dtnt:preview": "node scripts/test-dtnt-preview.mjs",
-    "build:dtnt": "node scripts/build-dtnt-pages.js"
+    "build:dtnt": "node scripts/build-dtnt-pages.js",
+    "check:syntax": "find api lib scripts \\( -name '*.js' -o -name '*.mjs' \\) -print0 | xargs -0 -n1 node --check",
+    "test": "npm run test:dtnt"
   },
   "dependencies": {
     "resend": "^4.0.0"

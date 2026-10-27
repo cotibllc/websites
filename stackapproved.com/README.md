@@ -16,6 +16,14 @@ npm install
 npm run dev        # watches CSS + runs `vercel dev`
 ```
 
+## Tests and checks
+
+```bash
+npm ci
+npm test               # node:test on api/contact.js (405, honeypot, missing fields), no network
+npm run check:syntax   # node --check on api/ and test/ (syntax only, no types)
+```
+
 ## Deploy
 
 ```bash

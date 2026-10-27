@@ -19,3 +19,6 @@
 **/photos-to-use/
 .vercel
 .env*
+
+# TypeScript incremental build info
+*.tsbuildinfo
