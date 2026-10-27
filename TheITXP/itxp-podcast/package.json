@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit",
+    "test:smoke": "next build",
+    "test": "npm run test:smoke"
   },
   "dependencies": {
     "@marsidev/react-turnstile": "^1.5.0",
