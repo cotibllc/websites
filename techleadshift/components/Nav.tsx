@@ -1,21 +1,23 @@
+import Link from "next/link";
+
 export default function Nav() {
   return (
     <nav>
-      <a href="/#home" className="nav-brand">
+      <Link href="/#home" className="nav-brand">
         Tech Lead Shift
-      </a>
+      </Link>
       <ul className="nav-links">
         <li>
-          <a href="/#about">About</a>
+          <Link href="/#about">About</Link>
         </li>
         <li>
-          <a href="/#series">The Series</a>
+          <Link href="/#series">The Series</Link>
         </li>
         <li>
-          <a href="/#newsletter">Subscribe</a>
+          <Link href="/#newsletter">Subscribe</Link>
         </li>
         <li className="nav-secondary">
-          <a href="/work">Work</a>
+          <Link href="/work">Work</Link>
         </li>
       </ul>
     </nav>

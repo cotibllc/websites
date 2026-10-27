@@ -30,6 +30,10 @@ Extra `cotib.com` scripts: `npm run build:dtnt` (regenerate Do the Next Thing pa
 
 Honest naming: `check:syntax` only runs `node --check` on each file (syntax, no types). The "smoke test" on `TheITXP/itxp-podcast` and `techleadshift` is `next build`, which also type checks and renders every static route. One `cotib.com` test is skipped on purpose (F11.5, paid plan only).
 
+## CI
+
+`.github/workflows/ci.yml` runs on every pull request, one job per site named `checks (<site>)`. Each job runs every script that site has: lint, typecheck, `check:syntax`, test. A guard step fails the job if the workflow flags drift from the site's `package.json`, so when you add or remove a script, update the matrix in `ci.yml` in the same PR. Never add `continue-on-error`, skip a step, or loosen a check to get green.
+
 ## Working rules
 
 1. Run typecheck, lint and the fast tests after each meaningful change, not only at the end.
