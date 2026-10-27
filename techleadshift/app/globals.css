@@ -453,9 +453,12 @@ body {
   outline-offset: 3px;
 }
 
-footer :focus-visible,
-.btn-primary:focus-visible {
+footer :focus-visible {
   outline-color: var(--gold);
+}
+
+.btn-primary:focus-visible {
+  outline-color: var(--ink);
 }
 
 .btn-primary:active,
