@@ -3,6 +3,7 @@ import { DM_Serif_Display, DM_Sans, DM_Mono } from "next/font/google";
 import "./globals.css";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
+import { SITE_URL } from "@/lib/site";
 
 const dmSerifDisplay = DM_Serif_Display({
   weight: ["400"],
@@ -26,21 +27,23 @@ const dmMono = DM_Mono({
   display: "swap",
 });
 
+const TITLE = "Tech Lead Shift: Manage the machine, not the sentiment";
+const DESCRIPTION =
+  "Manage the machine, not the sentiment. Articles on Silicon Labor: leading hybrid teams of humans and AI agents, culture, and accountability. New articles twice a month, on Wednesdays.";
+
 export const metadata: Metadata = {
-  title: "Tech Lead Shift — Manage the machine, not the sentiment",
-  description:
-    "Manage the machine, not the sentiment. A research series on Silicon Labor — leading hybrid teams of humans and AI agents, culture, and accountability.",
-  metadataBase: new URL("https://www.techleadshift.com"),
+  title: { default: TITLE, template: "%s | Tech Lead Shift" },
+  description: DESCRIPTION,
+  metadataBase: new URL(SITE_URL),
   alternates: {
     canonical: "/",
   },
   openGraph: {
-    title: "Tech Lead Shift — Manage the machine, not the sentiment",
-    description:
-      "Manage the machine, not the sentiment. A research series on Silicon Labor — leading hybrid teams of humans and AI agents, culture, and accountability.",
+    title: TITLE,
+    description: DESCRIPTION,
     siteName: "Tech Lead Shift",
     type: "website",
-    url: "https://www.techleadshift.com",
+    url: SITE_URL,
     images: [
       {
         url: "/opengraph-image",
@@ -52,9 +55,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Tech Lead Shift — Manage the machine, not the sentiment",
-    description:
-      "Manage the machine, not the sentiment. A research series on Silicon Labor — leading hybrid teams of humans and AI agents, culture, and accountability.",
+    title: TITLE,
+    description: DESCRIPTION,
     images: ["/opengraph-image"],
   },
 };
@@ -70,8 +72,11 @@ export default function RootLayout({
       className={`${dmSerifDisplay.variable} ${dmSans.variable} ${dmMono.variable}`}
     >
       <body>
+        <a href="#main" className="skip-link">
+          Skip to content
+        </a>
         <Nav />
-        <main>{children}</main>
+        <main id="main">{children}</main>
         <Footer />
       </body>
     </html>
