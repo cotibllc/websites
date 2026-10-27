@@ -62,7 +62,7 @@ nav {
 }
 
 .nav-links a {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 400;
   letter-spacing: 0.04em;
   color: var(--ink-muted);
@@ -137,7 +137,7 @@ section[id] { scroll-margin-top: 5rem; }
 
 .section-label {
   font-family: var(--mono);
-  font-size: 11px;
+  font-size: 12px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--gold-ink);
@@ -213,7 +213,7 @@ section[id] { scroll-margin-top: 5rem; }
 
 .form-field label {
   font-family: var(--mono);
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--ink-faint);
@@ -286,7 +286,7 @@ footer {
 }
 
 .footer-copy {
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 300;
 }
 
@@ -297,7 +297,7 @@ footer {
 }
 
 .footer-links a {
-  font-size: 12px;
+  font-size: 13px;
   color: rgba(255,255,255,0.72);
   text-decoration: none;
   transition: color 0.2s;
@@ -316,7 +316,7 @@ footer {
 
 .text-link {
   font-family: var(--sans);
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 500;
   letter-spacing: 0.04em;
   color: var(--accent);
@@ -332,7 +332,7 @@ footer {
 
 .nav-secondary a {
   color: var(--ink-faint) !important;
-  font-size: 12px !important;
+  font-size: 13px !important;
 }
 
 .work-page {
@@ -492,7 +492,7 @@ footer :focus-visible {
   gap: 1rem;
   margin-bottom: 1.5rem;
   font-family: var(--mono);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 500;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -540,8 +540,8 @@ footer :focus-visible {
 .lead-meta,
 .row-meta {
   font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.14em;
+  font-size: 12.5px;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--ink-muted);
 }
@@ -593,11 +593,16 @@ footer :focus-visible {
 }
 
 .next-line {
-  margin-top: 1.5rem;
+  margin-top: 2.5rem;
+  padding: 0.15rem 0 0.15rem 1rem;
+  border-left: 3px solid var(--gold);
   font-family: var(--mono);
-  font-size: 12px;
-  letter-spacing: 0.08em;
-  color: var(--ink-muted);
+  font-size: 13.5px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  line-height: 1.4;
+  color: var(--ink);
 }
 
 .fallback-copy {
@@ -626,7 +631,7 @@ footer :focus-visible {
 
 .row {
   display: grid;
-  grid-template-columns: 12rem 1fr;
+  grid-template-columns: 13rem 1fr;
   gap: 0.5rem 1.5rem;
   padding: 1.25rem 0 1.25rem 1rem;
   border-bottom: 1px solid var(--rule);
@@ -644,7 +649,7 @@ footer :focus-visible {
 }
 
 .row-dek {
-  font-size: 0.95rem;
+  font-size: 1rem;
   font-weight: 300;
   line-height: 1.65;
   color: var(--ink-muted);
@@ -657,16 +662,16 @@ footer :focus-visible {
 .row-tag {
   display: block;
   white-space: nowrap;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
   margin-top: 0.35rem;
   color: var(--gold-ink);
 }
 
 .row--major .row-title { font-size: clamp(1.5rem, 2.6vw, 2rem); line-height: 1.15; margin-bottom: 0.6rem; }
-.row--major .row-dek { -webkit-line-clamp: 4; font-size: 1.02rem; }
+.row--major .row-dek { -webkit-line-clamp: 4; font-size: 1.0625rem; }
 .row--major { padding-top: 1.75rem; padding-bottom: 1.75rem; }
 .row--compact .row-title { font-size: 1.1rem; margin-bottom: 0.25rem; }
-.row--compact .row-dek { -webkit-line-clamp: 2; font-size: 0.9rem; }
+.row--compact .row-dek { -webkit-line-clamp: 2; font-size: 0.95rem; }
 
 /* Start here: one large entry point, three short rows beside it */
 .shelf {
@@ -748,7 +753,7 @@ footer :focus-visible {
 
 .about-quote cite {
   font-family: var(--mono);
-  font-size: 11px;
+  font-size: 12px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--ink-muted);

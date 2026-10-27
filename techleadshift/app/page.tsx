@@ -4,18 +4,17 @@ import { Lead, LeadFallback, LeadSkeleton } from "@/components/Lead";
 import PostRow from "@/components/PostRow";
 import StartHere from "@/components/StartHere";
 import { fetchFeed } from "@/lib/feed";
+import { selectHome } from "@/lib/home";
 import { nextLabel, nextWednesday } from "@/lib/schedule";
 import { SUBSTACK_URL } from "@/lib/site";
 
 export const revalidate = 3600; // hourly; must be a literal for Next
 
-const RECENT_COUNT = 3;
-
 /** Everything that depends on the Substack feed. It renders in every feed state. */
 async function FeedSections() {
   const feed = await fetchFeed();
   const now = new Date();
-  const [lead, ...rest] = feed.posts;
+  const { lead, recent } = selectHome(feed.posts);
   const next = nextLabel(
     nextWednesday(
       now,
@@ -23,7 +22,6 @@ async function FeedSections() {
     ),
     now
   );
-  const recent = rest.slice(0, RECENT_COUNT);
 
   return (
     <>
