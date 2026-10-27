@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import ContactForm from "@/components/ContactForm";
 
 const SUBSTACK_URL = "https://techleadshift.substack.com";
@@ -30,9 +31,9 @@ export default function WorkPage() {
           >
             Read on Substack
           </a>
-          <a href="/#series" className="text-link">
+          <Link href="/#series" className="text-link">
             The Series
-          </a>
+          </Link>
         </div>
         <div className="work-form-wrap">
           <ContactForm />
