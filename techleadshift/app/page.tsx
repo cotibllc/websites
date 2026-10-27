@@ -282,7 +282,7 @@ export default async function HomePage() {
               <h2 className="section-headline">New articles twice a month.</h2>
               <p>
                 Published Wednesday mornings on Substack. No filler content, no weekly digests.
-                One article when there is something worth saying.
+                One article every other Wednesday, when it&apos;s worth your time.
               </p>
               <p>
                 Subscribe directly on Substack and you will also get access to Notes, shorter
