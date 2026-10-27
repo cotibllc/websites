@@ -2,6 +2,7 @@ import type { FieldMemoEntry } from "@/data/field-memos";
 import type { EpisodeStatus } from "@/data/content";
 import { formatPublishedDate } from "@/lib/youtube";
 import Image from "next/image";
+import Link from "next/link";
 
 interface FieldMemoCardProps {
   memo: FieldMemoEntry;
@@ -41,7 +42,12 @@ export default function FieldMemoCard({ memo, featured = false }: FieldMemoCardP
         </div>
         <h3 className={`font-sans font-semibold text-synergy-dark leading-snug line-clamp-2 ${featured ? "text-base" : "text-sm"}`}>{memo.title}</h3>
         {memo.rub && (<p className="mt-1 text-sm text-synergy-muted line-clamp-2 font-sans font-light">{memo.rub}</p>)}
-        <a href={watchUrl} target="_blank" rel="noopener noreferrer" className="inline-block mt-2 font-mono text-[10px] tracking-widest uppercase text-synergy-navy hover:text-synergy-amber transition-colors">WATCH →</a>
+        <div className="mt-2 flex flex-wrap gap-4">
+          <a href={watchUrl} target="_blank" rel="noopener noreferrer" className="inline-block font-mono text-[10px] tracking-widest uppercase text-synergy-navy hover:text-synergy-amber transition-colors">WATCH →</a>
+          {memo.slug && (
+            <Link href={`/field-memos/${memo.slug}`} className="inline-block font-mono text-[10px] tracking-widest uppercase text-synergy-navy hover:text-synergy-amber transition-colors">READ MEMO →</Link>
+          )}
+        </div>
       </div>
     </article>
   );

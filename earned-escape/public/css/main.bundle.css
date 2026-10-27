@@ -3645,3 +3645,305 @@ body.dest-page .reveal {
 }
 
 
+/* ==========================================================================
+   Imported: _sports.css
+   ========================================================================== */
+
+/* ===========================
+   /sports: Roadtrips event packages
+   One focal idea: a printed race card of event dates.
+   =========================== */
+
+.sports-hero {
+  background: linear-gradient(160deg, var(--ink) 0%, #1f1035 55%, var(--navy-deep) 100%);
+  padding: 140px var(--section-pad-x) 72px;
+  color: var(--white);
+}
+
+.sports-hero__inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+.sports-hero__headline {
+  font-size: clamp(36px, 5.5vw, 72px);
+  font-weight: 500;
+  line-height: 1.06;
+  color: var(--white);
+  margin-bottom: 24px;
+  max-width: 22ch;
+}
+
+.sports-hero__headline em {
+  color: var(--gold);
+}
+
+.sports-hero__sub {
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 1.75;
+  color: rgba(248, 245, 238, 0.82);
+  max-width: 52ch;
+  margin-bottom: 32px;
+}
+
+/* Race card */
+.sports-card {
+  background: var(--warm-bg);
+  padding: var(--section-pad-y) var(--section-pad-x);
+}
+
+.sports-card__inner {
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+.sports-card__header {
+  max-width: 64ch;
+  margin-bottom: 40px;
+}
+
+.sports-card .section-eyebrow {
+  color: var(--purple);
+  opacity: 1;
+}
+
+.sports-card__headline {
+  font-size: clamp(30px, 3.5vw, 46px);
+  color: var(--navy-deep);
+  line-height: 1.1;
+  margin-bottom: 18px;
+}
+
+.sports-card__note {
+  font-size: 15px;
+  line-height: 1.75;
+  color: rgba(8, 6, 24, 0.78);
+}
+
+.sports-card__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  background: #fff;
+  border: 1px solid rgba(201, 168, 76, 0.45);
+  border-top: 4px solid var(--navy-deep);
+}
+
+.sports-row {
+  display: grid;
+  grid-template-columns: 112px 1fr auto;
+  gap: 0 28px;
+  align-items: start;
+  padding: 26px 28px;
+  border-bottom: 1px solid rgba(201, 168, 76, 0.28);
+}
+
+.sports-row:last-child {
+  border-bottom: 0;
+}
+
+.sports-row__date {
+  display: flex;
+  flex-direction: column;
+  padding-right: 20px;
+  border-right: 1px dashed rgba(81, 46, 95, 0.35);
+  min-height: 100%;
+}
+
+.sports-row__day {
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 500;
+  color: var(--navy-deep);
+  line-height: 1.1;
+}
+
+.sports-row__year {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  color: var(--gold-dark);
+  margin-top: 4px;
+}
+
+.sports-row__sport {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--navy-mid);
+  margin-bottom: 6px;
+}
+
+.sports-row__name {
+  font-size: clamp(22px, 2.4vw, 28px);
+  font-weight: 500;
+  color: var(--ink);
+  line-height: 1.15;
+  margin-bottom: 6px;
+}
+
+.sports-row__meta {
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(8, 6, 24, 0.72);
+  margin-bottom: 10px;
+}
+
+.sports-row__note {
+  font-size: 14px;
+  line-height: 1.65;
+  color: rgba(8, 6, 24, 0.78);
+  max-width: 54ch;
+}
+
+.sports-row__note--flag {
+  border-left: 3px solid var(--gold);
+  padding-left: 10px;
+}
+
+.sports-row__price {
+  text-align: right;
+  min-width: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.sports-row__from {
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(8, 6, 24, 0.66);
+}
+
+.sports-row__amount {
+  font-family: var(--font-display);
+  font-size: 30px;
+  font-weight: 500;
+  color: var(--navy-deep);
+  line-height: 1.1;
+}
+
+.sports-row__basis {
+  font-size: 12px;
+  line-height: 1.45;
+  color: rgba(8, 6, 24, 0.66);
+  max-width: 17ch;
+  margin-top: 4px;
+}
+
+.sports-card__foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 18px 28px;
+  margin-top: 36px;
+}
+
+.sports-card__more {
+  font-size: 15px;
+  line-height: 1.6;
+  color: rgba(8, 6, 24, 0.78);
+  max-width: 48ch;
+}
+
+/* SPARK story */
+.sports-story {
+  background: var(--purple-pale);
+  padding: var(--section-pad-y) var(--section-pad-x);
+  border-top: 1px solid rgba(201, 168, 76, 0.25);
+}
+
+.sports-story__inner {
+  max-width: 64ch;
+  margin: 0 auto;
+}
+
+.sports-story .section-eyebrow {
+  color: var(--navy-mid);
+  opacity: 1;
+}
+
+.sports-story__headline {
+  font-size: clamp(30px, 3.5vw, 46px);
+  color: var(--navy-deep);
+  line-height: 1.1;
+  margin-bottom: 24px;
+}
+
+.sports-story__headline em {
+  color: var(--navy-mid);
+}
+
+.sports-story__body {
+  font-size: 16px;
+  line-height: 1.8;
+  color: rgba(8, 6, 24, 0.82);
+  margin-bottom: 18px;
+}
+
+.sports-story__takeaway {
+  font-family: var(--font-display);
+  font-size: clamp(22px, 2.4vw, 28px);
+  font-style: italic;
+  color: var(--navy-deep);
+  line-height: 1.35;
+  margin: 28px 0;
+}
+
+.sports-story__disclosure {
+  font-size: 13px;
+  line-height: 1.6;
+  color: rgba(8, 6, 24, 0.75);
+  margin-top: 36px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(81, 46, 95, 0.2);
+}
+
+.sports-story__fine {
+  font-size: 12px;
+  line-height: 1.6;
+  color: rgba(8, 6, 24, 0.66);
+  margin-top: 10px;
+}
+
+@media (max-width: 720px) {
+  .sports-hero {
+    padding: 116px var(--section-pad-x) 56px;
+  }
+
+  .sports-row {
+    grid-template-columns: 1fr;
+    gap: 0;
+    padding: 22px 18px;
+  }
+
+  .sports-row__date {
+    flex-direction: row;
+    align-items: baseline;
+    gap: 10px;
+    border-right: 0;
+    border-bottom: 1px dashed rgba(81, 46, 95, 0.35);
+    padding: 0 0 10px;
+    margin-bottom: 14px;
+  }
+
+  .sports-row__day {
+    font-size: 22px;
+  }
+
+  .sports-row__price {
+    text-align: left;
+    align-items: flex-start;
+    margin-top: 14px;
+    min-width: 0;
+  }
+
+  .sports-row__basis {
+    max-width: none;
+  }
+}
+
+
