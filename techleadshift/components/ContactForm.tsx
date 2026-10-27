@@ -64,7 +64,7 @@ export default function ContactForm() {
 
   return (
     <form onSubmit={handleSubmit} className="newsletter-form">
-      {/* Honeypot — hidden from humans, bots fill it in */}
+      {/* Honeypot: hidden from humans, bots fill it in */}
       <div aria-hidden="true" style={{ display: 'none' }}>
         <label htmlFor="website">Website</label>
         <input

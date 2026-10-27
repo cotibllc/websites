@@ -1,30 +1,27 @@
 # Tech Lead Shift
 
-Website for **Tech Lead Shift** — a research-backed leadership series examining what it takes to manage hybrid teams of human workers and autonomous AI agents.
+Website for **Tech Lead Shift**: articles on what it takes to manage hybrid teams of human workers and autonomous AI agents.
 
-Live at [techleadshift.com](https://www.techleadshift.com). Published on [Substack](https://techleadshift.substack.com).
+Live at [techleadshift.com](https://techleadshift.com). Published on [Substack](https://techleadshift.substack.com).
 
 A brand of [COTIB LLC](https://cotib.com). Written by Charles Betancourt, Director of Cloud Engineering with 18+ years of technology leadership.
 
 ---
 
-## The Series
+## What the site is
 
-Ten articles. One argument: current leadership frameworks were built for an all-human workforce — that assumption is already broken.
+An ongoing publication: new articles twice a month, on Wednesdays, on Substack. The homepage leads with the newest article (read from the Substack RSS feed), shows the next approved Wednesday, three recent articles, and a "Start here" shelf for the Core Series (a prologue plus Articles 1 to 10, which is finished). `/archive` lists every article by date and marks the Core Series with a gold rule.
 
-**Act I — The Diagnosis (Articles 1–6)**
-1. The First Leadership Crisis of AI Won't Be Technical. It Will Be Cultural. *(Live)*
-2. Managing the Invisible Worker *(Live)*
-3. Delegation Drift *(Live)*
-4. Why AI Will Expose Bad Management Faster Than Ever *(Live)*
-5. The New Leadership Skill: Systems Thinking *(Live)*
-6. The End of Productivity Theater *(Live)*
+### Where the data comes from
 
-**Act II — The Transformation (Articles 7–10)**
-7. Middle Management in the Age of AI: The Empathy Premium *(Live)*
-8. AI Will Scale Whatever Culture You Already Have *(Live)*
-9. The accountability problem no one is ready for
-10. The future leader is a system architect
+| Data | Source | How to change it |
+|---|---|---|
+| Latest, Recent, Archive | Substack RSS, `https://techleadshift.substack.com/feed`, revalidated hourly | Publish on Substack. No code edit. |
+| Core Series membership and the Start here picks | `lib/core-series.ts` (matched by slug, because the feed has no categories) | Edit the list. The list also holds an offline snapshot used if the feed is down. |
+| "Next: Wed ..." line | `lib/schedule.ts`, `APPROVED_WEDNESDAYS` | Add new approved dates. When none is left the line is hidden. |
+| Feed URL override (testing only) | `TLS_FEED_URL` env var, server side, unset in production | Point at a local mock to test the failure, empty and no-cover states. |
+
+If the feed fails or is empty, the pages still render: the lead area points to Substack, and the shelf and archive use the local snapshot with a notice.
 
 ---
 
@@ -62,7 +59,7 @@ npm run dev                  # http://localhost:3000
 npm ci
 npm run typecheck   # tsc --noEmit
 npm run lint        # eslint
-npm test            # smoke test: runs next build (type checks and renders every static route)
+npm test            # unit tests (feed, Core Series, schedule, components), then the smoke build
 ```
 
 
@@ -71,15 +68,15 @@ npm test            # smoke test: runs next build (type checks and renders every
 ```
 techleadshift/
 ├── app/
-│   ├── layout.tsx          ← root layout, fonts, metadata
-│   ├── page.tsx            ← homepage (hero, about, series, newsletter, contact)
+│   ├── layout.tsx          ← root layout, fonts, metadata (apex host)
+│   ├── page.tsx            ← home: nameplate, lead, recent, Start here, subscribe, about
+│   ├── archive/page.tsx    ← every article by date, Core Series marked
+│   ├── work/page.tsx       ← consulting and speaking inquiry
 │   ├── opengraph-image.tsx ← OG image generation
-│   ├── robots.ts           ← robots.txt
-│   └── sitemap.ts          ← dynamic sitemap
-├── components/
-│   ├── ContactForm.tsx     ← speaking/consulting inquiry form
-│   ├── Footer.tsx
-│   └── Nav.tsx
+│   └── sitemap.ts          ← sitemap (/, /archive, /work)
+├── components/             ← Lead, PostRow, StartHere, FeedNotice, Nav, Footer, ContactForm
+├── lib/                    ← feed.ts (RSS), core-series.ts, schedule.ts, site.ts, and the unit tests
+├── public/                 ← robots.txt, llms.txt
 └── vercel.json
 ```
 
