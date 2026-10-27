@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import MerchNotifyForm from "@/components/MerchNotifyForm";
 
 export const metadata: Metadata = {
   title: "Company Store",
@@ -44,20 +45,7 @@ export default function MerchPage() {
         {/* Notify me form */}
         <div className="border-t border-synergy-rule px-6 py-5 bg-synergy-white">
           <p className="intranet-label mb-3">Notify Me When Available</p>
-          <form className="flex gap-2 max-w-sm">
-            <input
-              type="email"
-              placeholder="your@email.com"
-              className="intranet-input flex-1"
-              aria-label="Email address"
-            />
-            <button
-              type="submit"
-              className="btn-intranet flex-shrink-0"
-            >
-              Submit Request
-            </button>
-          </form>
+          <MerchNotifyForm />
           <p className="font-mono text-[9px] text-synergy-muted mt-2 tracking-wider">
             Submission does not guarantee notification. Notifications not guaranteed.
           </p>
