@@ -279,7 +279,7 @@ export default async function HomePage() {
           <div className="newsletter-inner">
             <div className="newsletter-body">
               <div className="section-label">Subscribe</div>
-              <h2 className="section-headline">New articles, every four weeks.</h2>
+              <h2 className="section-headline">New articles twice a month.</h2>
               <p>
                 Published Wednesday mornings on Substack. No filler content, no weekly digests.
                 One article when there is something worth saying.
@@ -346,7 +346,7 @@ export default async function HomePage() {
               </div>
               <div className="stat-item">
                 <div className="stat-number">Wed</div>
-                <div className="stat-label">New articles every four weeks</div>
+                <div className="stat-label">New articles twice a month</div>
               </div>
             </div>
           </div>
