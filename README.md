@@ -51,7 +51,7 @@ npm run lint        # sites that have it
 npm test            # every Node site has a real test; see AGENTS.md for what each one covers
 ```
 
-`AGENTS.md` has the exact commands per site. Pull requests use `.github/pull_request_template.md`.
+`AGENTS.md` has the exact commands per site. GitHub Actions (`.github/workflows/ci.yml`) runs the same scripts on every pull request. Pull requests use `.github/pull_request_template.md`.
 
 ---
 

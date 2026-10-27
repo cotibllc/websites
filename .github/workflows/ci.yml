@@ -1,0 +1,120 @@
+# Runs on every pull request. One job per site. Each site runs every script it
+# has (lint, typecheck, test, check:syntax). The "guard" step fails the job if
+# the flags below drift from the site's package.json, so a script can never be
+# silently dropped or silently left out of CI. Nothing here uses
+# continue-on-error, and no step is conditional beyond these flags.
+name: ci
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  NEXT_TELEMETRY_DISABLED: "1"
+
+jobs:
+  checks:
+    name: checks (${{ matrix.site }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - site: cotib.com
+            dir: cotib.com
+            lint: false
+            typecheck: false
+            test: true
+            syntax: true
+          - site: stackapproved.com
+            dir: stackapproved.com
+            lint: false
+            typecheck: false
+            test: true
+            syntax: true
+          - site: earned-escape
+            dir: earned-escape
+            lint: false
+            typecheck: false
+            test: true
+            syntax: true
+          - site: corporate-hardcore
+            dir: corporate-hardcore/corporate-hardcore
+            lint: true
+            typecheck: true
+            test: true
+            syntax: false
+          - site: TheITXP
+            dir: TheITXP/itxp-podcast
+            lint: true
+            typecheck: true
+            test: true
+            syntax: false
+          - site: techleadshift
+            dir: techleadshift
+            lint: true
+            typecheck: true
+            test: true
+            syntax: false
+    defaults:
+      run:
+        working-directory: ${{ matrix.dir }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: ${{ matrix.dir }}/package-lock.json
+
+      - name: Guard (matrix flags match package.json scripts)
+        env:
+          WANT_LINT: ${{ matrix.lint }}
+          WANT_TYPECHECK: ${{ matrix.typecheck }}
+          WANT_TEST: ${{ matrix.test }}
+          WANT_SYNTAX: ${{ matrix.syntax }}
+        run: |
+          node -e '
+            const s = require("./package.json").scripts || {};
+            const want = {
+              lint: process.env.WANT_LINT === "true",
+              typecheck: process.env.WANT_TYPECHECK === "true",
+              test: process.env.WANT_TEST === "true",
+              "check:syntax": process.env.WANT_SYNTAX === "true",
+            };
+            let bad = 0;
+            for (const [name, flag] of Object.entries(want)) {
+              if (flag !== Boolean(s[name])) {
+                console.error(`Mismatch for "${name}": CI flag=${flag}, package.json has it=${Boolean(s[name])}. Update .github/workflows/ci.yml.`);
+                bad = 1;
+              }
+            }
+            process.exit(bad);
+          '
+
+      - name: Install
+        run: npm ci
+
+      - name: Lint
+        if: ${{ matrix.lint }}
+        run: npm run lint
+
+      - name: Typecheck
+        if: ${{ matrix.typecheck }}
+        run: npm run typecheck
+
+      - name: Syntax check
+        if: ${{ matrix.syntax }}
+        run: npm run check:syntax
+
+      - name: Test
+        if: ${{ matrix.test }}
+        run: npm test
