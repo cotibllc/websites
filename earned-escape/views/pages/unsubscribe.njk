@@ -1,0 +1,25 @@
+{% extends "layout/base.njk" %}
+
+{% block content %}
+  <section class="unsub" aria-labelledby="unsub-heading">
+    <div class="unsub__inner">
+      {% if state == 'confirm' %}
+        <h1 id="unsub-heading">Unsubscribe from Earned Escape emails?</h1>
+        <p>This stops the guide follow-up emails and travel tips sent to <strong>{{ email }}</strong>.</p>
+        <form method="post" action="/unsubscribe">
+          <input type="hidden" name="t" value="{{ token }}">
+          <button type="submit" class="btn btn--gold" id="unsub-confirm">Unsubscribe</button>
+        </form>
+      {% elif state == 'done' %}
+        <h1 id="unsub-heading">You're unsubscribed</h1>
+        <p><strong>{{ email }}</strong> won't get any more guide follow-up emails or travel tips from Earned Escape.</p>
+        <p>Changed your mind? You can request a guide again any time.</p>
+        <a href="/" class="btn btn--gold">Back to Earned Escape</a>
+      {% else %}
+        <h1 id="unsub-heading">This link isn't valid</h1>
+        <p>The unsubscribe link may be incomplete. Reply to any Earned Escape email with "unsubscribe" and Chuck will take you off the list.</p>
+      {% endif %}
+      <p style="font-size: 13px; margin-top: 28px;">{{ site.brand.business }}, {{ site.brand.mailingAddress }}</p>
+    </div>
+  </section>
+{% endblock %}
