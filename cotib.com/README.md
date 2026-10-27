@@ -70,6 +70,16 @@ Open `http://localhost:3000` to browse the site with the contact API working loc
 
 ---
 
+## Tests and checks
+
+```bash
+npm ci
+npm test               # runs npm run test:dtnt (node:test, Resend and Turnstile mocked)
+npm run check:syntax   # node --check on api/, lib/ and scripts/ (syntax only, no types)
+```
+
+One test is skipped on purpose (F11.5, paid plan only). Run `npm test` after each change.
+
 ## Deployment
 
 ```bash

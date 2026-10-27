@@ -57,6 +57,16 @@ npm run dev                  # http://localhost:3000
 
 ---
 
+## Tests and checks
+
+```bash
+npm ci
+npm run typecheck   # tsc --noEmit
+npm run lint        # eslint
+npm test            # smoke test: runs next build (fetches the live Libsyn feed, needs network)
+```
+
+
 ## Project Structure
 
 ```

@@ -24,6 +24,17 @@ npm run build
 
 ---
 
+## Tests and checks
+
+```bash
+npm ci
+npm test               # node:test smoke test: boots the Express app, checks status codes and page text
+npm run check:syntax   # node --check on app, routes, lib, config, scripts and test (syntax only, no types)
+```
+
+The smoke test sets `NODE_ENV=production` for itself so nunjucks file watchers do not keep the process alive and nothing is written to `.data/`.
+
+
 ## Before Going Live — Update Placeholders
 
 All placeholder values are isolated to **`config/site.js`**. Open that file and replace:
