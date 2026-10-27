@@ -13,6 +13,7 @@ const urls = [
   { loc: '/theme-parks', priority: '0.8', changefreq: 'monthly' },
   { loc: '/universal', priority: '0.8', changefreq: 'monthly' },
   { loc: '/sports', priority: '0.8', changefreq: 'monthly' },
+  { loc: '/china', priority: '0.8', changefreq: 'monthly' },
   { loc: '/about', priority: '0.7', changefreq: 'monthly' },
   { loc: '/compliance', priority: '0.4', changefreq: 'yearly' },
 ];
