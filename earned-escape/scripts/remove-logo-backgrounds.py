@@ -17,7 +17,7 @@ DEST_DIR = r"F:\Projects\githubprojects\websites\earned-escape\public\images\log
 LOGOS = [
     ("ee_about_logo.png", "ee-about-logo.png"),
     ("ee_book_now_logo.png", "ee-book-now-logo.png"),
-    ("ee_disney_logo.png", "ee-disney-logo.png"),
+    ("ee_disney_logo.png", "ee-castle-mark.png"),  # wordmark removed by hand 2026-10-12; regenerating would restore it
     ("ee_facebook_banner_logo.png", "ee-facebook-banner-logo.png"),
     ("ee_profile_logo.png", "ee-profile-logo.png"),
     ("ee_royal_caribbean_logo.png", "ee-royal-caribbean-logo.png"),

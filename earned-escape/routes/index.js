@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const site = require('../config/site');
+const sportsEvents = require('../config/sports-events');
 
 const { Resend } = require('resend');
 const { getResend } = require('../lib/resend-client');
@@ -13,6 +14,21 @@ const chinaChecklist = require('../lib/china-checklist');
 
 const TO_EMAIL = 'cbetancourt@castledreamstravel.com';
 const FROM_EMAIL = 'Chuck Betancourt <cbetancourt@castledreamstravel.com>';
+// Free-guide emails may send from earnedescape.agency (Castle Dreams guidelines,
+// Chuck 2026-10-26: only booking emails must come from castledreamstravel.com).
+// Replies still go to Chuck's Castle Dreams inbox.
+const GUIDE_FROM_EMAIL = 'Chuck Betancourt <guide@earnedescape.agency>';
+
+// The Resend SDK reports a rejected send (unverified domain, bad key, and so
+// on) in its return value instead of throwing, so check it explicitly.
+async function sendOrThrow(resend, opts) {
+  const result = await resend.emails.send(opts);
+  if (result?.error) {
+    const e = result.error;
+    throw new Error(`Resend rejected send to ${opts.to}: ${e.name || 'error'}: ${e.message || JSON.stringify(e)}`);
+  }
+  return result;
+}
 
 function escapeHtml(str) {
   if (!str) return '';
@@ -159,6 +175,17 @@ router.get('/theme-parks', (req, res) => {
   });
 });
 
+router.get('/sports', (req, res) => {
+  res.render('pages/sports.njk', {
+    site,
+    bodyClass: 'dest-page sports-page',
+    sports: sportsEvents,
+    title: 'Sports Event Travel Packages | Earned Escape',
+    description: 'Sports event travel packages through Roadtrips: Rose Bowl, Super Bowl, Masters, Kentucky Derby, Indy 500, Monaco Grand Prix, Wimbledon, Ryder Cup and more. Request a quote with Chuck.',
+    canonical: '/sports',
+  });
+});
+
 router.get('/universal', (req, res) => {
   res.render('pages/universal.njk', {
     site,
@@ -278,7 +305,7 @@ router.post('/api/guide', async (req, res) => {
 
     // 1. Notify Chuck
     await resend.emails.send({
-      from: FROM_EMAIL,
+      from: GUIDE_FROM_EMAIL,
       to: TO_EMAIL,
       replyTo: leadEmail,
       subject: '[Earned Escape] Guide Downloaded: ' + sanitizeForHeader(name || leadEmail),
@@ -298,7 +325,8 @@ router.post('/api/guide', async (req, res) => {
 
         const t7 = createToken({ email: leadEmail, guideType: guide.id });
         const r7 = await resend.emails.send({
-          from: FROM_EMAIL,
+          from: GUIDE_FROM_EMAIL,
+          replyTo: TO_EMAIL,
           to: leadEmail,
           subject: templates.day7.subject,
           html: templates.day7.html({ name, guide, token: t7 }),
@@ -310,7 +338,8 @@ router.post('/api/guide', async (req, res) => {
 
         const t3 = createToken({ email: leadEmail, guideType: guide.id, scheduledIds: [scheduled.day7] });
         const r3 = await resend.emails.send({
-          from: FROM_EMAIL,
+          from: GUIDE_FROM_EMAIL,
+          replyTo: TO_EMAIL,
           to: leadEmail,
           subject: templates.day3.subject,
           html: templates.day3.html({ name, guide, token: t3 }),
@@ -339,8 +368,14 @@ router.post('/api/guide', async (req, res) => {
 
     // 4. Deliver the PDF to the lead
     const td = createToken({ email: leadEmail, guideType: guide.id, scheduledIds: [scheduled.day3, scheduled.day7] });
-    await resend.emails.send({
-      from: FROM_EMAIL,
+    // The China checklist send is checked for a Resend rejection (sendOrThrow)
+    // so a failed send shows the reader an error instead of a false success.
+    const deliverySend = guide.id === 'china'
+      ? (opts) => sendOrThrow(resend, opts)
+      : (opts) => resend.emails.send(opts);
+    await deliverySend({
+      from: GUIDE_FROM_EMAIL,
+      replyTo: TO_EMAIL,
       to: leadEmail,
       subject: templates.delivery.subject,
       html: templates.delivery.html({ name, guide, token: td }),
@@ -644,22 +679,29 @@ router.post('/api/quiz', async (req, res) => {
 
     const resend = new Resend(process.env.RESEND_API_KEY);
 
-    // 1 & 2. Notify Chuck and send results to the lead — independent sends, run in parallel.
-    await Promise.all([
-      resend.emails.send({
-        from: FROM_EMAIL,
+    // 1. Send results to the lead. If Resend rejects this, the lead got
+    // nothing, so report the failure instead of a false success.
+    await sendOrThrow(resend, {
+      from: GUIDE_FROM_EMAIL,
+      replyTo: TO_EMAIL,
+      to: email.trim(),
+      subject: `Your custom escape: ${safeTitle}`,
+      html: resultsHtml,
+    });
+
+    // 2. Notify Chuck. The lead already has their results, so a failure here
+    // is logged loudly rather than shown to the lead (a retry would resend).
+    try {
+      await sendOrThrow(resend, {
+        from: GUIDE_FROM_EMAIL,
         to: TO_EMAIL,
         replyTo: email.trim(),
-        subject: `[Earned Escape] Quiz Result: ${safeTitle} – ${sanitizeForHeader(name)}`,
+        subject: `[Earned Escape] Quiz Result: ${safeTitle} - ${sanitizeForHeader(name)}`,
         html: notifyHtml,
-      }),
-      resend.emails.send({
-        from: FROM_EMAIL,
-        to: email.trim(),
-        subject: `Your custom escape: ${safeTitle}`,
-        html: resultsHtml,
-      }),
-    ]);
+      });
+    } catch (notifyErr) {
+      console.error('Quiz lead notification to Chuck failed:', notifyErr);
+    }
 
     // 3. Add to the Resend Audience so this lead is reachable for future sends
     await addToResendAudience(resend, name, email);
@@ -668,8 +710,9 @@ router.post('/api/quiz', async (req, res) => {
     // Scheduling failures must not fail the immediate results delivery.
     try {
       const day3 = new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString();
-      await resend.emails.send({
-        from: FROM_EMAIL,
+      await sendOrThrow(resend, {
+        from: GUIDE_FROM_EMAIL,
+        replyTo: TO_EMAIL,
         to: email.trim(),
         subject: 'Still thinking about that escape?',
         html: quizNurtureEmailHtml(name.trim(), safeTitle),

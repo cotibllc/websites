@@ -1,4 +1,5 @@
 {
+  "ignoreCommand": "git diff --quiet HEAD^ HEAD -- .",
   "framework": null,
   "installCommand": "npm install",
   "buildCommand": "npm run build",
@@ -7,6 +8,10 @@
       "includeFiles": "{views/**,linktree/**,public/**}"
     }
   },
+  "redirects": [
+    { "source": "/plan", "destination": "https://app.tern.travel/public/forms/gavAix0aLb2kpNxgR-T-zw/responses/new", "permanent": false },
+    { "source": "/plan/", "destination": "https://app.tern.travel/public/forms/gavAix0aLb2kpNxgR-T-zw/responses/new", "permanent": false }
+  ],
   "rewrites": [
     {
       "source": "/(.*)",

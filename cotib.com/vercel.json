@@ -1,10 +1,20 @@
 {
+  "ignoreCommand": "git diff --quiet HEAD^ HEAD -- .",
   "framework": null,
   "buildCommand": "npm run build",
   "outputDirectory": "www",
   "installCommand": "npm install",
   "cleanUrls": true,
   "trailingSlash": false,
+  "functions": {
+    "api/dtnt/download.js": { "includeFiles": "private/dtnt/*.pdf" }
+  },
+  "rewrites": [
+    { "source": "/do-the-next-thing/free", "destination": "/api/dtnt/signup" },
+    { "source": "/do-the-next-thing/free/confirm", "destination": "/api/dtnt/confirm" },
+    { "source": "/do-the-next-thing/free/dl/:token", "destination": "/api/dtnt/download?t=:token" },
+    { "source": "/do-the-next-thing/free/unsubscribe", "destination": "/api/dtnt/unsubscribe" }
+  ],
   "headers": [
     {
       "source": "/(.*)",
@@ -37,6 +47,21 @@
       "source": "/fontawesome/(.*)",
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    },
+    {
+      "source": "/do-the-next-thing/free(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "no-store" },
+        { "key": "X-Robots-Tag", "value": "noindex, nofollow" },
+        { "key": "Referrer-Policy", "value": "no-referrer" }
+      ]
+    },
+    {
+      "source": "/api/dtnt/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "no-store" },
+        { "key": "X-Robots-Tag", "value": "noindex, nofollow" }
       ]
     }
   ]
