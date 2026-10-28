@@ -305,6 +305,67 @@ test('F11.6 Turnstile failure, missing token and wrong hostname all fail with th
   assert.equal(world.emails.length, 0);
 });
 
+// Capture the JSON log lines a handler writes while fn runs.
+async function captureLogs(fn) {
+  const lines = [];
+  const orig = console.log;
+  console.log = (...a) => { lines.push(a.join(' ')); };
+  try { await fn(); } finally { console.log = orig; }
+  return lines.map((l) => { try { return JSON.parse(l); } catch { return { raw: l }; } });
+}
+
+test('Turnstile failures each get their own code and message, and the log carries Cloudflare error-codes', async () => {
+  const cases = [
+    { mode: 'fail', status: 400, code: 'turnstile', reason: 'failed', codes: ['invalid-input-response'], msg: "We couldn't confirm you're human. Refresh the page and try again." },
+    { mode: 'badsecret', status: 503, code: 'turnstile_config', reason: 'config', codes: ['invalid-input-secret'], msg: "Signup isn't working on our end right now. Try again later, or email customerservice@cotib.com." },
+    { mode: 'expired', status: 400, code: 'turnstile_expired', reason: 'expired', codes: ['timeout-or-duplicate'], msg: 'The human check timed out. Wait for it to say Success again, then send.' },
+    { mode: 'down', status: 502, code: 'turnstile_unavailable', reason: 'unreachable', codes: [], msg: "We couldn't reach the human check just now. Wait a minute and try again." },
+    { mode: 'badhost', status: 400, code: 'turnstile', reason: 'hostname', codes: [], msg: "We couldn't confirm you're human. Refresh the page and try again.", hostname: 'evil.example' },
+  ];
+  for (const c of cases) {
+    world.turnstile = c.mode;
+    let res, data;
+    const logs = await captureLogs(async () => { res = await signup(good()); data = await res.json(); });
+    assert.equal(res.status, c.status, c.mode);
+    assert.deepEqual({ code: data.code, error: data.error }, { code: c.code, error: c.msg }, c.mode);
+    const line = logs.find((l) => l.event === 'dtnt.signup.turnstile_failed');
+    assert.ok(line, `${c.mode}: no turnstile_failed log line`);
+    assert.equal(line.reason, c.reason, c.mode);
+    assert.deepEqual(line.errorCodes, c.codes, c.mode);
+    if (c.hostname) assert.equal(line.hostname, c.hostname);
+    const all = JSON.stringify(logs);
+    assert.ok(!all.includes('mock-turnstile-secret'), `${c.mode}: secret leaked into the log`);
+    assert.ok(!all.includes('tok-pass'), `${c.mode}: token leaked into the log`);
+    assert.ok(!all.includes('reader@example.com'), `${c.mode}: email leaked into the log`);
+  }
+  assert.equal(world.emails.length, 0);
+});
+
+test('siteverify gets the trimmed secret and the CF-Connecting-IP visitor address', async () => {
+  process.env.TURNSTILE_SECRET_KEY = '  mock-turnstile-secret\n';
+  const res = await realFetch(`${base}/do-the-next-thing/free`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', Accept: 'application/json', Origin: base, Host: new URL(base).host, 'X-Forwarded-For': '172.70.1.1', 'CF-Connecting-IP': '203.0.113.9' },
+    body: JSON.stringify(good()),
+  });
+  assert.equal(res.status, 200);
+  const ts = world.calls.find((c) => c.host === 'challenges.cloudflare.com');
+  assert.equal(ts.body.secret, 'mock-turnstile-secret');
+  assert.equal(ts.body.remoteip, '203.0.113.9');
+});
+
+test('a bad Origin gets its own message and a log line naming the Origin and host it saw', async () => {
+  let r, d;
+  const logs = await captureLogs(async () => { r = await signup(good(), { origin: 'https://evil.example' }); d = await r.json(); });
+  assert.equal(r.status, 403);
+  assert.deepEqual(d, { error: 'This form only works on www.cotib.com. Open www.cotib.com/do-the-next-thing and try again.', code: 'origin' });
+  const line = logs.find((l) => l.event === 'dtnt.signup.bad_origin');
+  assert.equal(line.origin, 'https://evil.example');
+  assert.equal(line.requestHost, new URL(base).host);
+  const none = await captureLogs(async () => { await signup(good(), { origin: null }); });
+  assert.equal(none.find((l) => l.event === 'dtnt.signup.bad_origin').origin, '(none)');
+});
+
 test('form checks: bad email, box not checked, bad origin, honeypot, too many tries', async () => {
   let r = await signup({ ...good(), email: 'not-an-email' });
   assert.equal(r.status, 400);

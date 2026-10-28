@@ -116,4 +116,5 @@ Env vars (set in Vercel by Chuck; the handlers fail closed if any is missing): `
 
 - Edit page copy in `scripts/build-dtnt-pages.js`, then run `npm run build:dtnt`.
 - Local tests (Resend and Turnstile mocked): `npm run test:dtnt`.
+- Turnstile failures log `dtnt.signup.turnstile_failed` with `reason` and Cloudflare's `errorCodes`, `hostname`, `action` and `challengeAgeSec` (never the secret or token). `invalid-input-secret` or `missing-input-secret` (reason `config`) means `TURNSTILE_SECRET_KEY` in Vercel Production is not the secret of widget `0x4AAAAAAC2VHJDJh24KBJBW`. `invalid-input-response` on a fresh Success token usually means the same: a secret from a different widget. `timeout-or-duplicate` means an expired or reused token. A refused Origin logs `dtnt.signup.bad_origin` with the Origin and host it saw.
 - Against a deployment: `node scripts/test-dtnt-preview.mjs <base-url>` (see the header of that file for the token and live levels).
