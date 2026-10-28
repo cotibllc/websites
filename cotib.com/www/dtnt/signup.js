@@ -10,10 +10,18 @@
   var MSG = {
     email: "That email address doesn't look right. Check it and try again.",
     consent: 'Check the box so we can email you the sampler.',
-    turnstile: "We couldn't confirm you're human. Refresh the page and try again.",
+    // No token yet: the widget is still checking, or was just reset.
+    pending: 'Wait for the human check to say Success, then send.',
     network: "We couldn't send the email just now. Wait a minute and try again."
   };
   function show(msg) { err.textContent = msg; err.classList.add('is-on'); err.focus(); }
+  // A Turnstile token is single use. After any refused or failed send, get a
+  // fresh one so the next try never reuses the old token.
+  function freshToken() {
+    var tsInput = form.querySelector('[name="cf-turnstile-response"]');
+    if (tsInput) tsInput.value = '';
+    if (window.turnstile) { try { window.turnstile.reset(); } catch (x) { /* widget not ready */ } }
+  }
   form.addEventListener('submit', async function (e) {
     e.preventDefault();
     err.classList.remove('is-on');
@@ -22,7 +30,7 @@
     if (!form.consent.checked) return show(MSG.consent);
     var tsInput = form.querySelector('[name="cf-turnstile-response"]');
     var token = tsInput ? tsInput.value : '';
-    if (!token) return show(MSG.turnstile);
+    if (!token) return show(MSG.pending);
     btn.disabled = true;
     try {
       var res = await fetch(form.action, {
@@ -39,10 +47,10 @@
         return;
       }
       show(data.error || MSG.network);
-      if (window.turnstile) window.turnstile.reset();
+      freshToken();
     } catch (x) {
       show(MSG.network);
-      if (window.turnstile) window.turnstile.reset();
+      freshToken();
     } finally {
       btn.disabled = false;
     }

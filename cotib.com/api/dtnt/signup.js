@@ -18,6 +18,12 @@ const MSG = {
   email: "That email address doesn't look right. Check it and try again.",
   consent: 'Check the box so we can email you the sampler.',
   turnstile: "We couldn't confirm you're human. Refresh the page and try again.",
+  // Each of these used to show the "human" line above. Separate copy and
+  // codes so the person, and the log, can tell the cases apart.
+  origin: 'This form only works on www.cotib.com. Open www.cotib.com/do-the-next-thing and try again.',
+  turnstile_expired: 'The human check timed out. Wait for it to say Success again, then send.',
+  turnstile_unavailable: "We couldn't reach the human check just now. Wait a minute and try again.",
+  turnstile_config: "Signup isn't working on our end right now. Try again later, or email customerservice@cotib.com.",
   rate: 'Too many tries from here. Wait a minute and try again.',
   send: "We couldn't send the email just now. Wait a minute and try again.",
   paused: "The free sampler isn't available right now. Try again later, or email customerservice@cotib.com.",
@@ -58,8 +64,15 @@ module.exports = async function handler(req, res) {
   }
 
   if (!originAllowed(req)) {
-    http.log('dtnt.signup.bad_origin');
-    return reply(403, 'turnstile');
+    // Header values only (no IP, no email), so the log shows which host or
+    // Origin did not match.
+    http.log('dtnt.signup.bad_origin', {
+      origin: http.header(req, 'origin').slice(0, 200) || '(none)',
+      requestHost: http.requestHost(req),
+      host: http.header(req, 'host'),
+      forwardedHost: http.header(req, 'x-forwarded-host') || undefined,
+    });
+    return reply(403, 'origin');
   }
 
   const ip = http.clientIp(req);
@@ -78,9 +91,23 @@ module.exports = async function handler(req, res) {
   if (!consent) return reply(400, 'consent');
 
   const turnstileToken = b.turnstileToken || b['cf-turnstile-response'];
-  const ts = await verifyTurnstile(turnstileToken, { ip, host: http.requestHost(req) });
+  // cotib.com sits behind Cloudflare's proxy, so CF-Connecting-IP is the
+  // visitor; x-forwarded-for is a Cloudflare edge address.
+  const tsIp = http.header(req, 'cf-connecting-ip') || ip;
+  const ts = await verifyTurnstile(turnstileToken, { ip: tsIp, host: http.requestHost(req) });
   if (!ts.ok) {
-    http.log('dtnt.signup.turnstile_failed', { reason: ts.reason });
+    http.log('dtnt.signup.turnstile_failed', {
+      reason: ts.reason,
+      errorCodes: ts.errorCodes,
+      hostname: ts.hostname,
+      action: ts.action,
+      challengeAgeSec: ts.challengeAgeSec,
+      requestHost: http.requestHost(req),
+      error: ts.error,
+    });
+    if (ts.reason === 'config') return reply(503, 'turnstile_config');
+    if (ts.reason === 'unreachable') return reply(502, 'turnstile_unavailable');
+    if (ts.reason === 'expired') return reply(400, 'turnstile_expired');
     return reply(400, 'turnstile');
   }
 

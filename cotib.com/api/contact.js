@@ -38,16 +38,24 @@ module.exports = async function handler(req, res) {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                secret: process.env.TURNSTILE_SECRET_KEY,
+                secret: String(process.env.TURNSTILE_SECRET_KEY || '').trim(),
                 response: turnstileToken,
             }),
         });
         verifyData = await verifyRes.json();
-    } catch {
+    } catch (err) {
+        console.log(JSON.stringify({ at: new Date().toISOString(), event: 'contact.turnstile_unreachable', error: err && err.name }));
         return res.status(500).json({ error: 'Unable to complete security check. Please try again.' });
     }
 
     if (!verifyData.success) {
+        // Cloudflare's error-codes only, never the secret or the token.
+        console.log(JSON.stringify({
+            at: new Date().toISOString(),
+            event: 'contact.turnstile_failed',
+            errorCodes: Array.isArray(verifyData['error-codes']) ? verifyData['error-codes'].slice(0, 5) : [],
+            hostname: verifyData.hostname,
+        }));
         return res.status(400).json({ error: 'Security check failed. Please refresh the page and try again.' });
     }
 

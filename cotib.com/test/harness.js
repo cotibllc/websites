@@ -51,6 +51,9 @@ function createMockWorld({ turnstile = 'pass', failSend = false } = {}) {
     if (u.host === 'challenges.cloudflare.com') {
       if (world.turnstile === 'pass' && !String(body.response).startsWith('not-a-real')) return reply(200, { success: true, hostname: '127.0.0.1' });
       if (world.turnstile === 'badhost') return reply(200, { success: true, hostname: 'evil.example' });
+      if (world.turnstile === 'badsecret') return reply(200, { success: false, 'error-codes': ['invalid-input-secret'] });
+      if (world.turnstile === 'expired') return reply(200, { success: false, 'error-codes': ['timeout-or-duplicate'] });
+      if (world.turnstile === 'down') throw new Error('mock siteverify down');
       return reply(200, { success: false, 'error-codes': ['invalid-input-response'] });
     }
     if (u.host !== 'api.resend.com') throw new Error(`unexpected fetch ${url}`);
