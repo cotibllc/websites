@@ -12,7 +12,7 @@ export default function PrivacyPage() {
       <div className="mx-auto content-max px-4 py-10 max-w-3xl">
         <div className="surface-card p-8">
           <h1 className="text-2xl font-bold mb-1">Privacy Policy</h1>
-          <p className="text-sm text-text-secondary mb-8">Effective date: March 31, 2025</p>
+          <p className="text-sm text-text-secondary mb-8">Effective date: March 31, 2025. Last updated: October 29, 2026.</p>
 
           <div className="prose prose-sm max-w-none text-text-primary space-y-8">
 
@@ -32,16 +32,22 @@ export default function PrivacyPage() {
               <h2 className="text-lg font-semibold mb-2">What data we collect</h2>
               <ul className="list-disc pl-5 space-y-2">
                 <li>
-                  <strong>Email address</strong> — if you join the Field Notes distribution list or
-                  submit a contact form.
+                  <strong>Email address</strong> — if you join the Field Notes distribution list, ask
+                  to be notified when the Company Store opens, or submit the contact form.
                 </li>
                 <li>
-                  <strong>Name and message content</strong> — if you submit the contact form.
+                  <strong>Name, subject and message</strong> — if you submit the contact form.
                 </li>
                 <li>
-                  <strong>Usage data</strong> — standard server logs may include your IP
-                  address, browser type, referring URL, and pages visited. This data is not
-                  linked to your identity.
+                  <strong>Usage data</strong> — our hosting and network providers keep server logs
+                  of your IP address, browser type, referring URL, and the pages you request. We
+                  do not link these logs to your name or email address.
+                </li>
+                <li>
+                  <strong>Analytics data:</strong> Google Analytics records the pages you view, how
+                  you reached the site, your device and browser type, your approximate location
+                  (worked out from your IP address), and a random ID kept in a cookie so repeat
+                  visits can be counted. See Cookies below.
                 </li>
               </ul>
               <p className="mt-3">We do not collect payment information, government IDs, or sensitive personal data.</p>
@@ -51,7 +57,10 @@ export default function PrivacyPage() {
               <h2 className="text-lg font-semibold mb-2">How we use your data</h2>
               <ul className="list-disc pl-5 space-y-2">
                 <li>To send you Field Notes when filed (if on the distribution list).</li>
+                <li>To tell you when the Company Store opens (if on the store notify list).</li>
                 <li>To respond to contact form submissions.</li>
+                <li>To keep automated spam out of our forms.</li>
+                <li>To count visits and see which pages people read.</li>
                 <li>To maintain and improve the site.</li>
               </ul>
               <p className="mt-3">We do not sell, rent, or share your personal data with third parties for marketing purposes.</p>
@@ -62,10 +71,36 @@ export default function PrivacyPage() {
               <p>We use the following third-party services that may process your data:</p>
               <ul className="list-disc pl-5 space-y-2 mt-2">
                 <li>
-                  <strong>Kit (formerly ConvertKit)</strong> — email delivery for the Field Notes distribution list.
-                  Subscriber data is stored on Kit&apos;s servers. See{" "}
+                  <strong>Kit (formerly ConvertKit)</strong> — runs both of our email lists: the Field
+                  Notes distribution list and the Company Store notify list. Kit stores your email
+                  address, which list you joined, when you joined, and any tags we add. Every Kit
+                  email has an unsubscribe link at the bottom that removes you from that list. See{" "}
                   <a href="https://kit.com/privacy" target="_blank" rel="noopener noreferrer" className="text-linkedin-blue hover:underline">
                     Kit&apos;s privacy policy
+                  </a>.
+                </li>
+                <li>
+                  <strong>Resend:</strong> sends contact form submissions to our inbox. Your name,
+                  email address, subject and message pass through Resend, which keeps a copy for a
+                  limited time under its own retention policy. See{" "}
+                  <a href="https://resend.com/legal/privacy-policy" target="_blank" rel="noopener noreferrer" className="text-linkedin-blue hover:underline">
+                    Resend&apos;s privacy policy
+                  </a>.
+                </li>
+                <li>
+                  <strong>Cloudflare:</strong> our network provider, so it handles every request to
+                  the site, including your IP address. Its Turnstile check runs on any form that shows
+                  a &ldquo;Verify you are human&rdquo; box: it reads signals from your browser to
+                  tell people from bots and tells us whether the check passed. See{" "}
+                  <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener noreferrer" className="text-linkedin-blue hover:underline">
+                    Cloudflare&apos;s privacy policy
+                  </a>.
+                </li>
+                <li>
+                  <strong>Google Analytics:</strong> measures visits to the site, as described under
+                  Cookies. See{" "}
+                  <a href="https://policies.google.com/technologies/partner-sites" target="_blank" rel="noopener noreferrer" className="text-linkedin-blue hover:underline">
+                    how Google uses information from sites that use its services
                   </a>.
                 </li>
                 <li>
@@ -80,16 +115,27 @@ export default function PrivacyPage() {
             <section>
               <h2 className="text-lg font-semibold mb-2">Cookies</h2>
               <p>
-                This site does not use tracking cookies or advertising cookies. We may use
-                essential session cookies required for basic site functionality. No cookie
-                consent banner is currently required as we do not use non-essential cookies.
+                This site uses Google Analytics, which sets two cookies on corphardcore.com:{" "}
+                _ga and _ga_RYY0GT1TLS. They hold a random ID, not your
+                name or email address, and last up to two years unless you clear them. We use them
+                only to count visits. We do not use advertising cookies.
+              </p>
+              <p className="mt-2">
+                To opt out, install{" "}
+                <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener noreferrer" className="text-linkedin-blue hover:underline">
+                  Google&apos;s Analytics opt-out add-on
+                </a>
+                , or block or clear cookies for corphardcore.com in your browser settings. The site
+                works the same without them.
               </p>
             </section>
 
             <section>
               <h2 className="text-lg font-semibold mb-2">Data retention</h2>
               <p>
-                Distribution-list data is retained until you ask to be removed. Contact form
+                Email list data (Field Notes and the Company Store notify list) is kept until you
+                unsubscribe or ask us to remove it. Google Analytics data is kept for the retention
+                period set in our Analytics account, then deleted by Google. Contact form
                 submissions are retained only as long as necessary to respond. You may request
                 deletion at any time.
               </p>
@@ -111,8 +157,9 @@ export default function PrivacyPage() {
                 <li><strong>Right to object</strong> — object to processing based on legitimate interests.</li>
               </ul>
               <p className="mt-3">
-                Our legal basis for processing distribution-list data is <strong>consent</strong> (Article 6(1)(a) GDPR).
-                You may withdraw consent at any time by contacting us.
+                Our legal basis for processing email list data is <strong>consent</strong> (Article 6(1)(a) GDPR).
+                You may withdraw consent at any time with the unsubscribe link in any list email, or
+                by contacting us.
               </p>
               <p className="mt-2">
                 To exercise any of these rights, contact us at{" "}
