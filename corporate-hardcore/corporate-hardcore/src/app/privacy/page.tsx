@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "Privacy Policy | Corporate Hardcore",
+  title: "Privacy Policy",
   description: "Privacy policy for Corporate Hardcore.",
   alternates: {
     canonical: "/privacy",
