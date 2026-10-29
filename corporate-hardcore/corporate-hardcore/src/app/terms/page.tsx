@@ -1,3 +1,5 @@
+import EmailLink from "@/components/EmailLink";
+
 export const metadata = {
   title: "Terms of Use | Corporate Hardcore",
   description: "Terms of use for Corporate Hardcore.",
@@ -127,9 +129,7 @@ export default function TermsPage() {
               <h2 className="text-lg font-semibold mb-2">Contact</h2>
               <p>
                 Questions about these terms:{" "}
-                <a href="mailto:hello@corphardcore.com" className="text-linkedin-blue hover:underline">
-                  hello@corphardcore.com
-                </a>
+                <EmailLink email="hello@corphardcore.com" className="text-linkedin-blue hover:underline" />
               </p>
             </section>
 

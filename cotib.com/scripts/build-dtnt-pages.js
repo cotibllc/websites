@@ -242,7 +242,7 @@ const landing = page({
             <li>Not affiliated with or endorsed by SpaceXAI or Cursor.</li>
             <li>Not affiliated with or endorsed by Dean Graziosi or Mastermind.com.</li>
             <li>Privacy: how we handle your email is at <a href="/do-the-next-thing/privacy">cotib.com/do-the-next-thing/privacy</a>.</li>
-            <li>Questions: <a href="mailto:customerservice@cotib.com">customerservice@cotib.com</a></li>
+            <li>Questions: <!--email_off--><a href="mailto:customerservice@cotib.com">customerservice@cotib.com</a><!--/email_off--></li>
           </ul>
           <p class="m0">A COTIB LLC product.</p>
         </div>
@@ -295,13 +295,13 @@ const privacy = page({
           <h2>Your choices and rights</h2>
           <ul>
             <li><strong>Unsubscribe:</strong> use the link in any of our emails. It takes effect right away.</li>
-            <li><strong>Access, correction, or deletion:</strong> email <a href="mailto:customerservice@cotib.com">customerservice@cotib.com</a>. If you ask us to delete your sampler contact, we'll delete it from Resend. After that we no longer have a record that you unsubscribed, but you're still only added back if you sign up and click a new confirm link.</li>
+            <li><strong>Access, correction, or deletion:</strong> email <!--email_off--><a href="mailto:customerservice@cotib.com">customerservice@cotib.com</a><!--/email_off-->. If you ask us to delete your sampler contact, we'll delete it from Resend. After that we no longer have a record that you unsubscribed, but you're still only added back if you sign up and click a new confirm link.</li>
             <li>Depending on where you live, you may have other rights over your data. Email us and we'll help.</li>
             <li><strong>Do Not Track:</strong> our pages don't change behavior based on Do Not Track signals. We don't track you across other sites.</li>
           </ul>
 
           <h2>Contact</h2>
-          <p>COTIB LLC, 155 Willowbrook Blvd, Ste 110 #2800, Wayne NJ 07470, United States<br><a href="mailto:customerservice@cotib.com">customerservice@cotib.com</a></p>
+          <p>COTIB LLC, 155 Willowbrook Blvd, Ste 110 #2800, Wayne NJ 07470, United States<br><!--email_off--><a href="mailto:customerservice@cotib.com">customerservice@cotib.com</a><!--/email_off--></p>
 
           <h2>Changes</h2>
           <p>Effective October 29, 2026.</p>

@@ -115,7 +115,7 @@ ${action}
 }
 
 const BACK = '<a href="/do-the-next-thing">cotib.com/do-the-next-thing</a>';
-const MAIL = `<a href="mailto:${SUPPORT_EMAIL}">${SUPPORT_EMAIL}</a>`;
+const MAIL = `<!--email_off--><a href="mailto:${SUPPORT_EMAIL}">${SUPPORT_EMAIL}</a><!--/email_off-->`;
 
 const states = {
   // Approved copy: free-tier copy section 3, confirm page success.

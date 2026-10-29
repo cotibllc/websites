@@ -2,6 +2,7 @@
 
 import { useState, useRef } from "react";
 import { Turnstile } from "@marsidev/react-turnstile";
+import EmailLink from "@/components/EmailLink";
 import type { TurnstileInstance } from "@marsidev/react-turnstile";
 
 interface Props {
@@ -110,9 +111,7 @@ export default function ContactFormIntranet({ subjectOptions }: Props) {
       ) : (
         <p className="font-mono text-[11px] text-synergy-amber" role="alert">
           Contact form is temporarily unavailable. Email{" "}
-          <a href={`mailto:${fallbackEmail}`} className="underline">
-            {fallbackEmail}
-          </a>
+          <EmailLink email={fallbackEmail} className="underline" />
           .
         </p>
       )}
@@ -120,7 +119,7 @@ export default function ContactFormIntranet({ subjectOptions }: Props) {
       {status === "error" && (
         <p className="font-mono text-[11px] text-red-600" role="alert">
           {errorMessage} Try again or email{" "}
-          <a href={`mailto:${fallbackEmail}`} className="underline">{fallbackEmail}</a>.
+          <EmailLink email={fallbackEmail} className="underline" />.
         </p>
       )}
 

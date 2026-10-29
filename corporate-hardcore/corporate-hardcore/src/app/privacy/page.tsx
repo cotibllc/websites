@@ -1,3 +1,5 @@
+import EmailLink from "@/components/EmailLink";
+
 export const metadata = {
   title: "Privacy Policy | Corporate Hardcore",
   description: "Privacy policy for Corporate Hardcore.",
@@ -22,9 +24,7 @@ export default function PrivacyPage() {
                 Corporate Hardcore is a satirical media project operated by Chuck Morrison.
                 This site is located at <strong>corphardcore.com</strong>. Questions about
                 this policy can be directed to{" "}
-                <a href="mailto:hello@corphardcore.com" className="text-linkedin-blue hover:underline">
-                  hello@corphardcore.com
-                </a>.
+                <EmailLink email="hello@corphardcore.com" className="text-linkedin-blue hover:underline" />.
               </p>
             </section>
 
@@ -116,9 +116,7 @@ export default function PrivacyPage() {
               </p>
               <p className="mt-2">
                 To exercise any of these rights, contact us at{" "}
-                <a href="mailto:hello@corphardcore.com" className="text-linkedin-blue hover:underline">
-                  hello@corphardcore.com
-                </a>. We will respond within 30 days.
+                <EmailLink email="hello@corphardcore.com" className="text-linkedin-blue hover:underline" />. We will respond within 30 days.
               </p>
             </section>
 
@@ -137,9 +135,7 @@ export default function PrivacyPage() {
               </ul>
               <p className="mt-3">
                 To submit a CCPA request, contact us at{" "}
-                <a href="mailto:hello@corphardcore.com" className="text-linkedin-blue hover:underline">
-                  hello@corphardcore.com
-                </a>.
+                <EmailLink email="hello@corphardcore.com" className="text-linkedin-blue hover:underline" />.
               </p>
             </section>
 
@@ -151,9 +147,7 @@ export default function PrivacyPage() {
                 with the Personal Information Protection and Electronic Documents Act (PIPEDA).
                 You have the right to access and correct your personal information. Contact us
                 at{" "}
-                <a href="mailto:hello@corphardcore.com" className="text-linkedin-blue hover:underline">
-                  hello@corphardcore.com
-                </a>{" "}
+                <EmailLink email="hello@corphardcore.com" className="text-linkedin-blue hover:underline" />{" "}
                 to make a request.
               </p>
             </section>
@@ -180,9 +174,7 @@ export default function PrivacyPage() {
               <h2 className="text-lg font-semibold mb-2">Contact</h2>
               <p>
                 Questions, requests, or concerns:{" "}
-                <a href="mailto:hello@corphardcore.com" className="text-linkedin-blue hover:underline">
-                  hello@corphardcore.com
-                </a>
+                <EmailLink email="hello@corphardcore.com" className="text-linkedin-blue hover:underline" />
               </p>
             </section>
 
