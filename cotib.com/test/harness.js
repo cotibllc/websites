@@ -116,6 +116,9 @@ function startServer({ port = 0 } = {}) {
       const ct = req.headers['content-type'] || '';
       req.body = !raw ? undefined : ct.includes('application/json') ? JSON.parse(raw) : ct.includes('urlencoded') ? Object.fromEntries(new URLSearchParams(raw)) : raw;
       req.query = Object.fromEntries(target.searchParams);
+      // Vercel's res.status() and res.json() helpers, used by api/contact.js.
+      res.status = (code) => { res.statusCode = code; return res; };
+      res.json = (obj) => { res.setHeader('Content-Type', 'application/json; charset=utf-8'); res.end(JSON.stringify(obj)); return res; };
       try {
         await loadHandler(target.pathname.replace(/^\/api\//, ''))(req, res);
       } catch (err) {
