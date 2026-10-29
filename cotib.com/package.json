@@ -13,7 +13,7 @@
     "test:dtnt:preview": "node scripts/test-dtnt-preview.mjs",
     "build:dtnt": "node scripts/build-dtnt-pages.js",
     "check:syntax": "find api lib scripts \\( -name '*.js' -o -name '*.mjs' \\) -print0 | xargs -0 -n1 node --check",
-    "test": "npm run test:dtnt"
+    "test": "npm run test:dtnt && node --test test/site-*.test.js"
   },
   "dependencies": {
     "resend": "^4.0.0"
