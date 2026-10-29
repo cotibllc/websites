@@ -16,11 +16,16 @@ export default function DistributionList() {
   const [honeypot, setHoneypot] = useState("");
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
   const turnstileRef = useRef<TurnstileInstance>(null);
+  // The widget stays hidden unless Cloudflare wants an interaction, so a short
+  // status line says why the button is still disabled.
+  const [checkFailed, setCheckFailed] = useState(false);
+  const [showingWidget, setShowingWidget] = useState(false);
 
   // A Turnstile token is single use: drop it after every attempt so the button
   // waits for the next Success.
   const discardToken = () => {
     setTurnstileToken(null);
+    setCheckFailed(false);
     turnstileRef.current?.reset();
   };
 
@@ -101,14 +106,27 @@ export default function DistributionList() {
             </button>
           </form>
           {turnstileSiteKey ? (
-            <div className="mt-3">
+            <div>
               <Turnstile
                 ref={turnstileRef}
                 siteKey={turnstileSiteKey}
-                onSuccess={(token) => setTurnstileToken(token)}
+                options={{ appearance: "interaction-only" }}
+                className={showingWidget ? "mt-3" : undefined}
+                onBeforeInteractive={() => setShowingWidget(true)}
+                onAfterInteractive={() => setShowingWidget(false)}
+                onSuccess={(token) => { setTurnstileToken(token); setCheckFailed(false); }}
                 onExpire={() => setTurnstileToken(null)}
-                onError={() => setTurnstileToken(null)}
+                onError={() => { setTurnstileToken(null); setCheckFailed(true); }}
               />
+              {!turnstileToken && !submitting && (
+                <p id="field-notes-check" role="status" aria-live="polite" className="font-mono text-[10px] text-synergy-muted mt-2 tracking-wide">
+                  {checkFailed
+                    ? "Security check could not finish. Refresh the page."
+                    : showingWidget
+                      ? "Complete the security check above to continue."
+                      : "Running security check..."}
+                </p>
+              )}
             </div>
           ) : (
             <p className="font-mono text-[11px] text-synergy-amber mt-2 tracking-wide" role="alert">
