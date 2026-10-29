@@ -5,12 +5,12 @@ import { getSortedJargonData } from "@/lib/jargon";
 export const metadata: Metadata = {
   title: "Corporate Jargon Glossary | Corporate Hardcore",
   description:
-    "Authoritative definitions of corporate jargon from an 18-year insider. What 'circle back,' 'synergy,' 'boil the ocean,' and dozens of other phrases actually mean — and why they exist.",
+    "Authoritative definitions of corporate jargon from an 18-year insider. What 'circle back,' 'synergy,' 'boil the ocean,' and dozens of other phrases actually mean, and why they exist.",
   alternates: { canonical: "/glossary" },
   openGraph: {
     title: "Corporate Jargon Glossary | Corporate Hardcore",
     description:
-      "Authoritative definitions of corporate jargon from an 18-year insider. What these phrases actually mean — and why they exist.",
+      "Authoritative definitions of corporate jargon from an 18-year insider. What these phrases actually mean, and why they exist.",
     url: "/glossary",
     type: "website",
   },
@@ -108,7 +108,7 @@ export default function GlossaryPage() {
             <div className="intranet-card p-5">
               <p className="dept-label mb-2">About This Glossary</p>
               <p className="font-sans text-xs text-synergy-muted leading-relaxed">
-                Every entry is authored by Chuck Morrison — 18 years at the same company,
+                Every entry is authored by Chuck Morrison, 18 years at the same company,
                 now documenting what these phrases actually mean, not what they pretend to mean.
               </p>
               <p className="font-sans text-xs text-synergy-muted leading-relaxed mt-3">

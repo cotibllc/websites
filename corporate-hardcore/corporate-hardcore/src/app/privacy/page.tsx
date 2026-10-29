@@ -69,7 +69,7 @@ export default function PrivacyPage() {
                   </a>.
                 </li>
                 <li>
-                  <strong>Vercel</strong> — website hosting and infrastructure. See{" "}
+                  <strong>Vercel</strong>: website hosting and infrastructure. See{" "}
                   <a href="https://vercel.com/legal/privacy-policy" target="_blank" rel="noopener noreferrer" className="text-linkedin-blue hover:underline">
                     Vercel&apos;s privacy policy
                   </a>.
@@ -97,18 +97,18 @@ export default function PrivacyPage() {
 
             {/* GDPR */}
             <section>
-              <h2 className="text-lg font-semibold mb-2">Your rights (EU/UK — GDPR)</h2>
+              <h2 className="text-lg font-semibold mb-2">Your rights under GDPR (EU/UK)</h2>
               <p>
                 If you are located in the European Union or United Kingdom, you have the
                 following rights under the General Data Protection Regulation (GDPR):
               </p>
               <ul className="list-disc pl-5 space-y-2 mt-2">
-                <li><strong>Right of access</strong> — request a copy of the data we hold about you.</li>
-                <li><strong>Right to rectification</strong> — request correction of inaccurate data.</li>
-                <li><strong>Right to erasure</strong> — request deletion of your personal data.</li>
-                <li><strong>Right to restrict processing</strong> — request that we limit how we use your data.</li>
-                <li><strong>Right to data portability</strong> — request your data in a portable format.</li>
-                <li><strong>Right to object</strong> — object to processing based on legitimate interests.</li>
+                <li><strong>Right of access</strong>: request a copy of the data we hold about you.</li>
+                <li><strong>Right to rectification</strong>: request correction of inaccurate data.</li>
+                <li><strong>Right to erasure</strong>: request deletion of your personal data.</li>
+                <li><strong>Right to restrict processing</strong>: request that we limit how we use your data.</li>
+                <li><strong>Right to data portability</strong>: request your data in a portable format.</li>
+                <li><strong>Right to object</strong>: object to processing based on legitimate interests.</li>
               </ul>
               <p className="mt-3">
                 Our legal basis for processing distribution-list data is <strong>consent</strong> (Article 6(1)(a) GDPR).
@@ -124,16 +124,16 @@ export default function PrivacyPage() {
 
             {/* CCPA */}
             <section>
-              <h2 className="text-lg font-semibold mb-2">Your rights (California — CCPA)</h2>
+              <h2 className="text-lg font-semibold mb-2">Your rights under CCPA (California)</h2>
               <p>
                 If you are a California resident, the California Consumer Privacy Act (CCPA)
                 grants you the following rights:
               </p>
               <ul className="list-disc pl-5 space-y-2 mt-2">
-                <li><strong>Right to know</strong> — request disclosure of the personal information we collect and how it is used.</li>
-                <li><strong>Right to delete</strong> — request deletion of your personal information.</li>
-                <li><strong>Right to opt-out</strong> — we do not sell personal information, so no opt-out is required.</li>
-                <li><strong>Right to non-discrimination</strong> — we will not discriminate against you for exercising these rights.</li>
+                <li><strong>Right to know</strong>: request disclosure of the personal information we collect and how it is used.</li>
+                <li><strong>Right to delete</strong>: request deletion of your personal information.</li>
+                <li><strong>Right to opt-out</strong>: we do not sell personal information, so no opt-out is required.</li>
+                <li><strong>Right to non-discrimination</strong>: we will not discriminate against you for exercising these rights.</li>
               </ul>
               <p className="mt-3">
                 To submit a CCPA request, contact us at{" "}

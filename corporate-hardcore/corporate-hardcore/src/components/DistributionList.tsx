@@ -40,7 +40,7 @@ export default function DistributionList() {
 
   return (
     <div className="intranet-card p-5">
-      <p className="dept-label mb-2">FIELD NOTES — DISTRIBUTION LIST</p>
+      <p className="dept-label mb-2">FIELD NOTES: DISTRIBUTION LIST</p>
       <p className="font-sans text-sm text-synergy-muted font-light mb-4 max-w-xl">
         Receive a copy when a Field Note is filed. Notes are filed monthly as part of recurring
         arcs. No weekly promise has been approved.

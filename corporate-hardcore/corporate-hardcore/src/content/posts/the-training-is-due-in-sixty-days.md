@@ -5,7 +5,7 @@ description: "The LMS says Q3 Compliance is due October 31. Leadership wants it 
 arc: "Mandatory Training"
 ---
 
-The email arrived at 9:14 AM. Subject line: Reminder — Complete Your Required Quarterly Training.
+The email arrived at 9:14 AM. Subject line: Reminder: Complete Your Required Quarterly Training.
 
 The body said the modules were due October 31. The last line said please prioritize completing them this week. Both sentences were in the same email. Both were from Leadership. Neither acknowledged the other.
 
@@ -25,7 +25,7 @@ October 31 is sixty days out. Sixty days, in theory, is enough time to finish ni
 
 Please prioritize completing them this week means your manager will ask on Friday whether you're done. It means the dashboard that leadership looks at updates in real time, and an incomplete row next to your name is visible long before October 31 is relevant.
 
-It does not mean the due date moved. The due date is still October 31. The political due date is Friday. Those are different instruments. Confusing them is how people end up doing compliance theater at 11 PM on a Thursday because someone scheduled a review of the completion report for Friday morning — with fifty-four days still on the LMS clock.
+It does not mean the due date moved. The due date is still October 31. The political due date is Friday. Those are different instruments. Confusing them is how people end up doing compliance theater at 11 PM on a Thursday because someone scheduled a review of the completion report for Friday morning, with fifty-four days still on the LMS clock.
 
 I documented that specific sequence last year. The due date did not change. The meeting about the due date did.
 
@@ -93,6 +93,6 @@ More field notes from inside Synergy Corp are filed at corphardcore.com. The Q3 
 
 Leadership would prefer you were already done.
 
-FILED — SYNERGY CORP INTERNAL
+FILED: SYNERGY CORP INTERNAL
 
 Circle Back. Never Return.

@@ -95,7 +95,7 @@ export default async function HomePage() {
                 <p className="font-sans text-[11px] text-synergy-dark italic leading-snug">
                   &ldquo;Together we can achieve synergy.&rdquo;
                 </p>
-                <p className="font-mono text-[8px] text-synergy-muted mt-1">— Leadership, 2019</p>
+                <p className="font-mono text-[8px] text-synergy-muted mt-1">Leadership, 2019</p>
               </div>
             </div>
           </div>
