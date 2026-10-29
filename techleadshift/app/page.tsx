@@ -111,7 +111,7 @@ export default function HomePage() {
               </h2>
               <div className="about-body">
                 <p>
-                  18+ years of technology leadership.{" "}
+                  25+ years of technology leadership.{" "}
                   <strong>Now writing about what happens to leadership when some of your team members aren&apos;t human.</strong>
                 </p>
                 <p>
