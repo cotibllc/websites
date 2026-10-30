@@ -87,11 +87,13 @@
     '#cookie-consent .cc-wrap{max-width:72rem;margin:0 auto;padding:.85rem 1.25rem;display:flex;flex-direction:column;gap:.75rem}' +
     '#cookie-consent h2{margin:0;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:#60a5fa;font-weight:600}' +
     '#cookie-consent p{margin:.25rem 0 0;font-size:.9rem;line-height:1.45;color:#f1f5f9}' +
+    '#cookie-consent a{color:#60a5fa;text-decoration:underline;text-underline-offset:2px;white-space:nowrap}' +
+    '#cookie-consent a:hover{color:#f1f5f9}' +
     '#cookie-consent .cc-actions{display:flex;gap:.5rem}' +
     '#cookie-consent button{flex:1;min-height:44px;padding:.55rem 1rem;border:1px solid #f1f5f9;border-radius:0;background:transparent;color:#f1f5f9;font:inherit;font-size:.8rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;cursor:pointer}' +
     '#cookie-consent button:hover{background:#f1f5f9;color:#0f172a}' +
     '#cookie-consent button:active{background:#22d3ee;color:#0f172a;border-color:#22d3ee}' +
-    '#cookie-consent button:focus-visible,[data-cookie-choices]:focus-visible{outline:2px solid #22d3ee;outline-offset:2px}' +
+    '#cookie-consent button:focus-visible,#cookie-consent a:focus-visible,[data-cookie-choices]:focus-visible{outline:2px solid #22d3ee;outline-offset:2px}' +
     '[data-cookie-choices]{background:none;border:0;padding:0;font:inherit;color:inherit;cursor:pointer}' +
     '@media (min-width:768px){#cookie-consent .cc-wrap{flex-direction:row;align-items:center;gap:2rem}#cookie-consent .cc-text{flex:1}#cookie-consent button{flex:none;min-width:11rem}}';
 
@@ -128,7 +130,9 @@
     var wrap = el('div', { 'class': 'cc-wrap' });
     var text = el('div', { 'class': 'cc-text' });
     text.appendChild(el('h2', { id: 'cookie-consent-title' }, 'Analytics cookies'));
-    text.appendChild(el('p', {}, 'We would like to use Google Analytics cookies to count visits and see which pages people read. Nothing loads until you choose. You can change this later with Cookie choices at the bottom of the page.'));
+    var copy = el('p', {}, 'We would like to use Google Analytics cookies to count visits and see which pages people read. Nothing loads until you choose. You can change this later with Cookie choices at the bottom of the page. ');
+    copy.appendChild(el('a', { href: '/website-privacy' }, 'Website privacy'));
+    text.appendChild(copy);
     var actions = el('div', { 'class': 'cc-actions', role: 'group', 'aria-label': 'Analytics cookie choice' });
     var accept = el('button', { type: 'button' }, 'Accept analytics');
     var reject = el('button', { type: 'button' }, 'Reject analytics');

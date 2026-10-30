@@ -173,6 +173,9 @@ test('EU/UK first visit: banner shows and nothing is requested from Google', asy
   assert.equal(t.banner().attrs['aria-labelledby'], 'cookie-consent-title');
   assert.deepEqual(all(t.banner()).filter((e) => e.tagName === 'BUTTON').map((e) => e.textContent), ['Accept analytics', 'Reject analytics']);
   assert.equal(t.footerBtn.hasAttribute('hidden'), false, 'Cookie choices is revealed once the script runs');
+  const link = all(t.banner()).find((e) => e.tagName === 'A');
+  assert.equal(link.attrs.href, '/website-privacy');
+  assert.equal(link.textContent, 'Website privacy');
 });
 
 test('unknown country or a failed region lookup also asks first, with nothing from Google', async () => {
