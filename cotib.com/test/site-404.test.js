@@ -10,7 +10,7 @@ test.before(async () => { server = await startServer(); base = `http://127.0.0.1
 test.after(() => server.close());
 
 test('a missing URL at any depth gets 404 and the branded page', async () => {
-  for (const p of ['/no-such-page', '/services/old/thing', '/blog']) {
+  for (const p of ['/no-such-page', '/services/old/thing', '/insights']) {
     const r = await fetch(base + p);
     assert.equal(r.status, 404, p);
     const html = await r.text();
