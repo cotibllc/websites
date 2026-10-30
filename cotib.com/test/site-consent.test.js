@@ -87,7 +87,7 @@ test('/api/consent-region answers per visitor and is never cached', async () => 
   assert.equal((await realFetch(base + '/api/consent-region', { method: 'POST' })).status, 405);
 });
 
-const SITE_PAGES = ['/', '/services', '/ventures', '/about', '/contact', '/privacy', '/eula', '/connect', '/disconnect', '/do-the-next-thing', '/do-the-next-thing/privacy', '/no-such-page'];
+const SITE_PAGES = ['/', '/website-privacy', '/services', '/ventures', '/about', '/contact', '/privacy', '/eula', '/connect', '/disconnect', '/do-the-next-thing', '/do-the-next-thing/privacy', '/no-such-page'];
 
 test('every site page loads the consent script and has a hidden Cookie choices button, with no Google tag in the HTML', async () => {
   for (const p of SITE_PAGES) {
