@@ -12,14 +12,15 @@ export default function PrivacyPage() {
       <div className="mx-auto content-max px-4 py-10 max-w-3xl">
         <div className="surface-card p-8">
           <h1 className="text-2xl font-bold mb-1">Privacy Policy</h1>
-          <p className="text-sm text-text-secondary mb-8">Effective date: March 31, 2025. Last updated: October 29, 2026.</p>
+          <p className="text-sm text-text-secondary mb-8">Effective date: March 31, 2025. Last updated: October 30, 2026.</p>
 
           <div className="prose prose-sm max-w-none text-text-primary space-y-8">
 
             <section>
               <h2 className="text-lg font-semibold mb-2">Who we are</h2>
               <p>
-                Corporate Hardcore is a satirical media project operated by Chuck Morrison.
+                Corporate Hardcore is a satirical media project operated by COTIB LLC, which
+                is responsible for the personal data described in this policy.
                 This site is located at <strong>corphardcore.com</strong>. Questions about
                 this policy can be directed to{" "}
                 <a href="mailto:hello@corphardcore.com" className="text-linkedin-blue hover:underline">
@@ -32,14 +33,14 @@ export default function PrivacyPage() {
               <h2 className="text-lg font-semibold mb-2">What data we collect</h2>
               <ul className="list-disc pl-5 space-y-2">
                 <li>
-                  <strong>Email address</strong> — if you join the Field Notes distribution list, ask
+                  <strong>Email address:</strong> if you join the Field Notes distribution list, ask
                   to be notified when the Company Store opens, or submit the contact form.
                 </li>
                 <li>
-                  <strong>Name, subject and message</strong> — if you submit the contact form.
+                  <strong>Name, subject and message:</strong> if you submit the contact form.
                 </li>
                 <li>
-                  <strong>Usage data</strong> — our hosting and network providers keep server logs
+                  <strong>Usage data:</strong> our hosting and network providers keep server logs
                   of your IP address, browser type, referring URL, and the pages you request. We
                   do not link these logs to your name or email address.
                 </li>
@@ -71,7 +72,7 @@ export default function PrivacyPage() {
               <p>We use the following third-party services that may process your data:</p>
               <ul className="list-disc pl-5 space-y-2 mt-2">
                 <li>
-                  <strong>Kit (formerly ConvertKit)</strong> — runs both of our email lists: the Field
+                  <strong>Kit (formerly ConvertKit):</strong> runs both of our email lists, the Field
                   Notes distribution list and the Company Store notify list. Kit stores your email
                   address, which list you joined, when you joined, and any tags we add. Every Kit
                   email has an unsubscribe link at the bottom that removes you from that list. See{" "}
@@ -104,7 +105,7 @@ export default function PrivacyPage() {
                   </a>.
                 </li>
                 <li>
-                  <strong>Vercel</strong> — website hosting and infrastructure. See{" "}
+                  <strong>Vercel:</strong> website hosting and infrastructure. See{" "}
                   <a href="https://vercel.com/legal/privacy-policy" target="_blank" rel="noopener noreferrer" className="text-linkedin-blue hover:underline">
                     Vercel&apos;s privacy policy
                   </a>.
@@ -118,7 +119,15 @@ export default function PrivacyPage() {
                 This site uses Google Analytics, which sets two cookies on corphardcore.com:{" "}
                 _ga and _ga_RYY0GT1TLS. They hold a random ID, not your
                 name or email address, and last up to two years unless you clear them. We use them
-                only to count visits. We do not use advertising cookies.
+                to count visits and see which pages people read.
+              </p>
+              <p className="mt-2">
+                If you visit from the European Union, the European Economic Area, the United
+                Kingdom or Switzerland, a cookie banner asks for your choice first. Google
+                Analytics does not load, and sets no cookies, until you choose Accept. If you
+                choose Reject, it stays off. We store your choice in your browser so we don&apos;t
+                ask on every page, and you can change it at any time with Cookie choices at the
+                bottom of every page.
               </p>
               <p className="mt-2">
                 To opt out, install{" "}
@@ -134,8 +143,8 @@ export default function PrivacyPage() {
               <h2 className="text-lg font-semibold mb-2">Data retention</h2>
               <p>
                 Email list data (Field Notes and the Company Store notify list) is kept until you
-                unsubscribe or ask us to remove it. Google Analytics data is kept for the retention
-                period set in our Analytics account, then deleted by Google. Contact form
+                unsubscribe or ask us to remove it. Google Analytics data is kept for the period set
+                in our Google Analytics settings, then deleted by Google. Contact form
                 submissions are retained only as long as necessary to respond. You may request
                 deletion at any time.
               </p>
@@ -143,23 +152,25 @@ export default function PrivacyPage() {
 
             {/* GDPR */}
             <section>
-              <h2 className="text-lg font-semibold mb-2">Your rights (EU/UK — GDPR)</h2>
+              <h2 className="text-lg font-semibold mb-2">Your rights (EU and UK GDPR)</h2>
               <p>
                 If you are located in the European Union or United Kingdom, you have the
                 following rights under the General Data Protection Regulation (GDPR):
               </p>
               <ul className="list-disc pl-5 space-y-2 mt-2">
-                <li><strong>Right of access</strong> — request a copy of the data we hold about you.</li>
-                <li><strong>Right to rectification</strong> — request correction of inaccurate data.</li>
-                <li><strong>Right to erasure</strong> — request deletion of your personal data.</li>
-                <li><strong>Right to restrict processing</strong> — request that we limit how we use your data.</li>
-                <li><strong>Right to data portability</strong> — request your data in a portable format.</li>
-                <li><strong>Right to object</strong> — object to processing based on legitimate interests.</li>
+                <li><strong>Right of access:</strong> request a copy of the data we hold about you.</li>
+                <li><strong>Right to rectification:</strong> request correction of inaccurate data.</li>
+                <li><strong>Right to erasure:</strong> request deletion of your personal data.</li>
+                <li><strong>Right to restrict processing:</strong> request that we limit how we use your data.</li>
+                <li><strong>Right to data portability:</strong> request your data in a portable format.</li>
+                <li><strong>Right to object:</strong> object to processing based on legitimate interests.</li>
               </ul>
               <p className="mt-3">
                 Our legal basis for processing email list data is <strong>consent</strong> (Article 6(1)(a) GDPR).
                 You may withdraw consent at any time with the unsubscribe link in any list email, or
-                by contacting us.
+                by contacting us. For visitors in the EU, EEA, UK and Switzerland, our legal basis
+                for Google Analytics is also <strong>consent</strong>, given or refused in the cookie
+                banner and withdrawn at any time with Cookie choices.
               </p>
               <p className="mt-2">
                 To exercise any of these rights, contact us at{" "}
@@ -171,16 +182,16 @@ export default function PrivacyPage() {
 
             {/* CCPA */}
             <section>
-              <h2 className="text-lg font-semibold mb-2">Your rights (California — CCPA)</h2>
+              <h2 className="text-lg font-semibold mb-2">Your rights (California CCPA)</h2>
               <p>
                 If you are a California resident, the California Consumer Privacy Act (CCPA)
                 grants you the following rights:
               </p>
               <ul className="list-disc pl-5 space-y-2 mt-2">
-                <li><strong>Right to know</strong> — request disclosure of the personal information we collect and how it is used.</li>
-                <li><strong>Right to delete</strong> — request deletion of your personal information.</li>
-                <li><strong>Right to opt-out</strong> — we do not sell personal information, so no opt-out is required.</li>
-                <li><strong>Right to non-discrimination</strong> — we will not discriminate against you for exercising these rights.</li>
+                <li><strong>Right to know:</strong> request disclosure of the personal information we collect and how it is used.</li>
+                <li><strong>Right to delete:</strong> request deletion of your personal information.</li>
+                <li><strong>Right to opt-out:</strong> we do not sell personal information, so no opt-out is required.</li>
+                <li><strong>Right to non-discrimination:</strong> we will not discriminate against you for exercising these rights.</li>
               </ul>
               <p className="mt-3">
                 To submit a CCPA request, contact us at{" "}
