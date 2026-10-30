@@ -11,6 +11,7 @@ const WWW = path.join(__dirname, '..', 'www');
 const TURNSTILE_SITE_KEY = '0x4AAAAAAC2VHJDJh24KBJBW'; // same widget as /contact
 
 const landing = page({
+  analytics: true,
   title: "Do the Next Thing: 28 prompts for when you know the step and still don't take it | COTIB LLC",
   description: 'Do the Next Thing: 28 prompts for when you know the step and still don\'t take it. Start with 3 prompts, free: paste one in, start a 10-minute timer, and see if it moves you. A COTIB LLC product.',
   canonical: 'https://www.cotib.com/do-the-next-thing',
@@ -251,6 +252,7 @@ const landing = page({
 });
 
 const privacy = page({
+  analytics: true,
   title: 'Privacy notice: Do the Next Thing | COTIB LLC',
   description: 'What COTIB LLC collects when you use the Do the Next Thing page or sign up for the free sampler, and who processes it.',
   canonical: 'https://www.cotib.com/do-the-next-thing/privacy',

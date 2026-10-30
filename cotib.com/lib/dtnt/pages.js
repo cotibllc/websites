@@ -44,7 +44,9 @@ const HEADER = `
     </div>
   </header>`;
 
-const FOOTER = `
+// analytics: true only on the two static DTNT pages. The confirm, download and
+// unsubscribe state pages carry tokens in the URL, so they never load GA.
+const footer = ({ analytics = false } = {}) => `
   <footer class="site-footer">
     <div class="wrap">
       <div class="foot-grid">
@@ -70,7 +72,8 @@ const FOOTER = `
         </div>
       </div>
       <div class="foot-base">
-        <p class="m0">&copy; 2026 COTIB LLC. All rights reserved. New York City, NY.</p>
+        <p class="m0">&copy; 2026 COTIB LLC. All rights reserved. New York City, NY.</p>${analytics ? `
+        <button type="button" data-cookie-choices aria-controls="cookie-consent" hidden>Cookie choices</button>` : ''}
         <nav aria-label="Social">
           <a href="https://www.linkedin.com/in/charles-b-technologist/" rel="noopener">LinkedIn</a>
           <a href="https://techleadshift.substack.com" rel="noopener">Substack</a>
@@ -79,15 +82,16 @@ const FOOTER = `
       </div>
     </div>
   </footer>
-  <script src="/dtnt/menu.js" defer></script>`;
+  <script src="/dtnt/menu.js" defer></script>${analytics ? `
+  <script src="/js/consent-v1.js" defer></script>` : ''}`;
 
-function page({ title, description, canonical, noindex, headExtra = '', main, bodyEnd = '' }) {
+function page({ title, description, canonical, noindex, headExtra = '', main, bodyEnd = '', analytics = false }) {
   return `${head({ title, description, canonical, noindex })}${headExtra}
 </head>
 <body>${HEADER}
   <main id="main">
 ${main}
-  </main>${FOOTER}${bodyEnd}
+  </main>${footer({ analytics })}${bodyEnd}
 </body>
 </html>
 `;
@@ -192,4 +196,4 @@ const states = {
   }),
 };
 
-module.exports = { page, head, HEADER, FOOTER, states };
+module.exports = { page, head, HEADER, footer, states };
