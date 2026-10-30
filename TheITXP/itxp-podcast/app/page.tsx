@@ -1,5 +1,6 @@
 import { getEpisodes } from "@/lib/feed";
-import { getVideos, CHANNEL_URL } from "@/lib/youtube";
+import { getVideos, getPodcastVideoIds, CHANNEL_URL } from "@/lib/youtube";
+import { excludePodcastVideos } from "@/lib/videoFilter";
 import EpisodeCard from "@/components/EpisodeCard";
 import VideoCard from "@/components/VideoCard";
 import Link from "next/link";
@@ -26,9 +27,19 @@ const podcastJsonLd = {
 };
 
 export default async function HomePage() {
-  const [episodes, videos] = await Promise.all([getEpisodes(), getVideos()]);
+  const [episodes, videos, podcastVideoIds] = await Promise.all([
+    getEpisodes(),
+    getVideos(),
+    getPodcastVideoIds(),
+  ]);
   const latest = episodes.slice(0, 6);
-  const latestVideos = videos.slice(0, 6);
+  // Podcast episodes are already listed above from Libsyn, so keep their
+  // YouTube uploads out of Latest Videos. Shorts stay in.
+  const latestVideos = excludePodcastVideos(
+    videos,
+    podcastVideoIds,
+    episodes.map((e) => e.title),
+  ).slice(0, 6);
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-12">
