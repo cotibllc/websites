@@ -17,7 +17,7 @@ export default function Ticker() {
               {msg.text}
             </span>
             <span className="font-mono text-[10px] text-white/30 tracking-[0.12em] uppercase">
-              — {msg.dept}
+              ({msg.dept})
             </span>
             <span className="text-synergy-amber/30 text-xs select-none">◆</span>
           </span>

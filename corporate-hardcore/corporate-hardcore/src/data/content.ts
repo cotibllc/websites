@@ -87,7 +87,7 @@ export const characters: Character[] = [
     department: 'Operations',
     yearsOfService: '11',
     clearanceLevel: 'STANDARD',
-    knownFor: 'Has been in a 9am–5pm meeting since 2019.',
+    knownFor: 'Has been in a 9am to 5pm meeting since 2019.',
     badgeNumber: '00318',
     headshot: '/cast/carl-dietrich.png',
   },

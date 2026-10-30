@@ -28,7 +28,7 @@ export default async function BlogPage({ searchParams }: Props) {
       {/* Page header */}
       <div className="intranet-card mb-6">
         <div className="intranet-header flex items-center justify-between">
-          <span>Field Notes — Document Archive</span>
+          <span>Field Notes: Document Archive</span>
           <span className="text-white/50">{posts.length} filed</span>
         </div>
         <div className="px-4 py-3 bg-synergy-white border-t border-synergy-rule flex items-center justify-between gap-4">
@@ -36,7 +36,7 @@ export default async function BlogPage({ searchParams }: Props) {
             Observations from eighteen years in the same company.
             {activeArc && (
               <span className="ml-2 font-mono text-[10px] text-synergy-amber uppercase tracking-wider">
-                — Filtered: {activeArc}
+                (Filtered: {activeArc})
               </span>
             )}
           </p>

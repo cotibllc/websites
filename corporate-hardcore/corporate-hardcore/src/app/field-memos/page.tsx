@@ -5,7 +5,7 @@ import { platformLinks } from "@/data/content";
 import FieldMemoCard from "@/components/FieldMemoCard";
 
 export const metadata: Metadata = {
-  title: "Field Memos — Media Library",
+  title: "Field Memos: Media Library",
   description: "Synergy Corp Media Library. Curated Field Memos filed by Chuck Morrison.",
   alternates: { canonical: "/field-memos" },
 };
@@ -17,7 +17,7 @@ export default function FieldMemosPage() {
     <div className="mx-auto content-max px-4 py-8">
       <div className="intranet-card mb-6">
         <div className="intranet-header flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
-          <span>FIELD MEMOS — MEDIA LIBRARY</span>
+          <span>FIELD MEMOS: MEDIA LIBRARY</span>
           <span className="text-white/50">{memos.length} record{memos.length === 1 ? "" : "s"}</span>
         </div>
         <div className="px-4 py-3 bg-synergy-white border-t border-synergy-rule flex flex-wrap gap-3 items-center">
