@@ -139,10 +139,18 @@
                     lands in B2B feeds.
                 </p>
                 <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <!-- Portfolio placeholders: replace each card with a <video> embed as spec ads ship -->
-                    <div class="glass-card aspect-[9/16] max-h-96 flex flex-col items-center justify-center gap-3 p-6">
-                        <span class="font-mono text-brand text-lg">[ ]</span>
-                        <p class="font-mono text-sm text-ink-500 text-center">talking-head hook ad<br>in production</p>
+                    <!-- Slot 1: Test-01 spec ad (YouTube Short isx3vZGxUhM). Slots 2 and 3 stay placeholders until their ads ship. -->
+                    <div class="glass-card aspect-[9/16] max-h-96 flex flex-col items-center justify-center gap-3 p-6" data-portfolio-slot="1">
+                        <div class="aspect-[9/16] flex-1" style="min-height: 0; max-width: 100%; overflow: hidden; border-radius: 0.5rem;">
+                            <iframe class="block w-full" style="height: 100%; border: 0;"
+                                src="https://www.youtube-nocookie.com/embed/isx3vZGxUhM"
+                                title="StackApproved spec ad for Claude Code"
+                                loading="lazy"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                referrerpolicy="strict-origin-when-cross-origin"
+                                allowfullscreen></iframe>
+                        </div>
+                        <p class="font-mono text-sm text-ink-400 text-center">Spec ad: made unpaid, on my own, for Claude Code. Not a client.</p>
                     </div>
                     <div class="glass-card aspect-[9/16] max-h-96 flex flex-col items-center justify-center gap-3 p-6">
                         <span class="font-mono text-brand text-lg">[ ]</span>
