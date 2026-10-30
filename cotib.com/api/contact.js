@@ -113,7 +113,7 @@ module.exports = async function handler(req, res) {
             from: FROM_EMAIL,
             to: TO_EMAIL,
             replyTo: email,
-            subject: `[COTIB] Free Consultation: ${service || 'General Inquiry'} — ${name}`,
+            subject: `[COTIB] Free Consultation: ${service || 'General Inquiry'}, from ${name}`,
             html,
         });
 
