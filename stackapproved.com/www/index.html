@@ -184,7 +184,7 @@
                         <h3 class="text-xl mb-3">Formats that fit the feed</h3>
                         <p class="text-ink-400 text-sm leading-6">
                             LinkedIn-native talking head, screen-demo with picture-in-picture, and
-                            founder-style content — captioned, cut for 9:16 / 1:1 / 16:9, delivered
+                            founder-style content, captioned and cut vertical 9:16, delivered
                             ready to launch.
                         </p>
                     </div>
@@ -218,7 +218,7 @@
                         <p class="font-mono text-4xl text-brand font-bold mb-4">03</p>
                         <h3 class="text-xl mb-3">Delivered ready to run</h3>
                         <p class="text-ink-400 text-sm leading-6">
-                            Captioned masters in every aspect ratio, clean filenames, organized Drive folder,
+                            Captioned 9:16 masters, clean filenames, organized Drive folder,
                             plus a Loom walkthrough explaining why each hook targets specific segments. We also
                             capture performance data together so early wins turn into case studies. Five business days standard.
                         </p>
@@ -227,43 +227,65 @@
             </div>
         </section>
 
-        <!-- Offers -->
+        <!-- Offers: packages follow rate card v1. No public pricing (Chuck 2026-10-30). -->
         <section id="offers" class="py-24 px-6 border-t border-white/5">
             <div class="mx-auto max-w-6xl">
                 <p class="eyebrow mb-3">// offers</p>
                 <h2 class="text-3xl sm:text-4xl mb-4">Start small, scale what works</h2>
                 <p class="text-ink-400 max-w-2xl mb-12">
-                    Per-video projects or monthly retainers. Rates on inquiry — send a brief and get a
+                    Per-video projects or monthly retainers. Rates on inquiry. Send a brief and get a
                     same-day quote.
                 </p>
-                <div class="grid md:grid-cols-3 gap-6">
-                    <div class="glass-card p-8 flex flex-col">
-                        <p class="font-mono text-brand text-sm mb-2">test</p>
-                        <h3 class="text-2xl mb-3">Hook Bundle</h3>
-                        <p class="text-ink-400 text-sm leading-6 flex-1">
-                            One concept, three hook variations. The lowest-risk way to see what a credible
-                            practitioner face does to your CTR and hook rate.
-                        </p>
-                        <a href="#contact" class="btn-secondary-custom mt-6">Inquire</a>
-                    </div>
-                    <div class="glass-card p-8 flex flex-col border-brand/40">
-                        <p class="font-mono text-brand text-sm mb-2">growth · most popular</p>
-                        <h3 class="text-2xl mb-3">Monthly Retainer</h3>
-                        <p class="text-ink-400 text-sm leading-6 flex-1">
-                            Eight videos a month across two concepts — a steady pipeline of fresh,
-                            data-informed creative so your winners never fatigue without a ready successor.
-                        </p>
-                        <a href="#contact" class="btn-primary-custom mt-6">Inquire</a>
-                    </div>
-                    <div class="glass-card p-8 flex flex-col">
-                        <p class="font-mono text-brand text-sm mb-2">scale</p>
-                        <h3 class="text-2xl mb-3">Creative Partner</h3>
-                        <p class="text-ink-400 text-sm leading-6 flex-1">
-                            Twelve videos a month plus a monthly creative-performance call — hook-rate
-                            and CTR review against your account data and plan the next round of variations.
-                        </p>
-                        <a href="#contact" class="btn-secondary-custom mt-6">Inquire</a>
-                    </div>
+
+                <div class="grid lg:grid-cols-[14rem_1fr] gap-x-12 gap-y-4 mb-12">
+                    <h3 class="font-mono text-sm text-ink-400 uppercase tracking-widest lg:pt-7">Projects</h3>
+                    <ul class="offer-list">
+                        <li class="offer-row">
+                            <div>
+                                <p class="font-mono text-brand text-sm mb-1">start</p>
+                                <h4 class="text-xl text-white font-semibold">Single Video</h4>
+                            </div>
+                            <p class="text-ink-400 text-sm leading-6">One video built on one hook. The smallest way to put a practitioner face in your feed.</p>
+                            <a href="#contact" class="btn-secondary-custom" aria-label="Inquire about Single Video">Inquire</a>
+                        </li>
+                        <li class="offer-row offer-row-lead">
+                            <div>
+                                <p class="font-mono text-brand text-sm mb-1">test &middot; recommended start</p>
+                                <h4 class="text-xl text-white font-semibold">Hook Bundle</h4>
+                            </div>
+                            <p class="text-ink-400 text-sm leading-6">One concept, three hook variations, three videos. The cleanest way to see which opening line moves your hook rate and CTR.</p>
+                            <a href="#contact" class="btn-primary-custom" aria-label="Inquire about Hook Bundle">Inquire</a>
+                        </li>
+                    </ul>
+
+                    <h3 class="font-mono text-sm text-ink-400 uppercase tracking-widest lg:pt-7 mt-8 lg:mt-0">Monthly</h3>
+                    <ul class="offer-list">
+                        <li class="offer-row">
+                            <div>
+                                <p class="font-mono text-brand text-sm mb-1">retainer</p>
+                                <h4 class="text-xl text-white font-semibold">Test</h4>
+                            </div>
+                            <p class="text-ink-400 text-sm leading-6">Four videos a month. Enough fresh creative to keep a concept in testing without it going stale.</p>
+                            <a href="#contact" class="btn-secondary-custom" aria-label="Inquire about the Test retainer">Inquire</a>
+                        </li>
+                        <li class="offer-row">
+                            <div>
+                                <p class="font-mono text-brand text-sm mb-1">retainer</p>
+                                <h4 class="text-xl text-white font-semibold">Growth</h4>
+                            </div>
+                            <p class="text-ink-400 text-sm leading-6">Eight videos a month across two concepts, so every winning ad has a fresh successor ready.</p>
+                            <a href="#contact" class="btn-secondary-custom" aria-label="Inquire about the Growth retainer">Inquire</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="border-t border-white/10 pt-6 max-w-3xl">
+                    <p class="font-mono text-sm text-ink-400 mb-3">Every package includes</p>
+                    <ul class="grid sm:grid-cols-3 gap-4 text-sm text-ink-300">
+                        <li class="flex items-start gap-3"><span class="font-mono text-brand" aria-hidden="true">[✓]</span><span>Vertical 9:16 videos, captioned</span></li>
+                        <li class="flex items-start gap-3"><span class="font-mono text-brand" aria-hidden="true">[✓]</span><span>90 days of paid usage rights</span></li>
+                        <li class="flex items-start gap-3"><span class="font-mono text-brand" aria-hidden="true">[✓]</span><span>Hook rationale on a Loom walkthrough</span></li>
+                    </ul>
                 </div>
             </div>
         </section>
@@ -344,9 +366,10 @@
                             <label for="interest" class="block text-sm font-medium text-ink-300 mb-2">Interested in</label>
                             <select id="interest" name="interest" class="field-custom">
                                 <option value="">Not sure yet</option>
-                                <option>Hook Bundle (test)</option>
-                                <option>Monthly Retainer (growth)</option>
-                                <option>Creative Partner (scale)</option>
+                                <option>Single Video</option>
+                                <option>Hook Bundle</option>
+                                <option>Monthly retainer: Test (4 videos)</option>
+                                <option>Monthly retainer: Growth (8 videos)</option>
                             </select>
                         </div>
                     </div>

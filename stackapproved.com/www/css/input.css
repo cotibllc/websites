@@ -75,4 +75,17 @@
   .bg-gradient-radial {
     background-image: radial-gradient(circle at top, rgba(34, 197, 94, 0.12) 0%, transparent 70%);
   }
+
+  /* Offers: one list row per package (rate card v1), not a card grid */
+  .offer-list {
+    @apply border-t border-white/10;
+  }
+
+  .offer-row {
+    @apply grid gap-4 py-6 border-b border-white/10 md:grid-cols-[12rem_1fr_auto] md:items-center md:gap-8;
+  }
+
+  .offer-row-lead {
+    @apply border-l-2 border-l-brand pl-5;
+  }
 }

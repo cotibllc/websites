@@ -4,4 +4,4 @@
 
 ## Core Pages
 
-- [Homepage (/)](https://stackapproved.com/): Overview, portfolio, offers (Hook Bundle, Monthly Retainer, Creative Partner), and brief submission.
+- [Homepage (/)](https://stackapproved.com/): Overview, portfolio, offers (Single Video, Hook Bundle, and Test and Growth monthly retainers), and brief submission.
