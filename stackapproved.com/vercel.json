@@ -6,6 +6,14 @@
   "installCommand": "npm install",
   "cleanUrls": true,
   "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "www.stackapproved.com" }],
+      "destination": "https://stackapproved.com/:path*",
+      "statusCode": 301
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",
