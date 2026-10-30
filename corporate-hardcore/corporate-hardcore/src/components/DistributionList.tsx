@@ -1,6 +1,8 @@
 "use client";
 
-import { useState, FormEvent } from "react";
+import { useState, useRef, FormEvent } from "react";
+import { Turnstile } from "@marsidev/react-turnstile";
+import type { TurnstileInstance } from "@marsidev/react-turnstile";
 
 type Status = "idle" | "submitting" | "ok" | "error";
 
@@ -10,6 +12,22 @@ export default function DistributionList() {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<Status>("idle");
   const [errorMessage, setErrorMessage] = useState(defaultErrorMessage);
+  const turnstileSiteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
+  const [honeypot, setHoneypot] = useState("");
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
+  const turnstileRef = useRef<TurnstileInstance>(null);
+  // The widget stays hidden unless Cloudflare wants an interaction, so a short
+  // status line says why the button is still disabled.
+  const [checkFailed, setCheckFailed] = useState(false);
+  const [showingWidget, setShowingWidget] = useState(false);
+
+  // A Turnstile token is single use: drop it after every attempt so the button
+  // waits for the next Success.
+  const discardToken = () => {
+    setTurnstileToken(null);
+    setCheckFailed(false);
+    turnstileRef.current?.reset();
+  };
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -21,18 +39,21 @@ export default function DistributionList() {
       const res = await fetch("/api/subscribe", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email, honeypot, turnstileToken }),
       });
       const data = (await res.json().catch(() => ({}))) as { error?: string };
       if (res.status === 200) {
         setStatus("ok");
         setEmail("");
+        discardToken();
       } else {
         setErrorMessage(data.error ?? defaultErrorMessage);
         setStatus("error");
+        discardToken();
       }
     } catch {
       setStatus("error");
+      discardToken();
     }
   }
 
@@ -52,6 +73,12 @@ export default function DistributionList() {
       ) : (
         <>
           <form onSubmit={onSubmit} className="flex flex-col sm:flex-row gap-2 max-w-md">
+            {/* Honeypot */}
+            <div aria-hidden="true" className="hidden">
+              <label htmlFor="field-notes-website">Website</label>
+              <input id="field-notes-website" name="website" type="text" tabIndex={-1} autoComplete="off"
+                value={honeypot} onChange={(e) => setHoneypot(e.target.value)} />
+            </div>
             <label htmlFor="field-notes-email" className="sr-only">
               Email address
             </label>
@@ -71,13 +98,41 @@ export default function DistributionList() {
             />
             <button
               type="submit"
-              className="btn-intranet flex-shrink-0 disabled:opacity-60 disabled:cursor-wait"
-              disabled={submitting}
+              className={`btn-intranet flex-shrink-0 disabled:opacity-60 ${submitting ? "cursor-wait" : ""}`}
+              disabled={submitting || !turnstileSiteKey || !turnstileToken}
               aria-busy={submitting}
             >
               ADD ME TO DISTRIBUTION
             </button>
           </form>
+          {turnstileSiteKey ? (
+            <div>
+              <Turnstile
+                ref={turnstileRef}
+                siteKey={turnstileSiteKey}
+                options={{ appearance: "interaction-only" }}
+                className={showingWidget ? "mt-3" : undefined}
+                onBeforeInteractive={() => setShowingWidget(true)}
+                onAfterInteractive={() => setShowingWidget(false)}
+                onSuccess={(token) => { setTurnstileToken(token); setCheckFailed(false); }}
+                onExpire={() => setTurnstileToken(null)}
+                onError={() => { setTurnstileToken(null); setCheckFailed(true); }}
+              />
+              {!turnstileToken && !submitting && (
+                <p id="field-notes-check" role="status" aria-live="polite" className="font-mono text-[10px] text-synergy-muted mt-2 tracking-wide">
+                  {checkFailed
+                    ? "Security check could not finish. Refresh the page."
+                    : showingWidget
+                      ? "Complete the security check above to continue."
+                      : "Running security check..."}
+                </p>
+              )}
+            </div>
+          ) : (
+            <p className="font-mono text-[11px] text-synergy-amber mt-2 tracking-wide" role="alert">
+              Distribution list signup is temporarily unavailable.
+            </p>
+          )}
           <div aria-live="assertive">
             {status === "error" && (
               <p id="field-notes-error" role="alert" className="font-mono text-[11px] text-synergy-amber mt-2 tracking-wide">
