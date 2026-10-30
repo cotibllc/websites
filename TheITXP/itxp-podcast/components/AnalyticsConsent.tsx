@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { COOKIE_CHOICES_EVENT, type ConsentChoice } from "@/lib/consent";
 import { browserEnv, createAnalytics, type Analytics } from "@/lib/analytics";
@@ -73,7 +74,13 @@ export default function AnalyticsConsent() {
           </h2>
           <p className="text-sm leading-snug mt-1 text-white">
             We would like to use Google Analytics cookies to count visits and see which pages people read.
-            Nothing loads until you choose. You can change this later with Cookie choices at the bottom of the page.
+            Nothing loads until you choose. You can change this later with Cookie choices at the bottom of the page.{" "}
+            <Link
+              href="/privacy"
+              className="whitespace-nowrap underline underline-offset-2 text-amber hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber"
+            >
+              Privacy policy
+            </Link>
           </p>
         </div>
         <div role="group" aria-label="Analytics cookie choice" className="flex gap-2 shrink-0">
