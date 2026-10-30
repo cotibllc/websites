@@ -3,7 +3,7 @@ import EpisodePlayer from "@/components/EpisodePlayer";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 
-export const revalidate = 7200;
+export const revalidate = 900; // 15 min, matches FEED_REVALIDATE_SECONDS in lib/feed.ts
 
 interface Props {
   params: Promise<{ slug: string }>;

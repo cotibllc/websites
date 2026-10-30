@@ -5,7 +5,7 @@ import VideoCard from "@/components/VideoCard";
 import Link from "next/link";
 import type { Metadata } from "next";
 
-export const revalidate = 7200;
+export const revalidate = 900; // 15 min, matches FEED_REVALIDATE_SECONDS in lib/feed.ts
 
 export const metadata: Metadata = {
   alternates: { canonical: "/" },
