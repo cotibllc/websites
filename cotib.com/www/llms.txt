@@ -1,15 +1,15 @@
 # COTIB LLC
 
-> Charles Betancourt runs businesses using AI. 30 years architecting enterprise systems, now applied to five businesses of his own, plus Fractional CTO advisory for organizations at COTIB LLC. New York City-based.
+> Charles Betancourt runs businesses using AI. 25+ years architecting enterprise systems, now applied to five businesses of his own, plus Fractional CTO advisory for organizations at COTIB LLC. New York City-based.
 
-Charles doesn't just advise on AI platforms — he builds and operates them daily. He personally runs StackApproved and Earned Escape solo, on AI-agent pipelines he designed himself, on top of 30 years leading enterprise cloud infrastructure and AI platform engineering.
+Charles doesn't just advise on AI platforms; he builds and operates them daily. He personally runs StackApproved and Earned Escape solo, on AI-agent pipelines he designed himself, on top of 25+ years leading enterprise cloud infrastructure and AI platform engineering.
 
 ## Who Is Charles Betancourt
 
-- **The one claim**: I run businesses using AI — 30 years architecting enterprise systems, now applied to five.
+- **The one claim**: I run businesses using AI: 25+ years architecting enterprise systems, now applied to five.
 - **Businesses he operates directly**: StackApproved (B2B UGC video production) and Earned Escape (travel advisory), both run solo via custom AI-agent pipelines.
 - **Media ventures**: Tech Lead Shift, The IT XP, and Corporate Hardcore.
-- **Enterprise credential**: 15+ years in corporate technology leadership — managed a $150M cloud infrastructure budget, delivered $15M in annual FinOps savings, and led AI/ML platform implementations in production.
+- **Enterprise credential**: 25+ years in corporate technology leadership: managed a $150M cloud infrastructure budget, delivered $15M in annual FinOps savings, and led AI/ML platform implementations in production.
 - **Available for**: Fractional CTO engagements, cloud infrastructure strategy, AI platform advisory, and FinOps optimization.
 
 ## Core Pages

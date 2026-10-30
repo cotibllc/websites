@@ -3,9 +3,9 @@
 import { useState, useRef } from 'react';
 import { Turnstile } from '@marsidev/react-turnstile';
 import type { TurnstileInstance } from '@marsidev/react-turnstile';
+import { CONTACT_ERRORS, FALLBACK_EMAIL as fallbackEmail, errorLead } from '@/lib/contact-copy';
 
-const fallbackEmail = 'hello@techleadshift.com';
-const defaultErrorMessage = 'Something went wrong.';
+const defaultErrorMessage: string = CONTACT_ERRORS.generic;
 
 export default function ContactForm() {
   const turnstileSiteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
@@ -18,6 +18,14 @@ export default function ContactForm() {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  // A Turnstile token is single use. Drop it and get a fresh widget, so Send
+  // Inquiry stays disabled until the next Success and a used token is never
+  // sent again.
+  const discardToken = () => {
+    setTurnstileToken(null);
+    turnstileRef.current?.reset();
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -36,16 +44,15 @@ export default function ContactForm() {
       if (response.ok) {
         setStatus('success');
         setForm({ name: '', email: '', message: '' });
-        setTurnstileToken(null);
-        turnstileRef.current?.reset();
+        discardToken();
       } else {
         setErrorMessage(data.error ?? defaultErrorMessage);
         setStatus('error');
-        turnstileRef.current?.reset();
+        discardToken();
       }
     } catch {
       setStatus('error');
-      turnstileRef.current?.reset();
+      discardToken();
     }
   };
 
@@ -136,7 +143,7 @@ export default function ContactForm() {
 
       {status === 'error' && (
         <p className="form-note form-note--error" role="alert">
-          {errorMessage} Or email{' '}
+          {errorLead(errorMessage)}{' '}
           <a href={`mailto:${fallbackEmail}`} style={{ color: 'var(--accent)' }}>
             {fallbackEmail}
           </a>{' '}

@@ -471,3 +471,15 @@ test('F10.6 unsubscribed addresses are not sent anywhere else (only Resend is ev
   const hosts = new Set(world.calls.map((c) => c.host));
   assert.deepEqual([...hosts].sort(), ['api.resend.com', 'challenges.cloudflare.com']);
 });
+
+// ---------- Entry points: the sampler page is reachable from the site ----------
+test('the homepage and /ventures link to /do-the-next-thing, and nothing links the old /resend', () => {
+  const www = path.join(ROOT, 'www');
+  const index = fs.readFileSync(path.join(www, 'index.html'), 'utf8');
+  const ventures = fs.readFileSync(path.join(www, 'ventures.html'), 'utf8');
+  assert.match(index, /<a href="\/do-the-next-thing"[^>]*>New: Do the Next Thing, 3 free prompts/);
+  assert.match(ventures, /<section[^>]*id="products"[\s\S]*?<a href="\/do-the-next-thing#free"[^>]*>Get the 3 free prompts<\/a>/);
+  for (const f of fs.readdirSync(www).filter((n) => n.endsWith('.html'))) {
+    assert.doesNotMatch(fs.readFileSync(path.join(www, f), 'utf8'), /href="[^"]*do-the-next-thing\/resend/, f);
+  }
+});

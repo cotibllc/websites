@@ -9,7 +9,7 @@ A new colleague joined the team this week.
 
 No onboarding. No introduction email. No first-day awkwardness where someone shows them where the printer is. They just appeared in the system on Monday with full calendar access, and by Tuesday morning there were three new meetings on my schedule that nobody had asked for.
 
-The invite subject lines were confident. "Alignment Sync — Infrastructure Priorities." "Weekly Velocity Check-In." "Cross-functional Standup: Q2 Initiatives." I looked at the attendee list. Twelve people across four departments. Nobody had agreed to attend. Nobody had been consulted. The meetings were simply there, the way weather is there, something that arrived without negotiation.
+The invite subject lines were confident. "Alignment Sync: Infrastructure Priorities." "Weekly Velocity Check-In." "Cross-functional Standup: Q2 Initiatives." I looked at the attendee list. Twelve people across four departments. Nobody had agreed to attend. Nobody had been consulted. The meetings were simply there, the way weather is there, something that arrived without negotiation.
 
 I asked my manager who approved the calendar integration.
 

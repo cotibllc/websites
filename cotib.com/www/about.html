@@ -5,16 +5,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="description" content="Charles Betancourt runs businesses using AI — 30 years architecting enterprise systems, now applied to five, including StackApproved and Earned Escape, plus Fractional CTO advisory at COTIB LLC.">
+    <meta name="description" content="Charles Betancourt, Fractional CTO and Cloud Infrastructure Technologist at COTIB LLC: enterprise cloud and AI platform work, plus the businesses he runs with AI, StackApproved and Earned Escape.">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="COTIB LLC">
-    <meta property="og:title" content="Charles Betancourt — I Run Businesses Using AI">
-    <meta property="og:description" content="30 years architecting enterprise systems, now applied to five businesses. Fractional CTO advisory and hands-on AI-agent operator.">
+    <meta property="og:title" content="About Charles Betancourt | COTIB LLC">
+    <meta property="og:description" content="Charles Betancourt, Fractional CTO and Cloud Infrastructure Technologist at COTIB LLC: enterprise cloud and AI platform work, plus the businesses he runs with AI, StackApproved and Earned Escape.">
     <meta property="og:image" content="https://cotib.com/img/biz-oriented-header.jpg">
     <meta name="twitter:card" content="summary_large_image">
     <meta property="og:url" content="https://cotib.com/about">
     <link rel="canonical" href="https://cotib.com/about">
-    <title>Charles Betancourt — I Run Businesses Using AI | COTIB LLC</title>
+    <title>About Charles Betancourt | COTIB LLC</title>
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     
     <!-- Google Fonts -->
@@ -35,7 +35,7 @@
       "@type": "Person",
       "name": "Charles Betancourt",
       "alternateName": "Chuck Betancourt",
-      "description": "I run businesses using AI. 30 years architecting enterprise systems, now applied to five businesses, plus Fractional CTO advisory for organizations.",
+      "description": "I run businesses using AI. 25+ years architecting enterprise systems, now applied to five businesses, plus Fractional CTO advisory for organizations.",
       "jobTitle": "Fractional CTO & Principal Consultant",
       "url": "https://cotib.com/about",
       "image": "https://cotib.com/img/biz-oriented-header.jpg",
@@ -89,7 +89,7 @@
 
                 <!-- Mobile Menu Button -->
                 <div class="md:hidden">
-                    <button id="mobile-menu-btn" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-navy-400 hover:text-white hover:bg-navy-900/60 focus:outline-none" aria-expanded="false">
+                    <button id="mobile-menu-btn" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-navy-400 hover:text-white hover:bg-navy-900/60 focus:outline-none" aria-expanded="false" aria-controls="mobile-menu">
                         <span class="sr-only">Open main menu</span>
                         <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
@@ -118,7 +118,7 @@
             <h1 class="text-4xl sm:text-5xl font-extrabold text-white tracking-tight">I run businesses using AI.</h1>
             <div class="h-1 w-24 bg-brand mx-auto rounded"></div>
             <p class="text-lg text-navy-300 font-light max-w-2xl mx-auto">
-                30 years architecting enterprise systems, now applied to five businesses of my own — and available as Fractional CTO &amp; Cloud Infrastructure Technologist at COTIB LLC.
+                25+ years architecting enterprise systems, now applied to five businesses of my own, and available as Fractional CTO &amp; Cloud Infrastructure Technologist at COTIB LLC.
             </p>
         </div>
     </section>
@@ -131,7 +131,7 @@
             <div class="space-y-6">
                 <h2 class="text-2xl font-bold text-white">Experience & Track Record</h2>
                 <p class="text-navy-300 font-light leading-relaxed">
-                    Over the past 15+ years, I have built the cloud infrastructure and AI platform technologies that enable business innovation. My work focuses on bridging the gap between high-level executive requirements and deep technical execution, primarily in highly regulated industries.
+                    Over the past 25+ years, I have built the cloud infrastructure and AI platform technologies that enable business innovation. My work focuses on bridging the gap between high-level executive requirements and deep technical execution, primarily in highly regulated industries.
                 </p>
                 <p class="text-navy-300 font-light leading-relaxed">
                     Throughout my career, I've managed <strong class="text-white">$150M cloud infrastructure budgets</strong>, built highly resilient platforms supporting 14,000+ users across 70 global locations, and systematically optimized cloud spent to deliver over <strong class="text-white">$15M in annual cost reductions</strong>. 
@@ -314,10 +314,17 @@
     <script>
         const btn = document.getElementById('mobile-menu-btn');
         const menu = document.getElementById('mobile-menu');
-
-        btn.addEventListener('click', () => {
-            menu.classList.toggle('hidden');
-        });
+        if (btn && menu) {
+            // Keep aria-expanded in step with the menu, and let Escape close it.
+            const setOpen = (open) => {
+                menu.classList.toggle('hidden', !open);
+                btn.setAttribute('aria-expanded', String(open));
+            };
+            btn.addEventListener('click', () => setOpen(menu.classList.contains('hidden')));
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && !menu.classList.contains('hidden')) { setOpen(false); btn.focus(); }
+            });
+        }
     </script>
 </body>
 </html>

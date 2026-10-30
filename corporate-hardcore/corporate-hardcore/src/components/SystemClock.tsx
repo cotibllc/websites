@@ -23,7 +23,7 @@ export default function SystemClock() {
 
   return (
     <span className="font-mono text-[10px] tracking-[0.1em] text-white/60 tabular-nums w-16 text-right">
-      {time ?? "——:——:——"}
+      {time ?? "--:--:--"}
     </span>
   );
 }
