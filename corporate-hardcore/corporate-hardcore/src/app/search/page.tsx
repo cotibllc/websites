@@ -8,7 +8,7 @@ export function generateMetadata({
   searchParams: Promise<{ q?: string }>;
 }) {
   return searchParams.then(({ q }) => ({
-    title: q ? `"${q}" – Search | Corporate Hardcore` : "Search | Corporate Hardcore",
+    title: q ? `"${q}" – Search` : "Search",
     description: q
       ? `Search results for "${q}" on Corporate Hardcore.`
       : "Search articles on Corporate Hardcore.",

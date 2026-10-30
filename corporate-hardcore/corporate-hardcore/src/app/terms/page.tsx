@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "Terms of Use | Corporate Hardcore",
+  title: "Terms of Use",
   description: "Terms of use for Corporate Hardcore.",
   alternates: {
     canonical: "/terms",
