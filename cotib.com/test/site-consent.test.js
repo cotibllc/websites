@@ -87,7 +87,7 @@ test('/api/consent-region answers per visitor and is never cached', async () => 
   assert.equal((await realFetch(base + '/api/consent-region', { method: 'POST' })).status, 405);
 });
 
-const SITE_PAGES = ['/', '/services', '/ventures', '/about', '/contact', '/privacy', '/eula', '/connect', '/disconnect', '/do-the-next-thing', '/do-the-next-thing/privacy', '/no-such-page'];
+const SITE_PAGES = ['/', '/services', '/ventures', '/about', '/contact', '/eula', '/connect', '/disconnect', '/do-the-next-thing', '/do-the-next-thing/privacy', '/no-such-page'];
 
 test('every site page loads the consent script and has a hidden Cookie choices button, with no Google tag in the HTML', async () => {
   for (const p of SITE_PAGES) {
@@ -96,6 +96,14 @@ test('every site page loads the consent script and has a hidden Cookie choices b
     assert.match(html, /<button type="button" data-cookie-choices aria-controls="cookie-consent" hidden[^>]*>Cookie choices<\/button>/, p);
     assert.doesNotMatch(html, /googletagmanager|google-analytics|gtag\(/, p);
   }
+});
+
+test('the QuickBooks /privacy page is deliberately left alone: no consent script, no Cookie choices, no Google tag, so GA never runs there', async () => {
+  const res = await get('/privacy');
+  assert.equal(res.status, 200);
+  const html = await res.text();
+  assert.match(html, /QuickBooks/);
+  assert.doesNotMatch(html, /consent-v1\.js|data-cookie-choices|cookie-consent|googletagmanager|google-analytics|gtag/);
 });
 
 test('DTNT token pages (confirm, download, unsubscribe) carry no consent script, no Cookie choices and no Google tag', async () => {
