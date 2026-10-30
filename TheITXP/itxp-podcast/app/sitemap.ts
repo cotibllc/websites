@@ -3,7 +3,7 @@ import { getEpisodes } from "@/lib/feed";
 
 const BASE = "https://www.theitxp.com";
 
-export const revalidate = 7200;
+export const revalidate = 900; // 15 min, matches FEED_REVALIDATE_SECONDS in lib/feed.ts
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const episodes = await getEpisodes();
