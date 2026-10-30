@@ -1,3 +1,4 @@
+import Link from "next/link";
 import CookieChoicesButton from "@/components/CookieChoicesButton";
 
 const SOCIAL_LINKS = [
@@ -16,6 +17,9 @@ export default function Footer() {
       <div className="max-w-6xl mx-auto px-4 py-10 flex flex-col md:flex-row items-center justify-between gap-6">
         <div className="flex flex-col md:flex-row items-center gap-3 md:gap-6">
           <p className="whitespace-nowrap text-sm font-mono">© {new Date().getFullYear()} COTIB LLC · The IT XP</p>
+          <Link href="/privacy" className="whitespace-nowrap uppercase tracking-widest text-xs hover:text-white transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber">
+            Privacy
+          </Link>
           <CookieChoicesButton />
         </div>
         <ul className="flex flex-wrap gap-5 text-sm">
