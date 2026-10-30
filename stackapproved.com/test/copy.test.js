@@ -49,3 +49,9 @@ test('years claims read 25+ in meta, hero, stat, about and llms.txt', () => {
   assert.match(index, /25\+ years evaluating tools/);
   assert.match(read('llms.txt'), /Chuck Betancourt, 25\+ years enterprise IT/);
 });
+
+test('no em or en dashes on any public SA page (house dash rule)', () => {
+  for (const file of siteFiles) {
+    assert.doesNotMatch(read(file), /[\u2013\u2014]/, `${file} has an em or en dash`);
+  }
+});
