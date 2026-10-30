@@ -1,10 +1,10 @@
 import type { Metadata, Viewport } from "next";
 import { IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
-import Script from "next/script";
 import "@/styles/globals.css";
 import NavBar from "@/components/NavBar";
 import Ticker from "@/components/Ticker";
 import Footer from "@/components/Footer";
+import AnalyticsConsent from "@/components/AnalyticsConsent";
 
 const ibmPlexSans = IBM_Plex_Sans({
   weight: ["300", "400", "500", "600"],
@@ -92,22 +92,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             }),
           }}
         />
-        <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-RYY0GT1TLS"
-          strategy="afterInteractive"
-        />
-        <Script id="google-analytics" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-RYY0GT1TLS');
-          `}
-        </Script>
         <NavBar />
         <Ticker />
         <main className="flex-1">{children}</main>
         <Footer />
+        {/* Loads Google Analytics, or asks first in the EU, EEA, UK and Switzerland. */}
+        <AnalyticsConsent />
       </body>
     </html>
   );

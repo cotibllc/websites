@@ -3,7 +3,7 @@ import { MapPin, Building2, Calendar, Users, ExternalLink } from "lucide-react";
 import CastAvatar from "@/components/CastAvatar";
 
 export const metadata = {
-  title: "Synergy Corp | Corporate Hardcore",
+  title: "Synergy Corp",
   description:
     "Optimizing Tomorrow's Solutions Today™. An integrated enterprise solutions provider since 1987.",
   alternates: {

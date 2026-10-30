@@ -3,7 +3,7 @@ import Link from "next/link";
 import { getSortedJargonData } from "@/lib/jargon";
 
 export const metadata: Metadata = {
-  title: "Corporate Jargon Glossary | Corporate Hardcore",
+  title: "Corporate Jargon Glossary",
   description:
     "Authoritative definitions of corporate jargon from an 18-year insider. What 'circle back,' 'synergy,' 'boil the ocean,' and dozens of other phrases actually mean, and why they exist.",
   alternates: { canonical: "/glossary" },

@@ -3,13 +3,14 @@
 import { useState, useRef } from "react";
 import { Turnstile } from "@marsidev/react-turnstile";
 import type { TurnstileInstance } from "@marsidev/react-turnstile";
+import { CONTACT_ERRORS, errorSentence } from "@/lib/contact-copy";
 
 interface Props {
   subjectOptions: string[];
 }
 
 const fallbackEmail = "hello@corphardcore.com";
-const defaultErrorMessage = "Transmission failed.";
+const defaultErrorMessage: string = CONTACT_ERRORS.generic;
 
 export default function ContactFormIntranet({ subjectOptions }: Props) {
   const turnstileSiteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
@@ -22,6 +23,14 @@ export default function ContactFormIntranet({ subjectOptions }: Props) {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  // A Turnstile token is single use. Drop it and get a fresh widget, so Submit
+  // Request stays disabled until the next Success and a used token is never
+  // sent again.
+  const discardToken = () => {
+    setTurnstileToken(null);
+    turnstileRef.current?.reset();
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -38,16 +47,15 @@ export default function ContactFormIntranet({ subjectOptions }: Props) {
       if (res.ok) {
         setStatus("success");
         setForm({ name: "", email: "", subject: subjectOptions[0] ?? "", message: "" });
-        setTurnstileToken(null);
-        turnstileRef.current?.reset();
+        discardToken();
       } else {
-        setErrorMessage(data.error ?? defaultErrorMessage);
+        setErrorMessage(errorSentence(data.error));
         setStatus("error");
-        turnstileRef.current?.reset();
+        discardToken();
       }
     } catch {
       setStatus("error");
-      turnstileRef.current?.reset();
+      discardToken();
     }
   };
 

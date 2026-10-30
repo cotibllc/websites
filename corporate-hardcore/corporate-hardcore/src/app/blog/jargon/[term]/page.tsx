@@ -15,7 +15,7 @@ export async function generateMetadata({ params }: Props) {
   const post = await getJargonData(term);
   if (!post) return { title: "Not Found" };
   return {
-    title: `What Does "${post.title}" Mean? | Corporate Hardcore Glossary`,
+    title: `What Does "${post.title}" Mean? | Glossary`,
     description: post.description,
     alternates: { canonical: `/blog/jargon/${term}` },
     openGraph: {
