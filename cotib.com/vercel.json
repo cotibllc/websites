@@ -58,6 +58,12 @@
       ]
     },
     {
+      "source": "/api/consent-region",
+      "headers": [
+        { "key": "Cache-Control", "value": "private, no-store, max-age=0" }
+      ]
+    },
+    {
       "source": "/api/dtnt/(.*)",
       "headers": [
         { "key": "Cache-Control", "value": "no-store" },
