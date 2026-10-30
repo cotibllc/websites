@@ -90,6 +90,7 @@ app.set('view engine', 'njk');
 
 // Routes
 app.use('/', require('./routes/redirect'));
+app.use('/', require('./routes/consent-region'));
 app.use('/', require('./routes/index'));
 
 // 404 handler

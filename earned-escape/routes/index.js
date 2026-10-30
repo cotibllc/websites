@@ -10,6 +10,7 @@ const { getTemplates, listUnsubscribeHeaders } = require('../lib/guide-emails');
 const { createToken, verifyToken } = require('../lib/unsubscribe-token');
 const leadStore = require('../lib/lead-store');
 const chinaChecklist = require('../lib/china-checklist');
+const { GA_MEASUREMENT_ID } = require('../lib/consent');
 
 
 const TO_EMAIL = 'cbetancourt@castledreamstravel.com';
@@ -213,6 +214,18 @@ router.get('/compliance', (req, res) => {
     title: 'Compliance & Disclosures | Earned Escape',
     description: 'Affiliate disclosure, business registration, and transparency about how Earned Escape operates as an affiliate of Castle Dreams Travel through Charles Betancourt, Independent Advisor.',
     canonical: '/compliance',
+  });
+});
+
+router.get('/privacy', (req, res) => {
+  res.render('pages/privacy.njk', {
+    site,
+    bodyClass: 'dest-page',
+    title: 'Privacy Policy | Earned Escape',
+    description: 'How Earned Escape handles your information: consent-gated Google Analytics, guide and quiz emails, planning requests, and who processes data for COTIB Adventures LLC.',
+    canonical: '/privacy',
+    contactEmail: TO_EMAIL,
+    gaCookie: `_ga_${GA_MEASUREMENT_ID.replace(/^G-/, '')}`,
   });
 });
 
