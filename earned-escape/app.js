@@ -26,14 +26,16 @@ app.use(helmet({
 
 app.use(compression());
 
-// Rate limiting
+// Rate limiting: form posts and /api/* only. Pages and static files stay
+// unlimited, because one page load is about 15 requests and a site wide limit
+// gave real visitors 429s after 6 or 7 pages.
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 100,
   standardHeaders: true,
   legacyHeaders: false,
 });
-app.use(limiter);
+app.use((req, res, next) => (req.method === 'POST' || req.path === '/api' || req.path.startsWith('/api/') ? limiter(req, res, next) : next()));
 
 // Body parsing for forms (JSON + urlencoded for safety)
 app.use(express.json({ limit: '100kb' }));
