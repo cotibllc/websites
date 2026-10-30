@@ -2,7 +2,7 @@ import { getEpisodesBySeason } from "@/lib/feed";
 import EpisodeCard from "@/components/EpisodeCard";
 import type { Metadata } from "next";
 
-export const revalidate = 7200;
+export const revalidate = 900; // 15 min, matches FEED_REVALIDATE_SECONDS in lib/feed.ts
 
 export const metadata: Metadata = {
   title: "Episodes",

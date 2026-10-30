@@ -56,7 +56,7 @@ export default function AboutPage() {
       <div className="mx-auto content-max px-4 py-8">
         {/* Page header */}
         <div className="intranet-card mb-6">
-          <div className="intranet-header">About — Personnel File</div>
+          <div className="intranet-header">About: Personnel File</div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -98,7 +98,7 @@ export default function AboutPage() {
 
             {/* Contact form */}
             <div className="intranet-card">
-              <div className="intranet-header">Help Desk — Submit a Ticket</div>
+              <div className="intranet-header">Help Desk: Submit a Ticket</div>
               <div className="p-6">
                 <ContactFormIntranet subjectOptions={subjectOptions} />
               </div>

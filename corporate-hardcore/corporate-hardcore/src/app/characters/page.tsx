@@ -14,7 +14,7 @@ export default function CharactersPage() {
       {/* Page header */}
       <div className="intranet-card mb-6">
         <div className="intranet-header">
-          Synergy Corp — Employee Directory
+          Synergy Corp: Employee Directory
         </div>
         <div className="px-4 py-3 bg-synergy-white border-t border-synergy-rule flex items-center justify-between">
           <p className="font-sans text-sm text-synergy-muted">
@@ -33,7 +33,7 @@ export default function CharactersPage() {
 
       {/* Footer note */}
       <p className="font-mono text-[10px] text-synergy-muted text-center mt-8 tracking-wider">
-        CLEARANCE LEVEL: STANDARD — This directory is for internal use only. Do not distribute.
+        CLEARANCE LEVEL: STANDARD. This directory is for internal use only. Do not distribute.
       </p>
     </div>
   );

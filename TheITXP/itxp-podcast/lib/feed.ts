@@ -2,6 +2,13 @@ import { XMLParser } from "fast-xml-parser";
 
 const RSS_URL = "https://theitxp.libsyn.com/rss";
 
+// How long a fetched copy of the Libsyn feed is reused before Next refetches it.
+// Route files export `revalidate = 900` to match (Next needs a literal there).
+export const FEED_REVALIDATE_SECONDS = 900;
+
+// Cache tag on the feed fetch. POST /api/revalidate expires it on demand.
+export const FEED_CACHE_TAG = "libsyn-feed";
+
 export interface Episode {
   title: string;
   slug: string;
@@ -66,7 +73,9 @@ function parseEpisode(item: Record<string, unknown>): Episode {
 }
 
 export async function getEpisodes(): Promise<Episode[]> {
-  const res = await fetch(RSS_URL, { next: { revalidate: 7200 } });
+  const res = await fetch(RSS_URL, {
+    next: { revalidate: FEED_REVALIDATE_SECONDS, tags: [FEED_CACHE_TAG] },
+  });
   const xml = await res.text();
 
   const parser = new XMLParser({

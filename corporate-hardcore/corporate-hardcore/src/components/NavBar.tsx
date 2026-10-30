@@ -41,7 +41,7 @@ export default function NavBar() {
         <div className="flex items-center gap-3 flex-shrink-0">
           <SystemClock />
           <span className="font-mono text-[10px] tracking-[0.1em] uppercase text-white/60 hidden lg:block">
-            Morrison, C. — IT Dept
+            Morrison, C., IT Dept
           </span>
         </div>
       </div>

@@ -30,17 +30,22 @@ COTIB LLC provides consulting services across cloud computing, cybersecurity, De
 ```
 cotib.com/
 ├── api/
-│   └── contact.js          ← Vercel serverless contact form handler
+│   ├── contact.js          ← /contact form handler (Turnstile, Resend)
+│   └── dtnt/               ← Do the Next Thing free sampler handlers
+├── lib/dtnt/               ← shared helpers (http, Turnstile, tokens, Resend, emails)
+├── private/dtnt/           ← sampler PDF, served only through a signed link
+├── scripts/                ← DTNT page builder and preview test
+├── test/                   ← node:test suites and the local harness
 ├── www/
 │   ├── index.html          ← Homepage
 │   ├── about.html          ← About page
 │   ├── services.html       ← Services page
-│   ├── blog.html           ← Blog page
+│   ├── ventures.html       ← Ventures page
 │   ├── contact.html        ← Contact page
-│   ├── css/                ← Bootstrap + custom styles
-│   ├── js/                 ← Bootstrap, jQuery, Parallax
-│   ├── fontawesome/        ← FontAwesome 5 (self-hosted)
-│   ├── img/                ← Site images
+│   ├── do-the-next-thing.html, do-the-next-thing/privacy.html, dtnt/  ← sampler pages
+│   ├── connect.html, disconnect.html, eula.html, privacy.html  ← QuickBooks app pages
+│   ├── css/                ← Tailwind build output and legacy styles
+│   ├── js/, fontawesome/, img/
 │   ├── favicon.svg
 │   ├── robots.txt
 │   └── sitemap.xml
@@ -64,9 +69,10 @@ Open `http://localhost:3000` to browse the site with the contact API working loc
 
 | Variable | Description |
 |---|---|
-| `RESEND_API_KEY` | Resend API key — sends contact form emails to customerservice@cotib.com |
-| `TURNSTILE_SECRET_KEY` | Cloudflare Turnstile server-side secret for bot protection |
-| `NEXT_PUBLIC_TURNSTILE_SITE_KEY` | Cloudflare Turnstile public key (used in HTML form) |
+| `RESEND_API_KEY` | Resend API key: sends contact form emails to customerservice@cotib.com |
+| `TURNSTILE_SECRET_KEY` | Cloudflare Turnstile secret for widget `0x4AAAAAAC2VHJDJh24KBJBW` |
+
+The Turnstile site key is public and is written into the HTML (`contact.html`, `do-the-next-thing.html`); there is no site key env var. The sampler adds three more vars, listed under Do the Next Thing below.
 
 ---
 
@@ -74,7 +80,7 @@ Open `http://localhost:3000` to browse the site with the contact API working loc
 
 ```bash
 npm ci
-npm test               # runs npm run test:dtnt (node:test, Resend and Turnstile mocked)
+npm test               # test:dtnt plus test/site-*.test.js (node:test, Resend and Turnstile mocked)
 npm run check:syntax   # node --check on api/, lib/ and scripts/ (syntax only, no types)
 ```
 
@@ -93,9 +99,10 @@ The site deploys to Vercel. Static files in `www/` are served as-is; `api/contac
 ## Contact Form Flow
 
 1. User submits form on `contact.html` with Turnstile challenge
-2. `api/contact.js` verifies the Turnstile token with Cloudflare
-3. On success, sends a formatted HTML email via Resend to `customerservice@cotib.com`
-4. Reply-To is set to the submitter's email for direct responses
+2. `api/contact.js` refuses another site's Origin (403, `contact.bad_origin`) and more than 5 posts a minute from one address (429, per instance, best effort)
+3. It verifies the Turnstile token with Cloudflare; a refusal logs `contact.turnstile_failed` with `reason` and Cloudflare's `errorCodes`
+4. On success, sends a formatted HTML email via Resend to `customerservice@cotib.com` (Reply-To is the submitter) and logs `contact.sent`; a Resend error returns 500 and logs `contact.send_failed`
+5. No log line carries the email, the token or the secret
 
 ---
 
