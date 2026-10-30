@@ -52,7 +52,7 @@
             showStatus('Network error. Please try again.', true);
         } finally {
             submitBtn.disabled = false;
-            submitBtn.textContent = 'Send the brief';
+            submitBtn.textContent = 'Get 3 hook ideas';
         }
     });
 })();
