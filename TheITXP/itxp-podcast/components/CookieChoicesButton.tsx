@@ -14,7 +14,7 @@ export default function CookieChoicesButton() {
       hidden={!hydrated}
       aria-controls="cookie-consent"
       onClick={() => window.dispatchEvent(new Event(COOKIE_CHOICES_EVENT))}
-      className="uppercase tracking-widest text-xs hover:text-white transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber"
+      className="whitespace-nowrap uppercase tracking-widest text-xs hover:text-white transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber"
     >
       Cookie choices
     </button>

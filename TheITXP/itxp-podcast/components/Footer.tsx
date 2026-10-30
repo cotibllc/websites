@@ -15,7 +15,7 @@ export default function Footer() {
     <footer className="bg-navy border-t border-slate text-steel">
       <div className="max-w-6xl mx-auto px-4 py-10 flex flex-col md:flex-row items-center justify-between gap-6">
         <div className="flex flex-col md:flex-row items-center gap-3 md:gap-6">
-          <p className="text-sm font-mono">© {new Date().getFullYear()} COTIB LLC · The IT XP</p>
+          <p className="whitespace-nowrap text-sm font-mono">© {new Date().getFullYear()} COTIB LLC · The IT XP</p>
           <CookieChoicesButton />
         </div>
         <ul className="flex flex-wrap gap-5 text-sm">
