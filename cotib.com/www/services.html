@@ -8,13 +8,13 @@
     <meta name="description" content="COTIB LLC Services — Fractional CTO, cloud infrastructure strategy, production AI integration, FinOps optimization, and platform engineering advisory.">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="COTIB LLC">
-    <meta property="og:title" content="COTIB LLC — Services">
+    <meta property="og:title" content="Services | COTIB LLC">
     <meta property="og:description" content="Fractional technology leadership, FinOps governance ($15M saved), and platform engineering strategy from Charles Betancourt.">
     <meta property="og:image" content="https://cotib.com/img/biz-oriented-header.jpg">
     <meta name="twitter:card" content="summary_large_image">
     <meta property="og:url" content="https://cotib.com/services">
     <link rel="canonical" href="https://cotib.com/services">
-    <title>COTIB LLC — Technology Services & Advisory</title>
+    <title>Technology Services & Advisory | COTIB LLC</title>
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     
     <!-- Google Fonts -->
@@ -53,7 +53,7 @@
 
                 <!-- Mobile Menu Button -->
                 <div class="md:hidden">
-                    <button id="mobile-menu-btn" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-navy-400 hover:text-white hover:bg-navy-900/60 focus:outline-none" aria-expanded="false">
+                    <button id="mobile-menu-btn" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-navy-400 hover:text-white hover:bg-navy-900/60 focus:outline-none" aria-expanded="false" aria-controls="mobile-menu">
                         <span class="sr-only">Open main menu</span>
                         <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
@@ -388,10 +388,17 @@
     <script>
         const btn = document.getElementById('mobile-menu-btn');
         const menu = document.getElementById('mobile-menu');
-
-        btn.addEventListener('click', () => {
-            menu.classList.toggle('hidden');
-        });
+        if (btn && menu) {
+            // Keep aria-expanded in step with the menu, and let Escape close it.
+            const setOpen = (open) => {
+                menu.classList.toggle('hidden', !open);
+                btn.setAttribute('aria-expanded', String(open));
+            };
+            btn.addEventListener('click', () => setOpen(menu.classList.contains('hidden')));
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && !menu.classList.contains('hidden')) { setOpen(false); btn.focus(); }
+            });
+        }
     </script>
 </body>
 </html>

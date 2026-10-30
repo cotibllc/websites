@@ -15,7 +15,7 @@ export async function generateMetadata({ params }: Props) {
   const post = await getJargonData(term);
   if (!post) return { title: "Not Found" };
   return {
-    title: `What Does "${post.title}" Mean? | Corporate Hardcore Glossary`,
+    title: `What Does "${post.title}" Mean? | Glossary`,
     description: post.description,
     alternates: { canonical: `/blog/jargon/${term}` },
     openGraph: {
@@ -116,7 +116,7 @@ export default async function JargonPostPage({ params }: Props) {
           <div className="intranet-card mb-4">
             <div className="bg-synergy-amber-light border-b border-synergy-rule px-6 py-5">
               <p className="font-mono text-[10px] tracking-widest uppercase text-synergy-amber mb-2">
-                Jargon of the Week — Corporate Hardcore Glossary
+                Jargon of the Week: Corporate Hardcore Glossary
               </p>
               <h1 className="font-sans font-bold text-3xl text-synergy-dark leading-tight mb-3">
                 {post.title}
@@ -127,7 +127,7 @@ export default async function JargonPostPage({ params }: Props) {
             </div>
             <div className="px-6 py-3 bg-synergy-white flex items-center justify-between">
               <p className="font-mono text-[10px] text-synergy-muted tracking-widest">
-                FILED — SYNERGY CORP INTERNAL / CHUCK MORRISON, 18-YEAR OBSERVER
+                FILED: SYNERGY CORP INTERNAL / CHUCK MORRISON, 18-YEAR OBSERVER
               </p>
               <p className="font-mono text-[10px] text-synergy-muted">{post.date}</p>
             </div>

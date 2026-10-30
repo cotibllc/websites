@@ -73,7 +73,7 @@ export default async function BlogPostPage({ params }: Props) {
               <span className="dept-label">Author</span>
               <p className="font-sans text-sm text-synergy-dark mt-0.5">
                 <Link href="/about" className="hover:text-synergy-amber transition-colors">Chuck Morrison</Link>
-                <span className="text-synergy-muted"> — 18 years in the trenches</span>
+                <span className="text-synergy-muted">, 18 years in the trenches</span>
               </p>
             </div>
           </div>
@@ -95,7 +95,7 @@ export default async function BlogPostPage({ params }: Props) {
 
           {/* Footer */}
           <div className="px-6 py-4 bg-synergy-white border-t border-synergy-rule flex items-center justify-between">
-            <p className="font-mono text-[10px] text-synergy-muted tracking-widest">FILED — SYNERGY CORP INTERNAL</p>
+            <p className="font-mono text-[10px] text-synergy-muted tracking-widest">FILED: SYNERGY CORP INTERNAL</p>
             <p className="font-sans text-xs italic text-synergy-muted"><em>Circle Back. Never Return.</em></p>
           </div>
         </article>

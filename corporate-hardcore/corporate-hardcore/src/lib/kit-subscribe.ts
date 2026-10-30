@@ -15,6 +15,13 @@ const KIT_API_BASE = "https://api.convertkit.com/v3";
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const KIT_ID_RE = /^\d+$/;
 
+// Same check for both lists. The route runs it before Turnstile, and each
+// handler runs it again so a bad address never reaches Kit.
+export function isValidEmail(raw: unknown): boolean {
+  const email = typeof raw === "string" ? raw.trim() : "";
+  return email.length > 0 && email.length <= 254 && EMAIL_RE.test(email);
+}
+
 export type SubscribeEnv = {
   KIT_API_KEY?: string;
   KIT_MERCH_FORM_ID?: string;
@@ -64,10 +71,10 @@ export async function handleSubscribe(
 }
 
 async function handleMerch(rawEmail: unknown, env: SubscribeEnv, fetchImpl: FetchLike): Promise<SubscribeResult> {
-  const email = typeof rawEmail === "string" ? rawEmail.trim() : "";
-  if (!email || email.length > 254 || !EMAIL_RE.test(email)) {
+  if (!isValidEmail(rawEmail)) {
     return { status: 400, body: { error: "Please enter a valid email address." } };
   }
+  const email = String(rawEmail).trim();
 
   const destination = resolveMerchDestination(env);
   if (destination.kind === "none") {
@@ -105,17 +112,21 @@ async function handleMerch(rawEmail: unknown, env: SubscribeEnv, fetchImpl: Fetc
   return { status: 200, body: { success: true } };
 }
 
-// Original Field Notes behavior, kept as is.
-async function handleFieldNotes(email: unknown, env: SubscribeEnv, fetchImpl: FetchLike): Promise<SubscribeResult> {
+// Original Field Notes behavior, plus the email format check.
+async function handleFieldNotes(rawEmail: unknown, env: SubscribeEnv, fetchImpl: FetchLike): Promise<SubscribeResult> {
   const kitApiKey = env.KIT_API_KEY;
   if (!kitApiKey) {
     console.error("Newsletter signup is missing KIT_API_KEY.");
     return { status: 500, body: { error: "Newsletter signup is not configured." } };
   }
 
-  if (!email) {
+  if (!rawEmail) {
     return { status: 400, body: { error: "Email is required" } };
   }
+  if (!isValidEmail(rawEmail)) {
+    return { status: 400, body: { error: "Please enter a valid email address." } };
+  }
+  const email = String(rawEmail).trim();
 
   const response = await fetchImpl(`${KIT_API_BASE}/forms/${FIELD_NOTES_FORM_ID}/subscribe`, {
     method: "POST",

@@ -116,6 +116,9 @@ function startServer({ port = 0 } = {}) {
       const ct = req.headers['content-type'] || '';
       req.body = !raw ? undefined : ct.includes('application/json') ? JSON.parse(raw) : ct.includes('urlencoded') ? Object.fromEntries(new URLSearchParams(raw)) : raw;
       req.query = Object.fromEntries(target.searchParams);
+      // Vercel's res.status() and res.json() helpers, used by api/contact.js.
+      res.status = (code) => { res.statusCode = code; return res; };
+      res.json = (obj) => { res.setHeader('Content-Type', 'application/json; charset=utf-8'); res.end(JSON.stringify(obj)); return res; };
       try {
         await loadHandler(target.pathname.replace(/^\/api\//, ''))(req, res);
       } catch (err) {
@@ -128,7 +131,13 @@ function startServer({ port = 0 } = {}) {
     if (!file.startsWith(WWW)) { res.statusCode = 400; return res.end(); }
     const candidates = pathname.endsWith('/') ? [path.join(file, 'index.html')] : [file, `${file}.html`, path.join(file, 'index.html')];
     const hit = candidates.find((f) => fs.existsSync(f) && fs.statSync(f).isFile());
-    if (!hit || pathname.endsWith('.html')) { res.statusCode = 404; return res.end('Not found'); }
+    if (!hit || pathname.endsWith('.html')) {
+      // Like Vercel: a 404.html in the output directory is the not-found page.
+      res.statusCode = 404;
+      const nf = path.join(WWW, '404.html');
+      if (fs.existsSync(nf)) { res.setHeader('Content-Type', TYPES['.html']); return res.end(fs.readFileSync(nf)); }
+      return res.end('Not found');
+    }
     res.setHeader('Content-Type', TYPES[path.extname(hit)] || 'application/octet-stream');
     res.end(fs.readFileSync(hit));
   });

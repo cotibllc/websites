@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "Terms of Use | Corporate Hardcore",
+  title: "Terms of Use",
   description: "Terms of use for Corporate Hardcore.",
   alternates: {
     canonical: "/terms",
@@ -20,9 +20,9 @@ export default function TermsPage() {
               <h2 className="text-lg font-semibold mb-2">This is satire</h2>
               <p>
                 Corporate Hardcore is a work of <strong>observational satire and fiction</strong>.
-                All characters, companies, events, and situations depicted on this site —
+                All characters, companies, events, and situations depicted on this site,
                 including but not limited to Chuck Morrison, Synergy Corp, and any referenced
-                colleagues — are fictional and created for comedic and satirical purposes.
+                colleagues, are fictional and created for comedic and satirical purposes.
               </p>
               <p className="mt-3">
                 Any resemblance to real persons, living or dead, or actual companies or events
@@ -43,7 +43,7 @@ export default function TermsPage() {
             <section>
               <h2 className="text-lg font-semibold mb-2">Intellectual property</h2>
               <p>
-                All content on this site — articles, videos, graphics, copy, and design — is
+                All content on this site (articles, videos, graphics, copy, and design) is
                 owned by Corporate Hardcore unless otherwise noted. You may not reproduce,
                 distribute, or create derivative works from this content without written
                 permission.

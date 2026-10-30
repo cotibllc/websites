@@ -38,7 +38,7 @@ export default function MerchPage() {
             Check back when things stabilize. We appreciate your patience and continued synergy.
           </p>
           <p className="font-sans text-synergy-muted text-sm italic font-light">
-            — HR Department
+            HR Department
           </p>
         </div>
 
