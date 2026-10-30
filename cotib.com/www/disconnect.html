@@ -37,7 +37,7 @@
                     <a href="/contact" class="nav-link-custom">Contact</a>
                 </nav>
                 <div class="md:hidden">
-                    <button id="mobile-menu-btn" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-navy-400 hover:text-white hover:bg-navy-900/60 focus:outline-none" aria-expanded="false">
+                    <button id="mobile-menu-btn" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-navy-400 hover:text-white hover:bg-navy-900/60 focus:outline-none" aria-expanded="false" aria-controls="mobile-menu">
                         <span class="sr-only">Open main menu</span>
                         <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
@@ -129,7 +129,17 @@
     <script>
         const btn = document.getElementById('mobile-menu-btn');
         const menu = document.getElementById('mobile-menu');
-        if (btn && menu) btn.addEventListener('click', () => menu.classList.toggle('hidden'));
+        if (btn && menu) {
+            // Keep aria-expanded in step with the menu, and let Escape close it.
+            const setOpen = (open) => {
+                menu.classList.toggle('hidden', !open);
+                btn.setAttribute('aria-expanded', String(open));
+            };
+            btn.addEventListener('click', () => setOpen(menu.classList.contains('hidden')));
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && !menu.classList.contains('hidden')) { setOpen(false); btn.focus(); }
+            });
+        }
     </script>
 </body>
 </html>
