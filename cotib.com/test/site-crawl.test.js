@@ -93,10 +93,11 @@ test('every internal link and asset on every page answers 200 or a redirect to o
   assert.deepEqual(bad, []);
 });
 
-test('robots.txt keeps crawlers out of /cdn-cgi/ and names the sitemap', () => {
+test('robots.txt keeps crawlers out of /cdn-cgi/ and /api/ and names the sitemap', () => {
   const txt = fs.readFileSync(path.join(WWW, 'robots.txt'), 'utf8');
   const lastStar = txt.slice(txt.lastIndexOf('User-agent: *'));
   assert.match(lastStar, /^Disallow: \/cdn-cgi\/$/m);
+  assert.match(lastStar, /^Disallow: \/api\/$/m);
   assert.match(txt, /^Sitemap: https:\/\/cotib\.com\/sitemap\.xml$/m);
 });
 
