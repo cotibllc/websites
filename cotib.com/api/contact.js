@@ -1,4 +1,7 @@
 const { Resend } = require('resend');
+const http = require('../lib/dtnt/http');
+const { PRODUCTION_HOSTS } = require('../lib/dtnt/config');
+const { verifyTurnstile } = require('../lib/dtnt/turnstile');
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -14,9 +17,36 @@ function escapeHtml(str) {
         .replace(/"/g, '&quot;');
 }
 
+function originAllowed(req) {
+    const origin = http.header(req, 'origin');
+    if (!origin) return false;
+    let host;
+    try { host = new URL(origin).host.toLowerCase(); } catch { return false; }
+    return host === http.requestHost(req) || PRODUCTION_HOSTS.includes(host);
+}
+
 module.exports = async function handler(req, res) {
     if (req.method !== 'POST') {
         return res.status(405).json({ error: 'Method not allowed' });
+    }
+
+    // Same Origin rule as the sampler signup: only pages on cotib.com (or the
+    // host that served this request, for previews) may post here.
+    if (!originAllowed(req)) {
+        http.log('contact.bad_origin', {
+            origin: http.header(req, 'origin').slice(0, 200) || '(none)',
+            requestHost: http.requestHost(req),
+        });
+        return res.status(403).json({ error: 'This form only works on www.cotib.com. Open www.cotib.com/contact and try again.' });
+    }
+
+    // Best effort, per function instance, no new infrastructure (same helper
+    // as the sampler signup). Turnstile stays the real gate.
+    const visitorIp = http.header(req, 'cf-connecting-ip') || http.clientIp(req);
+    if (http.rateLimited(`contact:${visitorIp}`, 5)) {
+        http.log('contact.rate_limited');
+        res.setHeader('Retry-After', '60');
+        return res.status(429).json({ error: 'Too many tries from here. Wait a minute and try again.' });
     }
 
     const { name, email, organization, phone, service, message, turnstileToken, website } = req.body || {};
@@ -31,31 +61,24 @@ module.exports = async function handler(req, res) {
         return res.status(400).json({ error: 'Please fill in all required fields.' });
     }
 
-    // Verify Cloudflare Turnstile token
-    let verifyData;
-    try {
-        const verifyRes = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                secret: String(process.env.TURNSTILE_SECRET_KEY || '').trim(),
-                response: turnstileToken,
-            }),
+    // Cloudflare Turnstile, shared with the sampler signup: trimmed secret,
+    // 8 second timeout, hostname check, and a reason for every refusal.
+    const ts = await verifyTurnstile(turnstileToken, { ip: visitorIp, host: http.requestHost(req) });
+    if (!ts.ok) {
+        // Reason and Cloudflare's error-codes only, never the secret, the
+        // token or the visitor's email.
+        http.log('contact.turnstile_failed', {
+            reason: ts.reason,
+            errorCodes: ts.errorCodes,
+            hostname: ts.hostname,
+            challengeAgeSec: ts.challengeAgeSec,
         });
-        verifyData = await verifyRes.json();
-    } catch (err) {
-        console.log(JSON.stringify({ at: new Date().toISOString(), event: 'contact.turnstile_unreachable', error: err && err.name }));
-        return res.status(500).json({ error: 'Unable to complete security check. Please try again.' });
-    }
-
-    if (!verifyData.success) {
-        // Cloudflare's error-codes only, never the secret or the token.
-        console.log(JSON.stringify({
-            at: new Date().toISOString(),
-            event: 'contact.turnstile_failed',
-            errorCodes: Array.isArray(verifyData['error-codes']) ? verifyData['error-codes'].slice(0, 5) : [],
-            hostname: verifyData.hostname,
-        }));
+        if (ts.reason === 'unreachable') {
+            return res.status(500).json({ error: 'Unable to complete security check. Please try again.' });
+        }
+        if (ts.reason === 'config') {
+            return res.status(503).json({ error: 'The contact form is not working on our end right now. Please email customerservice@cotib.com.' });
+        }
         return res.status(400).json({ error: 'Security check failed. Please refresh the page and try again.' });
     }
 
@@ -109,17 +132,25 @@ module.exports = async function handler(req, res) {
 </html>`;
 
     try {
-        await resend.emails.send({
+        // The Resend SDK returns { error } instead of throwing on an API
+        // error, so check it, or a failed send would show success.
+        const { error } = await resend.emails.send({
             from: FROM_EMAIL,
             to: TO_EMAIL,
             replyTo: email,
             subject: `[COTIB] Free Consultation: ${service || 'General Inquiry'}, from ${name}`,
             html,
         });
+        if (error) throw Object.assign(new Error(String(error.message || 'send failed')), { name: error.name, statusCode: error.statusCode });
 
+        http.log('contact.sent', { service: String(service || 'General Inquiry').slice(0, 60) });
         return res.status(200).json({ success: true });
     } catch (err) {
-        console.error('Resend error:', err);
+        http.log('contact.send_failed', {
+            name: err && err.name,
+            statusCode: err && err.statusCode,
+            message: String((err && err.message) || '').split(String(email)).join('[email]').slice(0, 300),
+        });
         return res.status(500).json({
             error: 'Failed to send your message. Please try again or use the contact information on this page.',
         });
