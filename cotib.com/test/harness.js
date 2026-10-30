@@ -1,6 +1,6 @@
 // Local stand-in for Vercel, for tests and screenshots only (never deployed).
 // Serves www/ with cleanUrls, applies the rewrites and headers from
-// vercel.json, and runs the api/ handlers with Vercel-style req.query and
+// vercel.json (redirects first, as Vercel does), and runs the api/ handlers with Vercel-style req.query and
 // req.body. Outbound fetch calls (Resend, Turnstile) are replaced by a mock
 // that records every call, so nothing leaves the machine.
 const http = require('http');
@@ -28,6 +28,14 @@ function rewrite(pathname) {
       keys.forEach((k, i) => { dest = dest.replace(`:${k}`, encodeURIComponent(m[i + 1])); });
       return dest;
     }
+  }
+  return null;
+}
+
+function redirectFor(pathname) {
+  for (const r of VERCEL.redirects || []) {
+    const { re } = toRegex(r.source);
+    if (re.test(pathname)) return { location: r.destination, status: r.statusCode || (r.permanent === false ? 307 : 308) };
   }
   return null;
 }
@@ -107,6 +115,8 @@ function startServer({ port = 0 } = {}) {
     const url = new URL(req.url, 'http://localhost');
     let pathname = url.pathname;
     applyHeaders(pathname, res);
+    const redirect = redirectFor(pathname);
+    if (redirect) { res.statusCode = redirect.status; res.setHeader('Location', redirect.location); return res.end(); }
     const rw = rewrite(pathname);
     let target = rw ? new URL(rw, 'http://localhost') : url;
     if (rw) for (const [k, v] of url.searchParams) if (!target.searchParams.has(k)) target.searchParams.set(k, v);
