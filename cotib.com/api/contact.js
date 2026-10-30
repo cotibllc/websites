@@ -3,7 +3,14 @@ const http = require('../lib/dtnt/http');
 const { PRODUCTION_HOSTS } = require('../lib/dtnt/config');
 const { verifyTurnstile } = require('../lib/dtnt/turnstile');
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Built on first send, not at load time. new Resend() throws when
+// RESEND_API_KEY is missing or empty, and a throw at load time fails every
+// request with a 500, even a crawler's GET (Search Console 5xx, Oct 22).
+let resend;
+function resendClient() {
+    if (!resend) resend = new Resend(process.env.RESEND_API_KEY);
+    return resend;
+}
 
 const TO_EMAIL = 'customerservice@cotib.com';
 const FROM_EMAIL = 'COTIB LLC <no-reply@cotib.com>';
@@ -26,8 +33,10 @@ function originAllowed(req) {
 }
 
 module.exports = async function handler(req, res) {
+    // GET and HEAD (crawlers, link checkers) get a fast, fully ended 405
+    // that names the one method this route takes. Nothing else runs first.
     if (req.method !== 'POST') {
-        return res.status(405).json({ error: 'Method not allowed' });
+        return http.sendJson(res, 405, { error: 'Method not allowed' }, { Allow: 'POST', 'Cache-Control': 'no-store' });
     }
 
     // Same Origin rule as the sampler signup: only pages on cotib.com (or the
@@ -134,7 +143,7 @@ module.exports = async function handler(req, res) {
     try {
         // The Resend SDK returns { error } instead of throwing on an API
         // error, so check it, or a failed send would show success.
-        const { error } = await resend.emails.send({
+        const { error } = await resendClient().emails.send({
             from: FROM_EMAIL,
             to: TO_EMAIL,
             replyTo: email,
