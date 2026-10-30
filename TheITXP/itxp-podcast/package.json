@@ -8,8 +8,9 @@
     "start": "next start",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
+    "test:unit": "tsx --test lib/*.test.ts",
     "test:smoke": "next build",
-    "test": "npm run test:smoke"
+    "test": "npm run test:unit && npm run test:smoke"
   },
   "dependencies": {
     "@marsidev/react-turnstile": "^1.5.0",
@@ -28,6 +29,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.2.2",
     "tailwindcss": "^4",
+    "tsx": "^4.23.15",
     "typescript": "^5"
   }
 }
