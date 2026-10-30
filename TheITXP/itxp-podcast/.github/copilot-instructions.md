@@ -17,7 +17,12 @@ npm test         # smoke test (runs next build)
 ## Architecture
 
 ### Episode data — RSS feed
-Episodes are fetched at build time from `https://theitxp.libsyn.com/rss` via `lib/feed.ts`. ISR revalidates every 24 hours (`revalidate = 86400`), so new episodes appear without a redeploy.
+Episodes are fetched at build time from `https://theitxp.libsyn.com/rss` via `lib/feed.ts`. ISR revalidates every 15 minutes, so new episodes appear without a redeploy, usually within about 15 minutes of going live on Libsyn.
+
+- The feed fetch uses `FEED_REVALIDATE_SECONDS = 900` and cache tag `libsyn-feed` in `lib/feed.ts`.
+- `/`, `/episodes`, `/[slug]` and `/sitemap.xml` each export `revalidate = 900`. Next needs a literal there, so if you change the interval, change `FEED_REVALIDATE_SECONDS` and all four files together.
+- On-demand refresh: `POST /api/revalidate` with header `Authorization: Bearer $REVALIDATE_SECRET` expires the `libsyn-feed` tag right away. `REVALIDATE_SECRET` is set by Chuck in Vercel; while it is unset (or shorter than 32 characters) the route returns 503.
+- YouTube videos on `/` (`lib/youtube.ts`) are a separate fetch that still revalidates every 2 hours.
 
 - `getEpisodes()` — all episodes, newest first
 - `getEpisodeBySlug(slug)` — lookup by slug
