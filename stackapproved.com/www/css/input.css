@@ -75,4 +75,38 @@
   .bg-gradient-radial {
     background-image: radial-gradient(circle at top, rgba(34, 197, 94, 0.12) 0%, transparent 70%);
   }
+
+  /* Legal pages (/privacy, /terms): plain reading layout, no cards */
+  .legal-body h2 {
+    @apply text-xl sm:text-2xl mt-12 mb-4;
+  }
+
+  .legal-body p,
+  .legal-body li {
+    @apply text-ink-300 leading-7;
+  }
+
+  .legal-body p {
+    @apply mb-4;
+  }
+
+  .legal-body ul {
+    @apply list-disc pl-6 mb-4 space-y-2;
+  }
+
+  .legal-body strong {
+    @apply text-ink-100 font-semibold;
+  }
+
+  .legal-body a {
+    @apply text-brand underline underline-offset-4 hover:text-brand-light focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand;
+  }
+
+  .legal-link {
+    @apply text-ink-400 hover:text-brand transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand;
+  }
+
+  .skip-link {
+    @apply sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-brand focus:text-ink-950 focus:px-4 focus:py-2 focus:font-semibold;
+  }
 }
