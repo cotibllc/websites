@@ -82,7 +82,9 @@ User-agent: Meta-ExternalFetcher
 Allow: /
 
 # --- Everyone else (Googlebot, Bingbot, etc.): allowed ---
+# /cdn-cgi/ is Cloudflare's own path (email protection links), not a page.
 User-agent: *
 Allow: /
+Disallow: /cdn-cgi/
 
 Sitemap: https://cotib.com/sitemap.xml

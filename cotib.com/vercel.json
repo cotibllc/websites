@@ -9,6 +9,11 @@
   "functions": {
     "api/dtnt/download.js": { "includeFiles": "private/dtnt/*.pdf" }
   },
+  "redirects": [
+    { "source": "/blog", "destination": "/ventures", "statusCode": 301 },
+    { "source": "/blog.html", "destination": "/ventures", "statusCode": 301 },
+    { "source": "/favicon.ico", "destination": "/favicon.svg", "statusCode": 301 }
+  ],
   "rewrites": [
     { "source": "/do-the-next-thing/free", "destination": "/api/dtnt/signup" },
     { "source": "/do-the-next-thing/free/confirm", "destination": "/api/dtnt/confirm" },
