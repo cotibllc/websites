@@ -3,6 +3,7 @@ import { IBM_Plex_Sans, IBM_Plex_Sans_Condensed, IBM_Plex_Mono } from "next/font
 import "./globals.css";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
+import AnalyticsConsent from "@/components/AnalyticsConsent";
 
 const ibmPlexSans = IBM_Plex_Sans({
   subsets: ["latin"],
@@ -50,6 +51,8 @@ export default function RootLayout({
         <Nav />
         <main className="flex-1">{children}</main>
         <Footer />
+        {/* Loads Google Analytics, or asks first in the EU, EEA, UK and Switzerland. */}
+        <AnalyticsConsent />
       </body>
     </html>
   );
