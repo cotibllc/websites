@@ -22,8 +22,10 @@ test('contact H2 reads "Get 3 hook ideas"', () => {
   assert.deepEqual(h2s, ['Get 3 hook ideas']);
 });
 
-test('no H2 on the page still reads "Send a brief"', () => {
+test('"Send a brief" no longer appears anywhere on the page', () => {
   assert.doesNotMatch(index, /<h2[^>]*>\s*Send a brief\s*<\/h2>/);
+  assert.doesNotMatch(index, /Send a brief/);
+  assert.match(index, /Rates on inquiry\. Get 3 hook ideas and a\s+same-day quote\./);
 });
 
 test('submit button label is unchanged', () => {
