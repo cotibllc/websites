@@ -4,7 +4,7 @@ Website for **Tech Lead Shift**: articles on what it takes to manage hybrid team
 
 Live at [techleadshift.com](https://techleadshift.com). Published on [Substack](https://techleadshift.substack.com).
 
-A brand of [COTIB LLC](https://cotib.com). Written by Charles Betancourt, Director of Cloud Engineering with 18+ years of technology leadership.
+A brand of [COTIB LLC](https://cotib.com). Written by Charles Betancourt, Director of Cloud Engineering with 25+ years of technology leadership.
 
 ---
 
