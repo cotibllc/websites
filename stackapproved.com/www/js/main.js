@@ -1,4 +1,55 @@
+// Portfolio: click-to-play YouTube facade. The page ships a thumbnail <button
+// data-video-id>; on click we swap in the youtube-nocookie iframe so YouTube
+// loads (and overlays its controls) only when someone asks to watch.
+// Exported under CommonJS for test/portfolio.test.js; DOM wiring runs only in a browser.
 (function () {
+    const VIDEO_ID = /^[A-Za-z0-9_-]{11}$/;
+    const ALLOW = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+
+    function buildVideoIframe(doc, videoId) {
+        if (typeof videoId !== 'string' || !VIDEO_ID.test(videoId)) {
+            throw new Error('Not a YouTube video id: ' + String(videoId));
+        }
+        const iframe = doc.createElement('iframe');
+        iframe.setAttribute('src', 'https://www.youtube-nocookie.com/embed/' + videoId + '?autoplay=1&playsinline=1&rel=0');
+        iframe.setAttribute('title', 'StackApproved spec ad for Claude Code');
+        iframe.setAttribute('allow', ALLOW);
+        iframe.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
+        iframe.setAttribute('allowfullscreen', '');
+        return iframe;
+    }
+
+    function activateVideoFacade(button) {
+        const iframe = buildVideoIframe(button.ownerDocument, button.dataset.videoId);
+        button.replaceWith(iframe);
+        iframe.focus();
+        return iframe;
+    }
+
+    function useFallbackThumb(img) {
+        const fallback = img.getAttribute('data-fallback-src');
+        if (fallback && img.getAttribute('src') !== fallback) img.setAttribute('src', fallback);
+    }
+
+    function initVideoFacades(root) {
+        root.querySelectorAll('button[data-video-id]').forEach(function (button) {
+            button.addEventListener('click', function () { activateVideoFacade(button); }, { once: true });
+            // oardefault (vertical) is not guaranteed for every Short; fall back to hqdefault.
+            const img = button.querySelector('img[data-fallback-src]');
+            if (!img) return;
+            img.addEventListener('error', function () { useFallbackThumb(img); }, { once: true });
+            if (img.complete && img.naturalWidth === 0) useFallbackThumb(img);
+        });
+    }
+
+    if (typeof module === 'object' && module.exports) {
+        module.exports = { buildVideoIframe, activateVideoFacade, initVideoFacades };
+    }
+    if (typeof document !== 'undefined') initVideoFacades(document);
+})();
+
+(function () {
+    if (typeof document === 'undefined') return;
     const form = document.getElementById('brief-form');
     if (!form) return;
 

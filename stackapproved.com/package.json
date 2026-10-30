@@ -9,7 +9,7 @@
     "dev": "concurrently \"npm run watch:css\" \"vercel dev\"",
     "build": "npm run build:css",
     "deploy": "npm run build && cd .. && vercel --prod",
-    "check:syntax": "find api test \\( -name '*.js' -o -name '*.mjs' \\) -print0 | xargs -0 -n1 node --check",
+    "check:syntax": "find api test www/js \\( -name '*.js' -o -name '*.mjs' \\) -print0 | xargs -0 -n1 node --check",
     "test": "node --test test/"
   },
   "dependencies": {
