@@ -14,6 +14,15 @@ export interface FieldMemoEntry {
 
 export const fieldMemos: FieldMemoEntry[] = [
   {
+    videoId: "XbmOOahZxRQ",
+    slug: "direct-report",
+    fmCode: "FM-04",
+    status: "FILED",
+    title: "Direct Report · Annual Review | Synergy Corp Field Memo",
+    rub: "Two hundred and twelve meetings created. None attended. Top accomplishment.",
+    published: "2026-11-03T00:00:00.000Z",
+  },
+  {
     videoId: "Y9lxK46WAmA",
     slug: "growth-paths",
     fmCode: "FM-03",
