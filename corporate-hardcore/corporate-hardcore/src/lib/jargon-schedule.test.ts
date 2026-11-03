@@ -1,5 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
+import fs from "fs";
+import path from "path";
 import { getAllJargonEntriesIncludingScheduled, getJargonData, getSortedJargonData } from "./jargon";
 
 // Release schedule approved by CH CoS, one entry per Monday.
@@ -56,4 +58,14 @@ test("each Monday adds exactly one entry, newest first", () => {
     return `${date} ${getSortedJargonData(new Date(`${date}T17:00:00Z`)).length} ${getSortedJargonData(new Date(`${date}T17:00:00Z`))[0].slug}`;
   });
   assert.deepEqual(counts, SCHEDULE.slice(3).map((row, i) => `${row.slice(0, 10)} ${4 + i} ${row.split(" ")[1]}`));
+});
+
+test("house dash rule: no em dashes, en dashes or spaced hyphens in any entry", () => {
+  for (const m of getAllJargonEntriesIncludingScheduled()) {
+    // Frontmatter values (not the YAML list markers) plus the Markdown body.
+    const raw = fs.readFileSync(path.join(process.cwd(), "src/content/jargon", `${m.slug}.md`), "utf8");
+    const body = raw.split("\n---\n").slice(1).join("\n---\n");
+    const text = `${JSON.stringify(m)}\n${body}`;
+    assert.doesNotMatch(text, /[\u2013\u2014]| - | -- /, m.slug);
+  }
 });
