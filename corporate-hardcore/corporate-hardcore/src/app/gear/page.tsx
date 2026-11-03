@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
-import { GEAR_DISCLOSURE, gearIsPublishable, gearItems, type GearItem } from "@/lib/gear";
+import { GEAR_DISCLOSURE, gearIsComplete, gearItems, gearRobots, type GearItem } from "@/lib/gear";
 
-const publishable = gearIsPublishable();
+const complete = gearIsComplete();
 
 export const metadata: Metadata = {
   title: "Approved Equipment",
   description: "Synergy Corp approved equipment list. Requisitions are processed in the order they are ignored.",
   alternates: { canonical: "/gear" },
-  // Placeholder slots stay out of search until real products are filed.
-  robots: publishable ? undefined : { index: false, follow: false },
+  // noindex, nofollow until GEAR_INDEXABLE is flipped on purpose (see src/lib/gear.ts).
+  robots: gearRobots(),
 };
 
 function RequisitionLink({ item }: { item: GearItem }) {
@@ -53,7 +53,7 @@ export default function GearPage() {
           <div><span className="dept-label">Requested by</span><p className="font-sans text-sm text-synergy-dark">Morrison, C.</p></div>
           <div><span className="dept-label">Approved by</span><p className="font-sans text-sm text-synergy-dark">Morrison, C.</p></div>
           <div><span className="dept-label">Budget code</span><p className="font-mono text-sm text-synergy-dark">PERSONAL CARD</p></div>
-          <div><span className="dept-label">Status</span><p className="font-mono text-sm text-synergy-amber">{publishable ? "FILED" : "DRAFT"}</p></div>
+          <div><span className="dept-label">Status</span><p className="font-mono text-sm text-synergy-amber">{complete ? "FILED" : "DRAFT"}</p></div>
         </div>
 
         <ol className="divide-y divide-synergy-rule">
@@ -62,6 +62,7 @@ export default function GearPage() {
               <span className="font-mono text-xs text-synergy-muted tracking-wider">{item.code}</span>
               <div>
                 <p className="font-sans font-semibold text-synergy-dark">{item.name}</p>
+                <p className="font-mono text-[11px] text-synergy-muted mt-1">{item.product}</p>
                 <p className="font-sans text-sm text-synergy-muted mt-1">{item.justification}</p>
               </div>
               <RequisitionLink item={item} />
