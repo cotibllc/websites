@@ -2,6 +2,11 @@ import { getJargonData, getAllJargonSlugs } from "@/lib/jargon";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
+// Publish date filter: future dated glossary entries stay hidden until 00:00
+// New York time on their date. Keep equal to JARGON_REVALIDATE_SECONDS in
+// src/lib/jargon.ts (route config must be a literal).
+export const revalidate = 900;
+
 interface Props {
   params: Promise<{ term: string }>;
 }
@@ -75,7 +80,7 @@ export default async function JargonPostPage({ params }: Props) {
           "@type": "Person",
           name: "Chuck Morrison",
           url: "https://www.corphardcore.com/about",
-          description: "18-year corporate survivor and founder of Corporate Hardcore",
+          description: "18 year corporate survivor and founder of Corporate Hardcore",
         },
         publisher: {
           "@type": "Organization",
@@ -127,7 +132,7 @@ export default async function JargonPostPage({ params }: Props) {
             </div>
             <div className="px-6 py-3 bg-synergy-white flex items-center justify-between">
               <p className="font-mono text-[10px] text-synergy-muted tracking-widest">
-                FILED: SYNERGY CORP INTERNAL / CHUCK MORRISON, 18-YEAR OBSERVER
+                FILED: SYNERGY CORP INTERNAL / CHUCK MORRISON, 18 YEAR OBSERVER
               </p>
               <p className="font-mono text-[10px] text-synergy-muted">{post.date}</p>
             </div>
@@ -156,7 +161,7 @@ export default async function JargonPostPage({ params }: Props) {
           {/* Main body */}
           {post.contentHtml && (
             <div className="intranet-card mb-4">
-              <div className="intranet-header">Chuck&apos;s 18-Year Field Observation</div>
+              <div className="intranet-header">Chuck&apos;s 18 Year Field Observation</div>
               <div
                 className="p-6 md:p-8 prose prose-neutral max-w-none
                   prose-headings:font-sans prose-headings:font-semibold

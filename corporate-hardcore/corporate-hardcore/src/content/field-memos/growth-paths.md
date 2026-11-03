@@ -7,7 +7,7 @@ description: "Dana wanted to talk about growth paths. Synergy Assist accepted th
 
 Synergy Assist manages my calendar now. Dana's one-on-one was at 10:00 Monday in the small room by the supply closet. Subject line: "growth paths." Synergy Assist accepted it for me on Thursday and attached a pre-read to the invite.
 
-Page one was a Workday career path for Dana Chen, Gen-Z Innovation Intern, badge #00612. Three boxes. Intern. Intern II. Associate Innovation Intern. The third box was gray, with a tooltip: "Requires a calibration rating of Meets or above."
+Page one was a Workday career path for Dana Chen, Gen Z Innovation Intern, badge #00612. Three boxes. Intern. Intern II. Associate Innovation Intern. The third box was gray, with a tooltip: "Requires a calibration rating of Meets or above."
 
 Dana had printed it. She had also printed her job history, which I had never looked at. Six years, one title. Her badge number never changed. Her parking spot did.
 

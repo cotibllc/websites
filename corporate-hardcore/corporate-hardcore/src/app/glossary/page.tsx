@@ -1,20 +1,28 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { getSortedJargonData } from "@/lib/jargon";
+import { getSortedJargonData, glossaryMetaDescription } from "@/lib/jargon";
 
-export const metadata: Metadata = {
-  title: "Corporate Jargon Glossary",
-  description:
-    "Authoritative definitions of corporate jargon from an 18-year insider. What 'circle back,' 'synergy,' 'boil the ocean,' and dozens of other phrases actually mean, and why they exist.",
-  alternates: { canonical: "/glossary" },
-  openGraph: {
-    title: "Corporate Jargon Glossary | Corporate Hardcore",
-    description:
-      "Authoritative definitions of corporate jargon from an 18-year insider. What these phrases actually mean, and why they exist.",
-    url: "/glossary",
-    type: "website",
-  },
-};
+// Publish date filter: future dated glossary entries stay hidden until 00:00
+// New York time on their date. Keep equal to JARGON_REVALIDATE_SECONDS in
+// src/lib/jargon.ts (route config must be a literal).
+export const revalidate = 900;
+
+// Built at request time from published entries only, so the description never
+// names a term before its publish date.
+export function generateMetadata(): Metadata {
+  return {
+    title: "Corporate Jargon Glossary",
+    description: glossaryMetaDescription(getSortedJargonData()),
+    alternates: { canonical: "/glossary" },
+    openGraph: {
+      title: "Corporate Jargon Glossary | Corporate Hardcore",
+      description:
+        "Authoritative definitions of corporate jargon from an 18 year insider. What these phrases actually mean, and why they exist.",
+      url: "/glossary",
+      type: "website",
+    },
+  };
+}
 
 const schema = {
   "@context": "https://schema.org",
