@@ -20,6 +20,7 @@ export default function Footer() {
           <Link href="/terms" className="font-mono text-[9px] tracking-[0.1em] uppercase text-white/25 hover:text-white/50 transition-colors">Terms</Link>
           <Link href="/contact" className="font-mono text-[9px] tracking-[0.1em] uppercase text-white/25 hover:text-white/50 transition-colors">Contact</Link>
           <CookieChoicesButton />
+          <Link href="/gear" className="font-mono text-[9px] tracking-[0.1em] uppercase text-white/25 hover:text-white/50 transition-colors">Approved Equipment</Link>
           <Link href="/merch" className="font-mono text-[9px] tracking-[0.1em] uppercase text-white/25 hover:text-white/50 transition-colors">COMPANY STORE · PENDING</Link>
           <span className="font-mono text-[9px] text-white/20 ml-auto italic">Circle Back. Never Return.</span>
         </div>
