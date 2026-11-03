@@ -2,7 +2,8 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import fs from "fs";
 import path from "path";
-import { getAllJargonEntriesIncludingScheduled, getJargonData, getSortedJargonData } from "./jargon";
+import { getAllJargonEntriesIncludingScheduled, getJargonData, getSortedJargonData, glossaryMetaDescription } from "./jargon";
+import { isPublished } from "./publish-date";
 
 // Release schedule approved by CH CoS, one entry per Monday.
 const SCHEDULE = [
@@ -68,4 +69,36 @@ test("house dash rule: no em dashes, en dashes or spaced hyphens in any entry", 
     const text = `${JSON.stringify(m)}\n${body}`;
     assert.doesNotMatch(text, /[\u2013\u2014]| - | -- /, m.slug);
   }
+});
+
+test("glossary meta description never names an unpublished term", () => {
+  const all = getAllJargonEntriesIncludingScheduled();
+  // Every hour from Apr 27 2026 to Feb 1 2027, plus each midnight boundary.
+  const instants: Date[] = [];
+  for (let t = Date.parse("2026-04-27T00:00:00Z"); t <= Date.parse("2027-02-01T00:00:00Z"); t += 3600_000) {
+    instants.push(new Date(t));
+  }
+  for (const row of SCHEDULE) {
+    const day = row.slice(0, 10);
+    for (const z of ["03:59:59", "04:00:00", "04:59:59", "05:00:00"]) instants.push(new Date(`${day}T${z}Z`));
+  }
+  for (const now of instants) {
+    const desc = glossaryMetaDescription(getSortedJargonData(now)).toLowerCase();
+    for (const m of all) {
+      if (!isPublished(m.date, now)) {
+        assert.ok(!desc.includes(m.title.toLowerCase()), `${now.toISOString()} names ${m.slug}`);
+      }
+    }
+  }
+});
+
+test("glossary meta description today, and before Boil the Ocean goes live", () => {
+  const today = glossaryMetaDescription(getSortedJargonData(new Date("2026-11-03T16:00:00Z")));
+  assert.equal(
+    today,
+    "Authoritative definitions of corporate jargon from an 18 year insider. What 'circle back,' 'synergy,' 'move the needle,' and other phrases actually mean, and why they exist.",
+  );
+  const sunNov22 = glossaryMetaDescription(getSortedJargonData(new Date("2026-11-23T04:59:59Z")));
+  assert.doesNotMatch(sunNov22, /boil the ocean/i);
+  assert.equal(glossaryMetaDescription([]), "Authoritative definitions of corporate jargon from an 18 year insider. What these phrases actually mean, and why they exist.");
 });

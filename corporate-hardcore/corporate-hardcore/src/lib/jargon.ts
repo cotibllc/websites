@@ -76,6 +76,20 @@ export function getSortedJargonData(now: Date = new Date()): JargonMeta[] {
   return getAllJargonEntriesIncludingScheduled().filter((m) => isPublished(m.date, now));
 }
 
+/**
+ * Meta description for /glossary. Names up to three of the oldest published
+ * terms (stable as new entries go live), never an unpublished one.
+ */
+export function glossaryMetaDescription(published: Pick<JargonMeta, "title" | "date">[]): string {
+  const named = [...published]
+    .sort((a, b) => (a.date < b.date ? -1 : a.date > b.date ? 1 : 0))
+    .slice(0, 3)
+    .map((m) => `'${m.title.toLowerCase()},'`);
+  const lead = "Authoritative definitions of corporate jargon from an 18 year insider.";
+  if (named.length === 0) return `${lead} What these phrases actually mean, and why they exist.`;
+  return `${lead} What ${named.join(" ")} and other phrases actually mean, and why they exist.`;
+}
+
 /** Slugs of published entries, for generateStaticParams. */
 export function getAllJargonSlugs(now: Date = new Date()): { term: string }[] {
   return getSortedJargonData(now).map((m) => ({ term: m.slug }));

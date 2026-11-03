@@ -11,7 +11,7 @@ It counts as headcount on my team now. The vendor's Exceeds review from last wee
 
 My manager told me this afterward, in the hallway, quietly. Nobody argued for anyone, he said. The spreadsheet was already sorted when the projector came on.
 
-Greg got a Developing rating. Two slots, two names: Greg and Dana, Gen-Z Innovation Intern, badge #00612. Dana has been an intern since before the badge numbers had leading zeros. Farber noted for the record that interns are calibrated "for completeness."
+Greg got a Developing rating. Two slots, two names: Greg and Dana, Gen Z Innovation Intern, badge #00612. Dana has been an intern since before the badge numbers had leading zeros. Farber noted for the record that interns are calibrated "for completeness."
 
 I asked my manager whether anyone could move Synergy Assist down. He said it would need a written justification against its engagement data, reviewed by the vendor's account rep. I asked whether anyone could move Greg up. He said it would need a written justification and someone rated Developing to replace him.
 
