@@ -2,6 +2,11 @@ import { getJargonData, getAllJargonSlugs } from "@/lib/jargon";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
+// Publish date filter: future dated glossary entries stay hidden until 00:00
+// New York time on their date. Keep equal to JARGON_REVALIDATE_SECONDS in
+// src/lib/jargon.ts (route config must be a literal).
+export const revalidate = 900;
+
 interface Props {
   params: Promise<{ term: string }>;
 }

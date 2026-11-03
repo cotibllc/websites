@@ -3,6 +3,11 @@ import { getSortedPostsData } from "@/lib/blog";
 import { getSortedJargonData } from "@/lib/jargon";
 import { fieldMemos } from "@/data/field-memos";
 
+// Publish date filter: future dated glossary entries stay hidden until 00:00
+// New York time on their date. Keep equal to JARGON_REVALIDATE_SECONDS in
+// src/lib/jargon.ts (route config must be a literal).
+export const revalidate = 900;
+
 const BASE = "https://www.corphardcore.com";
 
 export default function sitemap(): MetadataRoute.Sitemap {
