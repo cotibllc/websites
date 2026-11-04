@@ -11,6 +11,9 @@ export interface BlogPost {
   title: string;
   date: string;
   description: string;
+  /** Optional memo header overrides (see src/lib/memo-header.ts). */
+  department?: string;
+  classification?: string;
   arc: string;
   contentHtml: string;
 }
