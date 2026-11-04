@@ -4,12 +4,47 @@ import { useState, useRef } from 'react';
 import { Turnstile } from '@marsidev/react-turnstile';
 import type { TurnstileInstance } from '@marsidev/react-turnstile';
 import { CONTACT_ERRORS, FALLBACK_EMAIL as fallbackEmail, errorLead } from '@/lib/contact-copy';
+import { DIAGNOSTIC_QUESTIONS, type QuestionId } from '@/lib/diagnostic';
 
 const defaultErrorMessage: string = CONTACT_ERRORS.generic;
+
+type Answers = Record<QuestionId, string>;
+const emptyAnswers = Object.fromEntries(DIAGNOSTIC_QUESTIONS.map((q) => [q.id, ''])) as Answers;
+
+// The five diagnostic selects. Exported so the unit test can render them
+// without the client-only Turnstile widget.
+export function DiagnosticFields({
+  answers,
+  onChange,
+}: {
+  answers: Answers;
+  onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+}) {
+  return (
+    <>
+      {DIAGNOSTIC_QUESTIONS.map((q) => (
+        <div className="form-field" key={q.id}>
+          <label htmlFor={q.id}>{q.label}</label>
+          <select id={q.id} name={q.id} required value={answers[q.id]} onChange={onChange}>
+            <option value="" disabled>
+              Choose one
+            </option>
+            {q.options.map((o) => (
+              <option key={o.value} value={o.value}>
+                {o.label}
+              </option>
+            ))}
+          </select>
+        </div>
+      ))}
+    </>
+  );
+}
 
 export default function ContactForm() {
   const turnstileSiteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
   const [form, setForm] = useState({ name: '', email: '', message: '' });
+  const [answers, setAnswers] = useState<Answers>(emptyAnswers);
   const [honeypot, setHoneypot] = useState('');
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
@@ -18,6 +53,10 @@ export default function ContactForm() {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleAnswer = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setAnswers({ ...answers, [e.target.name]: e.target.value });
   };
 
   // A Turnstile token is single use. Drop it and get a fresh widget, so Send
@@ -37,13 +76,14 @@ export default function ContactForm() {
       const response = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...form, honeypot, turnstileToken }),
+        body: JSON.stringify({ ...form, ...answers, honeypot, turnstileToken }),
       });
       const data = (await response.json()) as { error?: string };
 
       if (response.ok) {
         setStatus('success');
         setForm({ name: '', email: '', message: '' });
+        setAnswers(emptyAnswers);
         discardToken();
       } else {
         setErrorMessage(data.error ?? defaultErrorMessage);
@@ -110,6 +150,8 @@ export default function ContactForm() {
           onChange={handleChange}
         />
       </div>
+
+      <DiagnosticFields answers={answers} onChange={handleAnswer} />
 
       <div className="form-field">
         <label htmlFor="message">How can I help?</label>

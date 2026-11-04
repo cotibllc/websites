@@ -2,8 +2,9 @@ import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
 import { CONTACT_ERRORS } from '@/lib/contact-copy';
 import { verifyTurnstile, type TurnstileReason } from '@/lib/turnstile';
+import { diagnosticTags, diagnosticText, inquirySubject, isQualified, parseDiagnostic } from '@/lib/diagnostic';
 
-type ContactRequestBody = {
+type ContactRequestBody = Record<string, unknown> & {
   name?: unknown;
   email?: unknown;
   message?: unknown;
@@ -70,6 +71,16 @@ export async function POST(request: Request) {
     return fail('missingFields', 400);
   }
 
+  // The diagnostic is checked before Turnstile so a bad choice never spends
+  // the visitor's single-use token.
+  const diagnostic = parseDiagnostic(body);
+  if (!diagnostic.ok) {
+    if (diagnostic.reason === 'missing') return fail('missingFields', 400);
+    log('contact.invalid_choice', { field: diagnostic.field });
+    return fail('invalidChoice', 400);
+  }
+  const answers = diagnostic.answers;
+
   if (!turnstileToken || turnstileToken.length > 2048) {
     return fail('noToken', 400);
   }
@@ -100,8 +111,9 @@ export async function POST(request: Request) {
     from: 'Tech Lead Shift <contact@techleadshift.com>',
     to: 'hello@techleadshift.com',
     replyTo: email,
-    subject: `Speaking Inquiry from ${name}`,
-    text: `Name: ${name}\nEmail: ${email}\n\n${message}`,
+    subject: inquirySubject(answers, name),
+    text: `Name: ${name}\nEmail: ${email}\n\n${diagnosticText(answers)}\n\n${message}`,
+    tags: diagnosticTags(answers),
   });
 
   if (error) {
@@ -114,5 +126,8 @@ export async function POST(request: Request) {
     return fail('send', 500);
   }
 
+  // Counting line for row 16: choice values only, never the name, email or
+  // message.
+  log('contact.sent', { interest: answers.interest, qualified: isQualified(answers) });
   return NextResponse.json({ success: true });
 }
