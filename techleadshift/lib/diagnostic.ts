@@ -9,7 +9,7 @@ export const DIAGNOSTIC_QUESTIONS = [
     id: "interest",
     label: "What are you looking for?",
     options: [
-      { value: "review", label: "An AI Operating Model Review for my team" },
+      { value: "review", label: "An AI Operating Model Review" },
       { value: "speaking", label: "A keynote or workshop" },
       { value: "advisory", label: "Ongoing advisory" },
       { value: "other", label: "Something else" },

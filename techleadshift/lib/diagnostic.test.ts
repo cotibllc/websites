@@ -94,7 +94,7 @@ describe("notification email", () => {
     assert.equal(
       diagnosticText(qualified),
       [
-        "What are you looking for? An AI Operating Model Review for my team",
+        "What are you looking for? An AI Operating Model Review",
         "Your role Director or head of a function",
         "How many people do you lead? 50 to 199",
         "When do you want to start? In the next 90 days",
