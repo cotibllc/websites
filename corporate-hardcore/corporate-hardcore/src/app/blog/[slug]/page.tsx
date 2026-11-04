@@ -1,4 +1,6 @@
-import { getPostData, getAllPostSlugs } from "@/lib/blog";
+import { getPostData, getAllPostSlugs, getSortedPostsData } from "@/lib/blog";
+import { buildMemoHeader } from "@/lib/memo-header";
+import MemoHeaderBlock from "@/components/MemoHeaderBlock";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
@@ -39,6 +41,13 @@ export default async function BlogPostPage({ params }: Props) {
   const { slug } = await params;
   const post = await getPostData(slug);
   if (!post) notFound();
+  const header = buildMemoHeader({
+    collection: "field-notes",
+    items: getSortedPostsData().map((p) => ({ id: p.slug, date: p.date })),
+    id: post.slug,
+    date: post.date,
+    frontmatter: { department: post.department, classification: post.classification },
+  });
 
   return (
     <>
@@ -64,19 +73,17 @@ export default async function BlogPostPage({ params }: Props) {
         </Link>
 
         <article className="intranet-card">
-          {/* Memo header */}
-          <div className="bg-synergy-amber-light border-b border-synergy-rule px-6 py-4 grid grid-cols-2 gap-x-6 gap-y-1">
-            <div><span className="dept-label">Classification</span><p className="font-mono text-sm text-synergy-amber">{post.arc}</p></div>
-            <div><span className="dept-label">Date Filed</span><p className="font-mono text-sm text-synergy-dark">{post.date}</p></div>
-            <div className="col-span-2"><span className="dept-label">Subject</span><p className="font-sans font-semibold text-synergy-dark text-lg leading-snug mt-0.5">{post.title}</p></div>
-            <div className="col-span-2 mt-1">
-              <span className="dept-label">Author</span>
-              <p className="font-sans text-sm text-synergy-dark mt-0.5">
+          <MemoHeaderBlock
+            header={header}
+            subject={post.title}
+            extraRows={[{ label: "Arc", value: post.arc }]}
+            from={
+              <>
                 <Link href="/about" className="hover:text-synergy-amber transition-colors">Chuck Morrison</Link>
                 <span className="text-synergy-muted">, 18 years in the trenches</span>
-              </p>
-            </div>
-          </div>
+              </>
+            }
+          />
 
           {/* Body */}
           <div className="p-6 md:p-8">
