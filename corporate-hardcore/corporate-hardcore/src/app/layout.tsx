@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
 import "@/styles/globals.css";
 import NavBar from "@/components/NavBar";
+import NoticeBar from "@/components/NoticeBar";
 import Ticker from "@/components/Ticker";
 import Footer from "@/components/Footer";
 import AnalyticsConsent from "@/components/AnalyticsConsent";
@@ -92,6 +93,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             }),
           }}
         />
+        <NoticeBar />
         <NavBar />
         <Ticker />
         <main className="flex-1">{children}</main>

@@ -16,6 +16,7 @@ export default function Footer() {
       </div>
       <div className="border-t border-white/5">
         <div className="mx-auto content-max px-4 py-2 flex items-center gap-4 flex-wrap">
+          <Link href="/start-here" className="font-mono text-[9px] tracking-[0.1em] uppercase text-white/60 hover:text-white transition-colors">Start Here</Link>
           <Link href="/privacy" className="font-mono text-[9px] tracking-[0.1em] uppercase text-white/25 hover:text-white/50 transition-colors">Privacy</Link>
           <Link href="/terms" className="font-mono text-[9px] tracking-[0.1em] uppercase text-white/25 hover:text-white/50 transition-colors">Terms</Link>
           <Link href="/contact" className="font-mono text-[9px] tracking-[0.1em] uppercase text-white/25 hover:text-white/50 transition-colors">Contact</Link>

@@ -1,4 +1,5 @@
 import type { EpisodeStatus } from "@/data/content";
+import { pickLatest, type DatedItem } from "../lib/memo-header";
 
 /** Curated Field Memo allowlist only — never auto-ingest YouTube RSS shorts. */
 export interface FieldMemoEntry {
@@ -65,6 +66,16 @@ export function getFieldMemoSlugs(): string[] {
   return fieldMemos.flatMap((m) => (m.slug ? [m.slug] : []));
 }
 
-export function getLatestFieldMemo(): FieldMemoEntry | null {
-  return getFieldMemos()[0] ?? null;
+/** Id and date per allowlist entry, the input for memo numbers and "latest". */
+export function fieldMemoDatedItems(
+  entries: readonly FieldMemoEntry[] = fieldMemos
+): (DatedItem & { entry: FieldMemoEntry })[] {
+  return entries.map((entry) => ({ id: entry.slug ?? entry.videoId, date: entry.published, entry }));
+}
+
+/** Newest allowlist entry by `published`. Used by the home card and /start-here. */
+export function getLatestFieldMemo(
+  entries: readonly FieldMemoEntry[] = fieldMemos
+): FieldMemoEntry | null {
+  return pickLatest(fieldMemoDatedItems(entries))?.entry ?? null;
 }

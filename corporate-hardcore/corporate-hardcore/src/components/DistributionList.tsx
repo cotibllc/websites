@@ -3,6 +3,7 @@
 import { useState, useRef, FormEvent } from "react";
 import { Turnstile } from "@marsidev/react-turnstile";
 import type { TurnstileInstance } from "@marsidev/react-turnstile";
+import { SUBSCRIBE_ANCHOR_ID } from "@/lib/subscribe-ask";
 
 type Status = "idle" | "submitting" | "ok" | "error";
 
@@ -60,7 +61,7 @@ export default function DistributionList() {
   const submitting = status === "submitting";
 
   return (
-    <div className="intranet-card p-5">
+    <div id={SUBSCRIBE_ANCHOR_ID} className="intranet-card p-5 scroll-mt-28">
       <p className="dept-label mb-2">FIELD NOTES: DISTRIBUTION LIST</p>
       <p className="font-sans text-sm text-synergy-muted font-light mb-4 max-w-xl">
         Receive a copy when a Field Note is filed. Notes are filed monthly as part of recurring

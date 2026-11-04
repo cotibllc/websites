@@ -1,4 +1,6 @@
-import { getFieldMemoBySlug, getFieldMemoSlugs } from "@/data/field-memos";
+import { fieldMemoDatedItems, getFieldMemoBySlug, getFieldMemoSlugs } from "@/data/field-memos";
+import { buildMemoHeader } from "@/lib/memo-header";
+import MemoHeaderBlock from "@/components/MemoHeaderBlock";
 import { getFieldMemoBody } from "@/lib/field-memo-content";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -44,6 +46,13 @@ export default async function FieldMemoPage({ params }: Props) {
   const entry = getFieldMemoBySlug(slug);
   const memo = await getFieldMemoBody(slug);
   if (!entry || !memo) notFound();
+  const header = buildMemoHeader({
+    collection: "field-memos",
+    items: fieldMemoDatedItems(),
+    id: entry.slug ?? entry.videoId,
+    date: memo.date || entry.published,
+    frontmatter: { department: memo.department, classification: memo.classification },
+  });
 
   return (
     <>
@@ -69,19 +78,17 @@ export default async function FieldMemoPage({ params }: Props) {
         </Link>
 
         <article className="intranet-card">
-          {/* Memo header */}
-          <div className="bg-synergy-amber-light border-b border-synergy-rule px-6 py-4 grid grid-cols-2 gap-x-6 gap-y-1">
-            <div><span className="dept-label">Filing Code</span><p className="font-mono text-sm text-synergy-amber">{entry.fmCode} · {entry.status}</p></div>
-            <div><span className="dept-label">Date Filed</span><p className="font-mono text-sm text-synergy-dark">{memo.date}</p></div>
-            <div className="col-span-2"><span className="dept-label">Subject</span><p className="font-sans font-semibold text-synergy-dark text-lg leading-snug mt-0.5">{memo.title}</p></div>
-            <div className="col-span-2 mt-1">
-              <span className="dept-label">Author</span>
-              <p className="font-sans text-sm text-synergy-dark mt-0.5">
+          <MemoHeaderBlock
+            header={header}
+            subject={memo.title}
+            extraRows={[{ label: "Filing Code", value: `${entry.fmCode} · ${entry.status}` }]}
+            from={
+              <>
                 <Link href="/about" className="hover:text-synergy-amber transition-colors">Chuck Morrison</Link>
                 <span className="text-synergy-muted">, Information Technology, Badge #00847</span>
-              </p>
-            </div>
-          </div>
+              </>
+            }
+          />
 
           {/* Body */}
           <div className="p-6 md:p-8">
