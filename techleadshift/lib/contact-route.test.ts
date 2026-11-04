@@ -147,6 +147,25 @@ describe("POST /api/contact diagnostic", () => {
     assert.ok(!lines.join("\n").includes("Reader"));
   });
 
+  it("an ongoing advisory lead that meets the rule is sent as a qualified Advisory Inquiry", async () => {
+    const r = await post(JSON.stringify({ ...goodBody, interest: "advisory" }));
+    assert.equal(r.status, 200);
+    assert.equal(resendBodies[0].subject, "[Qualified] Advisory Inquiry from Reader");
+    assert.match(String(resendBodies[0].text), /\nQualified: yes\n/);
+    assert.deepEqual(resendBodies[0].tags, [
+      { name: "form", value: "work" },
+      { name: "interest", value: "advisory" },
+      { name: "qualified", value: "yes" },
+    ]);
+  });
+
+  it("an advisory lead outside the rule on another answer is sent untagged", async () => {
+    const r = await post(JSON.stringify({ ...goodBody, interest: "advisory", timeline: "later" }));
+    assert.equal(r.status, 200);
+    assert.equal(resendBodies[0].subject, "Advisory Inquiry from Reader");
+    assert.match(String(resendBodies[0].text), /\nQualified: no \(outside the rule on: timeline\)\n/);
+  });
+
   it("a speaking inquiry is sent untagged as a Speaking Inquiry", async () => {
     const r = await post(JSON.stringify({ ...goodBody, interest: "speaking" }));
     assert.equal(r.status, 200);

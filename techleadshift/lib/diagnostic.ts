@@ -1,5 +1,5 @@
 // The /work diagnostic: five single-choice questions that tell a qualified
-// AI Operating Model Review lead (PORTFOLIO-MAP row 16) from every other
+// AI Operating Model Review or Ongoing advisory lead (PORTFOLIO-MAP row 16) from every other
 // inquiry. The form renders from DIAGNOSTIC_QUESTIONS and the route validates
 // against the same list, so a choice can't exist in one place and not the
 // other. Everything here is pure: no fetch, no env, no clock.
@@ -85,9 +85,10 @@ export function parseDiagnostic(body: Record<string, unknown>): DiagnosticParse 
   return { ok: true, answers: answers as DiagnosticAnswers };
 }
 
-// The qualified rule. Every line must hold.
+// The qualified rule. Every line must hold. Ongoing advisory qualifies
+// alongside the review (Chuck, Nov 4 2026).
 export const QUALIFIED_RULE = {
-  interest: ["review"],
+  interest: ["review", "advisory"],
   role: ["executive", "director", "manager"],
   teamSize: ["10-49", "50-199", "200+"],
   timeline: ["30days", "90days"],
@@ -118,7 +119,8 @@ const SUBJECT_KIND: Record<DiagnosticAnswers["interest"], string> = {
   other: "Inquiry",
 };
 
-// "[Qualified] Diagnostic Inquiry from Dana". Only a qualified lead carries
+// "[Qualified] Diagnostic Inquiry from Dana" or "[Qualified] Advisory
+// Inquiry from Dana". Only a qualified lead carries
 // the tag, so a mail search for "[Qualified]" is the row 16 count.
 export function inquirySubject(a: DiagnosticAnswers, name: string): string {
   return `${isQualified(a) ? "[Qualified] " : ""}${SUBJECT_KIND[a.interest]} from ${name}`;

@@ -57,7 +57,7 @@ describe("isQualified", () => {
 
   it("every single answer outside the rule disqualifies on its own", () => {
     const misses: Array<[keyof DiagnosticAnswers, string]> = [
-      ["interest", "speaking"], ["interest", "advisory"], ["interest", "other"],
+      ["interest", "speaking"], ["interest", "other"],
       ["role", "individual"], ["role", "other"],
       ["teamSize", "none"], ["teamSize", "1-9"],
       ["timeline", "later"], ["timeline", "exploring"],
@@ -70,14 +70,34 @@ describe("isQualified", () => {
     }
   });
 
-  it("counts every qualifying combination: 1 x 3 x 3 x 2 x 2 = 36", () => {
+  it("qualifies an ongoing advisory lead on the same other conditions", () => {
+    const advisory = { ...qualified, interest: "advisory" } as DiagnosticAnswers;
+    assert.equal(isQualified(advisory), true);
+    assert.deepEqual(unmetRules(advisory), []);
+  });
+
+  it("an advisory lead that misses any other condition is not qualified, naming that condition", () => {
+    const misses: Array<[keyof DiagnosticAnswers, string]> = [
+      ["role", "individual"], ["role", "other"],
+      ["teamSize", "none"], ["teamSize", "1-9"],
+      ["timeline", "later"], ["timeline", "exploring"],
+      ["approval", "unsure"],
+    ];
+    for (const [id, value] of misses) {
+      const a = { ...qualified, interest: "advisory", [id]: value } as DiagnosticAnswers;
+      assert.equal(isQualified(a), false, `advisory ${id}=${value}`);
+      assert.deepEqual(unmetRules(a), [id]);
+    }
+  });
+
+  it("counts every qualifying combination: 2 x 3 x 3 x 2 x 2 = 72", () => {
     let n = 0;
     const walk = (i: number, acc: Record<string, string>) => {
       if (i === DIAGNOSTIC_QUESTIONS.length) { if (isQualified(acc as DiagnosticAnswers)) n++; return; }
       for (const o of DIAGNOSTIC_QUESTIONS[i].options) walk(i + 1, { ...acc, [DIAGNOSTIC_QUESTIONS[i].id]: o.value });
     };
     walk(0, {});
-    assert.equal(n, 36);
+    assert.equal(n, 72);
   });
 });
 
@@ -86,7 +106,8 @@ describe("notification email", () => {
     assert.equal(inquirySubject(qualified, "Dana"), "[Qualified] Diagnostic Inquiry from Dana");
     assert.equal(inquirySubject({ ...qualified, timeline: "later" }, "Dana"), "Diagnostic Inquiry from Dana");
     assert.equal(inquirySubject({ ...qualified, interest: "speaking" }, "Dana"), "Speaking Inquiry from Dana");
-    assert.equal(inquirySubject({ ...qualified, interest: "advisory" }, "Dana"), "Advisory Inquiry from Dana");
+    assert.equal(inquirySubject({ ...qualified, interest: "advisory" }, "Dana"), "[Qualified] Advisory Inquiry from Dana");
+    assert.equal(inquirySubject({ ...qualified, interest: "advisory", teamSize: "1-9" }, "Dana"), "Advisory Inquiry from Dana");
     assert.equal(inquirySubject({ ...qualified, interest: "other" }, "Dana"), "Inquiry from Dana");
   });
 
@@ -112,6 +133,11 @@ describe("notification email", () => {
     assert.deepEqual(diagnosticTags(qualified), [
       { name: "form", value: "work" },
       { name: "interest", value: "review" },
+      { name: "qualified", value: "yes" },
+    ]);
+    assert.deepEqual(diagnosticTags({ ...qualified, interest: "advisory" }), [
+      { name: "form", value: "work" },
+      { name: "interest", value: "advisory" },
       { name: "qualified", value: "yes" },
     ]);
     for (const q of DIAGNOSTIC_QUESTIONS[0].options) {
