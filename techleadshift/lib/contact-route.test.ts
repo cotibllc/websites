@@ -14,18 +14,24 @@ const realError = console.error;
 let siteverify: () => Response;
 let lines: string[];
 let resendCalls: number;
+let resendBodies: Array<Record<string, unknown>>;
 
 beforeEach(() => {
   process.env.TURNSTILE_SECRET_KEY = SECRET;
   process.env.RESEND_API_KEY = "mock-resend-key";
   resendCalls = 0;
+  resendBodies = [];
   lines = [];
   console.error = (...a: unknown[]) => { lines.push(a.map(String).join(" ")); };
   siteverify = () => Response.json({ success: true, hostname: "techleadshift.com" });
-  globalThis.fetch = (async (url: string | URL | Request) => {
+  globalThis.fetch = (async (url: string | URL | Request, init?: RequestInit) => {
     const u = String(url);
     if (u.startsWith("https://challenges.cloudflare.com/")) return siteverify();
-    if (u.startsWith("https://api.resend.com/")) { resendCalls++; return Response.json({ id: "email_1" }); }
+    if (u.startsWith("https://api.resend.com/")) {
+      resendCalls++;
+      resendBodies.push(JSON.parse(String(init?.body ?? "{}")));
+      return Response.json({ id: "email_1" });
+    }
     throw new Error(`unexpected fetch ${u}`);
   }) as typeof fetch;
 });
@@ -33,7 +39,9 @@ afterEach(() => { globalThis.fetch = realFetch; console.error = realError; });
 
 const post = (body: string, headers: Record<string, string> = {}) =>
   POST(new Request("https://techleadshift.com/api/contact", { method: "POST", headers: { "content-type": "application/json", host: "techleadshift.com", ...headers }, body }));
-const good = JSON.stringify({ name: "Reader", email: EMAIL, message: "Keynote in March", honeypot: "", turnstileToken: TOKEN });
+const ANSWERS = { interest: "review", role: "director", teamSize: "50-199", timeline: "90days", approval: "shared" };
+const goodBody = { name: "Reader", email: EMAIL, message: "Keynote in March", ...ANSWERS, honeypot: "", turnstileToken: TOKEN };
+const good = JSON.stringify(goodBody);
 const events = () => lines.map((l) => { try { return JSON.parse(l); } catch { return { raw: l }; } });
 
 describe("POST /api/contact", () => {
@@ -100,6 +108,81 @@ describe("POST /api/contact", () => {
     const all = lines.join("\n");
     assert.ok(lines.length >= 4, "expected log lines");
     for (const secretish of [SECRET, TOKEN, EMAIL]) assert.ok(!all.includes(secretish), `log leaked ${secretish}`);
+  });
+});
+
+describe("POST /api/contact diagnostic", () => {
+  it("a qualified lead is tagged in the subject, body and Resend tags, and logged by value only", async () => {
+    const r = await post(good);
+    assert.equal(r.status, 200);
+    assert.equal(resendBodies.length, 1);
+    const sent = resendBodies[0];
+    assert.equal(sent.subject, "[Qualified] Diagnostic Inquiry from Reader");
+    assert.equal(sent.to, "hello@techleadshift.com");
+    assert.equal(sent.reply_to, EMAIL);
+    assert.equal(
+      sent.text,
+      [
+        "Name: Reader",
+        `Email: ${EMAIL}`,
+        "",
+        "What are you looking for? An AI Operating Model Review for my team",
+        "Your role Director or head of a function",
+        "How many people do you lead? 50 to 199",
+        "When do you want to start? In the next 90 days",
+        "Who signs off on work like this? I recommend it, someone else signs",
+        "Qualified: yes",
+        "",
+        "Keynote in March",
+      ].join("\n")
+    );
+    assert.deepEqual(sent.tags, [
+      { name: "form", value: "work" },
+      { name: "interest", value: "review" },
+      { name: "qualified", value: "yes" },
+    ]);
+    const line = events().find((e) => e.event === "contact.sent");
+    assert.deepEqual({ interest: line?.interest, qualified: line?.qualified }, { interest: "review", qualified: true });
+    assert.ok(!lines.join("\n").includes(EMAIL));
+    assert.ok(!lines.join("\n").includes("Reader"));
+  });
+
+  it("a speaking inquiry is sent untagged as a Speaking Inquiry", async () => {
+    const r = await post(JSON.stringify({ ...goodBody, interest: "speaking" }));
+    assert.equal(r.status, 200);
+    assert.equal(resendBodies[0].subject, "Speaking Inquiry from Reader");
+    assert.match(String(resendBodies[0].text), /\nQualified: no \(outside the rule on: interest\)\n/);
+  });
+
+  it("a missing answer is a 400 missingFields and sends nothing", async () => {
+    for (const id of Object.keys(ANSWERS)) {
+      const body: Record<string, unknown> = { ...goodBody };
+      delete body[id];
+      const r = await post(JSON.stringify(body));
+      assert.equal(r.status, 400, id);
+      assert.equal((await r.json()).code, "missingFields", id);
+    }
+    assert.equal(resendCalls, 0);
+  });
+
+  it("a value not on the list is a 400 invalidChoice, checked before the token is spent", async () => {
+    let siteverifyCalls = 0;
+    siteverify = () => { siteverifyCalls++; return Response.json({ success: true, hostname: "techleadshift.com" }); };
+    for (const [id, bad] of [["interest", "consulting"], ["role", "CEO"], ["teamSize", 500], ["timeline", "now"], ["approval", ["me"]]] as const) {
+      lines = [];
+      const r = await post(JSON.stringify({ ...goodBody, [id]: bad }));
+      assert.equal(r.status, 400, id);
+      assert.deepEqual(await r.json(), { error: "One of the answers isn't on the list. Refresh the page and try again", code: "invalidChoice" }, id);
+      assert.deepEqual(events().find((e) => e.event === "contact.invalid_choice")?.field, id);
+    }
+    assert.equal(siteverifyCalls, 0);
+    assert.equal(resendCalls, 0);
+  });
+
+  it("the honeypot still wins: 200 and nothing sent, even with bad answers", async () => {
+    const r = await post(JSON.stringify({ ...goodBody, interest: "nope", honeypot: "http://spam" }));
+    assert.equal(r.status, 200);
+    assert.equal(resendCalls, 0);
   });
 });
 
