@@ -238,7 +238,7 @@ router.get('/china', (req, res) => {
     checklist: chinaChecklist.data,
     bodyClass: 'dest-page china-page',
     // Copy source: EE Marketing page.md (ee-china-copy-2026-10).
-    title: 'Can Americans Visit China Without a Visa? | Earned Escape',
+    title: "China's 240-Hour Visa-Free Transit Explained | Earned Escape",
     description: "Yes, for up to 10 days, if you fly on to a third country or region. How China's 240-hour transit works for US passports, and when you need a tourist visa.",
     canonical: '/china',
   });
