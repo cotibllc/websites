@@ -1,5 +1,6 @@
 ---
 title: "Synergy Assist Rounded Up My Q4 Forecast. Its Annual Review Closes Friday."
+seoTitle: "Synergy Assist Rounded Up My Q4. Its Review Closes Friday."
 date: "2026-11-02"
 description: "Carl wanted one number from every team for Q4 close. I had two. Synergy Assist submitted a third."
 arc: "AI as Employee"

@@ -87,7 +87,7 @@ export function glossaryMetaDescription(published: Pick<JargonMeta, "title" | "d
     .map((m) => `'${m.title.toLowerCase()},'`);
   const lead = "Authoritative definitions of corporate jargon from an 18 year insider.";
   if (named.length === 0) return `${lead} What these phrases actually mean, and why they exist.`;
-  return `${lead} What ${named.join(" ")} and other phrases actually mean, and why they exist.`;
+  return `${lead} What ${named.join(" ")} and other phrases actually mean.`;
 }
 
 /** Slugs of published entries, for generateStaticParams. */

@@ -1,5 +1,6 @@
 ---
 title: "Calibration Has Room for One Exceeds. Synergy Assist Is in the Room."
+seoTitle: "Calibration Has Room for One Exceeds. Synergy Assist Is In."
 date: "2026-10-19"
 description: "Calibration has room for one Exceeds on my team. Synergy Assist entered the room already in it."
 arc: "AI as Employee"

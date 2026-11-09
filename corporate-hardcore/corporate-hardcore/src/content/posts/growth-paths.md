@@ -1,5 +1,6 @@
 ---
 title: "Dana Booked a Growth Paths One-on-One. Synergy Assist Wrote the Pre-Read."
+seoTitle: "Growth Paths One-on-One. Synergy Assist Wrote the Pre-Read."
 date: "2026-10-26"
 description: "Dana wanted to talk about growth paths. Synergy Assist accepted the invite for me and attached talking points."
 arc: "AI as Employee"
