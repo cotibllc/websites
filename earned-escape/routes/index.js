@@ -126,7 +126,7 @@ router.get('/about', (req, res) => {
     site,
     bodyClass: 'dest-page about-page',
     title: 'Meet Chuck | Family & Luxury Travel Advisor | Earned Escape',
-    description: 'After decades of exploring the world and 25+ years in corporate IT, Chuck Betancourt built Earned Escape to plan elevated family vacations and luxury escapes with the same precision.',
+    description: 'After decades of travel and 25+ years in corporate IT, Chuck Betancourt built Earned Escape to plan family vacations and luxury escapes with the same precision.',
     canonical: '/about',
     ogImage: '/images/photos/chuck-betancourt-headshot-square.jpg',
   });
@@ -181,7 +181,7 @@ router.get('/sports', (req, res) => {
     bodyClass: 'dest-page sports-page',
     sports: sportsEvents,
     title: 'Sports Event Travel Packages | Earned Escape',
-    description: 'Sports event travel packages through Roadtrips: Rose Bowl, Super Bowl, Masters, Kentucky Derby, Indy 500, Monaco Grand Prix, Wimbledon, Ryder Cup and more. Request a quote with Chuck.',
+    description: 'Sports event travel packages through Roadtrips: Rose Bowl, Super Bowl, Masters, Kentucky Derby, Indy 500, Wimbledon and more. Request a quote with Chuck.',
     canonical: '/sports',
   });
 });
@@ -211,7 +211,7 @@ router.get('/compliance', (req, res) => {
     site,
     bodyClass: 'dest-page',
     title: 'Compliance & Disclosures | Earned Escape',
-    description: 'Affiliate disclosure, business registration, and transparency about how Earned Escape operates as an affiliate of Castle Dreams Travel through Charles Betancourt, Independent Advisor.',
+    description: 'Affiliate disclosure, business registration, and how Earned Escape works as an affiliate of Castle Dreams Travel via Charles Betancourt, Independent Advisor.',
     canonical: '/compliance',
   });
 });
@@ -238,8 +238,8 @@ router.get('/china', (req, res) => {
     checklist: chinaChecklist.data,
     bodyClass: 'dest-page china-page',
     // Copy source: EE Marketing page.md (ee-china-copy-2026-10).
-    title: 'Can Americans Visit China Without a Visa? The 240-Hour Transit, Explained | Earned Escape',
-    description: "Yes, for up to 10 days, if you fly on to a third country or region. How China's 240-hour transit works for US passports, when you need a tourist visa instead, and the payment, phone and arrival steps to sort first.",
+    title: 'Can Americans Visit China Without a Visa? | Earned Escape',
+    description: "Yes, for up to 10 days, if you fly on to a third country or region. How China's 240-hour transit works for US passports, and when you need a tourist visa.",
     canonical: '/china',
   });
 });
