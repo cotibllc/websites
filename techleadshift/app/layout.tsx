@@ -3,7 +3,7 @@ import { DM_Serif_Display, DM_Sans, DM_Mono } from "next/font/google";
 import "./globals.css";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
-import { SITE_URL } from "@/lib/site";
+import { SITE_DESCRIPTION, SITE_TITLE, SITE_URL } from "@/lib/site";
 
 const dmSerifDisplay = DM_Serif_Display({
   weight: ["400"],
@@ -27,9 +27,8 @@ const dmMono = DM_Mono({
   display: "swap",
 });
 
-const TITLE = "Tech Lead Shift: Manage the machine, not the sentiment";
-const DESCRIPTION =
-  "Manage the machine, not the sentiment. Articles on Silicon Labor: leading hybrid teams of humans and AI agents, culture, and accountability. New articles twice a month, on Wednesdays.";
+const TITLE = SITE_TITLE;
+const DESCRIPTION = SITE_DESCRIPTION;
 
 export const metadata: Metadata = {
   title: { default: TITLE, template: "%s | Tech Lead Shift" },
