@@ -15,6 +15,15 @@ export interface FieldMemoEntry {
 
 export const fieldMemos: FieldMemoEntry[] = [
   {
+    videoId: "5WD-SkEUtEY",
+    slug: "holiday-blackout",
+    fmCode: "FM-05",
+    status: "FILED",
+    title: "Holiday Blackout · PTO Calendar | Synergy Corp Field Memo",
+    rub: "Nineteen days expiring. Zero days eligible. Thank you for your flexibility.",
+    published: "2026-11-09T00:00:00.000Z",
+  },
+  {
     videoId: "XbmOOahZxRQ",
     slug: "direct-report",
     fmCode: "FM-04",
