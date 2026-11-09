@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     template: "%s | The IT XP",
   },
   description:
-    "A podcast for IT professionals — pulling back the curtain on what it's really like to work in Information Technology.",
+    "A podcast for IT professionals, pulling back the curtain on what it's really like to work in Information Technology.",
   metadataBase: new URL("https://www.theitxp.com"),
   openGraph: {
     siteName: "The IT XP",

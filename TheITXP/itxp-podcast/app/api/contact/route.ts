@@ -4,7 +4,7 @@ import { Resend } from 'resend';
 export async function POST(request: Request) {
   const { name, email, reason, message, honeypot, turnstileToken } = await request.json();
 
-  // Honeypot — silently discard bot submissions
+  // Honeypot: silently discard bot submissions
   if (honeypot) {
     return NextResponse.json({ success: true });
   }

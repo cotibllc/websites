@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "The IT XP — A podcast for IT professionals";
+export const alt = "The IT XP | A podcast for IT professionals";
 export const size = {
   width: 1200,
   height: 630,
