@@ -15,18 +15,21 @@ export function generateStaticParams() {
   return getFieldMemoSlugs().map((slug) => ({ slug }));
 }
 
+import { metaDescription, pageTitle } from "@/lib/seo";
+
 export async function generateMetadata({ params }: Props) {
   const { slug } = await params;
   const memo = await getFieldMemoBody(slug);
   if (!memo) return { title: "Not Found" };
   const canonical = memo.canonical ?? `/field-memos/${slug}`;
+  const description = metaDescription(memo.description);
   return {
-    title: memo.title,
-    description: memo.description,
+    title: { absolute: pageTitle(memo.title, memo.seoTitle) },
+    description,
     alternates: { canonical },
     openGraph: {
       title: memo.title,
-      description: memo.description,
+      description,
       type: "article",
       url: canonical,
       publishedTime: memo.date,
@@ -35,7 +38,7 @@ export async function generateMetadata({ params }: Props) {
     twitter: {
       card: "summary_large_image",
       title: memo.title,
-      description: memo.description,
+      description,
       creator: "@corphardcore",
     },
   };

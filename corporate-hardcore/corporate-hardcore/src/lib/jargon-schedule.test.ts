@@ -96,8 +96,9 @@ test("glossary meta description today, and before Boil the Ocean goes live", () 
   const today = glossaryMetaDescription(getSortedJargonData(new Date("2026-11-03T16:00:00Z")));
   assert.equal(
     today,
-    "Authoritative definitions of corporate jargon from an 18 year insider. What 'circle back,' 'synergy,' 'move the needle,' and other phrases actually mean, and why they exist.",
+    "Authoritative definitions of corporate jargon from an 18 year insider. What 'circle back,' 'synergy,' 'move the needle,' and other phrases actually mean.",
   );
+  assert.ok(today.length <= 160, `glossary description ${today.length} > 160`);
   const sunNov22 = glossaryMetaDescription(getSortedJargonData(new Date("2026-11-23T04:59:59Z")));
   assert.doesNotMatch(sunNov22, /boil the ocean/i);
   assert.equal(glossaryMetaDescription([]), "Authoritative definitions of corporate jargon from an 18 year insider. What these phrases actually mean, and why they exist.");

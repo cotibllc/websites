@@ -15,17 +15,20 @@ export async function generateStaticParams() {
   return getAllJargonSlugs();
 }
 
+import { metaDescription } from "@/lib/seo";
+
 export async function generateMetadata({ params }: Props) {
   const { term } = await params;
   const post = await getJargonData(term);
   if (!post) return { title: "Not Found" };
+  const description = metaDescription(post.description);
   return {
-    title: `What Does "${post.title}" Mean? | Glossary`,
-    description: post.description,
+    title: `What Does "${post.title}" Mean?`,
+    description,
     alternates: { canonical: `/blog/jargon/${term}` },
     openGraph: {
       title: post.title,
-      description: post.description,
+      description,
       type: "article",
       url: `/blog/jargon/${term}`,
       publishedTime: post.date,
@@ -34,7 +37,7 @@ export async function generateMetadata({ params }: Props) {
     twitter: {
       card: "summary_large_image",
       title: `What Does "${post.title}" Mean?`,
-      description: post.description,
+      description,
       creator: "@corphardcore",
     },
   };

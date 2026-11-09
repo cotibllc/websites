@@ -12,17 +12,20 @@ export async function generateStaticParams() {
   return getAllPostSlugs().map((s) => ({ slug: s.slug }));
 }
 
+import { metaDescription, pageTitle } from "@/lib/seo";
+
 export async function generateMetadata({ params }: Props) {
   const { slug } = await params;
   const post = await getPostData(slug);
   if (!post) return { title: "Not Found" };
+  const description = metaDescription(post.description);
   return {
-    title: post.title,
-    description: post.description,
+    title: { absolute: pageTitle(post.title, post.seoTitle) },
+    description,
     alternates: { canonical: `/blog/${slug}` },
     openGraph: {
       title: post.title,
-      description: post.description,
+      description,
       type: "article",
       url: `/blog/${slug}`,
       publishedTime: post.date,
@@ -31,7 +34,7 @@ export async function generateMetadata({ params }: Props) {
     twitter: {
       card: "summary_large_image",
       title: post.title,
-      description: post.description,
+      description,
       creator: "@corphardcore",
     },
   };

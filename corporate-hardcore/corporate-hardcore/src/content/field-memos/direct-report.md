@@ -1,5 +1,6 @@
 ---
 title: "Synergy Assist Is My Direct Report. Its Annual Review Closes Friday."
+seoTitle: "Synergy Assist Is My Direct Report. Its Review Closes Friday"
 date: "2026-11-03"
 description: "It created 212 meetings this quarter and attended none of them. It listed that as its top accomplishment."
 ---

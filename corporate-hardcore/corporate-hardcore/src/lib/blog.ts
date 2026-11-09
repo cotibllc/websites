@@ -11,6 +11,8 @@ export interface BlogPost {
   title: string;
   date: string;
   description: string;
+  /** Optional shorter <title> when the headline is over 60 characters (see src/lib/seo.ts). */
+  seoTitle?: string;
   /** Optional memo header overrides (see src/lib/memo-header.ts). */
   department?: string;
   classification?: string;
