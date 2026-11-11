@@ -72,6 +72,9 @@ const landing = page({
               <label for="free-website">Website</label>
               <input id="free-website" name="website" type="text" tabindex="-1" autocomplete="off">
             </div>
+            <input type="hidden" id="free-utm-source" name="utm_source" value="">
+            <input type="hidden" id="free-utm-medium" name="utm_medium" value="">
+            <input type="hidden" id="free-utm-campaign" name="utm_campaign" value="">
             <div class="cf-turnstile" data-sitekey="${TURNSTILE_SITE_KEY}" data-action="dtnt-free"></div>
             <p class="form-error" id="free-error" role="alert" tabindex="-1"></p>
             <button class="btn btn-primary" type="submit">Send me the 3 prompts</button>

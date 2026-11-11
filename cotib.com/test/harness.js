@@ -48,7 +48,7 @@ function applyHeaders(pathname, res) {
 
 // Mock outbound world. state.contacts: email -> { id, unsubscribed, segments:Set, properties }
 function createMockWorld({ turnstile = 'pass', failSend = false } = {}) {
-  const world = { calls: [], emails: [], contacts: new Map(), turnstile, failSend, propertiesExist: true };
+  const world = { calls: [], emails: [], contacts: new Map(), turnstile, failSend, propertiesExist: true, missingProperties: new Set() };
   let n = 0;
   world.fetch = async (url, opts = {}) => {
     const u = new URL(url);
@@ -84,7 +84,7 @@ function createMockWorld({ turnstile = 'pass', failSend = false } = {}) {
       if (parts.length === 2 && method === 'GET') return c ? reply(200, { object: 'contact', id: c.id, email: c.email, unsubscribed: c.unsubscribed }) : reply(404, { message: 'not found' });
       if (parts.length === 2 && method === 'PATCH') {
         if (!c) return reply(404, { message: 'not found' });
-        if (body.properties && !world.propertiesExist) return reply(422, { message: 'property does not exist' });
+        if (body.properties && (!world.propertiesExist || Object.keys(body.properties).some((k) => world.missingProperties.has(k)))) return reply(422, { message: 'property does not exist' });
         if (body.unsubscribed !== undefined) c.unsubscribed = body.unsubscribed;
         if (body.properties) Object.assign(c.properties, body.properties);
         return reply(200, { object: 'contact', id: c.id });

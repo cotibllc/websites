@@ -9,6 +9,7 @@ const resend = require('../../lib/dtnt/resend');
 const { deliveryEmail } = require('../../lib/dtnt/emails');
 const { states } = require('../../lib/dtnt/pages');
 const http = require('../../lib/dtnt/http');
+const { utmProperties } = require('../../lib/dtnt/utm');
 
 module.exports = async function handler(req, res) {
   const send = (status, html) => http.sendHtml(res, status, html, http.PRIVATE_HEADERS);
@@ -82,8 +83,17 @@ module.exports = async function handler(req, res) {
   } catch (err) {
     http.log('dtnt.confirm.consent_properties_failed', { emailHash, error: err.message });
   }
+  // Signup source, in its own call: if these three property keys don't exist
+  // in Resend yet, only this call fails. Consent is already recorded and the
+  // sampler still goes out.
+  const utmProps = utmProperties(d);
+  try {
+    await resend.setContactProperties(email, utmProps);
+  } catch (err) {
+    http.log('dtnt.confirm.utm_properties_failed', { emailHash, error: err.message });
+  }
   // Consent record in the function log as well (hashes only, no raw email).
-  http.log('dtnt.consent', { emailHash, consentVersion: d.cv, consentTextHash: d.ch, submittedAt: d.sa, confirmedAt: new Date().toISOString(), ipHash: d.ih, uaHash: d.uh, source: 'dtnt-free' });
+  http.log('dtnt.consent', { emailHash, consentVersion: d.cv, consentTextHash: d.ch, submittedAt: d.sa, confirmedAt: new Date().toISOString(), ipHash: d.ih, uaHash: d.uh, source: 'dtnt-free', ...utmProps });
 
   try {
     const unsubscribeUrl = `${base}/do-the-next-thing/free/unsubscribe?t=${createToken('unsubscribe', { e: email }, null)}`;
