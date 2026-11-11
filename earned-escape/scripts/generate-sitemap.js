@@ -16,6 +16,7 @@ const urls = [
   { loc: '/china', priority: '0.8', changefreq: 'monthly' },
   { loc: '/about', priority: '0.7', changefreq: 'monthly' },
   { loc: '/compliance', priority: '0.4', changefreq: 'yearly' },
+  { loc: '/privacy', priority: '0.3', changefreq: 'yearly' },
 ];
 
 const today = new Date().toISOString().split('T')[0];

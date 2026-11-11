@@ -20,7 +20,7 @@ const turnstileSiteKey = (process.env.TURNSTILE_SITE_KEY && !process.env.TURNSTI
 module.exports = {
   siteUrl,
   // Bump when static assets change (cache-bust CDN after deploy)
-  assetVersion: '20261018-sports-china',
+  assetVersion: '20261030-consent',
   // ── BRAND
   brand: {
     name: 'Earned Escape',

@@ -2,15 +2,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#0D0821">
 
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-HF5TCJ4DKH"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-HF5TCJ4DKH');
-</script>
+<!-- Google Analytics 4 waits for consent in the EU, EEA, UK and Switzerland.
+     public/js/consent.js is the only place gtag.js is added to the page. -->
+<script src="/js/consent.js?v={{ site.assetVersion }}" defer></script>
 
 <title>{{ title or site.seo.title }}</title>
 <meta name="description" content="{{ description or site.seo.description }}">

@@ -1,0 +1,92 @@
+{% extends "layout/base.njk" %}
+
+{% block content %}
+
+<section class="dest-page-hero" id="top" style="min-height: 40vh;">
+  <div class="dest-page-hero__overlay" style="background: linear-gradient(135deg, #0D0821 0%, #1a0d2e 100%);"></div>
+  <div class="dest-page-hero__content">
+    <h1 class="dest-page-hero__headline">Privacy Policy</h1>
+    <p class="dest-page-hero__sub">Effective October 30, 2026</p>
+  </div>
+</section>
+
+<section class="dest-story privacy-policy" id="policy">
+  <div class="dest-story__inner">
+    <div class="dest-story__text">
+
+      <h2 class="dest-story__headline" id="who-we-are">Who we are</h2>
+      <p class="dest-story__body">
+        Earned Escape is a travel planning website at earnedescape.agency, operated by {{ site.brand.business }}. {{ site.brand.business }} is responsible for the personal data described in this policy. Chuck (Charles Betancourt) plans trips as an Independent Advisor, affiliate of {{ site.brand.parentAgency }}. Questions about this policy can be sent to <a href="mailto:{{ contactEmail }}">{{ contactEmail }}</a>.
+      </p>
+
+      <h2 class="dest-story__headline" id="what-we-collect">What we collect</h2>
+      <ul class="privacy-list">
+        <li><strong>Free guides:</strong> your email address, and your first name for the cruise guide, when you ask for a guide on <a href="/guide">/guide</a> or <a href="/china">/china</a>.</li>
+        <li><strong>Trip quiz:</strong> your name, email address and quiz answers (such as pace, who is traveling, trip type and setting), when you ask for your results by email.</li>
+        <li><strong>Planning requests:</strong> the details you enter in the planning form that <a href="/plan">/plan</a> opens, such as your name, contact details, travel dates and party.</li>
+        <li><strong>Usage data:</strong> our hosting provider keeps server logs of your IP address, browser type, referring URL and the pages you request. We do not link these logs to your name or email address.</li>
+        <li><strong>Analytics data:</strong> if Google Analytics runs (see Cookies below), it records the pages you view, how you reached the site, your device and browser type, your approximate location (worked out from your IP address), and a random ID kept in a cookie so repeat visits can be counted.</li>
+      </ul>
+      <p class="dest-story__body">We do not collect payment information or government IDs on this website. The site has no accounts.</p>
+
+      <h2 class="dest-story__headline" id="how-we-use-it">How we use it</h2>
+      <ul class="privacy-list">
+        <li>To email you the guide or quiz results you asked for, and the short series of follow up emails that comes with them: two for the cruise guide (day 3 and day 7) and one for the quiz (day 3). Every guide email has an unsubscribe link, and you can reply "unsubscribe" to any of them.</li>
+        <li>To answer planning requests and plan your trip.</li>
+        <li>To keep automated spam out of the forms.</li>
+        <li>To count visits and see which pages people read.</li>
+      </ul>
+      <p class="dest-story__body">We do not sell your personal data, and we do not use it for advertising. When you book a trip, bookings are handled through {{ site.brand.parentAgency }} and the travel suppliers, as described on our <a href="/compliance">Compliance &amp; Disclosures</a> page.</p>
+
+      <h2 class="dest-story__headline" id="services">Services that process it for us</h2>
+      <ul class="privacy-list">
+        <li><strong>Google Analytics:</strong> measures visits, as described under Cookies. See <a href="https://policies.google.com/technologies/partner-sites" target="_blank" rel="noopener noreferrer">how Google uses information from sites that use its services</a>.</li>
+        <li><strong>Google Fonts:</strong> serves the fonts on every page, so Google receives your IP address and browser details when a page loads. See <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Google's privacy policy</a>.</li>
+        <li><strong>Resend:</strong> sends the guide, quiz and follow up emails, and forwards your request to Chuck with your email address as the reply-to. Resend stores your name and email address and the scheduled follow up emails, and may keep you on our contact list there until you unsubscribe. See <a href="https://resend.com/legal/privacy-policy" target="_blank" rel="noopener noreferrer">Resend's privacy policy</a>.</li>
+        <li><strong>Tern:</strong> hosts the planning form that <a href="/plan">/plan</a> opens, and stores what you enter there for Chuck. See <a href="https://www.tern.travel/privacy" target="_blank" rel="noopener noreferrer">Tern's privacy policy</a>.</li>
+        <li><strong>Cloudflare Turnstile:</strong> loads on our pages and checks the forms: it reads signals from your browser to tell people from bots and tells us whether the check passed. See <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener noreferrer">Cloudflare's privacy policy</a>.</li>
+        <li><strong>Vercel:</strong> hosts the site and runs the form services. See <a href="https://vercel.com/legal/privacy-policy" target="_blank" rel="noopener noreferrer">Vercel's privacy policy</a>.</li>
+      </ul>
+      <p class="dest-story__body">Links to Instagram, Pinterest, Facebook, {{ site.brand.parentAgency }} and cruise and park sites take you to those services, which have their own policies.</p>
+
+      <h2 class="dest-story__headline" id="cookies">Cookies and Cookie choices</h2>
+      <p class="dest-story__body">
+        This site uses Google Analytics 4, which sets two cookies on earnedescape.agency: _ga and {{ gaCookie }}. They hold a random ID, not your name or email address, and last up to two years unless you clear them.
+      </p>
+      <p class="dest-story__body">
+        Google keeps this analytics data for 14 months, then deletes it. Google signals is turned off, so visits are not linked to Google accounts. We do not use Google Analytics for advertising, and it is not linked to Google Ads.
+      </p>
+      <p class="dest-story__body">
+        If you visit from the European Union, the European Economic Area, the United Kingdom or Switzerland, or we can't tell where you are, a cookie banner asks for your choice first. Google Analytics does not load, and sets no cookies, until you choose Accept. If you choose Reject, it stays off. Elsewhere, Google Analytics loads when the page opens. We store your choice in your browser so we don't ask on every page, and you can change it at any time with Cookie choices at the bottom of every page. Choosing Reject also removes the Google Analytics cookies. Google Analytics never runs on unsubscribe pages.
+      </p>
+      <p class="dest-story__body">
+        To opt out, you can also install <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener noreferrer">Google's Analytics opt-out add-on</a>, or block or clear cookies for earnedescape.agency in your browser settings. The site works the same without them.
+      </p>
+
+      <h2 class="dest-story__headline" id="retention">How long we keep it</h2>
+      <ul class="privacy-list">
+        <li>Google Analytics data: 14 months.</li>
+        <li>Guide and quiz sign ups: kept in Resend until you unsubscribe or ask us to delete them.</li>
+        <li>Planning requests: as long as we need them to plan and support your trip. You can ask us to delete them at any time.</li>
+      </ul>
+
+      <h2 class="dest-story__headline" id="rights">Your rights</h2>
+      <p class="dest-story__body">
+        You can ask to see, correct or delete the personal data we hold about you by emailing <a href="mailto:{{ contactEmail }}">{{ contactEmail }}</a>. We will respond within 30 days.
+      </p>
+      <p class="dest-story__body">
+        If you are in the European Union, the European Economic Area, the United Kingdom or Switzerland, you also have the right to restrict or object to processing and to ask for your data in a portable format. Our legal basis for Google Analytics and for guide and quiz emails is your consent, withdrawn at any time with Cookie choices or the unsubscribe link. We use planning requests to answer the request you sent us. You may also complain to your local data protection authority.
+      </p>
+      <p class="dest-story__body">
+        If you are a California resident, you can ask what personal information we collect and ask us to delete it. We do not sell or share personal information for advertising, and we won't treat you differently for using these rights.
+      </p>
+
+      <h2 class="dest-story__headline" id="changes">Changes</h2>
+      <p class="dest-story__body">We post any update to this policy on this page with a new effective date.</p>
+      <p class="dest-story__body">{{ site.brand.business }}, {{ site.brand.mailingAddress }}.</p>
+
+    </div>
+  </div>
+</section>
+
+{% endblock %}
