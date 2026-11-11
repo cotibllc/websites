@@ -12,6 +12,7 @@ const resend = require('../../lib/dtnt/resend');
 const { confirmEmail, deliveryEmail } = require('../../lib/dtnt/emails');
 const { states } = require('../../lib/dtnt/pages');
 const http = require('../../lib/dtnt/http');
+const { utmFromBody } = require('../../lib/dtnt/utm');
 
 const MSG = {
   ok: "Check your email. We sent a confirm link to the address you entered. Click it within 48 hours to get your 3 prompts. Not there in a few minutes? Check spam or promotions.",
@@ -111,6 +112,9 @@ module.exports = async function handler(req, res) {
     return reply(400, 'turnstile');
   }
 
+  // Signup source from the hidden UTM fields, cleaned ('direct' if absent).
+  const utm = utmFromBody(b);
+
   const base = http.baseUrl(req);
   const emailHash = hashValue('email', email);
   const unsubscribeUrl = `${base}/do-the-next-thing/free/unsubscribe?t=${createToken('unsubscribe', { e: email }, null)}`;
@@ -142,12 +146,15 @@ module.exports = async function handler(req, res) {
         sa: new Date().toISOString(),
         ih: ipHash,
         uh: hashValue('ua', http.header(req, 'user-agent')),
+        us: utm.utm_source,
+        um: utm.utm_medium,
+        uc: utm.utm_campaign,
         // Issued after an unsubscribe: only this link may resubscribe.
         ...(status === 'unsubscribed' ? { rs: 1 } : {}),
       }, CONFIRM_TTL_SECONDS);
       const msg = confirmEmail({ confirmUrl: `${base}/do-the-next-thing/free/confirm?t=${t}`, unsubscribeUrl });
       await resend.sendEmail({ to: email, ...msg });
-      http.log('dtnt.signup.confirm_sent', { emailHash, afterUnsubscribe: status === 'unsubscribed' });
+      http.log('dtnt.signup.confirm_sent', { emailHash, afterUnsubscribe: status === 'unsubscribed', ...utm });
     }
   } catch (err) {
     http.log('dtnt.signup.send_failed', { emailHash, error: err.message });
