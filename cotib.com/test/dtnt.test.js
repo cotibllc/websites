@@ -483,3 +483,188 @@ test('the homepage and /ventures link to /do-the-next-thing, and nothing links t
     assert.doesNotMatch(fs.readFileSync(path.join(www, f), 'utf8'), /href="[^"]*do-the-next-thing\/resend/, f);
   }
 });
+
+// ---------- Signup source (UTM) ----------
+// The page copies utm_source, utm_medium and utm_campaign into hidden fields;
+// signup carries them in the confirm token; confirm writes them to the Resend
+// contact in a call of their own. Missing values are 'direct'.
+const { cleanUtm } = require('../lib/dtnt/utm');
+const { readToken } = require('../lib/dtnt/tokens');
+const TODAY_UTM = { utm_source: 'substack', utm_medium: 'social', utm_campaign: 'dtnt-sampler' };
+const propertyPatches = () => world.calls.filter((c) => c.host === 'api.resend.com' && c.method === 'PATCH' && c.body && c.body.properties)
+  .map((c) => ({ method: c.method, path: c.path, body: c.body }));
+const tokenOf = (link) => readToken('confirm', new URL(link).searchParams.get('t')).data;
+
+test('UTM: cleanUtm trims, lowercases, keeps only safe characters, caps at 100, else direct', () => {
+  const cases = [
+    ['substack', 'substack'],
+    ['  LinkedIn ', 'linkedin'],
+    ['dtnt-sampler', 'dtnt-sampler'],
+    ['Spring Promo+2026', 'spring-promo-2026'],
+    ['news_letter.v2', 'news_letter.v2'],
+    ['<script>alert(1)</script>', 'scriptalert1script'],
+    ['"; DROP TABLE x; --', 'drop-table-x'],
+    ['%%%', 'direct'],
+    ['', 'direct'],
+    ['   ', 'direct'],
+    [undefined, 'direct'],
+    [null, 'direct'],
+    [42, 'direct'],
+    [['substack'], 'direct'],
+  ];
+  for (const [input, want] of cases) assert.equal(cleanUtm(input), want, JSON.stringify(input));
+  assert.equal(cleanUtm('a'.repeat(500)), 'a'.repeat(100));
+});
+
+test('UTM: ?utm_source=substack&utm_medium=social&utm_campaign=dtnt-sampler is written to the Resend contact on confirm', async (t) => {
+  const res = await signup({ ...good(), ...TODAY_UTM });
+  assert.equal(res.status, 200);
+  assert.equal(world.contacts.size, 0, 'still no contact before confirm');
+  const link = confirmLink(world.emails[0]);
+  const d = tokenOf(link);
+  assert.deepEqual({ us: d.us, um: d.um, uc: d.uc }, { us: 'substack', um: 'social', uc: 'dtnt-sampler' });
+  assert.equal((await get(link)).status, 200);
+  const patches = propertyPatches();
+  t.diagnostic(`payloads: ${JSON.stringify(patches)}`);
+  assert.equal(patches.length, 2, 'consent call, then UTM call');
+  assert.deepEqual(patches[1], {
+    method: 'PATCH',
+    path: '/contacts/reader%40example.com',
+    body: { properties: { dtnt_utm_source: 'substack', dtnt_utm_medium: 'social', dtnt_utm_campaign: 'dtnt-sampler' } },
+  });
+  assert.deepEqual(Object.keys(patches[0].body.properties), ['dtnt_consent_version', 'dtnt_signed_up_at', 'dtnt_confirmed_at', 'dtnt_ip_hash'], 'consent call unchanged');
+  const c = world.contacts.get('reader@example.com');
+  assert.ok(c.segments.has('seg_mock_dtnt_free'), 'contact is in the DTNT free segment');
+  assert.equal(c.properties.dtnt_utm_source, 'substack');
+  assert.equal(c.properties.dtnt_utm_medium, 'social');
+  assert.equal(c.properties.dtnt_utm_campaign, 'dtnt-sampler');
+});
+
+test('UTM: utm_source=linkedin is recorded the same way', async () => {
+  await signup({ ...good('li@example.com'), ...TODAY_UTM, utm_source: 'linkedin' });
+  await get(confirmLink(world.emails[0]));
+  assert.deepEqual(propertyPatches()[1].body.properties, { dtnt_utm_source: 'linkedin', dtnt_utm_medium: 'social', dtnt_utm_campaign: 'dtnt-sampler' });
+});
+
+test('UTM: no UTM fields (or empty hidden fields) gives direct for all three', async (t) => {
+  for (const [i, extra] of [{}, { utm_source: '', utm_medium: '', utm_campaign: '' }].entries()) {
+    world = createMockWorld();
+    const email = `nosource${i}@example.com`;
+    await signup({ ...good(email), ...extra });
+    await get(confirmLink(world.emails[0]));
+    const patches = propertyPatches();
+    t.diagnostic(`payloads (${i ? 'empty fields' : 'no fields'}): ${JSON.stringify(patches[1])}`);
+    assert.deepEqual(patches[1], {
+      method: 'PATCH',
+      path: `/contacts/${encodeURIComponent(email)}`,
+      body: { properties: { dtnt_utm_source: 'direct', dtnt_utm_medium: 'direct', dtnt_utm_campaign: 'direct' } },
+    });
+  }
+});
+
+test('UTM: the no-JS urlencoded form post carries the hidden fields too', async () => {
+  const res = await signup({ email: 'nojs@example.com', consent: 'on', 'cf-turnstile-response': 'tok-pass', website: '', ...TODAY_UTM }, { json: false });
+  assert.equal(res.status, 200);
+  await get(confirmLink(world.emails[0]));
+  assert.deepEqual(propertyPatches()[1].body.properties, { dtnt_utm_source: 'substack', dtnt_utm_medium: 'social', dtnt_utm_campaign: 'dtnt-sampler' });
+});
+
+test('UTM: hostile or oversized values are cleaned, and the confirm token stays under its size cap', async () => {
+  const email = `${'x'.repeat(240)}@example.com`;
+  const big = 'A'.repeat(1000);
+  await signup({ ...good(email), utm_source: big, utm_medium: '<img src=x onerror=alert(1)>', utm_campaign: big });
+  const link = confirmLink(world.emails[0]);
+  assert.ok(new URL(link).searchParams.get('t').length < 1500, 'token under MAX_TOKEN_LENGTH');
+  assert.equal((await get(link)).status, 200);
+  assert.deepEqual(propertyPatches()[1].body.properties, { dtnt_utm_source: 'a'.repeat(100), dtnt_utm_medium: 'img-srcx-onerroralert1', dtnt_utm_campaign: 'a'.repeat(100) });
+});
+
+test('UTM: if the UTM property keys are missing in Resend, confirm still succeeds, consent is kept and the sampler goes out', async () => {
+  world.missingProperties = new Set(['dtnt_utm_source', 'dtnt_utm_medium', 'dtnt_utm_campaign']);
+  await signup({ ...good(), ...TODAY_UTM });
+  let res;
+  const logs = await captureLogs(async () => { res = await get(confirmLink(world.emails[0])); });
+  assert.equal(res.status, 200);
+  assert.match(await res.text(), /You're confirmed\./);
+  assert.equal(world.emails.length, 2, 'delivery email sent');
+  const c = world.contacts.get('reader@example.com');
+  assert.equal(c.properties.dtnt_consent_version, 'dtnt-free-2026-10-07', 'consent recorded');
+  assert.equal(c.properties.dtnt_utm_source, undefined);
+  const line = logs.find((l) => l.event === 'dtnt.confirm.utm_properties_failed');
+  assert.ok(line, 'logged');
+  assert.match(line.error, /Resend contact properties failed \(422\)/);
+  assert.ok(!logs.some((l) => l.event === 'dtnt.confirm.consent_properties_failed'));
+});
+
+test('UTM: a confirm link issued before this change (no UTM in the token) records direct', async () => {
+  const t = createToken('confirm', { e: 'old@example.com', cv: 'dtnt-free-2026-10-07', ch: 'x', sa: new Date().toISOString(), ih: 'h', uh: 'u' }, 3600);
+  assert.equal((await get(`/do-the-next-thing/free/confirm?t=${t}`)).status, 200);
+  assert.deepEqual(propertyPatches()[1].body.properties, { dtnt_utm_source: 'direct', dtnt_utm_medium: 'direct', dtnt_utm_campaign: 'direct' });
+});
+
+test('UTM: the signup and consent log lines carry the cleaned source, never the raw value', async () => {
+  let logs = await captureLogs(() => signup({ ...good(), utm_source: ' SubStack ', utm_medium: 'social', utm_campaign: 'dtnt-sampler' }));
+  const sent = logs.find((l) => l.event === 'dtnt.signup.confirm_sent');
+  assert.equal(sent.utm_source, 'substack');
+  logs = await captureLogs(() => get(confirmLink(world.emails[0])));
+  const consent = logs.find((l) => l.event === 'dtnt.consent');
+  assert.equal(consent.dtnt_utm_source, 'substack');
+  assert.equal(consent.dtnt_utm_campaign, 'dtnt-sampler');
+});
+
+// The page script, run in jsdom against the committed page.
+const { JSDOM } = require('jsdom');
+function loadPage(search) {
+  const html = fs.readFileSync(path.join(ROOT, 'www', 'do-the-next-thing.html'), 'utf8');
+  const dom = new JSDOM(html, { url: `https://www.cotib.com/do-the-next-thing${search}`, runScripts: 'outside-only' });
+  const posted = [];
+  dom.window.fetch = async (url, opts) => { posted.push({ url, body: JSON.parse(opts.body) }); return { ok: true, json: async () => ({ ok: true, message: 'ok' }) }; };
+  // jsdom has no named form properties (form.email in a browser), so add the
+  // three the script reads. Real browsers are checked with Playwright in the PR.
+  const form = dom.window.document.getElementById('free-form');
+  for (const n of ['email', 'consent', 'website']) Object.defineProperty(form, n, { get: () => form.elements.namedItem(n) });
+  dom.window.eval(fs.readFileSync(path.join(ROOT, 'www', 'dtnt', 'signup.js'), 'utf8'));
+  return { dom, doc: dom.window.document, posted };
+}
+async function submitForm({ dom, doc }) {
+  const form = doc.getElementById('free-form');
+  doc.getElementById('free-email').value = 'reader@example.com';
+  doc.getElementById('free-consent').checked = true;
+  const ts = doc.createElement('input');
+  ts.type = 'hidden'; ts.name = 'cf-turnstile-response'; ts.value = 'tok-pass';
+  form.appendChild(ts);
+  form.dispatchEvent(new dom.window.Event('submit', { cancelable: true }));
+  await new Promise((r) => setTimeout(r, 20));
+}
+const hidden = (doc) => ['source', 'medium', 'campaign'].map((k) => doc.getElementById(`free-utm-${k}`).value);
+
+test('UTM page: the hidden fields exist inside #free-form and start empty', () => {
+  const { doc } = loadPage('');
+  for (const k of ['utm_source', 'utm_medium', 'utm_campaign']) {
+    const input = doc.querySelector(`#free-form input[type="hidden"][name="${k}"]`);
+    assert.ok(input, k);
+  }
+});
+
+test('UTM page: the script fills the hidden fields from the URL and posts them with the signup', async (t) => {
+  const page = loadPage('?utm_source=substack&utm_medium=social&utm_campaign=dtnt-sampler');
+  assert.deepEqual(hidden(page.doc), ['substack', 'social', 'dtnt-sampler']);
+  await submitForm(page);
+  t.diagnostic(`browser body: ${JSON.stringify(page.posted[0].body)}`);
+  assert.equal(page.posted.length, 1);
+  assert.deepEqual(page.posted[0].body, { email: 'reader@example.com', consent: true, turnstileToken: 'tok-pass', website: '', ...TODAY_UTM });
+});
+
+test('UTM page: with no UTM in the URL the fields stay empty and the server turns them into direct', async () => {
+  const page = loadPage('?ref=x');
+  assert.deepEqual(hidden(page.doc), ['', '', '']);
+  await submitForm(page);
+  assert.deepEqual(page.posted[0].body, { email: 'reader@example.com', consent: true, turnstileToken: 'tok-pass', website: '', utm_source: '', utm_medium: '', utm_campaign: '' });
+});
+
+test('UTM page: the build script writes the same hidden fields as the committed page', () => {
+  const script = fs.readFileSync(path.join(ROOT, 'scripts', 'build-dtnt-pages.js'), 'utf8');
+  for (const k of ['source', 'medium', 'campaign']) {
+    assert.match(script, new RegExp(`<input type="hidden" id="free-utm-${k}" name="utm_${k}" value="">`));
+  }
+});
