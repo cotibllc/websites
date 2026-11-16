@@ -1,4 +1,4 @@
-// Locks the approved Astra proposal-test copy (Chuck, cards t1531s6956 and t1531s6959).
+// Locks the approved Astra proposal-test copy (Chuck, cards t1531s6956, t1531s6959, and t1532u).
 // Prices, consent, form behavior, the sampler, and the Nov 29 gate stay unchanged.
 const test = require('node:test');
 const assert = require('node:assert/strict');
@@ -9,8 +9,16 @@ const { JSDOM } = require('jsdom');
 const PAGE = path.join(__dirname, '..', 'www', 'do-the-next-thing.html');
 const BUILD = path.join(__dirname, '..', 'scripts', 'build-dtnt-pages.js');
 const HUB = path.join(__dirname, '..', '..', 'cotib.link', 'index.html');
+const VENTURES = path.join(__dirname, '..', 'www', 'ventures.html');
 const CONSENT =
   'Email me the free sampler and up to 3 short emails over the next week about the paid Do the Next Thing Pack ($24) and Setup Kit ($37). I can unsubscribe any time.';
+const PAGE_TITLE = 'Do the Next Thing: Start with one small piece. | COTIB LLC';
+const PAGE_DESCRIPTION =
+  'Do the Next Thing: A proposal draft waiting for you? Start with one small piece. Three free AI prompts for solo consultants and technical operators.';
+const SOCIAL_TITLE =
+  'Do the Next Thing: A proposal draft waiting for you? Start with one small piece. | COTIB LLC';
+const SOCIAL_DESCRIPTION =
+  'Do the Next Thing: A proposal draft waiting for you? Start with one small piece. Three free AI prompts for solo consultants and technical operators. Pick the one that matches your stall, paste it into your AI chat, and use a ten-minute timer to finish one concrete piece.';
 
 function load(file) {
   return fs.readFileSync(file, 'utf8');
@@ -93,6 +101,51 @@ test('DTNT page uses the approved hero, example, and heading A, and leaves the f
   assert.equal(doc.querySelector('#t2').parentElement.querySelector('.price b').textContent, '$37');
   assert.equal([...doc.querySelectorAll('p.soon')].filter((n) => n.textContent.trim() === 'Coming soon').length, 2);
   assert.doesNotMatch(html, /stripe\.com|buy\.|checkout|Get the Pack/i);
+
+  const footerCta = doc.querySelector('section.close a.btn-quiet');
+  assert.equal(footerCta.textContent.trim(), 'Email me the 3 free prompts');
+  assert.equal(footerCta.getAttribute('href'), '#free');
+});
+
+test('DTNT title, meta, og, and twitter tags use the approved headline and subhead, within the 60 and 160 limits', () => {
+  const html = load(PAGE);
+  const doc = new JSDOM(html).window.document;
+  const content = (sel) => {
+    const el = doc.querySelector(sel);
+    assert.ok(el, sel);
+    return el.getAttribute('content');
+  };
+  const title = doc.querySelector('title').textContent.trim();
+  const description = content('meta[name="description"]');
+  assert.equal(title, PAGE_TITLE);
+  assert.ok(title.length <= 60, String(title.length));
+  assert.equal(description, PAGE_DESCRIPTION);
+  assert.ok(description.length <= 160, String(description.length));
+  assert.equal(content('meta[property="og:title"]'), SOCIAL_TITLE);
+  assert.equal(content('meta[property="og:description"]'), SOCIAL_DESCRIPTION);
+  assert.equal(content('meta[name="twitter:card"]'), 'summary_large_image');
+  assert.equal(content('meta[name="twitter:title"]'), SOCIAL_TITLE);
+  assert.equal(content('meta[name="twitter:description"]'), SOCIAL_DESCRIPTION);
+  assert.match(title, /Start with one small piece/);
+  assert.match(description, /A proposal draft waiting for you\? Start with one small piece/);
+  assert.match(description, /Three free AI prompts for solo consultants and technical operators/);
+  assert.match(SOCIAL_TITLE, /A proposal draft waiting for you\? Start with one small piece/);
+  assert.match(SOCIAL_DESCRIPTION, /use a ten-minute timer to finish one concrete piece/);
+});
+
+test('/ventures uses the approved DTNT headline and leaves the product name and coming-soon line in place', () => {
+  const html = load(VENTURES);
+  const doc = new JSDOM(html).window.document;
+  const block = doc.querySelector('#products');
+  assert.equal(block.querySelector('h3').textContent.trim(), 'Do the Next Thing');
+  assert.match(
+    block.querySelector('p').textContent.replace(/\s+/g, ' ').trim(),
+    /^A proposal draft waiting for you\? Start with one small piece\. Start with 3 prompts, free: paste one in, start a 10-minute timer, and see if it moves you\. The full Pack is coming soon\.$/,
+  );
+  assert.doesNotMatch(html, /28 prompts for when you know the step and still don't take it/);
+  const btn = block.querySelector('a.btn-primary-custom');
+  assert.equal(btn.textContent.trim(), 'Get the 3 free prompts');
+  assert.equal(btn.getAttribute('href'), '/do-the-next-thing#free');
 });
 
 test('the DTNT build script carries the same approved copy as the committed page', () => {
@@ -104,10 +157,16 @@ test('the DTNT build script carries the same approved copy as the committed page
     'Get three of the 28 prompts, free',
     "One is for starting, one for coming back after a skip, and one for when you're researching instead of deciding.",
     'Send me the 3 prompts',
+    PAGE_TITLE,
+    PAGE_DESCRIPTION,
+    SOCIAL_TITLE,
+    SOCIAL_DESCRIPTION,
+    'twitter: true',
   ]) {
     assert.match(script, new RegExp(snippet.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')), snippet);
   }
   assert.doesNotMatch(script, /Not ready to buy\?/);
+  assert.doesNotMatch(script, /28 prompts for when you know the step and still don't take it/);
 });
 
 test('cotib.link has a Do the Next Thing card after the COTIB card, with the approved text and destination and no checkout', () => {

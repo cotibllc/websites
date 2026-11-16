@@ -12,8 +12,11 @@ const TURNSTILE_SITE_KEY = '0x4AAAAAAC2VHJDJh24KBJBW'; // same widget as /contac
 
 const landing = page({
   analytics: true,
-  title: "Do the Next Thing: 28 prompts for when you know the step and still don't take it | COTIB LLC",
-  description: 'Do the Next Thing: 28 prompts for when you know the step and still don\'t take it. Start with 3 prompts, free: paste one in, start a 10-minute timer, and see if it moves you. A COTIB LLC product.',
+  title: "Do the Next Thing: Start with one small piece. | COTIB LLC",
+  description: "Do the Next Thing: A proposal draft waiting for you? Start with one small piece. Three free AI prompts for solo consultants and technical operators.",
+  ogTitle: "Do the Next Thing: A proposal draft waiting for you? Start with one small piece. | COTIB LLC",
+  ogDescription: "Do the Next Thing: A proposal draft waiting for you? Start with one small piece. Three free AI prompts for solo consultants and technical operators. Pick the one that matches your stall, paste it into your AI chat, and use a ten-minute timer to finish one concrete piece.",
+  twitter: true,
   canonical: 'https://www.cotib.com/do-the-next-thing',
   headExtra: `
   <meta property="og:type" content="website">
@@ -252,7 +255,7 @@ const landing = page({
     <section class="close" aria-label="Closing">
       <div class="wrap">
         <p class="last">The tabs will still be there tomorrow. What you do with the next 10&nbsp;minutes is yours.</p>
-        <a class="btn btn-quiet" href="#free">Start with 3 prompts, free</a>
+        <a class="btn btn-quiet" href="#free">Email me the 3 free prompts</a>
 
         <div class="fineprint">
           <h2>Fine print</h2>

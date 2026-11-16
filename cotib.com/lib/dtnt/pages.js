@@ -8,7 +8,9 @@ const { SUPPORT_EMAIL } = require('./config');
 
 const FONTS = 'https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=IBM+Plex+Serif:wght@400;600&family=IBM+Plex+Mono:wght@400;500&display=swap';
 
-function head({ title, description, canonical, noindex }) {
+function head({ title, description, canonical, noindex, ogTitle, ogDescription, twitter }) {
+  const socialTitle = ogTitle || title;
+  const socialDescription = ogDescription || description;
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,9 +20,12 @@ function head({ title, description, canonical, noindex }) {
   ${description ? `<meta name="description" content="${esc(description)}">` : ''}
   ${noindex ? '<meta name="robots" content="noindex, nofollow">' : '<meta name="robots" content="index,follow">'}
   <meta property="og:site_name" content="COTIB LLC">
-  <meta property="og:title" content="${esc(title)}">
-  ${description ? `<meta property="og:description" content="${esc(description)}">` : ''}
+  <meta property="og:title" content="${esc(socialTitle)}">
+  ${socialDescription ? `<meta property="og:description" content="${esc(socialDescription)}">` : ''}
   ${canonical ? `<meta property="og:url" content="${esc(canonical)}">\n  <link rel="canonical" href="${esc(canonical)}">` : ''}
+  ${twitter ? `<meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="${esc(socialTitle)}">
+  ${socialDescription ? `<meta name="twitter:description" content="${esc(socialDescription)}">` : ''}` : ''}
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -88,8 +93,8 @@ const footer = ({ analytics = false } = {}) => `
   <script src="/dtnt/menu.js" defer></script>${analytics ? `
   <script src="/js/consent-v1.js" defer></script>` : ''}`;
 
-function page({ title, description, canonical, noindex, headExtra = '', main, bodyEnd = '', analytics = false }) {
-  return `${head({ title, description, canonical, noindex })}${headExtra}
+function page({ title, description, canonical, noindex, ogTitle, ogDescription, twitter, headExtra = '', main, bodyEnd = '', analytics = false }) {
+  return `${head({ title, description, canonical, noindex, ogTitle, ogDescription, twitter })}${headExtra}
 </head>
 <body>${HEADER}
   <main id="main">
