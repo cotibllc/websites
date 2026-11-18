@@ -121,6 +121,40 @@ test('DTNT page uses the approved hero, example, and heading A, and leaves the f
   assert.equal(footerCta.getAttribute('href'), '#free');
 });
 
+test('the leftover prompt-pack sections now describe coaching tips, and the paid tiers keep their prices and Coming soon', () => {
+  const html = load(PAGE);
+  const doc = new JSDOM(html).window.document;
+  const text = (sel) => doc.querySelector(sel).textContent.replace(/\s+/g, ' ').trim();
+
+  // Hero sample card: the prompt is the tool inside tip 1, not a numbered pack item.
+  const card = doc.querySelector('.hero-figure article.sheet');
+  assert.equal(card.getAttribute('aria-label'), 'The prompt inside tip 1');
+  assert.deepEqual([...card.querySelectorAll('.sheet-meta span')].map((n) => n.textContent), ['Tip 1: START', 'The prompt inside']);
+  assert.equal(card.querySelector('h2').textContent, 'The first ugly version');
+  assert.ok(!card.querySelector('.num'), 'no 1.1 prompt number');
+
+  assert.match(text('section[aria-label="What it is"] .story'), /^You already know the step\. What's missing is a move small enough .* Do the Next Thing is a short coaching tip for that moment\. .* Each tip names the stall and gives you one technique\. The prompt inside is the tool: paste it into ChatGPT/);
+  assert.match(text('section[aria-label="What it is"] .closer'), /^None of the tips explain why you stalled\./);
+  assert.deepEqual([...doc.querySelectorAll('#how ~ .steps li, .steps li')].map((li) => li.querySelector('div').childNodes[0].textContent),
+    ['Read the tip.', 'Paste the prompt into any AI chat app and swap the [brackets] for your own words.', 'Start a 10-minute timer and do the one move it gives you.']);
+  assert.equal(text('#inside'), 'Five kinds of stall');
+  assert.deepEqual([...doc.querySelectorAll('.index-row h3')].map((h) => h.textContent), ['START', 'CONTINUE', 'RESTART AFTER A SKIP', 'DECIDE', 'SHIP']);
+  assert.match(text('.by-name'), /^The first three tips: The proposal opening you keep avoiding\. The follow-up you skipped\. Close the tabs, pick one\./);
+  assert.equal(doc.querySelector('.by-name a').getAttribute('href'), '/do-the-next-thing/tips');
+  assert.equal(text('.faq details:nth-of-type(4) summary'), 'How do the tips arrive?');
+  assert.match(text('.faq details:nth-of-type(4) p'), /^As short emails sent on set dates\./);
+  assert.equal(text('.faq details:nth-of-type(3) summary'), "What's the Coach?");
+  assert.match(text('.faq details:nth-of-type(3) p'), /^A bonus that comes with the paid Setup Kit, which is coming later\./);
+  assert.doesNotMatch(html, /<h2 id="inside">28 prompts|Bucket 1|In the free sampler|A few of the prompts by name|isn't the right pack|is 28 prompts for that moment/);
+
+  // Paid tiers: still coming soon, prices unchanged, still no buy links.
+  assert.equal(text('#pick-title'), 'Paid versions come later');
+  assert.equal(doc.querySelector('#t1').parentElement.querySelector('.price b').textContent, '$24');
+  assert.equal(doc.querySelector('#t2').parentElement.querySelector('.price b').textContent, '$37');
+  assert.equal([...doc.querySelectorAll('p.soon')].filter((n) => n.textContent.trim() === 'Coming soon').length, 2);
+  assert.doesNotMatch(html, /stripe\.com|buy\.|checkout|Get the Pack/i);
+});
+
 test('the page makes no promise of a prompt-pack sale or "up to 3 emails about the paid Pack"', () => {
   const html = load(PAGE) + load(path.join(__dirname, '..', 'www', 'do-the-next-thing', 'privacy.html'));
   assert.doesNotMatch(html, /up to 3|few short emails about the full Pack|Consent also covers|Get three of the 28 prompts|Email me the 3 free prompts|Send me the 3 prompts/i);
@@ -152,18 +186,18 @@ test('DTNT title, meta, og, and twitter tags use the approved headline and subhe
   assert.match(SOCIAL_DESCRIPTION, /a prompt to paste into your AI chat/);
 });
 
-test('/ventures uses the approved DTNT headline and leaves the product name and coming-soon line in place', () => {
+test('/ventures uses the approved DTNT headline and the coaching-tips blurb, and leaves the product name in place', () => {
   const html = load(VENTURES);
   const doc = new JSDOM(html).window.document;
   const block = doc.querySelector('#products');
   assert.equal(block.querySelector('h3').textContent.trim(), 'Do the Next Thing');
   assert.match(
     block.querySelector('p').textContent.replace(/\s+/g, ' ').trim(),
-    /^A proposal draft waiting for you\? Start with one small piece\. Start with 3 prompts, free: paste one in, start a 10-minute timer, and see if it moves you\. The full Pack is coming soon\.$/,
+    /^A proposal draft waiting for you\? Start with one small piece\. Get short coaching tips by email, each with a prompt to paste into your AI chat\. The paid Pack is coming later\.$/,
   );
   assert.doesNotMatch(html, /28 prompts for when you know the step and still don't take it/);
   const btn = block.querySelector('a.btn-primary-custom');
-  assert.equal(btn.textContent.trim(), 'Get the 3 free prompts');
+  assert.equal(btn.textContent.trim(), 'Get the free coaching tips');
   assert.equal(btn.getAttribute('href'), '/do-the-next-thing#free');
 });
 
@@ -184,6 +218,12 @@ test('the DTNT build script carries the same approved copy as the committed page
     SOCIAL_TITLE,
     SOCIAL_DESCRIPTION,
     'twitter: true',
+    'Five kinds of stall',
+    'The prompt inside',
+    'Paste the prompt into any AI chat app',
+    'How do the tips arrive?',
+    'Already signed up?',
+    '/do-the-next-thing/tips',
   ]) {
     assert.match(script, new RegExp(snippet.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')), snippet);
   }
@@ -204,10 +244,10 @@ test('cotib.link has a Do the Next Thing card after the COTIB card, with the app
   const card = cards[dtntAt];
   assert.equal(
     card.querySelector('p').textContent.trim(),
-    "Three free AI prompts for when you already know the next step and still haven't started. Paste one in, start a ten-minute timer, and finish one small piece.",
+    'Short coaching tips for the one small piece you keep putting off. Each tip gives you one technique and a prompt to paste into your AI chat.',
   );
   const btn = card.querySelector('a.btn');
-  assert.equal(btn.textContent.trim(), 'Start with 3 prompts, free');
+  assert.equal(btn.textContent.trim(), 'Get the free coaching tips');
   assert.equal(
     btn.getAttribute('href'),
     'https://www.cotib.com/do-the-next-thing?utm_source=cotib.link&utm_medium=linkhub&utm_campaign=do-the-next-thing',

@@ -54,44 +54,46 @@ function listUnsubscribeHeaders(unsubscribeUrl) {
 
 // Section 4: confirm email (transactional, no offer).
 function confirmEmail({ confirmUrl, unsubscribeUrl }) {
-  const subject = 'Confirm your email for the free Do the Next Thing prompts';
+  const subject = 'Confirm your email for the free Do the Next Thing coaching tips';
   const why = "You're getting this because someone entered this address at cotib.com.";
-  const html = shell('Confirm here to get your 3 free prompts.', `
-<p style="${P}">Someone (hopefully you) asked for the free Do the Next Thing sampler at cotib.com with this address.</p>
-<p style="${P}">Confirm here to get it:</p>
+  const html = shell('Confirm here to join the list.', `
+<p style="${P}">Someone (hopefully you) asked for the free Do the Next Thing coaching tips at cotib.com with this address.</p>
+<p style="${P}">Confirm here to join the list:</p>
 <p style="margin:0 0 20px;"><a href="${esc(confirmUrl)}" style="${BTN}">Confirm my email</a></p>
 <p style="${P}font-size:13px;color:#475569;">Or paste this link into your browser: <a href="${esc(confirmUrl)}" style="color:#2563eb;word-break:break-all;">${esc(confirmUrl)}</a></p>
 <p style="${P}">The link works for 48 hours. If you didn't ask for this, ignore this email. You won't hear from us again.</p>
 ${footerHtml(unsubscribeUrl, why)}`);
-  const text = `Someone (hopefully you) asked for the free Do the Next Thing sampler at cotib.com with this address.
+  const text = `Someone (hopefully you) asked for the free Do the Next Thing coaching tips at cotib.com with this address.
 
-Confirm here to get it: ${confirmUrl}
+Confirm here to join the list: ${confirmUrl}
 
 The link works for 48 hours. If you didn't ask for this, ignore this email. You won't hear from us again.${footerText(unsubscribeUrl, why)}`;
   return { subject, html, text, headers: listUnsubscribeHeaders(unsubscribeUrl) };
 }
 
-// Section 5: delivery email (transactional, no offer: the paid-products
-// opt-in is optional, so this email can't carry one).
-function deliveryEmail({ downloadUrl, unsubscribeUrl, pageUrl }) {
-  const subject = 'Your 3 free Do the Next Thing prompts';
-  const why = "You're getting this because you asked for the free sampler at cotib.com.";
-  const html = shell('Your 3 free prompts are here. The link works for 30 days.', `
-<p style="${P}">Here are your 3 free prompts:</p>
-<p style="margin:0 0 20px;"><a href="${esc(downloadUrl)}" style="${BTN}">Download the free sampler</a></p>
-<p style="${P}font-size:13px;color:#475569;">Or paste this link into your browser: <a href="${esc(downloadUrl)}" style="color:#2563eb;word-break:break-all;">${esc(downloadUrl)}</a></p>
-<p style="${P}">The link works for 30 days.</p>
-<p style="${P}">Start with whichever one matches today. Paste it into any AI chat app, fill in the [brackets], and start a 10-minute timer. If the answer comes back too big, reply: "Too big. Smaller. One move, under 10 minutes, no research."</p>
+// Section 5: welcome email, sent right after the confirm click (transactional,
+// no offer: the paid-products opt-in is optional, so this email can't carry one).
+// It makes no promise of a date. The tips go out on dated sends that Chuck
+// approves one at a time, and past tips are on the archive page.
+function welcomeEmail({ tipsUrl, unsubscribeUrl }) {
+  const subject = "You're on the list for the Do the Next Thing coaching tips";
+  const why = "You're getting this because you asked for the free coaching tips at cotib.com.";
+  const html = shell("You're on the list. Your first tip arrives with the next dated send.", `
+<p style="${P}">You're on the list.</p>
+<p style="${P}">Your first tip arrives with the next dated send. Each tip names a stall you probably know, gives one technique and a prompt to paste into your AI chat, and ends with one small thing to do today.</p>
+<p style="${P}">To catch up on tips that have already gone out, they're all here:</p>
+<p style="margin:0 0 20px;"><a href="${esc(tipsUrl)}" style="${BTN}">Read the tips so far</a></p>
+<p style="${P}font-size:13px;color:#475569;">Or paste this link into your browser: <a href="${esc(tipsUrl)}" style="color:#2563eb;word-break:break-all;">${esc(tipsUrl)}</a></p>
 <p style="margin:0;">COTIB LLC</p>
 ${footerHtml(unsubscribeUrl, why)}`);
-  const text = `Here are your 3 free prompts: ${downloadUrl}
+  const text = `You're on the list.
 
-The link works for 30 days.
+Your first tip arrives with the next dated send. Each tip names a stall you probably know, gives one technique and a prompt to paste into your AI chat, and ends with one small thing to do today.
 
-Start with whichever one matches today. Paste it into any AI chat app, fill in the [brackets], and start a 10-minute timer. If the answer comes back too big, reply: "Too big. Smaller. One move, under 10 minutes, no research."
+To catch up on tips that have already gone out, they're all here: ${tipsUrl}
 
 COTIB LLC${footerText(unsubscribeUrl, why)}`;
   return { subject, html, text, headers: listUnsubscribeHeaders(unsubscribeUrl) };
 }
 
-module.exports = { confirmEmail, deliveryEmail, listUnsubscribeHeaders, esc };
+module.exports = { confirmEmail, welcomeEmail, listUnsubscribeHeaders, esc };

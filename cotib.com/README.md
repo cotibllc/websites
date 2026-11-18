@@ -42,7 +42,7 @@ cotib.com/
 │   ├── services.html       ← Services page
 │   ├── ventures.html       ← Ventures page
 │   ├── contact.html        ← Contact page
-│   ├── do-the-next-thing.html, do-the-next-thing/privacy.html, dtnt/  ← sampler pages
+│   ├── do-the-next-thing.html, do-the-next-thing/privacy.html, dtnt/  ← coaching tips pages
 │   ├── connect.html, disconnect.html, eula.html, privacy.html  ← QuickBooks app pages
 │   ├── css/                ← Tailwind build output and legacy styles
 │   ├── js/, fontawesome/, img/
@@ -112,11 +112,12 @@ Sampler-first launch of the Do the Next Thing product page. Paid tiers show as "
 
 | Path | What it does |
 |---|---|
-| `/do-the-next-thing` | Static page (`www/do-the-next-thing.html`), free sampler signup is the one action |
+| `/do-the-next-thing` | Static page (`www/do-the-next-thing.html`), free coaching tips signup is the one action |
+| `/do-the-next-thing/tips` | `api/dtnt-tips.js`: the public archive of past tips. Text and publish dates are in `lib/dtnt/tips.js`; a tip shows only after its `publishAt` (null means not scheduled) |
 | `/do-the-next-thing/privacy` | Static privacy notice (`www/do-the-next-thing/privacy.html`) |
 | `POST /do-the-next-thing/free` | `api/dtnt/signup.js`: Turnstile, then a confirm email (double opt-in) |
-| `/do-the-next-thing/free/confirm?t=` | `api/dtnt/confirm.js`: adds the contact to the Resend segment, sends the delivery email, shows the download |
-| `/do-the-next-thing/free/dl/<token>` | `api/dtnt/download.js`: streams `private/dtnt/*.pdf` for a valid token (30 days) |
+| `/do-the-next-thing/free/confirm?t=` | `api/dtnt/confirm.js`: adds the contact to the Resend segment, sends the welcome email, shows the confirmed page with the tips link |
+| `/do-the-next-thing/free/dl/<token>` | `api/dtnt/download.js`: streams `private/dtnt/*.pdf` for a valid token (30 days). No page or email issues these links any more; it stays for links already sent |
 | `/do-the-next-thing/free/unsubscribe?t=` | `api/dtnt/unsubscribe.js`: GET asks, POST (or one-click) unsubscribes |
 
 Env vars (set in Vercel by Chuck; the handlers fail closed if any is missing): `RESEND_API_KEY` and `TURNSTILE_SECRET_KEY` (existing), plus `RESEND_FULL_API_KEY`, `DTNT_FREE_SEGMENT_ID` and `DTNT_TOKEN_SECRET` (at least 32 characters).

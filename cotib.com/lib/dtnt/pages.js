@@ -5,6 +5,7 @@
 // scripts/build-dtnt-pages.js, so every DTNT page looks the same.
 const { esc } = require('./emails');
 const { SUPPORT_EMAIL } = require('./config');
+const { sentOn } = require('./tips');
 
 const FONTS = 'https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=IBM+Plex+Serif:wght@400;600&family=IBM+Plex+Mono:wght@400;500&display=swap';
 
@@ -125,18 +126,71 @@ ${action}
   });
 }
 
+// ---------- Tip archive (/do-the-next-thing/tips) ----------
+// Server-rendered so a tip that is not published yet never reaches the browser.
+const TIPS_PATH = '/do-the-next-thing/tips';
+
+// Tip text is plain text with **bold** spans. Escape first, then add the tags.
+function inline(text) {
+  return esc(text).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+}
+
+function tipBlocks(blocks) {
+  return blocks.map(([kind, text]) => (kind === 'code'
+    ? `            <pre class="tip-prompt"><code>${esc(text)}</code></pre>`
+    : `            <p>${inline(text)}</p>`)).join('\n');
+}
+
+function tipsPage({ published }) {
+  const list = published.length
+    ? published.map((tip) => `          <article class="tip" id="tip-${esc(tip.slug)}" aria-labelledby="tip-${esc(tip.slug)}-title">
+            <p class="tip-meta"><span>Tip ${tip.number}</span><span>Sent ${esc(sentOn(tip))}</span></p>
+            <h2 id="tip-${esc(tip.slug)}-title">${esc(tip.subject)}</h2>
+${tipBlocks(tip.blocks)}
+          </article>`).join('\n')
+    : `          <div class="tips-empty">
+            <p>The first tip hasn't gone out yet. Each tip is posted here once it has been sent.</p>
+            <p><a class="btn btn-primary" href="/do-the-next-thing#free">Get the free coaching tips</a></p>
+          </div>`;
+  return page({
+    title: 'Do the Next Thing: the tips | COTIB LLC',
+    description: 'Past Do the Next Thing coaching tips. Each one names a stall, gives one technique and a prompt to paste into your AI chat.',
+    canonical: `https://www.cotib.com${TIPS_PATH}`,
+    analytics: true,
+    main: `    <section class="hero tips-head" aria-labelledby="title">
+      <div class="wrap">
+        <div class="state-simple">
+          <p class="eyebrow">a COTIB LLC product</p>
+          <h1 id="title">The tips</h1>
+          <div class="ticks" aria-hidden="true"></div>
+          <p>Short coaching tips for the one small piece you keep putting off. Each one names a stall, gives one technique and a prompt to paste into your AI chat, and ends with one small thing to do today.</p>
+        </div>
+      </div>
+    </section>
+    <section class="tips" aria-label="Past tips">
+      <div class="wrap">
+        <div class="tip-list">
+${list}
+        </div>${published.length ? `
+        <p class="tips-foot"><a class="btn btn-quiet" href="/do-the-next-thing#free">Get the next tip by email</a></p>` : ''}
+      </div>
+    </section>`,
+    bodyEnd: '',
+  });
+}
+
 const BACK = '<a href="/do-the-next-thing">cotib.com/do-the-next-thing</a>';
 const MAIL = `<a href="mailto:${SUPPORT_EMAIL}">${SUPPORT_EMAIL}</a>`;
 
 const states = {
   // Approved copy: free-tier copy section 3, confirm page success.
-  confirmed: ({ downloadPath }) => statePage({
+  confirmed: () => statePage({
     state: 'confirmed',
     title: "You're confirmed",
     heading: "You're confirmed.",
-    paragraphs: ['Your 3 prompts are ready:'],
-    action: `          <p><a class="btn btn-primary" href="${esc(downloadPath)}">Download the free sampler</a></p>
-          <p>We also emailed you the link. It works for 30 days.</p>
+    paragraphs: ["You're on the list. Your first tip arrives with the next dated send. Past tips are on the tips page:"],
+    action: `          <p><a class="btn btn-primary" href="${TIPS_PATH}">Read the tips so far</a></p>
+          <p>We also emailed you a note with the same link.</p>
           <p class="muted-line">a COTIB LLC product.</p>`,
   }),
   // Approved copy: confirm page, bad or expired link.
@@ -187,7 +241,7 @@ const states = {
     state: 'check-email',
     title: 'Check your email',
     heading: 'Check your email.',
-    paragraphs: ["We sent a confirm link to the address you entered. Click it within 48 hours to get your 3 prompts. Not there in a few minutes? Check spam or promotions."],
+    paragraphs: ["We sent a confirm link to the address you entered. Click it within 48 hours to confirm your signup. Not there in a few minutes? Check spam or promotions."],
   }),
   formError: ({ message }) => statePage({
     state: 'form-error',
@@ -199,9 +253,9 @@ const states = {
   paused: () => statePage({
     state: 'paused',
     title: 'Not available right now',
-    heading: "The free sampler isn't available right now.",
+    heading: "The free coaching tips signup isn't available right now.",
     paragraphs: [`Try again later, or email ${MAIL}.`],
   }),
 };
 
-module.exports = { page, head, HEADER, footer, states };
+module.exports = { page, head, HEADER, footer, states, tipsPage, TIPS_PATH };

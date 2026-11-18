@@ -39,16 +39,16 @@ const landing = page({
         </div>
 
         <figure class="hero-figure">
-          <article class="paper sheet" aria-label="Prompt 1.1, one of the 3 free prompts">
-            <div class="sheet-meta"><span>Bucket 1: START</span><span class="sheet-tag">In the free sampler</span></div>
-            <h2><span class="num">1.1</span>The first ugly version</h2>
+          <article class="paper sheet" aria-label="The prompt inside tip 1">
+            <div class="sheet-meta"><span>Tip 1: START</span><span class="sheet-tag">The prompt inside</span></div>
+            <h2>The first ugly version</h2>
             <p class="prompt">I need to start <span class="bracket">[the thing]</span> and I haven't begun. Give me ONE move I can finish in under 10 minutes that leaves a rough first piece on the page or screen. No research, no setup, no tools to install. Tell me exactly what to type or make first, and what "done" looks like. One sentence of instruction, one sentence of done. Nothing else.</p>
           </article>
           <div class="timer-rule" aria-hidden="true">
             <div class="bar"></div>
             <div class="labels"><span>0</span><span>10 min</span></div>
           </div>
-          <figcaption class="sr-only">Prompt 1.1, The first ugly version, shown in full above a ten-minute scale.</figcaption>
+          <figcaption class="sr-only">The prompt inside tip 1, The first ugly version, shown in full above a ten-minute scale.</figcaption>
         </figure>
       </div>
     </section>
@@ -67,13 +67,14 @@ const landing = page({
       </div>
     </section>
 
-    <!-- 2. The one primary action: free sampler signup (double opt-in) -->
+    <!-- 2. The one primary action: free coaching tips signup (double opt-in) -->
     <section class="free" id="free" aria-labelledby="free-title">
       <div class="wrap free-grid">
         <div class="section-head">
           <h2 id="free-title">Get the free coaching tips</h2>
           <div class="ticks" aria-hidden="true"></div>
           <p>Get a short coaching tip by email on getting unstuck, built for solo consultants and technical operators with a side offer to move forward. Each tip names a stall you probably know, gives one technique and a prompt to paste into your AI chat, and ends with one small thing to do today.</p>
+          <p class="tips-link">Already signed up? <a href="/do-the-next-thing/tips">Read the tips so far.</a></p>
         </div>
 
         <div class="paper formcard" id="free-card">
@@ -122,12 +123,12 @@ const landing = page({
           <p class="big">You already know the step.</p>
           <div class="ticks" aria-hidden="true"></div>
           <p>What's missing is a move small enough that you'll take it before something easier gets there first.</p>
-          <p>Do the Next Thing is 28 prompts for that moment. It's not a framework, and it won't hand you a bigger plan. Pick the bucket that matches where you are, paste one prompt into ChatGPT, Claude, Gemini, or any AI chat app, fill in the [brackets], and start a 10-minute timer. You get one move. You do it.</p>
+          <p>Do the Next Thing is a short coaching tip for that moment. It's not a framework, and it won't hand you a bigger plan. Each tip names the stall and gives you one technique. The prompt inside is the tool: paste it into ChatGPT, Claude, Gemini, or any AI chat app, fill in the [brackets], and start a 10-minute timer. You get one move. You do it.</p>
           <div class="reply">
             <p>If the answer comes back too big, you reply:</p>
             <code>"Too big. Smaller. One move, under 10 minutes, no research."</code>
           </div>
-          <p class="closer">None of the prompts explain why you stalled. Each one ends with you doing something.</p>
+          <p class="closer">None of the tips explain why you stalled. Each one ends with you doing something.</p>
         </div>
       </div>
     </section>
@@ -140,8 +141,8 @@ const landing = page({
           <div class="ticks" aria-hidden="true"></div>
         </div>
         <ol class="steps">
-          <li><div>Pick the bucket that matches where you are.</div></li>
-          <li><div>Paste one prompt into any AI chat app and swap the [brackets] for your own words.<span>The free versions work.</span></div></li>
+          <li><div>Read the tip.<span>It names a stall you probably know and gives one technique.</span></div></li>
+          <li><div>Paste the prompt into any AI chat app and swap the [brackets] for your own words.<span>The free versions work.</span></div></li>
           <li><div>Start a 10-minute timer and do the one move it gives you.<span>When the timer ends, stop.</span></div></li>
         </ol>
       </div>
@@ -151,17 +152,17 @@ const landing = page({
     <section aria-labelledby="inside">
       <div class="wrap">
         <div class="section-head">
-          <h2 id="inside">28 prompts in 5 buckets</h2>
+          <h2 id="inside">Five kinds of stall</h2>
           <div class="ticks" aria-hidden="true"></div>
         </div>
         <div class="index" role="list">
-          <div class="index-row rev2" role="listitem"><span class="n">01</span><h3>START <small>(6)</small></h3><p class="when">You haven't touched it yet.</p></div>
-          <div class="index-row rev2" role="listitem"><span class="n">02</span><h3>CONTINUE <small>(6)</small></h3><p class="when">You started, and momentum dropped.</p></div>
-          <div class="index-row rev2" role="listitem"><span class="n">03</span><h3>RESTART AFTER A SKIP <small>(5)</small></h3><p class="when">You missed a day, a week, or longer.</p></div>
-          <div class="index-row rev2" role="listitem"><span class="n">04</span><h3>DECIDE <small>(5)</small></h3><p class="when">You're stuck between options and researching instead.</p></div>
-          <div class="index-row rev2" role="listitem"><span class="n">05</span><h3>SHIP <small>(6)</small></h3><p class="when">It's almost done and you keep polishing.</p></div>
+          <div class="index-row rev2" role="listitem"><span class="n">01</span><h3>START</h3><p class="when">You haven't touched it yet.</p></div>
+          <div class="index-row rev2" role="listitem"><span class="n">02</span><h3>CONTINUE</h3><p class="when">You started, and momentum dropped.</p></div>
+          <div class="index-row rev2" role="listitem"><span class="n">03</span><h3>RESTART AFTER A SKIP</h3><p class="when">You missed a day, a week, or longer.</p></div>
+          <div class="index-row rev2" role="listitem"><span class="n">04</span><h3>DECIDE</h3><p class="when">You're stuck between options and researching instead.</p></div>
+          <div class="index-row rev2" role="listitem"><span class="n">05</span><h3>SHIP</h3><p class="when">It's almost done and you keep polishing.</p></div>
         </div>
-        <p class="by-name">A few of the prompts by name: <b>The first ugly version.</b> <b>Skip the stuck part.</b> <b>No catch-up.</b> <b>Close the tabs.</b> <b>Hit the button.</b></p>
+        <p class="by-name">The first three tips: <b>The proposal opening you keep avoiding.</b> <b>The follow-up you skipped.</b> <b>Close the tabs, pick one.</b> They cover starting, restarting after a skip, and deciding. <a href="/do-the-next-thing/tips">Read the tips so far.</a></p>
       </div>
     </section>
 
@@ -221,8 +222,8 @@ const landing = page({
           <div class="not">
             <h3>Who it isn't for</h3>
             <ul>
-              <li>You don't know your next step yet. These prompts assume you do.</li>
-              <li>You want to understand why you stall. None of the prompts go there.</li>
+              <li>You don't know your next step yet. These tips assume you do.</li>
+              <li>You want to understand why you stall. None of the tips go there.</li>
               <li>You're looking for a framework, a productivity system, or a course.</li>
               <li>You want someone to coach you live. These are email tips with prompts, not a person.</li>
             </ul>
@@ -237,19 +238,19 @@ const landing = page({
           </details>
           <details>
             <summary>Do I need a paid AI account?</summary>
-            <p>Not for the Pack, and not for the prompts and skills in the Setup Kit. They work in any AI chat app you can paste into, like ChatGPT, Claude, or Gemini, and the free versions work. The Coach bonus is different: it runs in Grok Bot and requires your own Grok Bot account on a paid plan, sold separately.</p>
+            <p>Not for the free tips, the Pack, or the prompts and skills in the Setup Kit. They work in any AI chat app you can paste into, like ChatGPT, Claude, or Gemini, and the free versions work. The Coach bonus is different: it runs in Grok Bot and requires your own Grok Bot account on a paid plan, sold separately.</p>
           </details>
           <details>
             <summary>What's the Coach?</summary>
-            <p>An AI coach, built as a Grok Bot template, that picks one 10-minute move with you at a time using the 28 prompts. It's an AI, not a person, and it isn't medical, mental-health, or financial advice.</p>
+            <p>A bonus that comes with the paid Setup Kit, which is coming later. It's an AI coach, built as a Grok Bot template, that picks one 10-minute move with you at a time using the 28 prompts the tips draw from. It's an AI, not a person, and it isn't medical, mental-health, or financial advice.</p>
           </details>
           <details>
-            <summary>What format is it?</summary>
-            <p>A PDF, a Notion template you import, and a one-page cheat sheet you can print. The Setup Kit adds plain text files and a setup guide.</p>
+            <summary>How do the tips arrive?</summary>
+            <p>As short emails sent on set dates. Each tip is also posted on the <a href="/do-the-next-thing/tips">tips page</a> once it has gone out, so you can catch up on any you missed. The paid Pack, coming later, is a PDF, a Notion template you import, and a one-page cheat sheet you can print. The Setup Kit adds plain text files and a setup guide.</p>
           </details>
           <details>
             <summary>What if I don't know my next step?</summary>
-            <p>Then this isn't the right pack yet. The prompts assume you already know the step and just aren't taking it.</p>
+            <p>Then these tips aren't the right fit yet. They assume you already know the step and just aren't taking it.</p>
           </details>
         </div>
       </div>
@@ -279,7 +280,7 @@ const landing = page({
 const privacy = page({
   analytics: true,
   title: 'Privacy notice: Do the Next Thing | COTIB LLC',
-  description: 'What COTIB LLC collects when you use the Do the Next Thing page or sign up for the free sampler, and who processes it.',
+  description: 'What COTIB LLC collects when you use the Do the Next Thing page or sign up for the free coaching tips, and who processes it.',
   canonical: 'https://www.cotib.com/do-the-next-thing/privacy',
   main: `
     <section class="hero" aria-labelledby="title">
@@ -288,13 +289,14 @@ const privacy = page({
           <p class="eyebrow">a COTIB LLC product</p>
           <h1 id="title">Privacy notice: Do the Next Thing</h1>
           <div class="ticks" aria-hidden="true"></div>
-          <p class="lead">This notice explains what COTIB LLC collects when you use the Do the Next Thing page at cotib.com/do-the-next-thing, sign up for the free sampler, or download it. For our QuickBooks integration app, see <a href="/privacy">cotib.com/privacy</a>.</p>
+          <p class="lead">This notice explains what COTIB LLC collects when you use the Do the Next Thing page at cotib.com/do-the-next-thing, sign up for the free coaching tips, or read the tips page. For our QuickBooks integration app, see <a href="/privacy">cotib.com/privacy</a>.</p>
 
           <h2>What we collect and why</h2>
-          <h3>When you sign up for the free sampler:</h3>
+          <h3>When you sign up for the free coaching tips:</h3>
           <ul>
             <li>Your email address and your consent record: the version of the signup wording you agreed to, whether you ticked the optional box for emails about paid products, when you signed up, when you clicked the confirm link, and a hashed version of your IP address (a one-way code, not the raw IP).</li>
             <li>We use a two-step signup: we only add you to our list after you click the confirm link in your email.</li>
+            <li>Past tips are posted on cotib.com/do-the-next-thing/tips, which anyone can read. That page has no form.</li>
             <li>Signups are checked by Cloudflare Turnstile to stop bots. Turnstile processes data such as your IP address and browser signals to do this.</li>
             <li>We use your email to send the confirm link and the free coaching tips, one short email at a time. If you tick the optional box, we also use it for occasional emails about paid Do the Next Thing products. We aren't sending those yet. You can unsubscribe any time.</li>
             <li>To slow down repeat tries, the signup form allows about 10 tries a minute from one connection. That count is kept in memory for a minute and isn't saved.</li>
@@ -304,16 +306,16 @@ const privacy = page({
 
           <h2>Who processes it for us</h2>
           <ul>
-            <li><strong>Resend:</strong> sends our emails and stores the free-sampler email list, including your consent record and whether you've unsubscribed.</li>
-            <li><strong>Vercel:</strong> hosts this page and runs the signup, confirm, download, and unsubscribe service (serverless functions), and stores the sampler file.</li>
+            <li><strong>Resend:</strong> sends our emails and stores the coaching-tips email list, including your consent record and whether you've unsubscribed.</li>
+            <li><strong>Vercel:</strong> hosts this page and runs the signup, confirm, download, and unsubscribe service (serverless functions).</li>
             <li><strong>Cloudflare:</strong> provides Turnstile.</li>
           </ul>
 
           <h2>How long we keep it</h2>
           <ul>
             <li>Unconfirmed signups: we don't store them. The confirm link in your email works for 48 hours, and you're only added to our list if you click it.</li>
-            <li>Free sampler download links: 30 days.</li>
-            <li>Sampler list membership and consent record: kept on your contact in Resend for as long as the contact exists.</li>
+            <li>Older free sampler download links, which we no longer issue: 30 days.</li>
+            <li>Tips list membership and consent record: kept on your contact in Resend for as long as the contact exists.</li>
             <li>After you unsubscribe: we keep your contact in Resend, marked unsubscribed, so we don't email you again. We don't delete it. If you sign up again later, you're only added back after you click a new confirm link.</li>
             <li>The log lines our signup service writes hold only one-way codes, never your raw email address or IP address.</li>
             <li>Resend email logs: 30 days.</li>
@@ -322,7 +324,7 @@ const privacy = page({
           <h2>Your choices and rights</h2>
           <ul>
             <li><strong>Unsubscribe:</strong> use the link in any of our emails. It takes effect right away.</li>
-            <li><strong>Access, correction, or deletion:</strong> email <a href="mailto:customerservice@cotib.com">customerservice@cotib.com</a>. If you ask us to delete your sampler contact, we'll delete it from Resend. After that we no longer have a record that you unsubscribed, but you're still only added back if you sign up and click a new confirm link.</li>
+            <li><strong>Access, correction, or deletion:</strong> email <a href="mailto:customerservice@cotib.com">customerservice@cotib.com</a>. If you ask us to delete your tips contact, we'll delete it from Resend. After that we no longer have a record that you unsubscribed, but you're still only added back if you sign up and click a new confirm link.</li>
             <li>Depending on where you live, you may have other rights over your data. Email us and we'll help.</li>
             <li><strong>Do Not Track:</strong> our pages don't change behavior based on Do Not Track signals. We don't track you across other sites.</li>
           </ul>

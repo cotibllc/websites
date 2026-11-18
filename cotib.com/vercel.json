@@ -15,6 +15,7 @@
     { "source": "/favicon.ico", "destination": "/favicon.svg", "statusCode": 301 }
   ],
   "rewrites": [
+    { "source": "/do-the-next-thing/tips", "destination": "/api/dtnt-tips" },
     { "source": "/do-the-next-thing/free", "destination": "/api/dtnt/signup" },
     { "source": "/do-the-next-thing/free/confirm", "destination": "/api/dtnt/confirm" },
     { "source": "/do-the-next-thing/free/dl/:token", "destination": "/api/dtnt/download?t=:token" },

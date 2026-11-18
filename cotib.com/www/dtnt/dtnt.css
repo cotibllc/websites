@@ -392,3 +392,21 @@ section.hero { border-top: 0; }
 .example-response { color: var(--text-300); font-size: 1.08rem; max-width: 40rem; }
 .example > .wrap > p { max-width: 40rem; }
 .example .reply { margin-top: 1rem; max-width: 40rem; }
+
+/* ---------- Tip archive (/do-the-next-thing/tips) and the link to it ---------- */
+.tips-link { margin: 1rem 0 0; font-size: .98rem; color: var(--text-300); }
+.by-name a { white-space: nowrap; }
+.tips-head { padding-bottom: 1rem; }
+.tips-head .state-simple p { max-width: 36rem; }
+.tips { padding: 2rem 0 clamp(3rem, 7vw, 5rem); }
+.tip-list { max-width: 42rem; }
+.tip { padding: 2.5rem 0; border-top: 1px solid var(--ink-800); }
+.tip:first-child { border-top: 2px solid var(--text-100); }
+.tip-meta { display: flex; flex-wrap: wrap; gap: .25rem 1.25rem; margin: 0 0 .75rem; font-family: var(--font-mono); font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; color: var(--text-400); }
+.tip h2 { font-size: clamp(1.6rem, 3.2vw, 2.1rem); font-weight: 800; letter-spacing: -.015em; margin-bottom: 1.25rem; }
+.tip p { color: var(--text-300); }
+.tip p strong { color: var(--text-100); font-weight: 600; }
+.tip-prompt { margin: 0 0 1.25rem; padding: 1.1rem 1.25rem; background: var(--ink-900); border: 1px solid var(--ink-800); border-left: 3px solid var(--cyan-400); border-radius: 4px; overflow-x: auto; }
+.tip-prompt code { display: block; white-space: pre-wrap; overflow-wrap: anywhere; font-family: var(--font-mono); font-size: .95rem; line-height: 1.55; color: var(--text-100); }
+.tips-empty { padding: 2rem 0; border-top: 2px solid var(--text-100); max-width: 36rem; }
+.tips-foot { margin: 1rem 0 0; }

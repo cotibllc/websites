@@ -1,12 +1,13 @@
 // GET /do-the-next-thing/free/confirm?t=<token> (rewritten to /api/dtnt/confirm).
 // Double opt-in step 2: the click proves consent. Adds the contact to the
 // DTNT free segment in Resend, records consent on the contact, sends the
-// delivery email and shows the download button. A second click on a link
-// that is still valid just shows the download again and sends nothing.
-const { DOWNLOAD_TTL_SECONDS, missingEnv } = require('../../lib/dtnt/config');
+// welcome email and shows the confirmed page with the link to the tips page.
+// A second click on a link that is still valid just shows that page again and
+// sends nothing.
+const { missingEnv } = require('../../lib/dtnt/config');
 const { createToken, readToken, hashValue } = require('../../lib/dtnt/tokens');
 const resend = require('../../lib/dtnt/resend');
-const { deliveryEmail } = require('../../lib/dtnt/emails');
+const { welcomeEmail } = require('../../lib/dtnt/emails');
 const { states } = require('../../lib/dtnt/pages');
 const http = require('../../lib/dtnt/http');
 const { utmProperties } = require('../../lib/dtnt/utm');
@@ -56,12 +57,9 @@ module.exports = async function handler(req, res) {
     }
   }
 
-  const dl = createToken('download', { eh: emailHash }, DOWNLOAD_TTL_SECONDS);
-  const downloadPath = `/do-the-next-thing/free/dl/${dl}`;
-
   if (contact.status === 'subscribed') {
     http.log('dtnt.confirm.repeat', { emailHash });
-    return send(200, states.confirmed({ downloadPath }));
+    return send(200, states.confirmed());
   }
 
   // New confirm: add to the segment. A failure here still delivers the file
@@ -108,14 +106,14 @@ module.exports = async function handler(req, res) {
 
   try {
     const unsubscribeUrl = `${base}/do-the-next-thing/free/unsubscribe?t=${createToken('unsubscribe', { e: email }, null)}`;
-    const msg = deliveryEmail({ downloadUrl: base + downloadPath, unsubscribeUrl, pageUrl: `${base}/do-the-next-thing` });
+    const msg = welcomeEmail({ tipsUrl: `${base}/do-the-next-thing/tips`, unsubscribeUrl });
     // Same token, same idempotency key: a double click inside Resend's
-    // 24 hour window can't send the delivery email twice.
-    await resend.sendEmail({ to: email, ...msg, idempotencyKey: `dtnt-delivery-${hashValue('tok', http.query(req, 't'))}` });
-    http.log('dtnt.confirm.delivery_sent', { emailHash });
+    // 24 hour window can't send the welcome email twice.
+    await resend.sendEmail({ to: email, ...msg, idempotencyKey: `dtnt-welcome-${hashValue('tok', http.query(req, 't'))}` });
+    http.log('dtnt.confirm.welcome_sent', { emailHash });
   } catch (err) {
-    http.log('dtnt.confirm.delivery_failed', { emailHash, error: err.message });
+    http.log('dtnt.confirm.welcome_failed', { emailHash, error: err.message });
   }
 
-  return send(200, states.confirmed({ downloadPath }));
+  return send(200, states.confirmed());
 };

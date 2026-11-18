@@ -1,15 +1,15 @@
 // POST /do-the-next-thing/free (rewritten to /api/dtnt/signup).
-// Free sampler signup with double opt-in. Checks run in the order of the
+// Free coaching tips signup with double opt-in. Checks run in the order of the
 // Worker addendum section 14.1, minus the KV pieces (no KV on Vercel):
 // origin, rate limit, email, consent box, Turnstile, then the Resend contact
 // state stands in for the suppression list.
 // The reply is the same for new, pending, confirmed and unsubscribed emails,
 // so nobody can tell whether an address is already on the list.
-const { CONSENT_VERSION, CONSENT_TEXT_HASH, MARKETING_CONSENT_TEXT_HASH, CONFIRM_TTL_SECONDS, DOWNLOAD_TTL_SECONDS, PRODUCTION_HOSTS, missingEnv } = require('../../lib/dtnt/config');
+const { CONSENT_VERSION, CONSENT_TEXT_HASH, MARKETING_CONSENT_TEXT_HASH, CONFIRM_TTL_SECONDS, PRODUCTION_HOSTS, missingEnv } = require('../../lib/dtnt/config');
 const { createToken, hashValue } = require('../../lib/dtnt/tokens');
 const { verifyTurnstile } = require('../../lib/dtnt/turnstile');
 const resend = require('../../lib/dtnt/resend');
-const { confirmEmail, deliveryEmail } = require('../../lib/dtnt/emails');
+const { confirmEmail, welcomeEmail } = require('../../lib/dtnt/emails');
 const { states } = require('../../lib/dtnt/pages');
 const http = require('../../lib/dtnt/http');
 const { utmFromBody } = require('../../lib/dtnt/utm');
@@ -125,7 +125,7 @@ module.exports = async function handler(req, res) {
   const unsubscribeUrl = `${base}/do-the-next-thing/free/unsubscribe?t=${createToken('unsubscribe', { e: email }, null)}`;
 
   // The Resend contact is the list of record. Confirmed contacts get a fresh
-  // delivery email (Worker addendum 21). Everyone else, including addresses
+  // welcome email. Everyone else, including addresses
   // that unsubscribed, gets a confirm link and nothing more. Signup never
   // writes to Resend, so it can't flip an unsubscribed contact back: only a
   // click on the new confirm link can (see confirm.js, the "rs" flag). If
@@ -139,10 +139,9 @@ module.exports = async function handler(req, res) {
 
   try {
     if (status === 'subscribed') {
-      const dl = createToken('download', { eh: emailHash }, DOWNLOAD_TTL_SECONDS);
-      const msg = deliveryEmail({ downloadUrl: `${base}/do-the-next-thing/free/dl/${dl}`, unsubscribeUrl, pageUrl: `${base}/do-the-next-thing` });
+      const msg = welcomeEmail({ tipsUrl: `${base}/do-the-next-thing/tips`, unsubscribeUrl });
       await resend.sendEmail({ to: email, ...msg });
-      http.log('dtnt.signup.resent_delivery', { emailHash });
+      http.log('dtnt.signup.resent_welcome', { emailHash });
     } else {
       const t = createToken('confirm', {
         e: email,

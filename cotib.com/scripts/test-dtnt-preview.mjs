@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Preview test for the Do the Next Thing free sampler (setup addendum F11
+// Preview test for the Do the Next Thing free coaching tips signup (setup addendum F11
 // free-path cases and F10 CAN-SPAM checks) against a deployed base URL.
 //
 //   node scripts/test-dtnt-preview.mjs https://<preview-or-prod-host>
@@ -9,7 +9,7 @@
 //   DTNT_TOKEN_SECRET=.. Also mints tokens locally to test expired and valid
 //                        links. Still sends no email and writes nothing.
 //   --live --email you@x Also runs a real confirm for that inbox: creates the
-//                        Resend contact, sends the delivery email, then
+//                        Resend contact, sends the welcome email, then
 //                        unsubscribes it. Use your own address only.
 //
 // Vercel previews sit behind Vercel Authentication. Set VERCEL_BYPASS to a
@@ -97,6 +97,7 @@ await check('P1', 'landing page is up, sampler-first, no buy buttons', async () 
   expect(/name="consent" type="checkbox" required>/.test(h), 'required tips consent box missing');
   expect(/name="marketing_consent" type="checkbox">/.test(h), 'optional paid-products box missing or required');
   expect(/class="cf-turnstile"/.test(h), 'Turnstile widget missing');
+  expect(/href="\/do-the-next-thing\/tips"/.test(h), 'tips archive link missing');
   expect((h.match(/Coming soon<\/p>/g) || []).length === 2, 'expected 2 "Coming soon" tiers');
   expect(!/stripe\.com|Get the Pack/i.test(h), 'a buy link or button is on the page');
   expect(/href="\/do-the-next-thing\/privacy"/.test(h), 'privacy link missing');
@@ -201,22 +202,16 @@ if (hasSecret) {
 // ---------- Live cases (real Resend writes and one real email) ----------
 if (live && hasSecret) {
   const email = emailArg.trim().toLowerCase();
-  let downloadPath = '';
-  await check('F11.1b', `confirm for ${email} shows the download (creates the Resend contact, sends the delivery email)`, async () => {
+  await check('F11.1b', `confirm for ${email} shows the tips link (creates the Resend contact, sends the welcome email)`, async () => {
     const t = minted('confirm', { e: email, cv: 'dtnt-free-2026-10-07', sa: new Date().toISOString(), ih: 'preview-test' }, 48 * 3600);
     const r = await req(`/do-the-next-thing/free/confirm?t=${t}`);
     expect(r.status === 200, `status ${r.status}`);
     const h = await r.text();
-    const m = h.match(/href="(\/do-the-next-thing\/free\/dl\/[^"]+)"/);
-    expect(m, 'download button missing');
-    downloadPath = m[1];
+    expect(/href="\/do-the-next-thing\/tips"/.test(h), 'tips link missing');
+    expect(!/\/free\/dl\//.test(h), 'the confirmed page still links the sampler PDF');
     globalThis.__confirmToken = t;
   });
-  await check('F11.1c', 'download from the confirm page works', async () => {
-    const r = await req(downloadPath);
-    expect(r.status === 200 && r.headers.get('content-type') === 'application/pdf', `status ${r.status}`);
-  });
-  await check('F11.2a', 'repeat confirm click shows the download again (check: no second delivery email arrives)', async () => {
+  await check('F11.2a', 'repeat confirm click shows the confirmed page again (check: no second welcome email arrives)', async () => {
     const r = await req(`/do-the-next-thing/free/confirm?t=${globalThis.__confirmToken}`);
     expect(r.status === 200, `status ${r.status}`);
   });
@@ -237,11 +232,11 @@ if (live && hasSecret) {
 console.log(`
 Manual steps in a browser at ${base}/do-the-next-thing (use your own inbox):
   [ ] F11.1  Sign up with the form. The page says "Check your email." One confirm email arrives.
-  [ ] F11.1  Click the confirm link. The page says "You're confirmed." and the download works.
-             The delivery email arrives with a download link that works.
+  [ ] F11.1  Click the confirm link. The page says "You're confirmed." and links the tips page.
+             The welcome email arrives with the same link and no download.
   [ ] F11.2  Sign up again with the same address. Same "Check your email." message, and a fresh
-             delivery email (not a confirm email) arrives.
-  [ ] F11.4  Unsubscribe from the confirm email, and (with a second address) from the delivery email.
+             welcome email (not a confirm email) arrives.
+  [ ] F11.4  Unsubscribe from the confirm email, and (with a second address) from the welcome email.
              Each link shows one Unsubscribe button and then "You're unsubscribed."
   [ ] F11.4  Sign up again with an unsubscribed address. Same message, and no email arrives.
   [ ] F11.6  Covered above by the script (Turnstile failure is refused).
