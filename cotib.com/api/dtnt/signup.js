@@ -5,7 +5,7 @@
 // state stands in for the suppression list.
 // The reply is the same for new, pending, confirmed and unsubscribed emails,
 // so nobody can tell whether an address is already on the list.
-const { CONSENT_VERSION, CONSENT_TEXT_HASH, CONFIRM_TTL_SECONDS, DOWNLOAD_TTL_SECONDS, PRODUCTION_HOSTS, missingEnv } = require('../../lib/dtnt/config');
+const { CONSENT_VERSION, CONSENT_TEXT_HASH, MARKETING_CONSENT_TEXT_HASH, CONFIRM_TTL_SECONDS, DOWNLOAD_TTL_SECONDS, PRODUCTION_HOSTS, missingEnv } = require('../../lib/dtnt/config');
 const { createToken, hashValue } = require('../../lib/dtnt/tokens');
 const { verifyTurnstile } = require('../../lib/dtnt/turnstile');
 const resend = require('../../lib/dtnt/resend');
@@ -15,9 +15,9 @@ const http = require('../../lib/dtnt/http');
 const { utmFromBody } = require('../../lib/dtnt/utm');
 
 const MSG = {
-  ok: "Check your email. We sent a confirm link to the address you entered. Click it within 48 hours to get your 3 prompts. Not there in a few minutes? Check spam or promotions.",
+  ok: "Check your email. We sent a confirm link to the address you entered. Click it within 48 hours to confirm your signup. Not there in a few minutes? Check spam or promotions.",
   email: "That email address doesn't look right. Check it and try again.",
-  consent: 'Check the box so we can email you the sampler.',
+  consent: 'Check the box so we can email you the coaching tips.',
   turnstile: "We couldn't confirm you're human. Refresh the page and try again.",
   // Each of these used to show the "human" line above. Separate copy and
   // codes so the person, and the log, can tell the cases apart.
@@ -91,6 +91,11 @@ module.exports = async function handler(req, res) {
   const consent = b.consent === true || b.consent === 'on' || b.consent === 'true';
   if (!consent) return reply(400, 'consent');
 
+  // Optional second box (emails about paid products). Anything but an
+  // explicit yes counts as no. The browser sends marketingConsent: true;
+  // a plain form post sends marketing_consent=on.
+  const marketing = [b.marketingConsent, b.marketing_consent].some((v) => v === true || v === 'on' || v === 'true');
+
   const turnstileToken = b.turnstileToken || b['cf-turnstile-response'];
   // cotib.com sits behind Cloudflare's proxy, so CF-Connecting-IP is the
   // visitor; x-forwarded-for is a Cloudflare edge address.
@@ -143,6 +148,9 @@ module.exports = async function handler(req, res) {
         e: email,
         cv: CONSENT_VERSION,
         ch: CONSENT_TEXT_HASH,
+        // Optional paid-products opt-in: 1 or 0, plus the hash of the text shown.
+        mc: marketing ? 1 : 0,
+        mh: MARKETING_CONSENT_TEXT_HASH,
         sa: new Date().toISOString(),
         ih: ipHash,
         uh: hashValue('ua', http.header(req, 'user-agent')),
@@ -154,7 +162,7 @@ module.exports = async function handler(req, res) {
       }, CONFIRM_TTL_SECONDS);
       const msg = confirmEmail({ confirmUrl: `${base}/do-the-next-thing/free/confirm?t=${t}`, unsubscribeUrl });
       await resend.sendEmail({ to: email, ...msg });
-      http.log('dtnt.signup.confirm_sent', { emailHash, afterUnsubscribe: status === 'unsubscribed', ...utm });
+      http.log('dtnt.signup.confirm_sent', { emailHash, afterUnsubscribe: status === 'unsubscribed', marketingOptIn: marketing, ...utm });
     }
   } catch (err) {
     http.log('dtnt.signup.send_failed', { emailHash, error: err.message });

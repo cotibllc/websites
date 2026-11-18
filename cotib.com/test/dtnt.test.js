@@ -77,6 +77,7 @@ test('page: /do-the-next-thing is sampler-first with no buy buttons', async () =
   const html = await res.text();
   assert.match(html, /<form id="free-form" method="post" action="\/do-the-next-thing\/free"/);
   assert.match(html, /name="consent" type="checkbox" required>/);
+  assert.match(html, /name="marketing_consent" type="checkbox">/, 'optional paid-products box, not required');
   assert.doesNotMatch(html, /type="checkbox"[^>]*checked/);
   assert.match(html, /class="cf-turnstile" data-sitekey="0x4AAAAAAC2VHJDJh24KBJBW"/);
   assert.equal((html.match(/Coming soon<\/p>/g) || []).length, 2);
@@ -99,7 +100,7 @@ test('page: /do-the-next-thing/privacy names Vercel, not the Worker, KV or R2', 
   assert.match(html, /only added back after you click a new confirm link/);
   assert.match(html, /about 10 tries a minute from one connection\. That count is kept in memory for a minute and isn't saved\./);
   assert.match(html, /Unconfirmed signups: we don't store them\./);
-  assert.match(html, /Effective October 29, 2026\./);
+  assert.match(html, /Effective November 17, 2026\./);
   assert.match(html, new RegExp(POSTAL.replace(/[.#]/g, '\\$&')));
   assert.doesNotMatch(html, DASHES);
 });
@@ -135,7 +136,7 @@ test('F11.1 confirm adds the contact to the DTNT segment, records consent, sends
   assert.match(html, /href="\/do-the-next-thing\/free\/dl\/d1\.[\w-]+">Download the free sampler/);
   const c = world.contacts.get('reader@example.com');
   assert.ok(c && c.segments.has('seg_mock_dtnt_free') && !c.unsubscribed);
-  assert.equal(c.properties.dtnt_consent_version, 'dtnt-free-2026-10-07');
+  assert.equal(c.properties.dtnt_consent_version, 'dtnt-tips-2026-11-17');
   assert.ok(c.properties.dtnt_confirmed_at && c.properties.dtnt_signed_up_at && c.properties.dtnt_ip_hash);
   const contactCall = world.calls.find((x) => x.path === '/contacts' && x.method === 'POST');
   assert.equal(contactCall.headers.Authorization, 'Bearer mock-full-key', 'contacts use the full-access key');
@@ -372,7 +373,7 @@ test('form checks: bad email, box not checked, bad origin, honeypot, too many tr
   assert.equal((await r.json()).error, "That email address doesn't look right. Check it and try again.");
   r = await signup({ ...good(), consent: false });
   assert.equal(r.status, 400);
-  assert.equal((await r.json()).error, 'Check the box so we can email you the sampler.');
+  assert.equal((await r.json()).error, 'Check the box so we can email you the coaching tips.');
   r = await signup(good(), { origin: 'https://evil.example' });
   assert.equal(r.status, 403);
   r = await signup(good(), { origin: null });
@@ -526,7 +527,7 @@ test('UTM: ?utm_source=substack&utm_medium=social&utm_campaign=dtnt-sampler is w
   assert.equal((await get(link)).status, 200);
   const patches = propertyPatches();
   t.diagnostic(`payloads: ${JSON.stringify(patches)}`);
-  assert.equal(patches.length, 2, 'consent call, then UTM call');
+  assert.equal(patches.length, 3, 'consent call, UTM call, then the marketing opt-in call');
   assert.deepEqual(patches[1], {
     method: 'PATCH',
     path: '/contacts/reader%40example.com',
@@ -588,7 +589,7 @@ test('UTM: if the UTM property keys are missing in Resend, confirm still succeed
   assert.match(await res.text(), /You're confirmed\./);
   assert.equal(world.emails.length, 2, 'delivery email sent');
   const c = world.contacts.get('reader@example.com');
-  assert.equal(c.properties.dtnt_consent_version, 'dtnt-free-2026-10-07', 'consent recorded');
+  assert.equal(c.properties.dtnt_consent_version, 'dtnt-tips-2026-11-17', 'consent recorded');
   assert.equal(c.properties.dtnt_utm_source, undefined);
   const line = logs.find((l) => l.event === 'dtnt.confirm.utm_properties_failed');
   assert.ok(line, 'logged');
@@ -622,7 +623,7 @@ function loadPage(search) {
   // jsdom has no named form properties (form.email in a browser), so add the
   // three the script reads. Real browsers are checked with Playwright in the PR.
   const form = dom.window.document.getElementById('free-form');
-  for (const n of ['email', 'consent', 'website']) Object.defineProperty(form, n, { get: () => form.elements.namedItem(n) });
+  for (const n of ['email', 'consent', 'marketing_consent', 'website']) Object.defineProperty(form, n, { get: () => form.elements.namedItem(n) });
   dom.window.eval(fs.readFileSync(path.join(ROOT, 'www', 'dtnt', 'signup.js'), 'utf8'));
   return { dom, doc: dom.window.document, posted };
 }
@@ -652,14 +653,14 @@ test('UTM page: the script fills the hidden fields from the URL and posts them w
   await submitForm(page);
   t.diagnostic(`browser body: ${JSON.stringify(page.posted[0].body)}`);
   assert.equal(page.posted.length, 1);
-  assert.deepEqual(page.posted[0].body, { email: 'reader@example.com', consent: true, turnstileToken: 'tok-pass', website: '', ...TODAY_UTM });
+  assert.deepEqual(page.posted[0].body, { email: 'reader@example.com', consent: true, marketingConsent: false, turnstileToken: 'tok-pass', website: '', ...TODAY_UTM });
 });
 
 test('UTM page: with no UTM in the URL the fields stay empty and the server turns them into direct', async () => {
   const page = loadPage('?ref=x');
   assert.deepEqual(hidden(page.doc), ['', '', '']);
   await submitForm(page);
-  assert.deepEqual(page.posted[0].body, { email: 'reader@example.com', consent: true, turnstileToken: 'tok-pass', website: '', utm_source: '', utm_medium: '', utm_campaign: '' });
+  assert.deepEqual(page.posted[0].body, { email: 'reader@example.com', consent: true, marketingConsent: false, turnstileToken: 'tok-pass', website: '', utm_source: '', utm_medium: '', utm_campaign: '' });
 });
 
 test('UTM page: the build script writes the same hidden fields as the committed page', () => {
@@ -667,4 +668,101 @@ test('UTM page: the build script writes the same hidden fields as the committed 
   for (const k of ['source', 'medium', 'campaign']) {
     assert.match(script, new RegExp(`<input type="hidden" id="free-utm-${k}" name="utm_${k}" value="">`));
   }
+});
+
+// ---------- Consent Option B: required tips box, optional paid-products box ----------
+const { CONSENT_TEXT, MARKETING_CONSENT_TEXT, CONSENT_VERSION, CONSENT_TEXT_HASH, MARKETING_CONSENT_TEXT_HASH } = require('../lib/dtnt/config');
+const marketingPatch = () => propertyPatches().find((p) => 'dtnt_marketing_opt_in' in p.body.properties);
+
+test('Option B: the two consent texts, the version, and their hashes', () => {
+  assert.equal(CONSENT_TEXT, 'Email me the free Do the Next Thing coaching tips, one short email at a time. I can unsubscribe any time.');
+  assert.equal(MARKETING_CONSENT_TEXT, 'Also send me occasional emails about paid Do the Next Thing products.');
+  assert.equal(CONSENT_VERSION, 'dtnt-tips-2026-11-17');
+  assert.match(CONSENT_TEXT_HASH, /^[0-9a-f]{64}$/);
+  assert.match(MARKETING_CONSENT_TEXT_HASH, /^[0-9a-f]{64}$/);
+  assert.notEqual(CONSENT_TEXT_HASH, MARKETING_CONSENT_TEXT_HASH);
+});
+
+test('Option B page: required tips box, optional unchecked paid-products box, no Pack pitch in the consent', () => {
+  const page = loadPage('');
+  const req = page.doc.getElementById('free-consent');
+  const opt = page.doc.getElementById('free-marketing-consent');
+  assert.ok(req.required && !req.checked);
+  assert.ok(opt && !opt.required && !opt.checked && opt.name === 'marketing_consent');
+  const labels = [...page.doc.querySelectorAll('label.consent span')].map((n) => n.textContent);
+  assert.deepEqual(labels, [`${CONSENT_TEXT}Required`, `${MARKETING_CONSENT_TEXT}Optional`]);
+  assert.doesNotMatch(labels.join(' '), /\$24|\$37|up to 3|Pack/);
+});
+
+test('Option B page: the browser posts marketingConsent true only when the optional box is ticked', async () => {
+  const page = loadPage('');
+  page.doc.getElementById('free-marketing-consent').checked = true;
+  await submitForm(page);
+  assert.equal(page.posted[0].body.marketingConsent, true);
+  assert.equal(page.posted[0].body.consent, true);
+});
+
+test('Option B: signup without the optional box records marketing opt-in false, and the tips box alone is enough', async (t) => {
+  assert.equal((await signup(good())).status, 200);
+  const d = tokenOf(confirmLink(world.emails[0]));
+  assert.deepEqual({ mc: d.mc, mh: d.mh, cv: d.cv, ch: d.ch }, { mc: 0, mh: MARKETING_CONSENT_TEXT_HASH, cv: CONSENT_VERSION, ch: CONSENT_TEXT_HASH });
+  assert.equal((await get(confirmLink(world.emails[0]))).status, 200);
+  t.diagnostic(`marketing payload: ${JSON.stringify(marketingPatch())}`);
+  assert.deepEqual(marketingPatch().body, { properties: { dtnt_marketing_opt_in: 'false' } });
+  assert.equal(world.contacts.get('reader@example.com').properties.dtnt_marketing_opt_in, 'false');
+});
+
+test('Option B: JSON marketingConsent true and a plain form post marketing_consent=on both record opt-in true', async (t) => {
+  assert.equal((await signup({ ...good('json@example.com'), marketingConsent: true })).status, 200);
+  assert.equal(tokenOf(confirmLink(world.emails[0])).mc, 1);
+  assert.equal((await get(confirmLink(world.emails[0]))).status, 200);
+  assert.deepEqual(marketingPatch().body, { properties: { dtnt_marketing_opt_in: 'true' } });
+  t.diagnostic(`json: ${JSON.stringify(marketingPatch())}`);
+
+  world = createMockWorld();
+  assert.equal((await signup({ email: 'nojs@example.com', consent: 'on', marketing_consent: 'on', 'cf-turnstile-response': 'tok-pass', website: '' }, { json: false })).status, 200);
+  assert.equal(tokenOf(confirmLink(world.emails[0])).mc, 1);
+});
+
+test('Option B: a marketing box without the required box is refused, and "false" or junk values count as no', async () => {
+  const r = await signup({ ...good(), consent: false, marketingConsent: true });
+  assert.equal(r.status, 400);
+  assert.equal((await r.json()).code, 'consent');
+  assert.equal(world.emails.length, 0);
+  for (const v of ['false', 'yes', 1, null, 'off']) {
+    world = createMockWorld();
+    assert.equal((await signup({ ...good(), marketingConsent: v })).status, 200);
+    assert.equal(tokenOf(confirmLink(world.emails[0])).mc, 0, String(v));
+  }
+});
+
+test('Option B: if the dtnt_marketing_opt_in key is missing in Resend, confirm still succeeds, consent and UTM are kept, and the miss is logged', async () => {
+  world.missingProperties = new Set(['dtnt_marketing_opt_in']);
+  await signup({ ...good(), marketingConsent: true, ...TODAY_UTM });
+  let res;
+  const logs = await captureLogs(async () => { res = await get(confirmLink(world.emails[0])); });
+  assert.equal(res.status, 200);
+  assert.equal(world.emails.length, 2, 'delivery email sent');
+  const c = world.contacts.get('reader@example.com');
+  assert.equal(c.properties.dtnt_consent_version, 'dtnt-tips-2026-11-17');
+  assert.equal(c.properties.dtnt_utm_source, 'substack');
+  assert.equal(c.properties.dtnt_marketing_opt_in, undefined);
+  assert.match(logs.find((l) => l.event === 'dtnt.confirm.marketing_property_failed').error, /Resend contact properties failed \(422\)/);
+  assert.ok(!logs.some((l) => l.event === 'dtnt.confirm.consent_properties_failed' || l.event === 'dtnt.confirm.utm_properties_failed'));
+});
+
+test('Option B: the consent log line carries the opt-in and the text hash, never the email', async () => {
+  await signup({ ...good(), marketingConsent: true });
+  const logs = await captureLogs(() => get(confirmLink(world.emails[0])));
+  const line = logs.find((l) => l.event === 'dtnt.consent');
+  assert.equal(line.marketingOptIn, true);
+  assert.equal(line.marketingConsentTextHash, MARKETING_CONSENT_TEXT_HASH);
+  assert.equal(line.consentVersion, 'dtnt-tips-2026-11-17');
+  assert.doesNotMatch(JSON.stringify(line), /reader@example\.com/);
+});
+
+test('Option B: the delivery email carries no paid-product pitch, so it is safe for people who did not opt in', async () => {
+  await confirmedReader();
+  const delivery = world.emails.at(-1);
+  assert.doesNotMatch(delivery.text + delivery.html, /\$24|\$37|Pack|Setup Kit|coming soon/i);
 });

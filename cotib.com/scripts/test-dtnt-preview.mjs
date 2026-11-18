@@ -94,6 +94,8 @@ await check('P1', 'landing page is up, sampler-first, no buy buttons', async () 
   const h = await r.text();
   expect(/id="free-form"/.test(h), 'signup form missing');
   expect(!/type="checkbox"[^>]*checked/.test(h), 'consent box is pre-checked');
+  expect(/name="consent" type="checkbox" required>/.test(h), 'required tips consent box missing');
+  expect(/name="marketing_consent" type="checkbox">/.test(h), 'optional paid-products box missing or required');
   expect(/class="cf-turnstile"/.test(h), 'Turnstile widget missing');
   expect((h.match(/Coming soon<\/p>/g) || []).length === 2, 'expected 2 "Coming soon" tiers');
   expect(!/stripe\.com|Get the Pack/i.test(h), 'a buy link or button is on the page');

@@ -28,7 +28,7 @@
   }
   var MSG = {
     email: "That email address doesn't look right. Check it and try again.",
-    consent: 'Check the box so we can email you the sampler.',
+    consent: 'Check the box so we can email you the coaching tips.',
     // No token yet: the widget is still checking, or was just reset.
     pending: 'Wait for the human check to say Success, then send.',
     network: "We couldn't send the email just now. Wait a minute and try again."
@@ -55,7 +55,7 @@
       var res = await fetch(form.action, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify(Object.assign({ email: email, consent: true, turnstileToken: token, website: form.website.value }, utmFields()))
+        body: JSON.stringify(Object.assign({ email: email, consent: true, marketingConsent: form.marketing_consent.checked, turnstileToken: token, website: form.website.value }, utmFields()))
       });
       var data = {};
       try { data = await res.json(); } catch (x) { data = {}; }

@@ -92,8 +92,19 @@ module.exports = async function handler(req, res) {
   } catch (err) {
     http.log('dtnt.confirm.utm_properties_failed', { emailHash, error: err.message });
   }
+  // Optional paid-products opt-in, in its own call so a missing property key
+  // in Resend can't take the consent record or the signup source down with
+  // it. The key dtnt_marketing_opt_in ('true' or 'false') has to be created in
+  // Resend (Contacts, Properties) before live use. Until then this call fails,
+  // is logged, and the sampler still goes out.
+  const marketingOptIn = d.mc === 1;
+  try {
+    await resend.setContactProperties(email, { dtnt_marketing_opt_in: marketingOptIn ? 'true' : 'false' });
+  } catch (err) {
+    http.log('dtnt.confirm.marketing_property_failed', { emailHash, error: err.message });
+  }
   // Consent record in the function log as well (hashes only, no raw email).
-  http.log('dtnt.consent', { emailHash, consentVersion: d.cv, consentTextHash: d.ch, submittedAt: d.sa, confirmedAt: new Date().toISOString(), ipHash: d.ih, uaHash: d.uh, source: 'dtnt-free', ...utmProps });
+  http.log('dtnt.consent', { emailHash, consentVersion: d.cv, consentTextHash: d.ch, marketingOptIn, marketingConsentTextHash: d.mh, submittedAt: d.sa, confirmedAt: new Date().toISOString(), ipHash: d.ih, uaHash: d.uh, source: 'dtnt-free', ...utmProps });
 
   try {
     const unsubscribeUrl = `${base}/do-the-next-thing/free/unsubscribe?t=${createToken('unsubscribe', { e: email }, null)}`;

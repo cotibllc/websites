@@ -5,7 +5,7 @@
 const fs = require('fs');
 const path = require('path');
 const { page } = require('../lib/dtnt/pages');
-const { CONSENT_TEXT } = require('../lib/dtnt/config');
+const { CONSENT_TEXT, MARKETING_CONSENT_TEXT } = require('../lib/dtnt/config');
 
 const WWW = path.join(__dirname, '..', 'www');
 const TURNSTILE_SITE_KEY = '0x4AAAAAAC2VHJDJh24KBJBW'; // same widget as /contact
@@ -13,9 +13,9 @@ const TURNSTILE_SITE_KEY = '0x4AAAAAAC2VHJDJh24KBJBW'; // same widget as /contac
 const landing = page({
   analytics: true,
   title: "Do the Next Thing: Start with one small piece. | COTIB LLC",
-  description: "Do the Next Thing: A proposal draft waiting for you? Start with one small piece. Three free AI prompts for solo consultants and technical operators.",
+  description: "Do the Next Thing: A proposal draft waiting for you? Start with one small piece. Short coaching tips for the one small piece you keep putting off.",
   ogTitle: "Do the Next Thing: A proposal draft waiting for you? Start with one small piece. | COTIB LLC",
-  ogDescription: "Do the Next Thing: A proposal draft waiting for you? Start with one small piece. Three free AI prompts for solo consultants and technical operators. Pick the one that matches your stall, paste it into your AI chat, and use a ten-minute timer to finish one concrete piece.",
+  ogDescription: "Do the Next Thing: A proposal draft waiting for you? Start with one small piece. Short coaching tips for the one small piece you keep putting off. Each tip gives one technique and a prompt to paste into your AI chat.",
   twitter: true,
   canonical: 'https://www.cotib.com/do-the-next-thing',
   headExtra: `
@@ -31,11 +31,11 @@ const landing = page({
           <p class="eyebrow">a COTIB LLC product</p>
           <h1 id="title">Do the Next Thing</h1>
           <p class="sub">A proposal draft waiting for you? Start with one small piece.</p>
-          <p class="lead">Three free AI prompts for solo consultants and technical operators. Pick the one that matches your stall, paste it into your AI chat, and use a ten-minute timer to finish one concrete piece.</p>
+          <p class="lead">Short coaching tips for the one small piece you keep putting off.</p>
           <div class="hero-actions">
-            <a class="btn btn-primary" href="#free">Email me the 3 free prompts</a>
+            <a class="btn btn-primary" href="#free">Email me the free coaching tips</a>
           </div>
-          <p class="hero-note">A two-page PDF. Free AI chat accounts work. Confirm your email to receive it. The form below explains the follow-up emails.</p>
+          <p class="hero-note">Free AI chat accounts work. Confirm your email to start. The form below explains exactly what we will send.</p>
         </div>
 
         <figure class="hero-figure">
@@ -71,9 +71,9 @@ const landing = page({
     <section class="free" id="free" aria-labelledby="free-title">
       <div class="wrap free-grid">
         <div class="section-head">
-          <h2 id="free-title">Get three of the 28 prompts, free</h2>
+          <h2 id="free-title">Get the free coaching tips</h2>
           <div class="ticks" aria-hidden="true"></div>
-          <p>One is for starting, one for coming back after a skip, and one for when you're researching instead of deciding. Paste one in, start a 10-minute timer, and see if it moves you.</p>
+          <p>Get a short coaching tip by email on getting unstuck, built for solo consultants and technical operators with a side offer to move forward. Each tip names a stall you probably know, gives one technique and a prompt to paste into your AI chat, and ends with one small thing to do today.</p>
         </div>
 
         <div class="paper formcard" id="free-card">
@@ -86,6 +86,10 @@ const landing = page({
               <input id="free-consent" name="consent" type="checkbox" required>
               <span>${CONSENT_TEXT}<small>Required</small></span>
             </label>
+            <label class="consent" for="free-marketing-consent">
+              <input id="free-marketing-consent" name="marketing_consent" type="checkbox">
+              <span>${MARKETING_CONSENT_TEXT}<small>Optional</small></span>
+            </label>
             <div class="hp" aria-hidden="true">
               <label for="free-website">Website</label>
               <input id="free-website" name="website" type="text" tabindex="-1" autocomplete="off">
@@ -95,12 +99,12 @@ const landing = page({
             <input type="hidden" id="free-utm-campaign" name="utm_campaign" value="">
             <div class="cf-turnstile" data-sitekey="${TURNSTILE_SITE_KEY}" data-action="dtnt-free"></div>
             <p class="form-error" id="free-error" role="alert" tabindex="-1"></p>
-            <button class="btn btn-primary" type="submit">Send me the 3 prompts</button>
-            <p class="confirm-note">We'll email you a confirm link first. Your sampler comes when you click it. Privacy: <a href="/do-the-next-thing/privacy">cotib.com/do-the-next-thing/privacy</a>. a COTIB LLC product.</p>
+            <button class="btn btn-primary" type="submit">Send me the free tips</button>
+            <p class="confirm-note">We'll email you a confirm link first. Your first tip comes after you click it. Privacy: <a href="/do-the-next-thing/privacy">cotib.com/do-the-next-thing/privacy</a>. a COTIB LLC product.</p>
           </form>
           <div class="done" id="free-done" tabindex="-1" aria-live="polite">
             <h3>Check your email.</h3>
-            <p>We sent a confirm link to the address you entered. Click it within 48 hours to get your 3 prompts. Not there in a few minutes? Check spam or promotions.</p>
+            <p>We sent a confirm link to the address you entered. Click it within 48 hours to confirm your signup. Not there in a few minutes? Check spam or promotions.</p>
           </div>
         </div>
       </div>
@@ -165,7 +169,7 @@ const landing = page({
     <section id="pick" aria-labelledby="pick-title">
       <div class="wrap">
         <div class="section-head">
-          <h2 id="pick-title">The full Pack is coming soon</h2>
+          <h2 id="pick-title">Paid versions come later</h2>
           <div class="ticks" aria-hidden="true"></div>
         </div>
 
@@ -196,7 +200,7 @@ const landing = page({
             <p class="soon">Coming soon</p>
           </article>
         </div>
-        <p class="soon-note">Neither version is on sale yet. <a href="#free">Start with the 3 free prompts.</a></p>
+        <p class="soon-note">Neither version is on sale yet. <a href="#free">Start with the free coaching tips.</a></p>
       </div>
     </section>
 
@@ -220,7 +224,7 @@ const landing = page({
               <li>You don't know your next step yet. These prompts assume you do.</li>
               <li>You want to understand why you stall. None of the prompts go there.</li>
               <li>You're looking for a framework, a productivity system, or a course.</li>
-              <li>You want someone to coach you live. This is a prompt pack and a kit, not a person.</li>
+              <li>You want someone to coach you live. These are email tips with prompts, not a person.</li>
             </ul>
           </div>
         </div>
@@ -228,8 +232,8 @@ const landing = page({
         <div class="faq">
           <h3 class="faq-title">Questions</h3>
           <details open>
-            <summary>Is there a free version?</summary>
-            <p>Yes. Get three of the 28 prompts free: put your email in the <a href="#free">form above</a> and confirm it. We'll send the sampler and a few short emails about the full Pack. Unsubscribe any time.</p>
+            <summary>Is it free?</summary>
+            <p>Yes. Put your email in the <a href="#free">form above</a> and confirm it. We'll send short coaching tips, one at a time. If you also tick the optional box, we'll send occasional emails about paid Do the Next Thing products. Unsubscribe any time.</p>
           </details>
           <details>
             <summary>Do I need a paid AI account?</summary>
@@ -255,7 +259,7 @@ const landing = page({
     <section class="close" aria-label="Closing">
       <div class="wrap">
         <p class="last">The tabs will still be there tomorrow. What you do with the next 10&nbsp;minutes is yours.</p>
-        <a class="btn btn-quiet" href="#free">Email me the 3 free prompts</a>
+        <a class="btn btn-quiet" href="#free">Email me the free coaching tips</a>
 
         <div class="fineprint">
           <h2>Fine print</h2>
@@ -289,10 +293,10 @@ const privacy = page({
           <h2>What we collect and why</h2>
           <h3>When you sign up for the free sampler:</h3>
           <ul>
-            <li>Your email address and your consent record: the version of the signup wording you agreed to, when you signed up, when you clicked the confirm link, and a hashed version of your IP address (a one-way code, not the raw IP).</li>
+            <li>Your email address and your consent record: the version of the signup wording you agreed to, whether you ticked the optional box for emails about paid products, when you signed up, when you clicked the confirm link, and a hashed version of your IP address (a one-way code, not the raw IP).</li>
             <li>We use a two-step signup: we only add you to our list after you click the confirm link in your email.</li>
             <li>Signups are checked by Cloudflare Turnstile to stop bots. Turnstile processes data such as your IP address and browser signals to do this.</li>
-            <li>We use your email to send the confirm link and the sampler. Your consent also covers up to 3 short emails about the paid Pack. We aren't sending those yet. You can unsubscribe any time.</li>
+            <li>We use your email to send the confirm link and the free coaching tips, one short email at a time. If you tick the optional box, we also use it for occasional emails about paid Do the Next Thing products. We aren't sending those yet. You can unsubscribe any time.</li>
             <li>To slow down repeat tries, the signup form allows about 10 tries a minute from one connection. That count is kept in memory for a minute and isn't saved.</li>
           </ul>
           <p><strong>When you email us:</strong> your email address and anything you write to us.</p>
@@ -327,7 +331,7 @@ const privacy = page({
           <p>COTIB LLC, 155 Willowbrook Blvd, Ste 110 #2800, Wayne NJ 07470, United States<br><a href="mailto:customerservice@cotib.com">customerservice@cotib.com</a></p>
 
           <h2>Changes</h2>
-          <p>Effective October 29, 2026.</p>
+          <p>Effective November 17, 2026.</p>
           <p>We post any update to this notice on this page with a new effective date. Material changes apply only to information collected after that date.</p>
 
           <p>A COTIB LLC product.</p>

@@ -1,5 +1,7 @@
 // Locks the approved Astra proposal-test copy (Chuck, cards t1531s6956, t1531s6959, and t1532u).
-// Prices, consent, form behavior, the sampler, and the Nov 29 gate stay unchanged.
+// Updated Nov 17 for the email-series reposition and consent Option B (Chuck, t1630u, t1631s7334):
+// the hero lead, hero note, CTA, signup copy, FAQ, consent boxes and meta descriptions changed; prices, the form
+// action, Turnstile, UTM fields, the example and the headline did not.
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('fs');
@@ -10,15 +12,18 @@ const PAGE = path.join(__dirname, '..', 'www', 'do-the-next-thing.html');
 const BUILD = path.join(__dirname, '..', 'scripts', 'build-dtnt-pages.js');
 const HUB = path.join(__dirname, '..', '..', 'cotib.link', 'index.html');
 const VENTURES = path.join(__dirname, '..', 'www', 'ventures.html');
-const CONSENT =
-  'Email me the free sampler and up to 3 short emails over the next week about the paid Do the Next Thing Pack ($24) and Setup Kit ($37). I can unsubscribe any time.';
+const CONSENT = 'Email me the free Do the Next Thing coaching tips, one short email at a time. I can unsubscribe any time.';
+const MARKETING_CONSENT = 'Also send me occasional emails about paid Do the Next Thing products.';
+const TAGLINE = 'Short coaching tips for the one small piece you keep putting off.';
+const BLURB =
+  'Get a short coaching tip by email on getting unstuck, built for solo consultants and technical operators with a side offer to move forward. Each tip names a stall you probably know, gives one technique and a prompt to paste into your AI chat, and ends with one small thing to do today.';
 const PAGE_TITLE = 'Do the Next Thing: Start with one small piece. | COTIB LLC';
 const PAGE_DESCRIPTION =
-  'Do the Next Thing: A proposal draft waiting for you? Start with one small piece. Three free AI prompts for solo consultants and technical operators.';
+  'Do the Next Thing: A proposal draft waiting for you? Start with one small piece. Short coaching tips for the one small piece you keep putting off.';
 const SOCIAL_TITLE =
   'Do the Next Thing: A proposal draft waiting for you? Start with one small piece. | COTIB LLC';
 const SOCIAL_DESCRIPTION =
-  'Do the Next Thing: A proposal draft waiting for you? Start with one small piece. Three free AI prompts for solo consultants and technical operators. Pick the one that matches your stall, paste it into your AI chat, and use a ten-minute timer to finish one concrete piece.';
+  'Do the Next Thing: A proposal draft waiting for you? Start with one small piece. Short coaching tips for the one small piece you keep putting off. Each tip gives one technique and a prompt to paste into your AI chat.';
 
 function load(file) {
   return fs.readFileSync(file, 'utf8');
@@ -35,14 +40,14 @@ test('DTNT page uses the approved hero, example, and heading A, and leaves the f
   );
   assert.equal(
     doc.querySelector('.hero .lead').textContent.trim(),
-    'Three free AI prompts for solo consultants and technical operators. Pick the one that matches your stall, paste it into your AI chat, and use a ten-minute timer to finish one concrete piece.',
+    TAGLINE,
   );
   const heroCta = doc.querySelector('.hero-actions a.btn-primary');
-  assert.equal(heroCta.textContent.trim(), 'Email me the 3 free prompts');
+  assert.equal(heroCta.textContent.trim(), 'Email me the free coaching tips');
   assert.equal(heroCta.getAttribute('href'), '#free');
   assert.equal(
     doc.querySelector('.hero-note').textContent.trim(),
-    'A two-page PDF. Free AI chat accounts work. Confirm your email to receive it. The form below explains the follow-up emails.',
+    'Free AI chat accounts work. Confirm your email to start. The form below explains exactly what we will send.',
   );
 
   const example = doc.querySelector('section.example');
@@ -80,10 +85,10 @@ test('DTNT page uses the approved hero, example, and heading A, and leaves the f
     'example comes before the signup form',
   );
 
-  assert.equal(doc.querySelector('#free-title').textContent.trim(), 'Get three of the 28 prompts, free');
+  assert.equal(doc.querySelector('#free-title').textContent.trim(), 'Get the free coaching tips');
   assert.equal(
     doc.querySelector('#free .section-head p').textContent.trim(),
-    "One is for starting, one for coming back after a skip, and one for when you're researching instead of deciding. Paste one in, start a 10-minute timer, and see if it moves you.",
+    BLURB,
   );
   assert.doesNotMatch(html, /Not ready to buy\?/);
 
@@ -91,8 +96,17 @@ test('DTNT page uses the approved hero, example, and heading A, and leaves the f
   assert.equal(consent.getAttribute('type'), 'checkbox');
   assert.ok(consent.hasAttribute('required'));
   assert.ok(!consent.hasAttribute('checked'));
-  assert.equal(doc.querySelector('label.consent span').childNodes[0].textContent, CONSENT);
-  assert.equal(doc.querySelector('#free-form button[type="submit"]').textContent.trim(), 'Send me the 3 prompts');
+  const spans = [...doc.querySelectorAll('label.consent span')];
+  assert.equal(spans.length, 2);
+  assert.equal(spans[0].childNodes[0].textContent, CONSENT);
+  assert.equal(spans[0].querySelector('small').textContent, 'Required');
+  const marketing = doc.querySelector('#free-marketing-consent');
+  assert.equal(marketing.getAttribute('type'), 'checkbox');
+  assert.equal(marketing.getAttribute('name'), 'marketing_consent');
+  assert.ok(!marketing.hasAttribute('required') && !marketing.hasAttribute('checked'), 'optional and unchecked');
+  assert.equal(spans[1].childNodes[0].textContent, MARKETING_CONSENT);
+  assert.equal(spans[1].querySelector('small').textContent, 'Optional');
+  assert.equal(doc.querySelector('#free-form button[type="submit"]').textContent.trim(), 'Send me the free tips');
   assert.equal(doc.querySelector('#free-form').getAttribute('action'), '/do-the-next-thing/free');
   assert.ok(doc.querySelector('#free-utm-source') && doc.querySelector('#free-utm-medium') && doc.querySelector('#free-utm-campaign'));
 
@@ -103,8 +117,13 @@ test('DTNT page uses the approved hero, example, and heading A, and leaves the f
   assert.doesNotMatch(html, /stripe\.com|buy\.|checkout|Get the Pack/i);
 
   const footerCta = doc.querySelector('section.close a.btn-quiet');
-  assert.equal(footerCta.textContent.trim(), 'Email me the 3 free prompts');
+  assert.equal(footerCta.textContent.trim(), 'Email me the free coaching tips');
   assert.equal(footerCta.getAttribute('href'), '#free');
+});
+
+test('the page makes no promise of a prompt-pack sale or "up to 3 emails about the paid Pack"', () => {
+  const html = load(PAGE) + load(path.join(__dirname, '..', 'www', 'do-the-next-thing', 'privacy.html'));
+  assert.doesNotMatch(html, /up to 3|few short emails about the full Pack|Consent also covers|Get three of the 28 prompts|Email me the 3 free prompts|Send me the 3 prompts/i);
 });
 
 test('DTNT title, meta, og, and twitter tags use the approved headline and subhead, within the 60 and 160 limits', () => {
@@ -128,9 +147,9 @@ test('DTNT title, meta, og, and twitter tags use the approved headline and subhe
   assert.equal(content('meta[name="twitter:description"]'), SOCIAL_DESCRIPTION);
   assert.match(title, /Start with one small piece/);
   assert.match(description, /A proposal draft waiting for you\? Start with one small piece/);
-  assert.match(description, /Three free AI prompts for solo consultants and technical operators/);
+  assert.match(description, /Short coaching tips for the one small piece you keep putting off/);
   assert.match(SOCIAL_TITLE, /A proposal draft waiting for you\? Start with one small piece/);
-  assert.match(SOCIAL_DESCRIPTION, /use a ten-minute timer to finish one concrete piece/);
+  assert.match(SOCIAL_DESCRIPTION, /a prompt to paste into your AI chat/);
 });
 
 test('/ventures uses the approved DTNT headline and leaves the product name and coming-soon line in place', () => {
@@ -152,11 +171,14 @@ test('the DTNT build script carries the same approved copy as the committed page
   const script = load(BUILD);
   for (const snippet of [
     'A proposal draft waiting for you? Start with one small piece.',
-    'Email me the 3 free prompts',
+    'Email me the free coaching tips',
     'Example (illustrative, not a customer result)',
-    'Get three of the 28 prompts, free',
-    "One is for starting, one for coming back after a skip, and one for when you're researching instead of deciding.",
-    'Send me the 3 prompts',
+    'Get the free coaching tips',
+    BLURB,
+    TAGLINE,
+    'Send me the free tips',
+    'marketing_consent',
+    'MARKETING_CONSENT_TEXT',
     PAGE_TITLE,
     PAGE_DESCRIPTION,
     SOCIAL_TITLE,

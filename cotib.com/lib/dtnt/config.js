@@ -8,11 +8,15 @@ const REPLY_TO = 'customerservice@cotib.com';
 const SUPPORT_EMAIL = 'customerservice@cotib.com';
 const POSTAL_ADDRESS = 'COTIB LLC, 155 Willowbrook Blvd, Ste 110 #2800, Wayne NJ 07470, United States';
 
-// Consent wording shown next to the required checkbox. Bump CONSENT_VERSION
-// whenever CONSENT_TEXT changes (setup addendum F8).
-const CONSENT_VERSION = 'dtnt-free-2026-10-07';
-const CONSENT_TEXT = 'Email me the free sampler and up to 3 short emails over the next week about the paid Do the Next Thing Pack ($24) and Setup Kit ($37). I can unsubscribe any time.';
+// Consent wording shown next to the two checkboxes: one required (the free
+// coaching tips) and one optional, unchecked by default (emails about paid
+// products). Bump CONSENT_VERSION whenever either text changes (setup
+// addendum F8). The version covers both texts.
+const CONSENT_VERSION = 'dtnt-tips-2026-11-17';
+const CONSENT_TEXT = 'Email me the free Do the Next Thing coaching tips, one short email at a time. I can unsubscribe any time.';
 const CONSENT_TEXT_HASH = crypto.createHash('sha256').update(CONSENT_TEXT).digest('hex');
+const MARKETING_CONSENT_TEXT = 'Also send me occasional emails about paid Do the Next Thing products.';
+const MARKETING_CONSENT_TEXT_HASH = crypto.createHash('sha256').update(MARKETING_CONSENT_TEXT).digest('hex');
 
 const CONFIRM_TTL_SECONDS = 48 * 60 * 60;      // confirm link: 48 hours
 const DOWNLOAD_TTL_SECONDS = 30 * 24 * 60 * 60; // download link: 30 days
@@ -47,6 +51,8 @@ module.exports = {
   CONSENT_VERSION,
   CONSENT_TEXT,
   CONSENT_TEXT_HASH,
+  MARKETING_CONSENT_TEXT,
+  MARKETING_CONSENT_TEXT_HASH,
   CONFIRM_TTL_SECONDS,
   DOWNLOAD_TTL_SECONDS,
   PRODUCTION_HOSTS,
