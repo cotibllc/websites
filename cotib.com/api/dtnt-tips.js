@@ -1,8 +1,7 @@
 // GET /do-the-next-thing/tips (rewritten to /api/dtnt-tips).
-// The public archive of past coaching tips. It shows only the tips whose
-// publishAt in lib/dtnt/tips.js has passed, so a tip is never visible before
-// its dated send. No env vars, no Resend, no cookies: a read-only page.
-const { publishedTips } = require('../lib/dtnt/tips');
+// The public page with all three coaching tips. It does not depend on a date:
+// the email series is timed per reader (see lib/dtnt/tips.js), and this page
+// is the same for everyone. No env vars, no Resend, no cookies: a read-only page.
 const { tipsPage } = require('../lib/dtnt/pages');
 const http = require('../lib/dtnt/http');
 
@@ -12,8 +11,7 @@ module.exports = async function handler(req, res) {
     res.setHeader('Allow', 'GET, HEAD');
     return res.end();
   }
-  // Short edge cache: a tip appears within about five minutes of its date.
-  return http.sendHtml(res, 200, tipsPage({ published: publishedTips(Date.now()) }), {
+  return http.sendHtml(res, 200, tipsPage(), {
     'Cache-Control': 'public, max-age=0, s-maxage=300, must-revalidate',
   });
 };

@@ -142,7 +142,7 @@ test('the leftover prompt-pack sections now describe coaching tips, and the paid
   assert.match(text('.by-name'), /^The first three tips: The proposal opening you keep avoiding\. The follow-up you skipped\. Close the tabs, pick one\./);
   assert.equal(doc.querySelector('.by-name a').getAttribute('href'), '/do-the-next-thing/tips');
   assert.equal(text('.faq details:nth-of-type(4) summary'), 'How do the tips arrive?');
-  assert.match(text('.faq details:nth-of-type(4) p'), /^As short emails sent on set dates\./);
+  assert.match(text('.faq details:nth-of-type(4) p'), /^As three short emails, timed from the day you confirm your signup: Tip 1 right away, Tip 2 on day 3 and Tip 3 on day 7\./);
   assert.equal(text('.faq details:nth-of-type(3) summary'), "What's the Coach?");
   assert.match(text('.faq details:nth-of-type(3) p'), /^A bonus that comes with the paid Setup Kit, which is coming later\./);
   assert.doesNotMatch(html, /<h2 id="inside">28 prompts|Bucket 1|In the free sampler|A few of the prompts by name|isn't the right pack|is 28 prompts for that moment/);

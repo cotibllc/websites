@@ -19,6 +19,7 @@ Object.assign(process.env, ENV);
 
 const { startServer, createMockWorld } = require('./harness');
 const { createToken } = require('../lib/dtnt/tokens');
+const tipsData = require('../lib/dtnt/tips');
 const ROOT = path.join(__dirname, '..');
 const PDF = fs.readFileSync(path.join(ROOT, 'private', 'dtnt', 'do-the-next-thing-free-sampler-v2.pdf'));
 const POSTAL = 'COTIB LLC, 155 Willowbrook Blvd, Ste 110 #2800, Wayne NJ 07470, United States';
@@ -62,11 +63,16 @@ function withClock(offsetSeconds, fn) {
   return Promise.resolve(fn()).finally(() => { Date.now = real; });
 }
 
+// The confirm click sends Tip 1 and schedules Tips 2 and 3. tipEmail(n) is the
+// email for tip n; tip1 is the one with no scheduled_at.
+const tipEmail = (n) => world.emails.find((e) => e.subject === tipsData.TIPS[n - 1].subject);
+const SUBJECT_TIP1 = tipsData.TIPS[0].subject;
+
 async function confirmedReader(email = 'reader@example.com') {
   assert.equal((await signup(good(email))).status, 200);
   const res = await get(confirmLink(world.emails.at(-1)));
   assert.equal(res.status, 200);
-  return world.emails.at(-1);
+  return tipEmail(1);
 }
 
 // ---------- Pages ----------
@@ -125,15 +131,15 @@ test('F11.1 signup sends one confirm email and adds nobody to the list yet', asy
   assert.equal(sends()[0].headers.Authorization, 'Bearer mock-send-key', 'sends use the sending key');
 });
 
-test('F11.1 confirm adds the contact to the DTNT segment, records consent, sends the welcome email, links the tips page', async () => {
+test('F11.1 confirm adds the contact to the DTNT segment, records consent, starts the tip series, links the tips page', async () => {
   await signup(good());
   const res = await get(confirmLink(world.emails[0]));
   assert.equal(res.status, 200);
   assert.equal(res.headers.get('cache-control'), 'no-store');
   const html = await res.text();
   assert.match(html, /You're confirmed\./);
-  assert.match(html, /You're on the list\. Your first tip arrives with the next dated send\./);
-  assert.match(html, /<a class="btn btn-primary" href="\/do-the-next-thing\/tips">Read the tips so far<\/a>/);
+  assert.match(html, /You're on the list\. Tip 1 is in your inbox now\. Tip 2 arrives on day 3 and Tip 3 on day 7\./);
+  assert.match(html, /<a class="btn btn-primary" href="\/do-the-next-thing\/tips">Read all three tips<\/a>/);
   assert.doesNotMatch(html, /sampler|3 prompts|\/free\/dl\//, 'the confirmed page no longer offers the PDF');
   const c = world.contacts.get('reader@example.com');
   assert.ok(c && c.segments.has('seg_mock_dtnt_free') && !c.unsubscribed);
@@ -141,9 +147,12 @@ test('F11.1 confirm adds the contact to the DTNT segment, records consent, sends
   assert.ok(c.properties.dtnt_confirmed_at && c.properties.dtnt_signed_up_at && c.properties.dtnt_ip_hash);
   const contactCall = world.calls.find((x) => x.path === '/contacts' && x.method === 'POST');
   assert.equal(contactCall.headers.Authorization, 'Bearer mock-full-key', 'contacts use the full-access key');
-  assert.equal(world.emails.length, 2);
-  assert.equal(world.emails[1].subject, "You're on the list for the Do the Next Thing coaching tips");
-  assert.match(world.emails[1].idempotencyKey, /^dtnt-welcome-/);
+  // Confirm email, then Tips 2 and 3 (scheduled), then Tip 1 (immediate).
+  assert.equal(world.emails.length, 4);
+  assert.deepEqual(world.emails.slice(1).map((e) => e.subject), [tipsData.TIPS[1].subject, tipsData.TIPS[2].subject, tipsData.TIPS[0].subject]);
+  assert.match(tipEmail(1).idempotencyKey, /^dtnt-tip1-/);
+  assert.match(tipEmail(2).idempotencyKey, /^dtnt-tip2-/);
+  assert.match(tipEmail(3).idempotencyKey, /^dtnt-tip3-/);
 });
 
 // The sampler PDF is no longer linked from any page or email. The endpoint
@@ -170,14 +179,18 @@ test('F11.2 repeat confirm click shows the confirmed page again and sends nothin
   assert.equal(world.emails.length, before);
 });
 
-test('F11.2 repeat signup by a confirmed reader resends the welcome email, same reply', async () => {
+test('F11.2 repeat signup by a confirmed reader gets the already-on-the-list note (no tip), same reply', async () => {
   await confirmedReader();
   const before = world.emails.length;
   const res = await signup(good());
   assert.equal(res.status, 200);
   assert.match((await res.json()).message, /^Check your email\./);
   assert.equal(world.emails.length, before + 1);
-  assert.equal(world.emails.at(-1).subject, "You're on the list for the Do the Next Thing coaching tips");
+  const note = world.emails.at(-1);
+  assert.equal(note.subject, "You're already on the list for the Do the Next Thing coaching tips");
+  assert.equal(note.scheduled_at, undefined, 'sent now, not scheduled');
+  assert.ok(!tipsData.TIPS.some((t) => t.subject === note.subject), 'no tip is re-sent, so the 3 and 7 day timing holds');
+  assert.equal(world.emails.filter((e) => e.subject === SUBJECT_TIP1).length, 1);
 });
 
 test('F11.2 repeat signup before confirming sends a fresh confirm link', async () => {
@@ -281,7 +294,7 @@ test('F11.4 re-signup after unsubscribe: stays unsubscribed until a fresh confir
   assert.equal(contact().id, id, 'same contact, not recreated');
   assert.equal(contact().unsubscribed, false);
   assert.ok(contact().segments.has('seg_mock_dtnt_free'));
-  assert.equal(world.emails.at(-1).subject, "You're on the list for the Do the Next Thing coaching tips");
+  assert.equal(world.emails.at(-1).subject, SUBJECT_TIP1, 'a fresh confirm starts the series again with Tip 1');
   assert.equal(world.calls.filter((x) => x.method === 'DELETE').length, 0, 'nothing is ever deleted');
 });
 
@@ -423,12 +436,13 @@ test('a Resend send failure returns the retry message', async () => {
   assert.equal((await r.json()).error, "We couldn't send the email just now. Wait a minute and try again.");
 });
 
-test('missing consent properties in Resend do not block the sampler', async () => {
+test('missing properties in Resend do not block the confirm page or Tip 1, and nothing is left scheduled that unsubscribe could not stop', async () => {
   world.propertiesExist = false;
   await signup(good());
   const res = await get(confirmLink(world.emails[0]));
   assert.equal(res.status, 200);
-  assert.equal(world.emails.length, 2);
+  assert.ok(tipEmail(1), 'Tip 1 still went out');
+  for (const n of [2, 3]) assert.equal(tipEmail(n).last_event, 'canceled', `Tip ${n} was cancelled because its id could not be saved`);
 });
 
 test('tokens keep the email address out of URLs', async () => {
@@ -444,11 +458,11 @@ test('tokens keep the email address out of URLs', async () => {
 // ---------- F10 CAN-SPAM, on every email this flow sends ----------
 test('F10 every email: accurate From and Reply-To, subject, postal address, working unsubscribe, one-click headers', async () => {
   const delivery = await confirmedReader();
-  const all = [world.emails[0], delivery];
+  const all = [world.emails[0], tipEmail(1), tipEmail(2), tipEmail(3)];
   for (const e of all) {
     assert.equal(e.from, 'COTIB LLC <no-reply@cotib.com>', 'F10.1 From');
     assert.equal(e.reply_to, 'customerservice@cotib.com', 'F10.1 Reply-To');
-    assert.ok(['Confirm your email for the free Do the Next Thing coaching tips', "You're on the list for the Do the Next Thing coaching tips"].includes(e.subject), 'F10.2 subject says what is inside');
+    assert.ok(['Confirm your email for the free Do the Next Thing coaching tips', ...tipsData.TIPS.map((t) => t.subject)].includes(e.subject), 'F10.2 subject says what is inside');
     assert.ok(e.html.includes(POSTAL) && e.text.includes(POSTAL), 'F10.4 postal address in HTML and text');
     assert.match(e.html, /<a href="http[^"]+\/do-the-next-thing\/free\/unsubscribe\?t=[^"]+"[^>]*>Unsubscribe<\/a>/, 'F10.5 unsubscribe in HTML');
     assert.match(e.text, /Unsubscribe: http\S+\/do-the-next-thing\/free\/unsubscribe\?t=/, 'F10.5 unsubscribe in text');
@@ -530,7 +544,7 @@ test('UTM: ?utm_source=substack&utm_medium=social&utm_campaign=dtnt-sampler is w
   assert.equal((await get(link)).status, 200);
   const patches = propertyPatches();
   t.diagnostic(`payloads: ${JSON.stringify(patches)}`);
-  assert.equal(patches.length, 3, 'consent call, UTM call, then the marketing opt-in call');
+  assert.equal(patches.length, 4, 'consent call, UTM call, marketing opt-in call, then the scheduled tip ids');
   assert.deepEqual(patches[1], {
     method: 'PATCH',
     path: '/contacts/reader%40example.com',
@@ -583,14 +597,14 @@ test('UTM: hostile or oversized values are cleaned, and the confirm token stays 
   assert.deepEqual(propertyPatches()[1].body.properties, { dtnt_utm_source: 'a'.repeat(100), dtnt_utm_medium: 'img-srcx-onerroralert1', dtnt_utm_campaign: 'a'.repeat(100) });
 });
 
-test('UTM: if the UTM property keys are missing in Resend, confirm still succeeds, consent is kept and the sampler goes out', async () => {
+test('UTM: if the UTM property keys are missing in Resend, confirm still succeeds, consent is kept and Tip 1 goes out', async () => {
   world.missingProperties = new Set(['dtnt_utm_source', 'dtnt_utm_medium', 'dtnt_utm_campaign']);
   await signup({ ...good(), ...TODAY_UTM });
   let res;
   const logs = await captureLogs(async () => { res = await get(confirmLink(world.emails[0])); });
   assert.equal(res.status, 200);
   assert.match(await res.text(), /You're confirmed\./);
-  assert.equal(world.emails.length, 2, 'delivery email sent');
+  assert.ok(tipEmail(1), 'Tip 1 sent');
   const c = world.contacts.get('reader@example.com');
   assert.equal(c.properties.dtnt_consent_version, 'dtnt-tips-2026-11-17', 'consent recorded');
   assert.equal(c.properties.dtnt_utm_source, undefined);
@@ -745,7 +759,7 @@ test('Option B: if the dtnt_marketing_opt_in key is missing in Resend, confirm s
   let res;
   const logs = await captureLogs(async () => { res = await get(confirmLink(world.emails[0])); });
   assert.equal(res.status, 200);
-  assert.equal(world.emails.length, 2, 'delivery email sent');
+  assert.ok(tipEmail(1), 'Tip 1 sent');
   const c = world.contacts.get('reader@example.com');
   assert.equal(c.properties.dtnt_consent_version, 'dtnt-tips-2026-11-17');
   assert.equal(c.properties.dtnt_utm_source, 'substack');
@@ -770,18 +784,16 @@ test('Option B: the welcome email carries no paid-product pitch, so it is safe f
   assert.doesNotMatch(delivery.text + delivery.html, /\$24|\$37|Pack|Setup Kit|coming soon/i);
 });
 
-// ---------- Tip archive (/do-the-next-thing/tips), date-gated ----------
-const tipsData = require('../lib/dtnt/tips');
+// ---------- Tips: timing relative to each reader's confirm, and the archive ----------
 const { tipsPage } = require('../lib/dtnt/pages');
 const { JSDOM: TipsDOM } = require('jsdom');
-
-// Run fn with the schedule set, then put the placeholders back.
-async function withSchedule(dates, fn) {
-  const saved = tipsData.TIPS.map((t) => t.publishAt);
-  tipsData.TIPS.forEach((t, i) => { t.publishAt = dates[i] ?? null; });
-  try { return await fn(); } finally { tipsData.TIPS.forEach((t, i) => { t.publishAt = saved[i]; }); }
-}
+const DAY = 24 * 60 * 60 * 1000;
 const tipsDoc = async (res) => new TipsDOM(await res.text()).window.document;
+const resendCalls = (method, pathRe) => world.calls.filter((c) => c.host === 'api.resend.com' && c.method === method && pathRe.test(c.path));
+const unsubscribeVia = (email, { oneClick = false } = {}) => {
+  const t = new URL(unsubLink(email)).searchParams.get('t');
+  return get('/do-the-next-thing/free/unsubscribe', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: oneClick ? `t=${t}&List-Unsubscribe=One-Click` : `t=${t}` });
+};
 
 test('tips: the three approved emails are the text on file, unchanged', () => {
   const crypto = require('crypto');
@@ -798,77 +810,226 @@ test('tips: the three approved emails are the text on file, unchanged', () => {
   assert.match(prompts[2], /^I've been researching \[the decision\] instead of making it\./);
 });
 
-test('tips: every publishAt ships as a null placeholder, so nothing is public until Chuck sets a date', async () => {
-  assert.deepEqual(tipsData.TIPS.map((t) => t.publishAt), [null, null, null]);
-  assert.deepEqual(tipsData.publishedTips(Date.now() + 10 * 365 * 86400 * 1000), [], 'even far in the future, null means unscheduled');
+test('tips: delivery is relative to the confirm click: Tip 1 now, Tip 2 on day 3, Tip 3 on day 7', () => {
+  assert.deepEqual(tipsData.TIPS.map((t) => t.delayDays), [0, 3, 7]);
+  const t0 = Date.parse('2026-12-01T14:30:00Z');
+  assert.deepEqual(tipsData.TIPS.map((t) => tipsData.sendAtMs(t0, t)), [t0, t0 + 3 * DAY, t0 + 7 * DAY]);
+  assert.ok(tipsData.TIPS.every((t) => !('publishAt' in t)), 'no fixed publish dates remain');
+});
+
+test('tips: confirm sends Tip 1 now and schedules Tips 2 and 3 at Resend for 3 and 7 days after the click, within Resend\'s 30 day limit', async () => {
+  await signup(good());
+  const link = confirmLink(world.emails[0]);
+  const clickAt = Date.now() + 90 * 1000;
+  await withClock(90, async () => { assert.equal((await get(link)).status, 200); });
+  const [t1, t2, t3] = [1, 2, 3].map(tipEmail);
+  for (const e of [t1, t2, t3]) {
+    assert.deepEqual(e.to, ['reader@example.com']);
+    assert.equal(e.headers['List-Unsubscribe-Post'], 'List-Unsubscribe=One-Click');
+  }
+  assert.equal(t1.scheduled_at, undefined, 'Tip 1 is sent immediately');
+  assert.equal(t1.last_event, 'delivered');
+  // The mock clock is advanced 90 s inside the handler's Date.now, so allow a small window around the click.
+  const near = (iso, expected) => assert.ok(Math.abs(Date.parse(iso) - expected) < 5000, `${iso} is not near ${new Date(expected).toISOString()}`);
+  near(t2.scheduled_at, clickAt + 3 * DAY);
+  near(t3.scheduled_at, clickAt + 7 * DAY);
+  assert.match(t2.scheduled_at, /^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d\.\d{3}Z$/, 'ISO 8601');
+  for (const e of [t2, t3]) {
+    assert.equal(e.last_event, 'scheduled');
+    assert.ok(Date.parse(e.scheduled_at) - Date.now() < 30 * DAY, 'inside the 30 day scheduling limit');
+  }
+  // Sent with the sending key, the ids saved on the contact with the full-access key.
+  for (const c of sends().slice(1)) assert.equal(c.headers.Authorization, 'Bearer mock-send-key');
+  const props = world.contacts.get('reader@example.com').properties;
+  assert.equal(props.dtnt_tip2_email_id, t2.id);
+  assert.equal(props.dtnt_tip3_email_id, t3.id);
+  assert.equal(new Set(world.emails.map((e) => e.idempotencyKey).filter(Boolean)).size, 3, 'one idempotency key per tip');
+});
+
+test('tips: two readers who confirm on different days get different send times, each counted from their own click', async () => {
+  const first = await (async () => { await confirmedReader('a@example.com'); return world.emails.filter((e) => e.to[0] === 'a@example.com' && e.scheduled_at).map((e) => Date.parse(e.scheduled_at)); })();
+  await withClock(5 * DAY / 1000, async () => {
+    await signup(good('b@example.com'));
+    await get(confirmLink(world.emails.filter((e) => e.to[0] === 'b@example.com').at(-1)));
+  });
+  const second = world.emails.filter((e) => e.to[0] === 'b@example.com' && e.scheduled_at).map((e) => Date.parse(e.scheduled_at));
+  assert.equal(first.length, 2);
+  assert.equal(second.length, 2);
+  second.forEach((t, i) => assert.ok(Math.abs(t - first[i] - 5 * DAY) < 10000, 'five days later, five days later'));
+});
+
+test('tips: a repeat click on the confirm link neither sends nor schedules anything twice', async () => {
+  await signup(good());
+  const link = confirmLink(world.emails[0]);
+  await get(link);
+  const before = world.emails.length;
+  await get(link);
+  await get(link);
+  assert.equal(world.emails.length, before);
+  assert.equal(world.emails.filter((e) => e.scheduled_at).length, 2);
+});
+
+test('tips: the same confirm token reuses its idempotency keys, so a retry inside Resend\'s window cannot double-send', async () => {
+  await signup(good());
+  const link = confirmLink(world.emails[0]);
+  await get(link);
+  const keys = world.emails.slice(1).map((e) => e.idempotencyKey);
+  // Simulate the lookup failing on a second click: confirm then runs the whole path again with the same token.
+  const real = world.fetch;
+  world.fetch = async (url, opts = {}) => (/\/contacts\/reader%40example\.com$/.test(url) && (opts.method || 'GET') === 'GET' ? { ok: false, status: 500, json: async () => ({}) } : real(url, opts));
+  await get(link);
+  world.fetch = real;
+  assert.equal(world.emails.length, 4, 'Resend returned the original emails for the same keys');
+  assert.deepEqual(world.emails.slice(1).map((e) => e.idempotencyKey), keys);
+});
+
+test('tips: no tip is sent or scheduled without the required tips consent on the signup', async () => {
+  // A confirm token that lacks the consent version and text hash (signup.js only sets them when the box is ticked).
+  const t = createToken('confirm', { e: 'noconsent@example.com', sa: new Date().toISOString() }, 3600);
+  let res;
+  const logs = await captureLogs(async () => { res = await get(`/do-the-next-thing/free/confirm?t=${t}`); });
+  assert.equal(res.status, 200);
+  assert.equal(world.emails.length, 0, 'no tip, no schedule');
+  assert.ok(logs.some((l) => l.event === 'dtnt.confirm.no_tips_consent'));
+  // And the signup endpoint refuses an unticked box outright.
+  const refused = await signup({ ...good(), consent: false });
+  assert.equal(refused.status, 400);
+});
+
+test('tips: unsubscribing cancels the scheduled Tips 2 and 3 and leaves the delivered Tip 1 alone', async () => {
+  const tip1 = await confirmedReader();
+  assert.equal((await unsubscribeVia(tip1)).status, 200);
+  assert.equal(world.contacts.get('reader@example.com').unsubscribed, true);
+  assert.equal(tipEmail(2).last_event, 'canceled');
+  assert.equal(tipEmail(3).last_event, 'canceled');
+  assert.equal(tipEmail(1).last_event, 'delivered');
+  const cancels = resendCalls('POST', /^\/emails\/[^/]+\/cancel$/);
+  assert.equal(cancels.length, 2);
+  for (const c of cancels) assert.equal(c.headers.Authorization, 'Bearer mock-full-key');
+  // Repeating the unsubscribe is safe: nothing left to cancel.
+  assert.equal((await unsubscribeVia(tip1)).status, 200);
+  assert.equal(resendCalls('POST', /^\/emails\/[^/]+\/cancel$/).length, 2);
+});
+
+test('tips: one-click unsubscribe (RFC 8058) from a later tip also cancels what is still scheduled', async () => {
+  await confirmedReader();
+  tipEmail(2).last_event = 'delivered'; // day 3 has passed and Tip 2 went out
+  assert.equal((await unsubscribeVia(tipEmail(2), { oneClick: true })).status, 200);
+  assert.equal(tipEmail(2).last_event, 'delivered', 'an email that already went out is not touched');
+  assert.equal(tipEmail(3).last_event, 'canceled');
+  const cancelled = resendCalls('POST', /^\/emails\/[^/]+\/cancel$/).map((c) => c.path);
+  assert.deepEqual(cancelled, [`/emails/${tipEmail(3).id}/cancel`]);
+});
+
+test('tips: if the cancel fails, unsubscribe says so (502, one-click 502) instead of claiming success, and a retry finishes it', async () => {
+  const tip1 = await confirmedReader();
+  world.failCancel = true;
+  const page = await unsubscribeVia(tip1);
+  assert.equal(page.status, 502);
+  assert.match(await page.text(), /We couldn't finish that just now\./);
+  assert.equal((await unsubscribeVia(tip1, { oneClick: true })).status, 502);
+  assert.equal(world.contacts.get('reader@example.com').unsubscribed, true, 'the contact is flagged either way');
+  assert.equal(tipEmail(3).last_event, 'scheduled', 'still scheduled, so the person was told to retry');
+  world.failCancel = false;
+  assert.equal((await unsubscribeVia(tip1)).status, 200);
+  assert.equal(tipEmail(2).last_event, 'canceled');
+  assert.equal(tipEmail(3).last_event, 'canceled');
+});
+
+test('tips: unsubscribing before ever confirming has nothing to cancel and still suppresses the address', async () => {
+  await signup(good());
+  assert.equal((await unsubscribeVia(world.emails[0])).status, 200);
+  assert.equal(resendCalls('POST', /\/cancel$/).length, 0);
+  assert.equal(world.contacts.get('reader@example.com').unsubscribed, true);
+});
+
+test('tips: after an unsubscribe, a fresh confirm starts the series over from that click, with its own scheduled emails', async () => {
+  const tip1 = await confirmedReader();
+  await unsubscribeVia(tip1);
+  const firstScheduled = world.emails.filter((e) => e.scheduled_at);
+  assert.ok(firstScheduled.every((e) => e.last_event === 'canceled'));
+  await signup(good());
+  await get(confirmLink(world.emails.at(-1)));
+  const scheduled = world.emails.filter((e) => e.scheduled_at);
+  assert.equal(scheduled.length, 4);
+  const live = scheduled.filter((e) => e.last_event === 'scheduled');
+  assert.equal(live.length, 2, 'only the new Tips 2 and 3 are live');
+  const props = world.contacts.get('reader@example.com').properties;
+  assert.deepEqual([props.dtnt_tip2_email_id, props.dtnt_tip3_email_id].sort(), live.map((e) => e.id).sort(), 'the contact points at the live ones');
+  // Unsubscribing again cancels exactly those.
+  await unsubscribeVia(world.emails.filter((e) => e.subject === SUBJECT_TIP1).at(-1));
+  assert.ok(scheduled.every((e) => e.last_event === 'canceled'));
+});
+
+test('tips: if Resend refuses to schedule, the reader still confirms and gets Tip 1, the failure is logged, and nothing half-scheduled is left', async () => {
+  await signup(good());
+  const real = world.fetch;
+  world.fetch = async (url, opts = {}) => {
+    const body = opts.body ? JSON.parse(opts.body) : {};
+    if (body.scheduled_at && body.subject === tipsData.TIPS[2].subject) return { ok: false, status: 422, json: async () => ({ message: 'mock: cannot schedule' }) };
+    return real(url, opts);
+  };
+  let res;
+  const logs = await captureLogs(async () => { res = await get(confirmLink(world.emails[0])); });
+  world.fetch = real;
+  assert.equal(res.status, 200);
+  assert.ok(tipEmail(1));
+  assert.equal(tipEmail(2).last_event, 'canceled', 'Tip 2 was scheduled, then cancelled when Tip 3 could not be');
+  assert.equal(tipEmail(3), undefined);
+  assert.ok(logs.some((l) => l.event === 'dtnt.confirm.tips_schedule_failed'));
+  assert.doesNotMatch(JSON.stringify(logs), /reader@example\.com/);
+});
+
+test('tips: the emails carry the approved tip text word for word, say where the reader is in the series, and keep the footer', async () => {
+  await confirmedReader();
+  tipsData.TIPS.forEach((t, i) => {
+    const e = tipEmail(i + 1);
+    assert.equal(e.subject, t.subject);
+    for (const [, text] of t.blocks) assert.ok(e.text.includes(text.replace(/\*\*/g, '')), `Tip ${t.number} text block present: ${text.slice(0, 40)}`);
+    assert.match(e.text, new RegExp(`Tip ${t.number} of 3`));
+    assert.ok(e.html.includes(POSTAL) && e.text.includes(POSTAL));
+    assert.doesNotMatch(e.html + e.text, /Hi \[first name\]|\$24|\$37|Pack\b|Setup Kit/);
+  });
+  assert.match(tipEmail(1).text, /^You're on the list\. This is Tip 1 of 3\. Tip 2 arrives 3 days from now and Tip 3 arrives on day 7\./);
+  assert.match(tipEmail(1).html, /<strong>The technique:<\/strong>/);
+  assert.match(tipEmail(1).html, /<pre [^>]*>I need to start \[the thing\]/);
+  assert.match(tipEmail(3).text, /^Tip 3 of 3, the last one\./);
+  assert.match(world.emails[0].text, /After you confirm, Tip 1 arrives right away, Tip 2 on day 3 and Tip 3 on day 7\./);
+});
+
+test('tips: the archive shows all three tips to everyone, in order, labelled by when they arrive, with no dates', async () => {
   const res = await get('/do-the-next-thing/tips');
   assert.equal(res.status, 200);
+  assert.match(res.headers.get('content-type'), /text\/html/);
+  assert.equal(res.headers.get('cache-control'), 'public, max-age=0, s-maxage=300, must-revalidate');
   const html = await res.text();
-  assert.match(html, /The first tip hasn't gone out yet\./);
-  for (const t of tipsData.TIPS) assert.ok(!html.includes(t.subject), `unpublished subject "${t.subject}" must not be in the page`);
-  assert.doesNotMatch(html, /I need to start \[the thing\]|class="tip"/);
-});
-
-test('tips: a tip appears only once its publish time has passed, oldest first, with its ET send date', async () => {
-  await withSchedule(['2026-12-01T09:00:00-05:00', '2026-12-04T09:00:00-05:00', '2026-12-08T09:00:00-05:00'], async () => {
-    const at = (iso) => Date.parse(iso);
-    assert.deepEqual(tipsData.publishedTips(at('2026-12-01T08:59:59-05:00')).map((t) => t.number), []);
-    assert.deepEqual(tipsData.publishedTips(at('2026-12-01T09:00:00-05:00')).map((t) => t.number), [1]);
-    assert.deepEqual(tipsData.publishedTips(at('2026-12-05T00:00:00-05:00')).map((t) => t.number), [1, 2]);
-
-    // Live through the handler, moving the clock: before, after tip 1, after tip 2.
-    const realNow = Date.now;
-    try {
-      Date.now = () => at('2026-11-30T12:00:00-05:00');
-      assert.match(await (await get('/do-the-next-thing/tips')).text(), /The first tip hasn't gone out yet\./);
-      Date.now = () => at('2026-12-02T12:00:00-05:00');
-      let doc = await tipsDoc(await get('/do-the-next-thing/tips'));
-      assert.deepEqual([...doc.querySelectorAll('article.tip h2')].map((h) => h.textContent), ['The proposal opening you keep avoiding']);
-      assert.equal(doc.querySelector('.tip-meta').textContent, 'Tip 1Sent December 1, 2026');
-      assert.ok(!doc.body.textContent.includes('The follow-up you skipped'), 'tip 2 is still hidden');
-      Date.now = () => at('2026-12-05T12:00:00-05:00');
-      doc = await tipsDoc(await get('/do-the-next-thing/tips'));
-      assert.deepEqual([...doc.querySelectorAll('article.tip h2')].map((h) => h.textContent), ['The proposal opening you keep avoiding', 'The follow-up you skipped']);
-      assert.ok(!doc.body.textContent.includes('Close the tabs, pick one'), 'tip 3 is still hidden');
-    } finally { Date.now = realNow; }
+  const doc = new TipsDOM(html).window.document;
+  assert.equal(doc.querySelector('h1').textContent, 'The tips');
+  assert.equal(doc.querySelectorAll('article.tip').length, 3);
+  assert.deepEqual([...doc.querySelectorAll('.tip-meta')].map((m) => m.textContent), ['Tip 1Arrives when you confirm', 'Tip 2Arrives on day 3', 'Tip 3Arrives on day 7']);
+  tipsData.TIPS.forEach((t, i) => {
+    const art = doc.querySelectorAll('article.tip')[i];
+    assert.equal(art.querySelector('h2').textContent, t.subject);
+    assert.equal(art.querySelector('pre.tip-prompt code').textContent, t.blocks.find((b) => b[0] === 'code')[1]);
+    const paras = [...art.querySelectorAll('p:not(.tip-meta)')].map((p) => p.textContent);
+    assert.deepEqual(paras, t.blocks.filter((b) => b[0] === 'p').map((b) => b[1].replace(/\*\*/g, '')));
+    assert.equal(art.querySelectorAll('strong').length >= 3, true, 'technique, prompt and today labels are bold');
   });
-});
-
-test('tips: a bad or missing publishAt never publishes', () => {
-  const fake = [{ number: 1, publishAt: 'soon' }, { number: 2, publishAt: '' }, { number: 3, publishAt: undefined }, { number: 4, publishAt: 12345 }];
-  assert.deepEqual(tipsData.publishedTips(Date.now(), fake), []);
-});
-
-test('tips: page shows the published tips word for word, with the prompt in its own block, and reads cleanly', async () => {
-  await withSchedule(['2026-11-01T09:00:00-05:00', '2026-11-02T09:00:00-05:00', '2026-11-03T09:00:00-05:00'], async () => {
-    const res = await get('/do-the-next-thing/tips');
-    assert.equal(res.status, 200);
-    assert.match(res.headers.get('content-type'), /text\/html/);
-    assert.equal(res.headers.get('cache-control'), 'public, max-age=0, s-maxage=300, must-revalidate');
-    const html = await res.text();
-    const doc = new TipsDOM(html).window.document;
-    assert.equal(doc.querySelector('h1').textContent, 'The tips');
-    assert.equal(doc.querySelectorAll('article.tip').length, 3);
-    tipsData.TIPS.forEach((t, i) => {
-      const art = doc.querySelectorAll('article.tip')[i];
-      assert.equal(art.querySelector('h2').textContent, t.subject);
-      assert.equal(art.querySelector('pre.tip-prompt code').textContent, t.blocks.find((b) => b[0] === 'code')[1]);
-      const paras = [...art.querySelectorAll('p:not(.tip-meta)')].map((p) => p.textContent);
-      assert.deepEqual(paras, t.blocks.filter((b) => b[0] === 'p').map((b) => b[1].replace(/\*\*/g, '')));
-      assert.equal(art.querySelectorAll('strong').length >= 3, true, 'technique, prompt and today labels are bold');
-    });
-    assert.doesNotMatch(html, /Hi \[first name\]/, 'the mail merge greeting is not on the web page');
-    assert.doesNotMatch(html, DASHES);
-    assert.match(html, /<title>Do the Next Thing: the tips \| COTIB LLC<\/title>/);
-    assert.ok(doc.querySelector('title').textContent.length <= 60);
-    assert.ok(doc.querySelector('meta[name="description"]').content.length <= 160);
-    assert.doesNotMatch(html, /stripe\.com|\$24|\$37|checkout/i, 'no sales on the archive');
-    assert.match(html, /href="\/do-the-next-thing#free"/, 'links back to the signup');
-  });
+  assert.match(doc.querySelector('.tips-head').textContent, /Tip 1 arrives when you confirm your signup, Tip 2 on day 3 and Tip 3 on day 7\./);
+  assert.doesNotMatch(html, /hasn't gone out yet|Sent (January|February|March|April|May|June|July|August|September|October|November|December)/);
+  assert.doesNotMatch(html, /Hi \[first name\]/, 'the mail merge greeting is not on the web page');
+  assert.doesNotMatch(html, DASHES);
+  assert.match(html, /<title>Do the Next Thing: the tips \| COTIB LLC<\/title>/);
+  assert.ok(doc.querySelector('title').textContent.length <= 60);
+  assert.ok(doc.querySelector('meta[name="description"]').content.length <= 160);
+  assert.doesNotMatch(html, /stripe\.com|\$24|\$37|checkout/i, 'no sales on the archive');
+  assert.match(html, /href="\/do-the-next-thing#free"/, 'links back to the signup');
+  // The clock has no say: the same page a year from now.
+  await withClock(365 * 86400, async () => assert.equal(await (await get('/do-the-next-thing/tips')).text(), html));
 });
 
 test('tips: the archive escapes tip text and only accepts GET and HEAD', async () => {
-  const html = tipsPage({ published: [{ number: 1, slug: 'x', subject: '<script>alert(1)</script>', publishAt: '2026-11-01T09:00:00-05:00', blocks: [['p', 'a <b>bold</b> & **real bold**'], ['code', '<img src=x onerror=alert(1)>']] }] });
+  const html = tipsPage({ tips: [{ number: 1, delayDays: 0, slug: 'x', subject: '<script>alert(1)</script>', blocks: [['p', 'a <b>bold</b> & **real bold**'], ['code', '<img src=x onerror=alert(1)>']] }] });
   assert.doesNotMatch(html, /<script>alert|<img src=x|<b>bold/);
   assert.match(html, /&lt;script&gt;alert\(1\)&lt;\/script&gt;/);
   assert.match(html, /<strong>real bold<\/strong>/);
@@ -877,18 +1038,31 @@ test('tips: the archive escapes tip text and only accepts GET and HEAD', async (
   assert.equal((await get('/do-the-next-thing/tips', { method: 'HEAD' })).status, 200);
 });
 
-test('tips: the DTNT page, the confirmed page and the welcome email all point to the archive', async () => {
+test('tips: the DTNT page, the confirmed page and the already-subscribed note point to the archive and say when tips arrive', async () => {
   const page = fs.readFileSync(path.join(ROOT, 'www', 'do-the-next-thing.html'), 'utf8');
-  assert.match(page, /<p class="tips-link">Already signed up\? <a href="\/do-the-next-thing\/tips">Read the tips so far\.<\/a><\/p>/);
+  assert.match(page, /<p class="tips-link">Already signed up\? <a href="\/do-the-next-thing\/tips">Read all three tips\.<\/a><\/p>/);
   assert.match(page, /<a href="\/do-the-next-thing\/tips">tips page<\/a>/);
+  assert.match(page, /Tip 1 arrives right after you click it, Tip 2 on day 3 and Tip 3 on day 7\./);
+  assert.match(page, /As three short emails, timed from the day you confirm your signup: Tip 1 right away, Tip 2 on day 3 and Tip 3 on day 7\./);
+  const privacy = fs.readFileSync(path.join(ROOT, 'www', 'do-the-next-thing', 'privacy.html'), 'utf8');
+  assert.match(privacy, /Tip 1 when you confirm, Tip 2 on day 3 and Tip 3 on day 7/);
+  assert.match(privacy, /we can cancel them if you unsubscribe/);
   await signup(good());
   const confirmHtml = await (await get(confirmLink(world.emails[0]))).text();
   assert.match(confirmHtml, /href="\/do-the-next-thing\/tips"/);
-  const welcome = world.emails[1];
-  assert.match(welcome.text, /http:\/\/127\.0\.0\.1:\d+\/do-the-next-thing\/tips/);
-  assert.match(welcome.html, /href="http:\/\/127\.0\.0\.1:\d+\/do-the-next-thing\/tips"/);
-  assert.match(welcome.text, /^You're on the list\.\n\nYour first tip arrives with the next dated send\./);
-  assert.match(welcome.text, /catch up on tips that have already gone out/);
+  assert.match(tipEmail(1).text, /http:\/\/127\.0\.0\.1:\d+\/do-the-next-thing\/tips/);
+  await signup(good());
+  const note = world.emails.at(-1);
+  assert.match(note.text, /http:\/\/127\.0\.0\.1:\d+\/do-the-next-thing\/tips/);
+  assert.match(note.html, /href="http:\/\/127\.0\.0\.1:\d+\/do-the-next-thing\/tips"/);
+  assert.match(note.text, /^You're already on the list, so there's nothing more to do\.\n\nThree tips arrive in order: Tip 1 when you confirm, Tip 2 on day 3 and Tip 3 on day 7\./);
+});
+
+test('tips: no leftover wording about fixed dates or publish schedules in the code or the pages', () => {
+  const files = ['lib/dtnt/tips.js', 'lib/dtnt/pages.js', 'lib/dtnt/emails.js', 'api/dtnt-tips.js', 'scripts/build-dtnt-pages.js', 'www/do-the-next-thing.html', 'www/do-the-next-thing/privacy.html'];
+  for (const f of files) {
+    assert.doesNotMatch(fs.readFileSync(path.join(ROOT, f), 'utf8'), /publishAt|publishedTips|sentOn|dated send|next dated|set dates|tips so far|already gone out|has gone out/i, f);
+  }
 });
 
 test('tips: no page and no email links the sampler PDF or promises "3 free prompts" any more', async () => {

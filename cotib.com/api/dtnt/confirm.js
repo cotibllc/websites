@@ -1,13 +1,16 @@
 // GET /do-the-next-thing/free/confirm?t=<token> (rewritten to /api/dtnt/confirm).
 // Double opt-in step 2: the click proves consent. Adds the contact to the
-// DTNT free segment in Resend, records consent on the contact, sends the
-// welcome email and shows the confirmed page with the link to the tips page.
-// A second click on a link that is still valid just shows that page again and
-// sends nothing.
+// DTNT free segment in Resend, records consent on the contact, then starts the
+// three-tip series relative to this click: Tip 1 now, Tip 2 on day 3, Tip 3 on
+// day 7. Tips 2 and 3 are scheduled at Resend (scheduled_at) right here, and
+// their email ids are saved on the contact so unsubscribe.js can cancel them.
+// A second click on a link that is still valid just shows the confirmed page
+// again and sends nothing.
 const { missingEnv } = require('../../lib/dtnt/config');
 const { createToken, readToken, hashValue } = require('../../lib/dtnt/tokens');
 const resend = require('../../lib/dtnt/resend');
-const { welcomeEmail } = require('../../lib/dtnt/emails');
+const { tipEmail } = require('../../lib/dtnt/emails');
+const { TIPS, sendAtMs } = require('../../lib/dtnt/tips');
 const { states } = require('../../lib/dtnt/pages');
 const http = require('../../lib/dtnt/http');
 const { utmProperties } = require('../../lib/dtnt/utm');
@@ -104,15 +107,48 @@ module.exports = async function handler(req, res) {
   // Consent record in the function log as well (hashes only, no raw email).
   http.log('dtnt.consent', { emailHash, consentVersion: d.cv, consentTextHash: d.ch, marketingOptIn, marketingConsentTextHash: d.mh, submittedAt: d.sa, confirmedAt: new Date().toISOString(), ipHash: d.ih, uaHash: d.uh, source: 'dtnt-free', ...utmProps });
 
+  // The tip series. Consent gate: only a signup that carried the required
+  // tips consent (consent version and text hash on the token, set by signup.js
+  // only when the box was ticked) gets any tip.
+  if (!d.cv || !d.ch) {
+    http.log('dtnt.confirm.no_tips_consent', { emailHash });
+    return send(200, states.confirmed());
+  }
+
+  const confirmedAtMs = Date.now();
+  const tokHash = hashValue('tok', http.query(req, 't'));
+  const unsubscribeUrl = `${base}/do-the-next-thing/free/unsubscribe?t=${createToken('unsubscribe', { e: email }, null)}`;
+  const tipsUrl = `${base}/do-the-next-thing/tips`;
+  // Same token, same idempotency key: a double click inside Resend's 24 hour
+  // window can't send or schedule a tip twice.
+  const tipMessage = (tip) => ({ to: email, ...tipEmail({ tip, tipsUrl, unsubscribeUrl }), idempotencyKey: `dtnt-tip${tip.number}-${tokHash}` });
+
+  // Tips 2 and 3 first, then Tip 1, so a reader who clicks unsubscribe in Tip 1
+  // the moment it lands already has the scheduled ids saved on the contact.
+  // If the ids can't be saved, the unsubscribe handler would have no way to
+  // stop them, so they are cancelled again and not delivered (fail closed).
+  const scheduled = {};
   try {
-    const unsubscribeUrl = `${base}/do-the-next-thing/free/unsubscribe?t=${createToken('unsubscribe', { e: email }, null)}`;
-    const msg = welcomeEmail({ tipsUrl: `${base}/do-the-next-thing/tips`, unsubscribeUrl });
-    // Same token, same idempotency key: a double click inside Resend's
-    // 24 hour window can't send the welcome email twice.
-    await resend.sendEmail({ to: email, ...msg, idempotencyKey: `dtnt-welcome-${hashValue('tok', http.query(req, 't'))}` });
-    http.log('dtnt.confirm.welcome_sent', { emailHash });
+    for (const tip of TIPS.filter((t) => t.delayDays > 0)) {
+      const sent = await resend.sendEmail({ ...tipMessage(tip), scheduledAt: new Date(sendAtMs(confirmedAtMs, tip)).toISOString() });
+      scheduled[tip.number] = sent.id;
+    }
+    const props = {};
+    for (const [n, id] of Object.entries(scheduled)) props[resend.TIP_ID_PROPERTIES[n]] = String(id);
+    await resend.setContactProperties(email, props);
+    http.log('dtnt.confirm.tips_scheduled', { emailHash, tips: Object.keys(scheduled).map(Number) });
   } catch (err) {
-    http.log('dtnt.confirm.welcome_failed', { emailHash, error: err.message });
+    http.log('dtnt.confirm.tips_schedule_failed', { emailHash, error: err.message, scheduledTips: Object.keys(scheduled).map(Number) });
+    for (const id of Object.values(scheduled)) {
+      try { await resend.cancelScheduledEmail(id); } catch (e) { http.log('dtnt.confirm.tips_cancel_failed', { emailHash, error: e.message }); }
+    }
+  }
+
+  try {
+    await resend.sendEmail(tipMessage(TIPS[0]));
+    http.log('dtnt.confirm.tip1_sent', { emailHash });
+  } catch (err) {
+    http.log('dtnt.confirm.tip1_failed', { emailHash, error: err.message });
   }
 
   return send(200, states.confirmed());

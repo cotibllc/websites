@@ -1,28 +1,29 @@
 // The Do the Next Thing coaching tips: the text of each approved email, and
-// the publish schedule for the public archive at /do-the-next-thing/tips.
+// when each one reaches a reader.
 //
 // Text source: Mac vault COTIB-LLC/Products/Do-the-Next-Thing/
 // 2026-11-17-DTNT-Email-Series-DRAFT-FOR-CHUCK.md, emails 1 to 3, approved by
 // Chuck 2026-11-17 6:57 PM ET as written. Prompts 1.1, 3.1 and 4.3 are
 // verbatim from the locked v0 list. The email greeting ("Hi [first name],")
-// is a mail merge field, so the archive leaves it out and keeps the rest.
+// is a mail merge field, so the emails and the archive leave it out and keep
+// the rest.
 //
-// DATE GATE: a tip shows on the archive only when its publishAt is a real
-// date at or before "now". publishAt is null on purpose. null means "not
-// scheduled yet", so nothing is public until Chuck sets a date.
+// TIMING (Chuck, 2026-11-19): tips go out relative to each person's confirmed
+// signup, not on calendar dates. delayDays is the number of days after the
+// confirm click: Tip 1 on confirm (0), Tip 2 on day 3, Tip 3 on day 7.
+// api/dtnt/confirm.js sends Tip 1 right away and schedules Tips 2 and 3 with
+// Resend's scheduled_at (Resend allows up to 30 days ahead).
 //
-// PLACEHOLDERS FOR CHUCK: set publishAt for each tip to the date and time its
-// dated send goes out, as an ISO string with the New York offset, for example
-// '2026-12-01T09:00:00-05:00'. Setting a date here does not send anything. The
-// send itself is a separate step in Resend that Chuck approves.
+// ARCHIVE: /do-the-next-thing/tips shows all three tips at all times. Nothing
+// on that page depends on a date.
 
 const TIPS = [
   {
     number: 1,
+    delayDays: 0,
     slug: 'proposal-opening',
     subject: 'The proposal opening you keep avoiding',
     promptName: 'The first ugly version',
-    publishAt: null, // PLACEHOLDER: Chuck sets the send date and time for tip 1 (ET)
     blocks: [
       ['p', `You have a proposal to write. You open the doc, look at the blank first paragraph, and close it again. The opening feels like it has to be good, so it stays empty.`],
       ['p', `**The technique:** start with an ugly first version. A blank page can't be fixed, but a rough one can. So don't ask yourself to write the opening. Ask for one small move that leaves something rough on the page.`],
@@ -36,10 +37,10 @@ const TIPS = [
   },
   {
     number: 2,
+    delayDays: 3,
     slug: 'follow-up-you-skipped',
     subject: 'The follow-up you skipped',
     promptName: 'No catch-up',
-    publishAt: null, // PLACEHOLDER: Chuck sets the send date and time for tip 2 (ET)
     blocks: [
       ['p', `You meant to follow up with a prospect last week. Now it's been two, and the message seems to need an apology and a paragraph of explanation. So it waits, and the wait makes it harder.`],
       ['p', `**The technique:** skip the catch-up. The gap feels big because you're trying to make up for it. Treat today as if the skip never happened and do one small move that puts you back in. Nobody is grading the gap but you.`],
@@ -52,10 +53,10 @@ const TIPS = [
   },
   {
     number: 3,
+    delayDays: 7,
     slug: 'close-the-tabs',
     subject: 'Close the tabs, pick one',
     promptName: 'Close the tabs',
-    publishAt: null, // PLACEHOLDER: Chuck sets the send date and time for tip 3 (ET)
     blocks: [
       ['p', `You're building a side offer, and you have a decision to make: how to price it, what to call it, or which version to start with. You've got a dozen tabs open on it. Another article feels like it will finally settle things.`],
       ['p', `**The technique:** notice when research has turned into avoiding. Past a certain point, more reading doesn't help you decide. It just postpones it. The way out is to write your choice in one sentence, then take one small action that makes it real. You can change a decision later. You can't change one you never made.`],
@@ -68,27 +69,12 @@ const TIPS = [
   },
 ];
 
-const ET = 'America/New_York';
+const DAY_MS = 24 * 60 * 60 * 1000;
 
-// Milliseconds for a publishAt value, or null if it is missing or not a date.
-function publishTime(tip) {
-  if (typeof tip.publishAt !== 'string' || !tip.publishAt.trim()) return null;
-  const t = Date.parse(tip.publishAt);
-  return Number.isNaN(t) ? null : t;
+// When a tip should be delivered, in ms since the epoch, given the moment the
+// reader confirmed. Tip 1 (delayDays 0) is the confirm moment itself.
+function sendAtMs(confirmedAtMs, tip) {
+  return confirmedAtMs + tip.delayDays * DAY_MS;
 }
 
-// Tips whose publish time has come, oldest first. Anything unscheduled or
-// scheduled for later stays out, including its subject line.
-function publishedTips(nowMs = Date.now(), tips = TIPS) {
-  return tips
-    .filter((tip) => { const t = publishTime(tip); return t !== null && t <= nowMs; })
-    .sort((a, b) => publishTime(a) - publishTime(b) || a.number - b.number);
-}
-
-function sentOn(tip) {
-  const t = publishTime(tip);
-  if (t === null) return '';
-  return new Intl.DateTimeFormat('en-US', { timeZone: ET, year: 'numeric', month: 'long', day: 'numeric' }).format(new Date(t));
-}
-
-module.exports = { TIPS, publishedTips, publishTime, sentOn };
+module.exports = { TIPS, DAY_MS, sendAtMs };

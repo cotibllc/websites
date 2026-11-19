@@ -48,7 +48,7 @@ function applyHeaders(pathname, res) {
 
 // Mock outbound world. state.contacts: email -> { id, unsubscribed, segments:Set, properties }
 function createMockWorld({ turnstile = 'pass', failSend = false } = {}) {
-  const world = { calls: [], emails: [], contacts: new Map(), turnstile, failSend, propertiesExist: true, missingProperties: new Set() };
+  const world = { calls: [], emails: [], contacts: new Map(), turnstile, failSend, failCancel: false, propertiesExist: true, missingProperties: new Set() };
   let n = 0;
   world.fetch = async (url, opts = {}) => {
     const u = new URL(url);
@@ -66,11 +66,28 @@ function createMockWorld({ turnstile = 'pass', failSend = false } = {}) {
     }
     if (u.host !== 'api.resend.com') throw new Error(`unexpected fetch ${url}`);
     const parts = u.pathname.split('/').filter(Boolean).map(decodeURIComponent);
-    if (parts[0] === 'emails' && method === 'POST') {
+    if (parts[0] === 'emails' && parts.length === 1 && method === 'POST') {
       if (world.failSend) return reply(500, { message: 'mock failure' });
       const id = `email_${++n}`;
-      world.emails.push({ id, ...body, idempotencyKey: opts.headers?.['Idempotency-Key'] });
+      // Same idempotency key inside the window returns the first email's id and sends nothing new.
+      const key = opts.headers?.['Idempotency-Key'];
+      const dupe = key && world.emails.find((e) => e.idempotencyKey === key);
+      if (dupe) return reply(200, { id: dupe.id });
+      if (body.scheduled_at && Date.parse(body.scheduled_at) - Date.now() > 30 * 24 * 60 * 60 * 1000) return reply(422, { message: 'scheduled_at is more than 30 days out' });
+      world.emails.push({ id, ...body, idempotencyKey: key, last_event: body.scheduled_at ? 'scheduled' : 'delivered' });
       return reply(200, { id });
+    }
+    if (parts[0] === 'emails' && parts.length === 2 && method === 'GET') {
+      const e = world.emails.find((x) => x.id === parts[1]);
+      return e ? reply(200, { object: 'email', id: e.id, to: e.to, subject: e.subject, last_event: e.last_event, scheduled_at: e.scheduled_at || null }) : reply(404, { message: 'not found' });
+    }
+    if (parts[0] === 'emails' && parts[2] === 'cancel' && method === 'POST') {
+      const e = world.emails.find((x) => x.id === parts[1]);
+      if (!e) return reply(404, { message: 'not found' });
+      if (world.failCancel) return reply(500, { message: 'mock cancel failure' });
+      if (e.last_event !== 'scheduled') return reply(422, { message: 'only scheduled emails can be cancelled' });
+      e.last_event = 'canceled';
+      return reply(200, { object: 'email', id: e.id });
     }
     if (parts[0] === 'contacts') {
       const find = (k) => world.contacts.get(k) || [...world.contacts.values()].find((c) => c.id === k);
@@ -81,7 +98,7 @@ function createMockWorld({ turnstile = 'pass', failSend = false } = {}) {
         return reply(201, { object: 'contact', id: c.id });
       }
       const c = find(parts[1]);
-      if (parts.length === 2 && method === 'GET') return c ? reply(200, { object: 'contact', id: c.id, email: c.email, unsubscribed: c.unsubscribed }) : reply(404, { message: 'not found' });
+      if (parts.length === 2 && method === 'GET') return c ? reply(200, { object: 'contact', id: c.id, email: c.email, unsubscribed: c.unsubscribed, properties: Object.fromEntries(Object.entries(c.properties).map(([k, v]) => [k, { value: v, type: 'string' }])) }) : reply(404, { message: 'not found' });
       if (parts.length === 2 && method === 'PATCH') {
         if (!c) return reply(404, { message: 'not found' });
         if (body.properties && (!world.propertiesExist || Object.keys(body.properties).some((k) => world.missingProperties.has(k)))) return reply(422, { message: 'property does not exist' });

@@ -4,6 +4,12 @@
 // POST also serves RFC 8058 one-click requests (List-Unsubscribe-Post).
 // The token never expires, so the link keeps working well past CAN-SPAM's
 // 30 days, and it takes effect right away.
+// Tips 2 and 3 are scheduled at Resend when someone confirms, and Resend does
+// not hold back a scheduled email because a contact unsubscribed. So after the
+// contact is flagged, this handler cancels any of those emails that have not
+// gone out yet. If that cancel fails the person gets the error page (and a
+// one-click request gets a 502) so the unsubscribe is retried; both steps are
+// safe to repeat.
 const { missingEnv } = require('../../lib/dtnt/config');
 const { readToken, hashValue } = require('../../lib/dtnt/tokens');
 const resend = require('../../lib/dtnt/resend');
@@ -41,6 +47,8 @@ module.exports = async function handler(req, res) {
   try {
     await resend.unsubscribeContact(email);
     http.log('dtnt.unsubscribe', { emailHash });
+    const stopped = await resend.cancelScheduledTips(email);
+    http.log('dtnt.unsubscribe.tips_cancelled', { emailHash, ...stopped });
   } catch (err) {
     http.log('dtnt.unsubscribe.failed', { emailHash, error: err.message });
     if (oneClick) { res.statusCode = 502; return res.end(); }

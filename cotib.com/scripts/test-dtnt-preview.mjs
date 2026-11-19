@@ -9,8 +9,9 @@
 //   DTNT_TOKEN_SECRET=.. Also mints tokens locally to test expired and valid
 //                        links. Still sends no email and writes nothing.
 //   --live --email you@x Also runs a real confirm for that inbox: creates the
-//                        Resend contact, sends the welcome email, then
-//                        unsubscribes it. Use your own address only.
+//                        Resend contact, sends Tip 1, schedules Tips 2 and
+//                        3 at Resend (day 3 and day 7), then unsubscribes it,
+//                        which cancels them. Use your own address only.
 //
 // Vercel previews sit behind Vercel Authentication. Set VERCEL_BYPASS to a
 // Protection Bypass for Automation secret, or run it against production
@@ -202,7 +203,7 @@ if (hasSecret) {
 // ---------- Live cases (real Resend writes and one real email) ----------
 if (live && hasSecret) {
   const email = emailArg.trim().toLowerCase();
-  await check('F11.1b', `confirm for ${email} shows the tips link (creates the Resend contact, sends the welcome email)`, async () => {
+  await check('F11.1b', `confirm for ${email} shows the tips link (creates the Resend contact, sends Tip 1, schedules Tips 2 and 3)`, async () => {
     const t = minted('confirm', { e: email, cv: 'dtnt-free-2026-10-07', sa: new Date().toISOString(), ih: 'preview-test' }, 48 * 3600);
     const r = await req(`/do-the-next-thing/free/confirm?t=${t}`);
     expect(r.status === 200, `status ${r.status}`);
@@ -211,7 +212,7 @@ if (live && hasSecret) {
     expect(!/\/free\/dl\//.test(h), 'the confirmed page still links the sampler PDF');
     globalThis.__confirmToken = t;
   });
-  await check('F11.2a', 'repeat confirm click shows the confirmed page again (check: no second welcome email arrives)', async () => {
+  await check('F11.2a', 'repeat confirm click shows the confirmed page again (check: no second Tip 1 arrives and nothing more is scheduled)', async () => {
     const r = await req(`/do-the-next-thing/free/confirm?t=${globalThis.__confirmToken}`);
     expect(r.status === 200, `status ${r.status}`);
   });
@@ -233,10 +234,10 @@ console.log(`
 Manual steps in a browser at ${base}/do-the-next-thing (use your own inbox):
   [ ] F11.1  Sign up with the form. The page says "Check your email." One confirm email arrives.
   [ ] F11.1  Click the confirm link. The page says "You're confirmed." and links the tips page.
-             The welcome email arrives with the same link and no download.
-  [ ] F11.2  Sign up again with the same address. Same "Check your email." message, and a fresh
-             welcome email (not a confirm email) arrives.
-  [ ] F11.4  Unsubscribe from the confirm email, and (with a second address) from the welcome email.
+             Tip 1 arrives (it names the schedule and links the tips page). Tips 2 and 3 are scheduled for day 3 and day 7 (check Resend, Emails, Scheduled).
+  [ ] F11.2  Sign up again with the same address. Same "Check your email." message, and a an
+             "already on the list" note (not a confirm email, and not Tip 1 again) arrives.
+  [ ] F11.4  Unsubscribe from the confirm email, and (with a second address) from a tip email. Unsubscribing cancels any tip still scheduled in Resend.
              Each link shows one Unsubscribe button and then "You're unsubscribed."
   [ ] F11.4  Sign up again with an unsubscribed address. Same message, and no email arrives.
   [ ] F11.6  Covered above by the script (Turnstile failure is refused).

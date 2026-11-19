@@ -5,7 +5,7 @@
 // scripts/build-dtnt-pages.js, so every DTNT page looks the same.
 const { esc } = require('./emails');
 const { SUPPORT_EMAIL } = require('./config');
-const { sentOn } = require('./tips');
+const { TIPS } = require('./tips');
 
 const FONTS = 'https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=IBM+Plex+Serif:wght@400;600&family=IBM+Plex+Mono:wght@400;500&display=swap';
 
@@ -127,8 +127,14 @@ ${action}
 }
 
 // ---------- Tip archive (/do-the-next-thing/tips) ----------
-// Server-rendered so a tip that is not published yet never reaches the browser.
+// All three tips, always. Nothing here depends on a date: each reader gets the
+// tips on their own clock (Tip 1 on confirm, Tip 2 on day 3, Tip 3 on day 7).
 const TIPS_PATH = '/do-the-next-thing/tips';
+
+// When a tip reaches a reader, for the label on the archive.
+function arrives(tip) {
+  return tip.delayDays === 0 ? 'Arrives when you confirm' : `Arrives on day ${tip.delayDays}`;
+}
 
 // Tip text is plain text with **bold** spans. Escape first, then add the tags.
 function inline(text) {
@@ -141,20 +147,15 @@ function tipBlocks(blocks) {
     : `            <p>${inline(text)}</p>`)).join('\n');
 }
 
-function tipsPage({ published }) {
-  const list = published.length
-    ? published.map((tip) => `          <article class="tip" id="tip-${esc(tip.slug)}" aria-labelledby="tip-${esc(tip.slug)}-title">
-            <p class="tip-meta"><span>Tip ${tip.number}</span><span>Sent ${esc(sentOn(tip))}</span></p>
+function tipsPage({ tips = TIPS } = {}) {
+  const list = tips.map((tip) => `          <article class="tip" id="tip-${esc(tip.slug)}" aria-labelledby="tip-${esc(tip.slug)}-title">
+            <p class="tip-meta"><span>Tip ${tip.number}</span><span>${esc(arrives(tip))}</span></p>
             <h2 id="tip-${esc(tip.slug)}-title">${esc(tip.subject)}</h2>
 ${tipBlocks(tip.blocks)}
-          </article>`).join('\n')
-    : `          <div class="tips-empty">
-            <p>The first tip hasn't gone out yet. Each tip is posted here once it has been sent.</p>
-            <p><a class="btn btn-primary" href="/do-the-next-thing#free">Get the free coaching tips</a></p>
-          </div>`;
+          </article>`).join('\n');
   return page({
     title: 'Do the Next Thing: the tips | COTIB LLC',
-    description: 'Past Do the Next Thing coaching tips. Each one names a stall, gives one technique and a prompt to paste into your AI chat.',
+    description: 'The three Do the Next Thing coaching tips. Each one names a stall, gives one technique and a prompt to paste into your AI chat.',
     canonical: `https://www.cotib.com${TIPS_PATH}`,
     analytics: true,
     main: `    <section class="hero tips-head" aria-labelledby="title">
@@ -164,15 +165,16 @@ ${tipBlocks(tip.blocks)}
           <h1 id="title">The tips</h1>
           <div class="ticks" aria-hidden="true"></div>
           <p>Short coaching tips for the one small piece you keep putting off. Each one names a stall, gives one technique and a prompt to paste into your AI chat, and ends with one small thing to do today.</p>
+          <p>By email, Tip 1 arrives when you confirm your signup, Tip 2 on day 3 and Tip 3 on day 7. All three are here to read any time.</p>
         </div>
       </div>
     </section>
-    <section class="tips" aria-label="Past tips">
+    <section class="tips" aria-label="The three tips">
       <div class="wrap">
         <div class="tip-list">
 ${list}
-        </div>${published.length ? `
-        <p class="tips-foot"><a class="btn btn-quiet" href="/do-the-next-thing#free">Get the next tip by email</a></p>` : ''}
+        </div>
+        <p class="tips-foot"><a class="btn btn-quiet" href="/do-the-next-thing#free">Get the tips by email</a></p>
       </div>
     </section>`,
     bodyEnd: '',
@@ -188,9 +190,8 @@ const states = {
     state: 'confirmed',
     title: "You're confirmed",
     heading: "You're confirmed.",
-    paragraphs: ["You're on the list. Your first tip arrives with the next dated send. Past tips are on the tips page:"],
-    action: `          <p><a class="btn btn-primary" href="${TIPS_PATH}">Read the tips so far</a></p>
-          <p>We also emailed you a note with the same link.</p>
+    paragraphs: ["You're on the list. Tip 1 is in your inbox now. Tip 2 arrives on day 3 and Tip 3 on day 7. If you'd rather read ahead, all three are on the tips page:"],
+    action: `          <p><a class="btn btn-primary" href="${TIPS_PATH}">Read all three tips</a></p>
           <p class="muted-line">a COTIB LLC product.</p>`,
   }),
   // Approved copy: confirm page, bad or expired link.
