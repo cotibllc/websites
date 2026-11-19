@@ -14,8 +14,9 @@
 // api/dtnt/confirm.js sends Tip 1 right away and schedules Tips 2 and 3 with
 // Resend's scheduled_at (Resend allows up to 30 days ahead).
 //
-// ARCHIVE: /do-the-next-thing/tips shows all three tips at all times. Nothing
-// on that page depends on a date.
+// PUBLIC PAGE: /do-the-next-thing/tips lists only each tip's title and when it
+// arrives (Chuck, Nov 19, 2026). The tip bodies are used by the emails only.
+// Nothing on that page depends on a date.
 
 const TIPS = [
   {

@@ -118,10 +118,9 @@ module.exports = async function handler(req, res) {
   const confirmedAtMs = Date.now();
   const tokHash = hashValue('tok', http.query(req, 't'));
   const unsubscribeUrl = `${base}/do-the-next-thing/free/unsubscribe?t=${createToken('unsubscribe', { e: email }, null)}`;
-  const tipsUrl = `${base}/do-the-next-thing/tips`;
   // Same token, same idempotency key: a double click inside Resend's 24 hour
   // window can't send or schedule a tip twice.
-  const tipMessage = (tip) => ({ to: email, ...tipEmail({ tip, tipsUrl, unsubscribeUrl }), idempotencyKey: `dtnt-tip${tip.number}-${tokHash}` });
+  const tipMessage = (tip) => ({ to: email, ...tipEmail({ tip, unsubscribeUrl }), idempotencyKey: `dtnt-tip${tip.number}-${tokHash}` });
 
   // Tips 2 and 3 first, then Tip 1, so a reader who clicks unsubscribe in Tip 1
   // the moment it lands already has the scheduled ids saved on the contact.

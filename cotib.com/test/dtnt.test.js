@@ -138,8 +138,9 @@ test('F11.1 confirm adds the contact to the DTNT segment, records consent, start
   assert.equal(res.headers.get('cache-control'), 'no-store');
   const html = await res.text();
   assert.match(html, /You're confirmed\./);
-  assert.match(html, /You're on the list\. Tip 1 is in your inbox now\. Tip 2 arrives on day 3 and Tip 3 on day 7\./);
-  assert.match(html, /<a class="btn btn-primary" href="\/do-the-next-thing\/tips">Read all three tips<\/a>/);
+  assert.match(html, /You're on the list\. Tip 1 is on its way\. If it hasn't arrived in a few minutes, check your spam or promotions folder\. Tip 2 comes on day 3 and Tip 3 on day 7\. Here are the titles of the three tips:/);
+  assert.doesNotMatch(html, /in your inbox now/, 'no promise that the email has already landed');
+  assert.match(html, /<a class="btn btn-primary" href="\/do-the-next-thing\/tips">See the three tip titles<\/a>/);
   assert.doesNotMatch(html, /sampler|3 prompts|\/free\/dl\//, 'the confirmed page no longer offers the PDF');
   const c = world.contacts.get('reader@example.com');
   assert.ok(c && c.segments.has('seg_mock_dtnt_free') && !c.unsubscribed);
@@ -997,7 +998,7 @@ test('tips: the emails carry the approved tip text word for word, say where the 
   assert.match(world.emails[0].text, /After you confirm, Tip 1 arrives right away, Tip 2 on day 3 and Tip 3 on day 7\./);
 });
 
-test('tips: the archive shows all three tips to everyone, in order, labelled by when they arrive, with no dates', async () => {
+test('tips: the public page lists only the three tip titles and when each arrives, never the tip text', async () => {
   const res = await get('/do-the-next-thing/tips');
   assert.equal(res.status, 200);
   assert.match(res.headers.get('content-type'), /text\/html/);
@@ -1007,61 +1008,89 @@ test('tips: the archive shows all three tips to everyone, in order, labelled by 
   assert.equal(doc.querySelector('h1').textContent, 'The tips');
   assert.equal(doc.querySelectorAll('article.tip').length, 3);
   assert.deepEqual([...doc.querySelectorAll('.tip-meta')].map((m) => m.textContent), ['Tip 1Arrives when you confirm', 'Tip 2Arrives on day 3', 'Tip 3Arrives on day 7']);
-  tipsData.TIPS.forEach((t, i) => {
-    const art = doc.querySelectorAll('article.tip')[i];
-    assert.equal(art.querySelector('h2').textContent, t.subject);
-    assert.equal(art.querySelector('pre.tip-prompt code').textContent, t.blocks.find((b) => b[0] === 'code')[1]);
-    const paras = [...art.querySelectorAll('p:not(.tip-meta)')].map((p) => p.textContent);
-    assert.deepEqual(paras, t.blocks.filter((b) => b[0] === 'p').map((b) => b[1].replace(/\*\*/g, '')));
-    assert.equal(art.querySelectorAll('strong').length >= 3, true, 'technique, prompt and today labels are bold');
-  });
-  assert.match(doc.querySelector('.tips-head').textContent, /Tip 1 arrives when you confirm your signup, Tip 2 on day 3 and Tip 3 on day 7\./);
+  assert.deepEqual([...doc.querySelectorAll('article.tip h2')].map((h) => h.textContent), tipsData.TIPS.map((t) => t.subject));
+  // Each article holds only its label and title.
+  for (const art of doc.querySelectorAll('article.tip')) {
+    assert.deepEqual([...art.children].map((c) => c.tagName), ['P', 'H2']);
+    assert.equal(art.querySelector('pre'), null);
+  }
+  // No tip body anywhere in the page: not a sentence, not a prompt, not a label.
+  const bare = (t) => t.replace(/\*\*/g, '');
+  for (const t of tipsData.TIPS) {
+    for (const [, text] of t.blocks) {
+      if (text === 'Chuck') continue;
+      assert.ok(!html.includes(bare(text)), `Tip ${t.number} body text is on the public page: ${text.slice(0, 50)}`);
+      assert.ok(!html.includes(bare(text).slice(0, 40)), `Tip ${t.number} opening is on the public page: ${text.slice(0, 40)}`);
+    }
+  }
+  assert.doesNotMatch(html, /I need to start \[the thing\]|I skipped \[the thing\]|I've been researching|The technique:|Today:|class="tip-prompt"|<pre/);
+  assert.match(doc.querySelector('.tips-head').textContent, /The tips come by email: Tip 1 when you confirm your signup, Tip 2 on day 3 and Tip 3 on day 7\. Here are the three titles\./);
   assert.doesNotMatch(html, /hasn't gone out yet|Sent (January|February|March|April|May|June|July|August|September|October|November|December)/);
-  assert.doesNotMatch(html, /Hi \[first name\]/, 'the mail merge greeting is not on the web page');
   assert.doesNotMatch(html, DASHES);
   assert.match(html, /<title>Do the Next Thing: the tips \| COTIB LLC<\/title>/);
   assert.ok(doc.querySelector('title').textContent.length <= 60);
   assert.ok(doc.querySelector('meta[name="description"]').content.length <= 160);
-  assert.doesNotMatch(html, /stripe\.com|\$24|\$37|checkout/i, 'no sales on the archive');
+  assert.doesNotMatch(html, /stripe\.com|\$24|\$37|checkout/i, 'no sales on the page');
   assert.match(html, /href="\/do-the-next-thing#free"/, 'links back to the signup');
   // The clock has no say: the same page a year from now.
   await withClock(365 * 86400, async () => assert.equal(await (await get('/do-the-next-thing/tips')).text(), html));
 });
 
-test('tips: the archive escapes tip text and only accepts GET and HEAD', async () => {
+test('tips: the full tip text is in the emails only', async () => {
+  await confirmedReader();
+  for (const t of tipsData.TIPS) {
+    const e = tipEmail(t.number);
+    for (const [, text] of t.blocks) assert.ok(e.text.includes(text.replace(/\*\*/g, '')), `Tip ${t.number} body is in its email`);
+  }
+  // Nothing under www/ (static pages, generated pages) carries a tip body either.
+  const www = path.join(ROOT, 'www');
+  const walk = (d) => fs.readdirSync(d, { withFileTypes: true }).flatMap((en) => (en.isDirectory() ? walk(path.join(d, en.name)) : [path.join(d, en.name)]));
+  for (const f of walk(www).filter((n) => n.endsWith('.html'))) {
+    const html = fs.readFileSync(f, 'utf8');
+    for (const t of tipsData.TIPS) {
+      const prompt = t.blocks.find((b) => b[0] === 'code')[1];
+      assert.ok(!html.includes(prompt), `${path.relative(www, f)} carries the Tip ${t.number} prompt`);
+    }
+  }
+});
+
+test('tips: the tips page escapes titles, never renders blocks, and only accepts GET and HEAD', async () => {
   const html = tipsPage({ tips: [{ number: 1, delayDays: 0, slug: 'x', subject: '<script>alert(1)</script>', blocks: [['p', 'a <b>bold</b> & **real bold**'], ['code', '<img src=x onerror=alert(1)>']] }] });
   assert.doesNotMatch(html, /<script>alert|<img src=x|<b>bold/);
   assert.match(html, /&lt;script&gt;alert\(1\)&lt;\/script&gt;/);
-  assert.match(html, /<strong>real bold<\/strong>/);
+  assert.doesNotMatch(html, /real bold|onerror/, 'blocks are never rendered');
   const post = await get('/do-the-next-thing/tips', { method: 'POST' });
   assert.equal(post.status, 405);
   assert.equal((await get('/do-the-next-thing/tips', { method: 'HEAD' })).status, 200);
 });
 
-test('tips: the DTNT page, the confirmed page and the already-subscribed note point to the archive and say when tips arrive', async () => {
+test('tips: the DTNT page, the confirmed page and the already-subscribed note point to the titles page and say when tips arrive', async () => {
   const page = fs.readFileSync(path.join(ROOT, 'www', 'do-the-next-thing.html'), 'utf8');
-  assert.match(page, /<p class="tips-link">Already signed up\? <a href="\/do-the-next-thing\/tips">Read all three tips\.<\/a><\/p>/);
+  assert.match(page, /<p class="tips-link">Already signed up\? <a href="\/do-the-next-thing\/tips">See the three tip titles\.<\/a><\/p>/);
   assert.match(page, /<a href="\/do-the-next-thing\/tips">tips page<\/a>/);
   assert.match(page, /Tip 1 arrives right after you click it, Tip 2 on day 3 and Tip 3 on day 7\./);
-  assert.match(page, /As three short emails, timed from the day you confirm your signup: Tip 1 right away, Tip 2 on day 3 and Tip 3 on day 7\./);
+  assert.match(page, /As three short emails, timed from the day you confirm your signup: Tip 1 right away, Tip 2 on day 3 and Tip 3 on day 7\. The three tip titles are also on the <a href="\/do-the-next-thing\/tips">tips page<\/a>\./);
   const privacy = fs.readFileSync(path.join(ROOT, 'www', 'do-the-next-thing', 'privacy.html'), 'utf8');
   assert.match(privacy, /Tip 1 when you confirm, Tip 2 on day 3 and Tip 3 on day 7/);
   assert.match(privacy, /we can cancel them if you unsubscribe/);
+  assert.match(privacy, /The titles of the three tips are listed on cotib\.com\/do-the-next-thing\/tips, which anyone can read\./);
+  assert.match(privacy, /Effective November 17, 2026\./, 'privacy effective date stays as is (Chuck, Nov 19)');
   await signup(good());
   const confirmHtml = await (await get(confirmLink(world.emails[0]))).text();
   assert.match(confirmHtml, /href="\/do-the-next-thing\/tips"/);
-  assert.match(tipEmail(1).text, /http:\/\/127\.0\.0\.1:\d+\/do-the-next-thing\/tips/);
+  assert.doesNotMatch(tipEmail(1).text + tipEmail(1).html, /do-the-next-thing\/tips|read ahead/i, 'the tip email no longer sends readers to a page');
   await signup(good());
   const note = world.emails.at(-1);
   assert.match(note.text, /http:\/\/127\.0\.0\.1:\d+\/do-the-next-thing\/tips/);
   assert.match(note.html, /href="http:\/\/127\.0\.0\.1:\d+\/do-the-next-thing\/tips"/);
   assert.match(note.text, /^You're already on the list, so there's nothing more to do\.\n\nThree tips arrive in order: Tip 1 when you confirm, Tip 2 on day 3 and Tip 3 on day 7\./);
+  assert.match(note.text, /The titles of the three tips are here: /);
 });
 
 test('tips: no leftover wording about fixed dates or publish schedules in the code or the pages', () => {
   const files = ['lib/dtnt/tips.js', 'lib/dtnt/pages.js', 'lib/dtnt/emails.js', 'api/dtnt-tips.js', 'scripts/build-dtnt-pages.js', 'www/do-the-next-thing.html', 'www/do-the-next-thing/privacy.html'];
   for (const f of files) {
-    assert.doesNotMatch(fs.readFileSync(path.join(ROOT, f), 'utf8'), /publishAt|publishedTips|sentOn|dated send|next dated|set dates|tips so far|already gone out|has gone out/i, f);
+    assert.doesNotMatch(fs.readFileSync(path.join(ROOT, f), 'utf8'), /publishAt|publishedTips|sentOn|dated send|next dated|set dates|tips so far|already gone out|has gone out|read ahead|all three tips|in your inbox now/i, f);
   }
 });
 

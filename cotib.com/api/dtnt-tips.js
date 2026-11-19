@@ -1,7 +1,8 @@
 // GET /do-the-next-thing/tips (rewritten to /api/dtnt-tips).
-// The public page with all three coaching tips. It does not depend on a date:
-// the email series is timed per reader (see lib/dtnt/tips.js), and this page
-// is the same for everyone. No env vars, no Resend, no cookies: a read-only page.
+// The public page that lists the three coaching tips by title only. The tip
+// text goes out by email and is never on this page. It does not depend on a
+// date: the email series is timed per reader (see lib/dtnt/tips.js), and this
+// page is the same for everyone. No env vars, no Resend, no cookies: a read-only page.
 const { tipsPage } = require('../lib/dtnt/pages');
 const http = require('../lib/dtnt/http');
 

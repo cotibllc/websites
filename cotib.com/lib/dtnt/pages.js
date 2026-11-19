@@ -126,36 +126,26 @@ ${action}
   });
 }
 
-// ---------- Tip archive (/do-the-next-thing/tips) ----------
-// All three tips, always. Nothing here depends on a date: each reader gets the
-// tips on their own clock (Tip 1 on confirm, Tip 2 on day 3, Tip 3 on day 7).
+// ---------- Tip list (/do-the-next-thing/tips) ----------
+// Titles only (Chuck, Nov 19, 2026): the full tips live in the emails, so no
+// tip body is ever rendered on this page. Nothing here depends on a date: each
+// reader gets the tips on their own clock (Tip 1 on confirm, Tip 2 on day 3,
+// Tip 3 on day 7).
 const TIPS_PATH = '/do-the-next-thing/tips';
 
-// When a tip reaches a reader, for the label on the archive.
+// When a tip reaches a reader, for the label on the page.
 function arrives(tip) {
   return tip.delayDays === 0 ? 'Arrives when you confirm' : `Arrives on day ${tip.delayDays}`;
-}
-
-// Tip text is plain text with **bold** spans. Escape first, then add the tags.
-function inline(text) {
-  return esc(text).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
-}
-
-function tipBlocks(blocks) {
-  return blocks.map(([kind, text]) => (kind === 'code'
-    ? `            <pre class="tip-prompt"><code>${esc(text)}</code></pre>`
-    : `            <p>${inline(text)}</p>`)).join('\n');
 }
 
 function tipsPage({ tips = TIPS } = {}) {
   const list = tips.map((tip) => `          <article class="tip" id="tip-${esc(tip.slug)}" aria-labelledby="tip-${esc(tip.slug)}-title">
             <p class="tip-meta"><span>Tip ${tip.number}</span><span>${esc(arrives(tip))}</span></p>
             <h2 id="tip-${esc(tip.slug)}-title">${esc(tip.subject)}</h2>
-${tipBlocks(tip.blocks)}
           </article>`).join('\n');
   return page({
     title: 'Do the Next Thing: the tips | COTIB LLC',
-    description: 'The three Do the Next Thing coaching tips. Each one names a stall, gives one technique and a prompt to paste into your AI chat.',
+    description: 'The three Do the Next Thing coaching tips, by title. Each one comes by email, with a prompt to paste into your AI chat.',
     canonical: `https://www.cotib.com${TIPS_PATH}`,
     analytics: true,
     main: `    <section class="hero tips-head" aria-labelledby="title">
@@ -165,7 +155,7 @@ ${tipBlocks(tip.blocks)}
           <h1 id="title">The tips</h1>
           <div class="ticks" aria-hidden="true"></div>
           <p>Short coaching tips for the one small piece you keep putting off. Each one names a stall, gives one technique and a prompt to paste into your AI chat, and ends with one small thing to do today.</p>
-          <p>By email, Tip 1 arrives when you confirm your signup, Tip 2 on day 3 and Tip 3 on day 7. All three are here to read any time.</p>
+          <p>The tips come by email: Tip 1 when you confirm your signup, Tip 2 on day 3 and Tip 3 on day 7. Here are the three titles.</p>
         </div>
       </div>
     </section>
@@ -190,8 +180,8 @@ const states = {
     state: 'confirmed',
     title: "You're confirmed",
     heading: "You're confirmed.",
-    paragraphs: ["You're on the list. Tip 1 is in your inbox now. Tip 2 arrives on day 3 and Tip 3 on day 7. If you'd rather read ahead, all three are on the tips page:"],
-    action: `          <p><a class="btn btn-primary" href="${TIPS_PATH}">Read all three tips</a></p>
+    paragraphs: ["You're on the list. Tip 1 is on its way. If it hasn't arrived in a few minutes, check your spam or promotions folder. Tip 2 comes on day 3 and Tip 3 on day 7. Here are the titles of the three tips:"],
+    action: `          <p><a class="btn btn-primary" href="${TIPS_PATH}">See the three tip titles</a></p>
           <p class="muted-line">a COTIB LLC product.</p>`,
   }),
   // Approved copy: confirm page, bad or expired link.

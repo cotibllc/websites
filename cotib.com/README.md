@@ -113,7 +113,7 @@ Sampler-first launch of the Do the Next Thing product page. Paid tiers show as "
 | Path | What it does |
 |---|---|
 | `/do-the-next-thing` | Static page (`www/do-the-next-thing.html`), free coaching tips signup is the one action |
-| `/do-the-next-thing/tips` | `api/dtnt-tips.js`: the public page with all three tips, always. Text and timing (`delayDays`: 0, 3, 7) are in `lib/dtnt/tips.js` |
+| `/do-the-next-thing/tips` | `api/dtnt-tips.js`: the public page that lists the three tip titles and when each arrives (no tip text). Text and timing (`delayDays`: 0, 3, 7) are in `lib/dtnt/tips.js` |
 | `/do-the-next-thing/privacy` | Static privacy notice (`www/do-the-next-thing/privacy.html`) |
 | `POST /do-the-next-thing/free` | `api/dtnt/signup.js`: Turnstile, then a confirm email (double opt-in) |
 | `/do-the-next-thing/free/confirm?t=` | `api/dtnt/confirm.js`: adds the contact to the Resend segment, sends Tip 1 now, schedules Tips 2 and 3 at Resend for day 3 and day 7 after the click (saving their email ids on the contact), shows the confirmed page with the tips link |
