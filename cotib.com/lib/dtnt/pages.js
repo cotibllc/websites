@@ -145,7 +145,7 @@ function tipsPage({ tips = TIPS } = {}) {
           </article>`).join('\n');
   return page({
     title: 'Do the Next Thing: the tips | COTIB LLC',
-    description: 'The three Do the Next Thing coaching tips, by title. Each one comes by email, with a prompt to paste into your AI chat.',
+    description: 'The three Do the Next Thing coaching tips, by title. Each one comes by email, with a line to paste into your AI chat.',
     canonical: `https://www.cotib.com${TIPS_PATH}`,
     analytics: true,
     main: `    <section class="hero tips-head" aria-labelledby="title">
@@ -154,7 +154,7 @@ function tipsPage({ tips = TIPS } = {}) {
           <p class="eyebrow">a COTIB LLC product</p>
           <h1 id="title">The tips</h1>
           <div class="ticks" aria-hidden="true"></div>
-          <p>Short coaching tips for the one small piece you keep putting off. Each one names a stall, gives one technique and a prompt to paste into your AI chat, and ends with one small thing to do today.</p>
+          <p>Short coaching tips for the one small piece you keep putting off. Each one names a stall, gives one technique and a line to paste into your AI chat, and ends with one small thing to do today.</p>
           <p>The tips come by email: Tip 1 when you confirm your signup, Tip 2 on day 3 and Tip 3 on day 7. Here are the three titles.</p>
         </div>
       </div>

@@ -15,7 +15,7 @@ const landing = page({
   title: "Do the Next Thing: Start with one small piece. | COTIB LLC",
   description: "Do the Next Thing: A proposal draft waiting for you? Start with one small piece. Short coaching tips for the one small piece you keep putting off.",
   ogTitle: "Do the Next Thing: A proposal draft waiting for you? Start with one small piece. | COTIB LLC",
-  ogDescription: "Do the Next Thing: A proposal draft waiting for you? Start with one small piece. Short coaching tips for the one small piece you keep putting off. Each tip gives one technique and a prompt to paste into your AI chat.",
+  ogDescription: "Do the Next Thing: A proposal draft waiting for you? Start with one small piece. Short coaching tips for the one small piece you keep putting off. Each tip gives one technique and a line to paste into your AI chat.",
   twitter: true,
   canonical: 'https://www.cotib.com/do-the-next-thing',
   headExtra: `
@@ -39,8 +39,8 @@ const landing = page({
         </div>
 
         <figure class="hero-figure">
-          <article class="paper sheet" aria-label="The prompt inside tip 1">
-            <div class="sheet-meta"><span>Tip 1: START</span><span class="sheet-tag">The prompt inside</span></div>
+          <article class="paper sheet" aria-label="The line inside tip 1">
+            <div class="sheet-meta"><span>Tip 1: START</span><span class="sheet-tag">The line inside</span></div>
             <h2>The first ugly version</h2>
             <p class="prompt">I need to start <span class="bracket">[the thing]</span> and I haven't begun. Give me ONE move I can finish in under 10 minutes that leaves a rough first piece on the page or screen. No research, no setup, no tools to install. Tell me exactly what to type or make first, and what "done" looks like. One sentence of instruction, one sentence of done. Nothing else.</p>
           </article>
@@ -48,7 +48,7 @@ const landing = page({
             <div class="bar"></div>
             <div class="labels"><span>0</span><span>10 min</span></div>
           </div>
-          <figcaption class="sr-only">The prompt inside tip 1, The first ugly version, shown in full above a ten-minute scale.</figcaption>
+          <figcaption class="sr-only">The line inside tip 1, The first ugly version, shown in full above a ten-minute scale.</figcaption>
         </figure>
       </div>
     </section>
@@ -73,7 +73,7 @@ const landing = page({
         <div class="section-head">
           <h2 id="free-title">Get the free coaching tips</h2>
           <div class="ticks" aria-hidden="true"></div>
-          <p>Get a short coaching tip by email on getting unstuck, built for solo consultants and technical operators with a side offer to move forward. Each tip names a stall you probably know, gives one technique and a prompt to paste into your AI chat, and ends with one small thing to do today.</p>
+          <p>Get a short coaching tip by email on getting unstuck, built for solo consultants and technical operators with a side offer to move forward. Each tip names a stall you probably know, gives one technique and a line to paste into your AI chat, and ends with one small thing to do today.</p>
           <p class="tips-link">Already signed up? <a href="/do-the-next-thing/tips">See the three tip titles.</a></p>
         </div>
 
@@ -123,7 +123,7 @@ const landing = page({
           <p class="big">You already know the step.</p>
           <div class="ticks" aria-hidden="true"></div>
           <p>What's missing is a move small enough that you'll take it before something easier gets there first.</p>
-          <p>Do the Next Thing is a short coaching tip for that moment. It's not a framework, and it won't hand you a bigger plan. Each tip names the stall and gives you one technique. The prompt inside is the tool: paste it into ChatGPT, Claude, Gemini, or any AI chat app, fill in the [brackets], and start a 10-minute timer. You get one move. You do it.</p>
+          <p>Do the Next Thing is a short coaching tip for that moment. It's not a framework, and it won't hand you a bigger plan. Each tip names the stall and gives you one technique. The line inside is the tool: paste it into ChatGPT, Claude, Gemini, or any AI chat app, fill in the [brackets], and start a 10-minute timer. You get one move. You do it.</p>
           <div class="reply">
             <p>If the answer comes back too big, you reply:</p>
             <code>"Too big. Smaller. One move, under 10 minutes, no research."</code>
@@ -142,7 +142,7 @@ const landing = page({
         </div>
         <ol class="steps">
           <li><div>Read the tip.<span>It names a stall you probably know and gives one technique.</span></div></li>
-          <li><div>Paste the prompt into any AI chat app and swap the [brackets] for your own words.<span>The free versions work.</span></div></li>
+          <li><div>Paste the line into any AI chat app and swap the [brackets] for your own words.<span>The free versions work.</span></div></li>
           <li><div>Start a 10-minute timer and do the one move it gives you.<span>When the timer ends, stop.</span></div></li>
         </ol>
       </div>
@@ -176,10 +176,10 @@ const landing = page({
 
         <div class="tiers">
           <article class="tier is-soon" aria-labelledby="t1">
-            <h3 id="t1">The Pack</h3>
+            <h3 id="t1">The Coaching Tips Library</h3>
             <p class="price"><b>$24</b></p>
             <ul>
-              <li>All 28 prompts in 5 buckets</li>
+              <li>The full set of coaching tips, across the 5 kinds of stall</li>
               <li>A beginner how-to with one worked example, start to finish</li>
               <li>The one reply for when your AI gives you too much</li>
               <li>A 10-page PDF, a Notion template, and a one-page printable cheat sheet that maps back to the PDF</li>
@@ -188,15 +188,15 @@ const landing = page({
           </article>
 
           <article class="tier is-soon" aria-labelledby="t2">
-            <h3 id="t2">The Pack plus Assistant Setup Kit</h3>
+            <h3 id="t2">The Coaching Tips Library plus Assistant Setup Kit</h3>
             <p class="price"><b>$37</b></p>
-            <p class="lede">Everything in the Pack, plus the Setup Kit:</p>
+            <p class="lede">Everything in the Library, plus the Setup Kit:</p>
             <ul class="kit">
-              <li>A setup guide for turning the prompts into a standing assistant you can come back to</li>
-              <li>The prompts and skills as plain text files, ready to paste</li>
+              <li>A setup guide for turning the coaching tips into a standing assistant you can come back to</li>
+              <li>The coaching tips as plain text files, ready to paste</li>
               <li>Onboarding steps for your first session, from setup to your first 10-minute move</li>
             </ul>
-            <p class="coach"><b>Bonus: the Do the Next Thing Coach.</b> A link to a ready-made Grok Bot template that runs the prompts with you, one move at a time. It's a bonus that comes with the kit, not the product itself. The Coach requires your own Grok Bot account on a paid plan, sold separately.</p>
+            <p class="coach"><b>Bonus: the Do the Next Thing Coach.</b> A link to a ready-made Grok Bot template that walks you through the coaching tips, one move at a time. It's a bonus that comes with the kit, not the product itself. The Coach requires your own Grok Bot account on a paid plan, sold separately.</p>
             <div class="grow"></div>
             <p class="soon">Coming soon</p>
           </article>
@@ -215,7 +215,7 @@ const landing = page({
             <ul>
               <li>You already know your next step, on a project, a business, or a piece of work you care about.</li>
               <li>You stall anyway: the inbox, tidying, one more tutorial, one more round of research.</li>
-              <li>You use an AI chat app, or you're willing to paste a prompt into one.</li>
+              <li>You use an AI chat app, or you're willing to paste a line into one.</li>
               <li>You'll start a 10-minute timer and stop when it ends.</li>
             </ul>
           </div>
@@ -225,7 +225,7 @@ const landing = page({
               <li>You don't know your next step yet. These tips assume you do.</li>
               <li>You want to understand why you stall. None of the tips go there.</li>
               <li>You're looking for a framework, a productivity system, or a course.</li>
-              <li>You want someone to coach you live. These are email tips with prompts, not a person.</li>
+              <li>You want someone to coach you live. These are email tips with a line to paste, not a person.</li>
             </ul>
           </div>
         </div>
@@ -238,15 +238,15 @@ const landing = page({
           </details>
           <details>
             <summary>Do I need a paid AI account?</summary>
-            <p>Not for the free tips, the Pack, or the prompts and skills in the Setup Kit. They work in any AI chat app you can paste into, like ChatGPT, Claude, or Gemini, and the free versions work. The Coach bonus is different: it runs in Grok Bot and requires your own Grok Bot account on a paid plan, sold separately.</p>
+            <p>Not for the free tips, the Coaching Tips Library, or the coaching tips in the Setup Kit. They work in any AI chat app you can paste into, like ChatGPT, Claude, or Gemini, and the free versions work. The Coach bonus is different: it runs in Grok Bot and requires your own Grok Bot account on a paid plan, sold separately.</p>
           </details>
           <details>
             <summary>What's the Coach?</summary>
-            <p>A bonus that comes with the paid Setup Kit, which is coming later. It's an AI coach, built as a Grok Bot template, that picks one 10-minute move with you at a time using the 28 prompts the tips draw from. It's an AI, not a person, and it isn't medical, mental-health, or financial advice.</p>
+            <p>A bonus that comes with the paid Setup Kit, which is coming later. It's an AI coach, built as a Grok Bot template, that picks one 10-minute move with you at a time using the Coaching Tips Library. It's an AI, not a person, and it isn't medical, mental-health, or financial advice.</p>
           </details>
           <details>
             <summary>How do the tips arrive?</summary>
-            <p>As three short emails, timed from the day you confirm your signup: Tip 1 right away, Tip 2 on day 3 and Tip 3 on day 7. The three tip titles are also on the <a href="/do-the-next-thing/tips">tips page</a>. The paid Pack, coming later, is a PDF, a Notion template you import, and a one-page cheat sheet you can print. The Setup Kit adds plain text files and a setup guide.</p>
+            <p>As three short emails, timed from the day you confirm your signup: Tip 1 right away, Tip 2 on day 3 and Tip 3 on day 7. The three tip titles are also on the <a href="/do-the-next-thing/tips">tips page</a>. The paid Coaching Tips Library, coming later, is a PDF, a Notion template you import, and a one-page cheat sheet you can print. The Setup Kit adds plain text files and a setup guide.</p>
           </details>
           <details>
             <summary>What if I don't know my next step?</summary>

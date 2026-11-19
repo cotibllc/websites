@@ -111,7 +111,7 @@ function welcomeEmail({ tipsUrl, unsubscribeUrl }) {
   const why = "You're getting this because you asked for the free coaching tips at cotib.com.";
   const html = shell("You're already on the list. Tips arrive on confirm, day 3 and day 7.", `
 <p style="${P}">You're already on the list, so there's nothing more to do.</p>
-<p style="${P}">Three tips arrive in order: Tip 1 when you confirm, Tip 2 on day 3 and Tip 3 on day 7. Each tip names a stall you probably know, gives one technique and a prompt to paste into your AI chat, and ends with one small thing to do today.</p>
+<p style="${P}">Three tips arrive in order: Tip 1 when you confirm, Tip 2 on day 3 and Tip 3 on day 7. Each tip names a stall you probably know, gives one technique and a line to paste into your AI chat, and ends with one small thing to do today.</p>
 <p style="${P}">The titles of the three tips are here:</p>
 <p style="margin:0 0 20px;"><a href="${esc(tipsUrl)}" style="${BTN}">See the three tip titles</a></p>
 <p style="${P}font-size:13px;color:#475569;">Or paste this link into your browser: <a href="${esc(tipsUrl)}" style="color:#2563eb;word-break:break-all;">${esc(tipsUrl)}</a></p>
@@ -119,7 +119,7 @@ function welcomeEmail({ tipsUrl, unsubscribeUrl }) {
 ${footerHtml(unsubscribeUrl, why)}`);
   const text = `You're already on the list, so there's nothing more to do.
 
-Three tips arrive in order: Tip 1 when you confirm, Tip 2 on day 3 and Tip 3 on day 7. Each tip names a stall you probably know, gives one technique and a prompt to paste into your AI chat, and ends with one small thing to do today.
+Three tips arrive in order: Tip 1 when you confirm, Tip 2 on day 3 and Tip 3 on day 7. Each tip names a stall you probably know, gives one technique and a line to paste into your AI chat, and ends with one small thing to do today.
 
 The titles of the three tips are here: ${tipsUrl}
 

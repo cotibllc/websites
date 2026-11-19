@@ -417,7 +417,7 @@ test('fails closed when any env var is missing, before calling anyone', async ()
     delete process.env[k];
     const r = await signup(good());
     assert.equal(r.status, 503, `signup without ${k}`);
-    assert.match((await r.json()).error, /isn't available right now/);
+    assert.match((await r.json()).error, /^The free coaching tips signup isn't available right now\. Try again later, or email customerservice@cotib\.com\.$/);
     assert.equal(world.calls.length, 0);
     process.env[k] = saved;
   }

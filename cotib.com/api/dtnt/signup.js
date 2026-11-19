@@ -27,7 +27,7 @@ const MSG = {
   turnstile_config: "Signup isn't working on our end right now. Try again later, or email customerservice@cotib.com.",
   rate: 'Too many tries from here. Wait a minute and try again.',
   send: "We couldn't send the email just now. Wait a minute and try again.",
-  paused: "The free sampler isn't available right now. Try again later, or email customerservice@cotib.com.",
+  paused: "The free coaching tips signup isn't available right now. Try again later, or email customerservice@cotib.com.",
 };
 
 const EMAIL_RE = /^[^\s@<>()[\]\\,;:"]+@[^\s@<>()[\]\\,;:"]+\.[^\s@<>()[\]\\,;:"]{2,}$/;
