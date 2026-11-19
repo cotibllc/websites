@@ -42,7 +42,7 @@ cotib.com/
 │   ├── services.html       ← Services page
 │   ├── ventures.html       ← Ventures page
 │   ├── contact.html        ← Contact page
-│   ├── do-the-next-thing.html, do-the-next-thing/privacy.html, dtnt/  ← sampler pages
+│   ├── do-the-next-thing.html, do-the-next-thing/privacy.html, dtnt/  ← coaching tips pages
 │   ├── connect.html, disconnect.html, eula.html, privacy.html  ← QuickBooks app pages
 │   ├── css/                ← Tailwind build output and legacy styles
 │   ├── js/, fontawesome/, img/
@@ -112,14 +112,17 @@ Sampler-first launch of the Do the Next Thing product page. Paid tiers show as "
 
 | Path | What it does |
 |---|---|
-| `/do-the-next-thing` | Static page (`www/do-the-next-thing.html`), free sampler signup is the one action |
+| `/do-the-next-thing` | Static page (`www/do-the-next-thing.html`), free coaching tips signup is the one action |
+| `/do-the-next-thing/tips` | `api/dtnt-tips.js`: the public page that lists the three tip titles and when each arrives (no tip text). Text and timing (`delayDays`: 0, 3, 7) are in `lib/dtnt/tips.js` |
 | `/do-the-next-thing/privacy` | Static privacy notice (`www/do-the-next-thing/privacy.html`) |
 | `POST /do-the-next-thing/free` | `api/dtnt/signup.js`: Turnstile, then a confirm email (double opt-in) |
-| `/do-the-next-thing/free/confirm?t=` | `api/dtnt/confirm.js`: adds the contact to the Resend segment, sends the delivery email, shows the download |
-| `/do-the-next-thing/free/dl/<token>` | `api/dtnt/download.js`: streams `private/dtnt/*.pdf` for a valid token (30 days) |
-| `/do-the-next-thing/free/unsubscribe?t=` | `api/dtnt/unsubscribe.js`: GET asks, POST (or one-click) unsubscribes |
+| `/do-the-next-thing/free/confirm?t=` | `api/dtnt/confirm.js`: adds the contact to the Resend segment, sends Tip 1 now, schedules Tips 2 and 3 at Resend for day 3 and day 7 after the click (saving their email ids on the contact), shows the confirmed page with the tips link |
+| `/do-the-next-thing/free/dl/<token>` | `api/dtnt/download.js`: streams `private/dtnt/*.pdf` for a valid token (30 days). No page or email issues these links any more; it stays for links already sent |
+| `/do-the-next-thing/free/unsubscribe?t=` | `api/dtnt/unsubscribe.js`: GET asks, POST (or one-click) unsubscribes and cancels any Tip 2 or Tip 3 still scheduled (a failed cancel returns 502 so it is retried) |
 
 Env vars (set in Vercel by Chuck; the handlers fail closed if any is missing): `RESEND_API_KEY` and `TURNSTILE_SECRET_KEY` (existing), plus `RESEND_FULL_API_KEY`, `DTNT_FREE_SEGMENT_ID` and `DTNT_TOKEN_SECRET` (at least 32 characters).
+
+Tip timing (Chuck, Nov 19, 2026): tips go out relative to each reader's confirm click, not on calendar dates. Resend's `scheduled_at` accepts up to 30 days ahead, so Tips 2 and 3 are scheduled at confirm time (idempotency keys `dtnt-tip<n>-<token hash>`). Resend does not stop a scheduled email when a contact unsubscribes, so each scheduled email id is saved on the contact and the unsubscribe handler cancels them. No new env vars. Before this ships, create these two contact properties in Resend (Contacts, Properties, type string): `dtnt_tip2_email_id`, `dtnt_tip3_email_id`. Also still needed: `dtnt_marketing_opt_in` and the "DTNT tips" segment (`DTNT_FREE_SEGMENT_ID`). If the two id properties are missing, confirm cancels the scheduled tips again and only Tip 1 is delivered (logged as `dtnt.confirm.tips_schedule_failed`).
 
 - Edit page copy in `scripts/build-dtnt-pages.js`, then run `npm run build:dtnt`.
 - Local tests (Resend and Turnstile mocked): `npm run test:dtnt`.

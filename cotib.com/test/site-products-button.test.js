@@ -1,5 +1,5 @@
 // The Products row on /ventures must vertically center the
-// "Get the 3 free prompts" button against the title plus description.
+// "Get the free coaching tips" button against the title plus description.
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('fs');
@@ -16,7 +16,7 @@ function productsSection() {
 test('/ventures Products row uses items-center so the button is vertically centered', () => {
   const section = productsSection();
   const row = section.match(
-    /<div class="([^"]*\bgrid\b[^"]*)">\s*<div class="lg:col-span-8[\s\S]*?<a href="\/do-the-next-thing#free"[^>]*>Get the 3 free prompts<\/a>/,
+    /<div class="([^"]*\bgrid\b[^"]*)">\s*<div class="lg:col-span-8[\s\S]*?<a href="\/do-the-next-thing#free"[^>]*>Get the free coaching tips<\/a>/,
   );
   assert.ok(row, 'products row with the DTNT button not found');
   const classes = row[1].split(/\s+/);
