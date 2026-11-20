@@ -10,9 +10,11 @@
 //
 // TIMING (Chuck, 2026-11-19): tips go out relative to each person's confirmed
 // signup, not on calendar dates. delayDays is the number of days after the
-// confirm click: Tip 1 on confirm (0), Tip 2 on day 3, Tip 3 on day 7.
-// api/dtnt/confirm.js sends Tip 1 right away and schedules Tips 2 and 3 with
-// Resend's scheduled_at (Resend allows up to 30 days ahead).
+// confirm click: Tip 1 on confirm (0), Tip 2 on day 3, Tip 3 on day 7, and a
+// bonus tip on day 14 (Chuck, 2026-11-19; entry number 4 with bonus: true, shown
+// as "Bonus tip", never "Tip 4"). api/dtnt/confirm.js sends Tip 1 right away and
+// schedules every later tip with Resend's scheduled_at (Resend allows up to 30
+// days ahead, so day 14 fits).
 //
 // PUBLIC PAGE: /do-the-next-thing/tips lists only each tip's title and when it
 // arrives (Chuck, Nov 19, 2026). The tip bodies are used by the emails only.
@@ -65,6 +67,31 @@ const TIPS = [
       ['code', `I've been researching [the decision] instead of making it. Tell me to close the research, then write my choice in one sentence, then take one 10-minute action that makes the choice real (send it, book it, write it, start it). Tell me exactly what that action is.`],
       ['p', `**Example (illustrative, not a customer result; the price is a placeholder).** You fill in "what to charge for my first fixed-price audit." A reply might be: "Close the tabs. Write one sentence: 'My first audit is $1,500, fixed.' Then email that number to one person who asked about it." Your reply will vary.`],
       ['p', `**Today:** close the research tabs, write your choice in one sentence where you'll see it, and do the one action. If you think you picked wrong, you can change it next week.`],
+      ['p', `Chuck`],
+    ],
+  },
+  {
+    number: 4,
+    bonus: true,
+    delayDays: 14,
+    slug: 'name-the-goal',
+    subject: 'Bonus tip: Name the goal, not the step',
+    // Shown on the public tips page under the "Bonus tip" label.
+    archiveTitle: 'Name the goal, not the step',
+    promptName: 'Name the goal',
+    // Optional credit, approved by Chuck 2026-11-19. Rendered above the footer in the email only.
+    credit: {
+      text: 'The goal-first idea here comes from Lauren (@poteto): ',
+      url: 'https://x.com/poteto/status/2123159537016533493',
+    },
+    blocks: [
+      ['p', `You're setting up an intake form for a new client. You've renamed the fields, reordered the questions, and picked a font. It still hasn't gone out, and you couldn't say why it needs one more pass.`],
+      ['p', `**The technique:** name the goal, not the step. A step is something you do on the way. The goal is what you want to be true when it's all over. When you can only describe the step, it's easy to keep working on it and call that progress. So say the result first, in one sentence, then let your AI check whether the step you keep polishing is even the next one.`],
+      ['p', `**The prompt.** Paste this into your AI chat, then fill the brackets and dump what you know, in any order:`],
+      ['code', `I keep working on [the step] and haven't reached [the result it's for]. Here is how I think it goes, in no order: [dump what you know]. First, state the goal in one sentence: what is true when this is finished. Second, say the steps back to me in plain words so I can correct you. Third, tell me what I haven't told you that you'd need to know. Then give me ONE move under 10 minutes toward the goal, and what done looks like. Don't start the work itself yet.`],
+      ['p', `**Example (illustrative, not a customer result).** You fill in "the client intake form" and "a signed form back from a new client," then paste a messy list. A reply might be: "Goal: a new client has sent back the form, so you can start. Your steps as I read them: write the questions, format the form, send it. You haven't said who gets it or when you need it back. Move: send the current version to one client today with a one-line note, and write the date you need it back. Done means the email is sent." Your reply will vary.`],
+      ['p', `If the reply starts doing the work instead, answer: "Not yet. Goal, steps, what's missing, then one move."`],
+      ['p', `**Today:** pick the one thing you keep polishing and write what it's for in one sentence before you open it again. Run the prompt, do the one move, and stop when the 10-minute timer ends. A good-enough version that goes out beats a perfect one that doesn't.`],
       ['p', `Chuck`],
     ],
   },
