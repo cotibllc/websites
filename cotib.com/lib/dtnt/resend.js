@@ -106,11 +106,11 @@ async function unsubscribeContact(email) {
   return r.data;
 }
 
-// Scheduled tips. Resend does not stop a scheduled email when a contact
+// Scheduled tips (Tips 2 and 3 and the bonus tip, number 4). Resend does not stop a scheduled email when a contact
 // unsubscribes (unsubscribes only affect Broadcasts), so confirm.js saves each
 // scheduled email id on the contact and the unsubscribe handler cancels them.
 // Property keys, created by Chuck in Resend (Contacts, Properties, type string):
-const TIP_ID_PROPERTIES = { 2: 'dtnt_tip2_email_id', 3: 'dtnt_tip3_email_id' };
+const TIP_ID_PROPERTIES = { 2: 'dtnt_tip2_email_id', 3: 'dtnt_tip3_email_id', 4: 'dtnt_tip4_email_id' };
 
 // Last events after which an email can no longer be cancelled. Anything else
 // (scheduled, queued, unknown) gets a cancel attempt.

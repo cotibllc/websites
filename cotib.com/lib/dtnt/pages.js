@@ -130,7 +130,7 @@ ${action}
 // Titles only (Chuck, Nov 19, 2026): the full tips live in the emails, so no
 // tip body is ever rendered on this page. Nothing here depends on a date: each
 // reader gets the tips on their own clock (Tip 1 on confirm, Tip 2 on day 3,
-// Tip 3 on day 7).
+// Tip 3 on day 7, a bonus tip on day 14).
 const TIPS_PATH = '/do-the-next-thing/tips';
 
 // When a tip reaches a reader, for the label on the page.
@@ -140,12 +140,12 @@ function arrives(tip) {
 
 function tipsPage({ tips = TIPS } = {}) {
   const list = tips.map((tip) => `          <article class="tip" id="tip-${esc(tip.slug)}" aria-labelledby="tip-${esc(tip.slug)}-title">
-            <p class="tip-meta"><span>Tip ${tip.number}</span><span>${esc(arrives(tip))}</span></p>
-            <h2 id="tip-${esc(tip.slug)}-title">${esc(tip.subject)}</h2>
+            <p class="tip-meta"><span>${tip.bonus ? 'Bonus tip' : `Tip ${tip.number}`}</span><span>${esc(arrives(tip))}</span></p>
+            <h2 id="tip-${esc(tip.slug)}-title">${esc(tip.archiveTitle || tip.subject)}</h2>
           </article>`).join('\n');
   return page({
     title: 'Do the Next Thing: the tips | COTIB LLC',
-    description: 'The three Do the Next Thing coaching tips, by title. Each one comes by email, with a line to paste into your AI chat.',
+    description: 'The Do the Next Thing coaching tips, by title. Each one comes by email, with a line to paste into your AI chat.',
     canonical: `https://www.cotib.com${TIPS_PATH}`,
     analytics: true,
     main: `    <section class="hero tips-head" aria-labelledby="title">
@@ -155,11 +155,11 @@ function tipsPage({ tips = TIPS } = {}) {
           <h1 id="title">The tips</h1>
           <div class="ticks" aria-hidden="true"></div>
           <p>Short coaching tips for the one small piece you keep putting off. Each one names a stall, gives one technique and a line to paste into your AI chat, and ends with one small thing to do today.</p>
-          <p>The tips come by email: Tip 1 when you confirm your signup, Tip 2 on day 3 and Tip 3 on day 7. Here are the three titles.</p>
+          <p>The tips come by email: Tip 1 when you confirm your signup, Tip 2 on day 3 and Tip 3 on day 7, with a bonus tip around day 14. Here are the titles.</p>
         </div>
       </div>
     </section>
-    <section class="tips" aria-label="The three tips">
+    <section class="tips" aria-label="The tips">
       <div class="wrap">
         <div class="tip-list">
 ${list}
@@ -180,8 +180,8 @@ const states = {
     state: 'confirmed',
     title: "You're confirmed",
     heading: "You're confirmed.",
-    paragraphs: ["You're on the list. Tip 1 is on its way. If it hasn't arrived in a few minutes, check your spam or promotions folder. Tip 2 comes on day 3 and Tip 3 on day 7. Here are the titles of the three tips:"],
-    action: `          <p><a class="btn btn-primary" href="${TIPS_PATH}">See the three tip titles</a></p>
+    paragraphs: ["You're on the list. Tip 1 is on its way. If it hasn't arrived in a few minutes, check your spam or promotions folder. Tip 2 comes on day 3 and Tip 3 on day 7, with a bonus tip around day 14. Here are the titles of the tips:"],
+    action: `          <p><a class="btn btn-primary" href="${TIPS_PATH}">See the tip titles</a></p>
           <p class="muted-line">a COTIB LLC product.</p>`,
   }),
   // Approved copy: confirm page, bad or expired link.

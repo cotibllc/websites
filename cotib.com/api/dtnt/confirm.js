@@ -1,8 +1,9 @@
 // GET /do-the-next-thing/free/confirm?t=<token> (rewritten to /api/dtnt/confirm).
 // Double opt-in step 2: the click proves consent. Adds the contact to the
 // DTNT free segment in Resend, records consent on the contact, then starts the
-// three-tip series relative to this click: Tip 1 now, Tip 2 on day 3, Tip 3 on
-// day 7. Tips 2 and 3 are scheduled at Resend (scheduled_at) right here, and
+// tip series relative to this click: Tip 1 now, Tip 2 on day 3, Tip 3 on day 7
+// and a bonus tip on day 14. Everything after Tip 1 is scheduled at Resend
+// (scheduled_at) right here, and
 // their email ids are saved on the contact so unsubscribe.js can cancel them.
 // A second click on a link that is still valid just shows the confirmed page
 // again and sends nothing.
@@ -122,7 +123,7 @@ module.exports = async function handler(req, res) {
   // window can't send or schedule a tip twice.
   const tipMessage = (tip) => ({ to: email, ...tipEmail({ tip, unsubscribeUrl }), idempotencyKey: `dtnt-tip${tip.number}-${tokHash}` });
 
-  // Tips 2 and 3 first, then Tip 1, so a reader who clicks unsubscribe in Tip 1
+  // The scheduled tips first (Tips 2 and 3, the bonus tip), then Tip 1, so a reader who clicks unsubscribe in Tip 1
   // the moment it lands already has the scheduled ids saved on the contact.
   // If the ids can't be saved, the unsubscribe handler would have no way to
   // stop them, so they are cancelled again and not delivered (fail closed).

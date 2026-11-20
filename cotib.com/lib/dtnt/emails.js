@@ -58,14 +58,14 @@ function confirmEmail({ confirmUrl, unsubscribeUrl }) {
   const why = "You're getting this because someone entered this address at cotib.com.";
   const html = shell('Confirm here to join the list.', `
 <p style="${P}">Someone (hopefully you) asked for the free Do the Next Thing coaching tips at cotib.com with this address.</p>
-<p style="${P}">After you confirm, Tip 1 arrives right away, Tip 2 on day 3 and Tip 3 on day 7. Confirm here to join the list:</p>
+<p style="${P}">After you confirm, Tip 1 arrives right away, Tip 2 on day 3 and Tip 3 on day 7, with a bonus tip around day 14. Confirm here to join the list:</p>
 <p style="margin:0 0 20px;"><a href="${esc(confirmUrl)}" style="${BTN}">Confirm my email</a></p>
 <p style="${P}font-size:13px;color:#475569;">Or paste this link into your browser: <a href="${esc(confirmUrl)}" style="color:#2563eb;word-break:break-all;">${esc(confirmUrl)}</a></p>
 <p style="${P}">The link works for 48 hours. If you didn't ask for this, ignore this email. You won't hear from us again.</p>
 ${footerHtml(unsubscribeUrl, why)}`);
   const text = `Someone (hopefully you) asked for the free Do the Next Thing coaching tips at cotib.com with this address.
 
-After you confirm, Tip 1 arrives right away, Tip 2 on day 3 and Tip 3 on day 7. Confirm here to join the list: ${confirmUrl}
+After you confirm, Tip 1 arrives right away, Tip 2 on day 3 and Tip 3 on day 7, with a bonus tip around day 14. Confirm here to join the list: ${confirmUrl}
 
 The link works for 48 hours. If you didn't ask for this, ignore this email. You won't hear from us again.${footerText(unsubscribeUrl, why)}`;
   return { subject, html, text, headers: listUnsubscribeHeaders(unsubscribeUrl) };
@@ -81,25 +81,29 @@ const CODE = 'margin:0 0 16px;padding:12px 14px;background:#f1f5f9;border:1px so
 // approved (lib/dtnt/tips.js). The only additions are a short lead-in that says
 // which tip this is and when the rest arrive, and the footer. Tip 1 goes out on
 // the confirm click and doubles as the welcome; Tips 2 and 3 are scheduled by
-// confirm.js for day 3 and day 7 after the click.
+// confirm.js for day 3 and day 7 after the click, plus a bonus tip for day 14.
 // Section 5 of the free-tier copy (welcome email) is replaced by this.
 function tipEmail({ tip, unsubscribeUrl }) {
   const lead = {
-    1: ["You're on the list. This is Tip 1 of 3.", 'Tip 2 arrives 3 days from now and Tip 3 arrives on day 7.'],
+    1: ["You're on the list. This is Tip 1 of 3.", 'Tip 2 arrives 3 days from now, Tip 3 arrives on day 7, and a bonus tip follows around day 14.'],
     2: ['Tip 2 of 3.', 'Tip 3 arrives in 4 days.'],
-    3: ['Tip 3 of 3, the last one.', ''],
+    3: ['Tip 3 of 3.', 'A bonus tip follows around day 14.'],
+    4: ['Bonus tip. This one comes on top of the three.', ''],
   }[tip.number];
   const why = "You're getting this because you confirmed your signup for the free coaching tips at cotib.com.";
   const body = tip.blocks.map(([kind, t]) => (kind === 'code'
     ? `<pre style="${CODE}">${esc(t)}</pre>`
     : `<p style="${P}">${inline(t)}</p>`)).join('\n');
-  const html = shell(`Tip ${tip.number} of 3: ${tip.subject}`, `
+  const preheader = tip.bonus ? tip.subject : `Tip ${tip.number} of 3: ${tip.subject}`;
+  const creditHtml = tip.credit ? `\n<p style="${P}font-size:13px;color:#475569;">${esc(tip.credit.text)}<a href="${esc(tip.credit.url)}" style="color:#2563eb;word-break:break-all;">${esc(tip.credit.url)}</a></p>` : '';
+  const creditText = tip.credit ? `\n\n${tip.credit.text}${tip.credit.url}` : '';
+  const html = shell(preheader, `
 <p style="${P}font-size:13px;color:#475569;">${esc(lead[0])}${lead[1] ? ` ${esc(lead[1])}` : ''}</p>
-${body}
+${body}${creditHtml}
 ${footerHtml(unsubscribeUrl, why)}`);
   const text = `${lead[0]}${lead[1] ? ` ${lead[1]}` : ''}
 
-${tip.blocks.map(([, t]) => t.replace(/\*\*/g, '')).join('\n\n')}${footerText(unsubscribeUrl, why)}`;
+${tip.blocks.map(([, t]) => t.replace(/\*\*/g, '')).join('\n\n')}${creditText}${footerText(unsubscribeUrl, why)}`;
   return { subject: tip.subject, html, text, headers: listUnsubscribeHeaders(unsubscribeUrl) };
 }
 
@@ -109,19 +113,19 @@ ${tip.blocks.map(([, t]) => t.replace(/\*\*/g, '')).join('\n\n')}${footerText(un
 function welcomeEmail({ tipsUrl, unsubscribeUrl }) {
   const subject = "You're already on the list for the Do the Next Thing coaching tips";
   const why = "You're getting this because you asked for the free coaching tips at cotib.com.";
-  const html = shell("You're already on the list. Tips arrive on confirm, day 3 and day 7.", `
+  const html = shell("You're already on the list. Tips arrive on confirm, day 3 and day 7, plus a bonus tip around day 14.", `
 <p style="${P}">You're already on the list, so there's nothing more to do.</p>
-<p style="${P}">Three tips arrive in order: Tip 1 when you confirm, Tip 2 on day 3 and Tip 3 on day 7. Each tip names a stall you probably know, gives one technique and a line to paste into your AI chat, and ends with one small thing to do today.</p>
-<p style="${P}">The titles of the three tips are here:</p>
-<p style="margin:0 0 20px;"><a href="${esc(tipsUrl)}" style="${BTN}">See the three tip titles</a></p>
+<p style="${P}">Three tips arrive in order: Tip 1 when you confirm, Tip 2 on day 3 and Tip 3 on day 7, with a bonus tip around day 14. Each tip names a stall you probably know, gives one technique and a line to paste into your AI chat, and ends with one small thing to do today.</p>
+<p style="${P}">The titles of the tips are here:</p>
+<p style="margin:0 0 20px;"><a href="${esc(tipsUrl)}" style="${BTN}">See the tip titles</a></p>
 <p style="${P}font-size:13px;color:#475569;">Or paste this link into your browser: <a href="${esc(tipsUrl)}" style="color:#2563eb;word-break:break-all;">${esc(tipsUrl)}</a></p>
 <p style="margin:0;">COTIB LLC</p>
 ${footerHtml(unsubscribeUrl, why)}`);
   const text = `You're already on the list, so there's nothing more to do.
 
-Three tips arrive in order: Tip 1 when you confirm, Tip 2 on day 3 and Tip 3 on day 7. Each tip names a stall you probably know, gives one technique and a line to paste into your AI chat, and ends with one small thing to do today.
+Three tips arrive in order: Tip 1 when you confirm, Tip 2 on day 3 and Tip 3 on day 7, with a bonus tip around day 14. Each tip names a stall you probably know, gives one technique and a line to paste into your AI chat, and ends with one small thing to do today.
 
-The titles of the three tips are here: ${tipsUrl}
+The titles of the tips are here: ${tipsUrl}
 
 COTIB LLC${footerText(unsubscribeUrl, why)}`;
   return { subject, html, text, headers: listUnsubscribeHeaders(unsubscribeUrl) };

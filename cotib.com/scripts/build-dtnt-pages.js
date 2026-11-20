@@ -74,7 +74,7 @@ const landing = page({
           <h2 id="free-title">Get the free coaching tips</h2>
           <div class="ticks" aria-hidden="true"></div>
           <p>Get a short coaching tip by email on getting unstuck, built for solo consultants and technical operators with a side offer to move forward. Each tip names a stall you probably know, gives one technique and a line to paste into your AI chat, and ends with one small thing to do today.</p>
-          <p class="tips-link">Already signed up? <a href="/do-the-next-thing/tips">See the three tip titles.</a></p>
+          <p class="tips-link">Already signed up? <a href="/do-the-next-thing/tips">See the tip titles.</a></p>
         </div>
 
         <div class="paper formcard" id="free-card">
@@ -101,7 +101,7 @@ const landing = page({
             <div class="cf-turnstile" data-sitekey="${TURNSTILE_SITE_KEY}" data-action="dtnt-free"></div>
             <p class="form-error" id="free-error" role="alert" tabindex="-1"></p>
             <button class="btn btn-primary" type="submit">Send me the free tips</button>
-            <p class="confirm-note">We'll email you a confirm link first. Tip 1 arrives right after you click it, Tip 2 on day 3 and Tip 3 on day 7. Privacy: <a href="/do-the-next-thing/privacy">cotib.com/do-the-next-thing/privacy</a>. a COTIB LLC product.</p>
+            <p class="confirm-note">We'll email you a confirm link first. Tip 1 arrives right after you click it, Tip 2 on day 3 and Tip 3 on day 7, with a bonus tip around day 14. Privacy: <a href="/do-the-next-thing/privacy">cotib.com/do-the-next-thing/privacy</a>. a COTIB LLC product.</p>
           </form>
           <div class="done" id="free-done" tabindex="-1" aria-live="polite">
             <h3>Check your email.</h3>
@@ -162,7 +162,7 @@ const landing = page({
           <div class="index-row rev2" role="listitem"><span class="n">04</span><h3>DECIDE</h3><p class="when">You're stuck between options and researching instead.</p></div>
           <div class="index-row rev2" role="listitem"><span class="n">05</span><h3>SHIP</h3><p class="when">It's almost done and you keep polishing.</p></div>
         </div>
-        <p class="by-name">The first three tips: <b>The proposal opening you keep avoiding.</b> <b>The follow-up you skipped.</b> <b>Close the tabs, pick one.</b> They cover starting, restarting after a skip, and deciding. <a href="/do-the-next-thing/tips">See the three tip titles.</a></p>
+        <p class="by-name">The first three tips: <b>The proposal opening you keep avoiding.</b> <b>The follow-up you skipped.</b> <b>Close the tabs, pick one.</b> They cover starting, restarting after a skip, and deciding. <a href="/do-the-next-thing/tips">See the tip titles.</a></p>
       </div>
     </section>
 
@@ -246,7 +246,7 @@ const landing = page({
           </details>
           <details>
             <summary>How do the tips arrive?</summary>
-            <p>As three short emails, timed from the day you confirm your signup: Tip 1 right away, Tip 2 on day 3 and Tip 3 on day 7. The three tip titles are also on the <a href="/do-the-next-thing/tips">tips page</a>. The paid Coaching Tips Library, coming later, is a PDF, a Notion template you import, and a one-page cheat sheet you can print. The Setup Kit adds plain text files and a setup guide.</p>
+            <p>As short emails, timed from the day you confirm your signup: Tip 1 right away, Tip 2 on day 3 and Tip 3 on day 7, with a bonus tip around day 14. The tip titles are also on the <a href="/do-the-next-thing/tips">tips page</a>. The paid Coaching Tips Library, coming later, is a PDF, a Notion template you import, and a one-page cheat sheet you can print. The Setup Kit adds plain text files and a setup guide.</p>
           </details>
           <details>
             <summary>What if I don't know my next step?</summary>
@@ -296,9 +296,9 @@ const privacy = page({
           <ul>
             <li>Your email address and your consent record: the version of the signup wording you agreed to, whether you ticked the optional box for emails about paid products, when you signed up, when you clicked the confirm link, and a hashed version of your IP address (a one-way code, not the raw IP).</li>
             <li>We use a two-step signup: we only add you to our list after you click the confirm link in your email.</li>
-            <li>The titles of the three tips are listed on cotib.com/do-the-next-thing/tips, which anyone can read. That page has no form.</li>
+            <li>The titles of the tips are listed on cotib.com/do-the-next-thing/tips, which anyone can read. That page has no form.</li>
             <li>Signups are checked by Cloudflare Turnstile to stop bots. Turnstile processes data such as your IP address and browser signals to do this.</li>
-            <li>We use your email to send the confirm link and the free coaching tips, one short email at a time: Tip 1 when you confirm, Tip 2 on day 3 and Tip 3 on day 7. When you confirm, Resend is told to send Tips 2 and 3 later, and we save those two scheduled email IDs on your contact so we can cancel them if you unsubscribe. If you tick the optional box, we also use it for occasional emails about paid Do the Next Thing products. We aren't sending those yet. You can unsubscribe any time.</li>
+            <li>We use your email to send the confirm link and the free coaching tips, one short email at a time: Tip 1 when you confirm, Tip 2 on day 3 and Tip 3 on day 7, with a bonus tip around day 14. When you confirm, Resend is told to send Tips 2 and 3 and the bonus tip later, and we save those three scheduled email IDs on your contact so we can cancel them if you unsubscribe. If you tick the optional box, we also use it for occasional emails about paid Do the Next Thing products. We aren't sending those yet. You can unsubscribe any time.</li>
             <li>To slow down repeat tries, the signup form allows about 10 tries a minute from one connection. That count is kept in memory for a minute and isn't saved.</li>
           </ul>
           <p><strong>When you email us:</strong> your email address and anything you write to us.</p>
