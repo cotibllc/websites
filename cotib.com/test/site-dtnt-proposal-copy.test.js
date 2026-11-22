@@ -66,12 +66,10 @@ test('DTNT page uses the approved hero, example, and heading A, and leaves the f
   );
   assert.match(
     example.textContent,
-    /What to check after the timer: Two sentences saved in the actual proposal file\. If the suggested move is still too large, reply:/,
+    /Each tip also gives you a way to narrow the AI's response if it comes back too big, so you can focus on taking the smaller step\./,
   );
-  assert.equal(
-    example.querySelector('code').textContent.trim(),
-    '"Too big. Smaller. One move, under 10 minutes, no research."',
-  );
+  assert.equal(example.querySelector('code'), null, 'the example no longer quotes the narrowing reply');
+  assert.doesNotMatch(html, /What to check after the timer|Two sentences saved in the actual proposal file|Too big\. Smaller/);
 
   const hero = doc.querySelector('section.hero');
   const free = doc.querySelector('section#free');
@@ -135,6 +133,7 @@ test('the leftover prompt-pack sections now describe coaching tips, and the paid
   assert.ok(!card.querySelector('.num'), 'no 1.1 prompt number');
 
   assert.match(text('section[aria-label="What it is"] .story'), /^You already know the step\. What's missing is a move small enough .* Do the Next Thing is a short coaching tip for that moment\. .* Each tip names the stall and gives you one technique\. The line inside is the tool: paste it into ChatGPT/);
+  assert.match(text('section[aria-label="What it is"] .story'), /If the answer comes back too big, the tip also gives you a way to narrow it, so you can focus on taking the smaller step\./);
   assert.match(text('section[aria-label="What it is"] .closer'), /^None of the tips explain why you stalled\./);
   assert.deepEqual([...doc.querySelectorAll('#how ~ .steps li, .steps li')].map((li) => li.querySelector('div').childNodes[0].textContent),
     ['Read the tip.', 'Paste the line into any AI chat app and swap the [brackets] for your own words.', 'Start a 10-minute timer and do the one move it gives you.']);

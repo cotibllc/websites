@@ -60,10 +60,7 @@ const landing = page({
         <div class="ticks" aria-hidden="true"></div>
         <p class="example-task">I need to start the opening of a consulting proposal and haven't begun.</p>
         <p class="example-response">Open your proposal draft and write two rough sentences: the client's problem and the outcome they asked for. Done means those sentences are saved at the top of the draft.</p>
-        <p>What to check after the timer: Two sentences saved in the actual proposal file. If the suggested move is still too large, reply:</p>
-        <div class="reply">
-          <code>"Too big. Smaller. One move, under 10 minutes, no research."</code>
-        </div>
+        <p>Each tip also gives you a way to narrow the AI's response if it comes back too big, so you can focus on taking the smaller step.</p>
       </div>
     </section>
 
@@ -124,10 +121,7 @@ const landing = page({
           <div class="ticks" aria-hidden="true"></div>
           <p>What's missing is a move small enough that you'll take it before something easier gets there first.</p>
           <p>Do the Next Thing is a short coaching tip for that moment. It's not a framework, and it won't hand you a bigger plan. Each tip names the stall and gives you one technique. The line inside is the tool: paste it into ChatGPT, Claude, Gemini, or any AI chat app, fill in the [brackets], and start a 10-minute timer. You get one move. You do it.</p>
-          <div class="reply">
-            <p>If the answer comes back too big, you reply:</p>
-            <code>"Too big. Smaller. One move, under 10 minutes, no research."</code>
-          </div>
+          <p>If the answer comes back too big, the tip also gives you a way to narrow it, so you can focus on taking the smaller step.</p>
           <p class="closer">None of the tips explain why you stalled. Each one ends with you doing something.</p>
         </div>
       </div>
