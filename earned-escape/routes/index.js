@@ -560,7 +560,7 @@ function quizResultsEmailHtml({
     ${tipItems}
   </ol>
   <p style="margin: 0 0 12px;"><a href="${tipPack.moreUrl}" style="color: #2A164E; font-weight: 600;">${escapeHtml(tipPack.moreLabel)} &rarr;</a></p>
-  <p style="margin: 0 0 16px;">Want to turn this into an actual itinerary? Let's hop on a free 30-minute planning call. Zero pressure, no planning fee.</p>
+  <p style="margin: 0 0 16px;">Want to turn this into an actual itinerary? Let's hop on a free 30-minute planning call. Zero pressure. Trips booked through my suppliers are planned at no extra fee.</p>
   <p style="margin: 24px 0;"><a href="https://earnedescape.agency/plan" style="display:inline-block; padding:12px 24px; background:#2A164E; color:#fff; text-decoration:none; border-radius:4px;">Reserve My Planning Call</a></p>
   <p style="margin: 20px 0 0; color: #0D0821;">Talk soon,<br>Chuck<br><span style="font-size: 13px; color: #666;">Earned Escape by COTIB Adventures LLC</span></p>
   <hr style="margin: 32px 0 16px; border: none; border-top: 1px solid #eee;">
@@ -578,7 +578,7 @@ function quizNurtureEmailHtml(name, safeTitle) {
   <p style="margin: 0 0 16px; color: #0D0821;">Hi ${escapeHtml(name)},</p>
   <p style="margin: 0 0 16px;">A few days ago you took the Design My Escape quiz and landed on <strong>${escapeHtml(safeTitle)}</strong>.</p>
   <p style="margin: 0 0 16px;">Most people get stuck right after that moment, comparing options in too many tabs and second-guessing dates, ships, or resorts. That is exactly when a short planning call helps: we narrow the field, map a realistic pace, and decide what is worth booking now versus later.</p>
-  <p style="margin: 0 0 16px;">If you want a second set of eyes, grab a free 30-minute call. Zero pressure, no planning fee.</p>
+  <p style="margin: 0 0 16px;">If you want a second set of eyes, grab a free 30-minute call. Zero pressure. Trips booked through my suppliers are planned at no extra fee.</p>
   <p style="margin: 24px 0;"><a href="https://earnedescape.agency/plan" style="display:inline-block; padding:12px 24px; background:#2A164E; color:#fff; text-decoration:none; border-radius:4px;">Reserve My Planning Call</a></p>
   <p style="margin: 0 0 16px;">Either way, keep the tips from your results email handy when you research. You've earned a trip that actually feels easy.</p>
   <p style="margin: 20px 0 0; color: #0D0821;">Best,<br>Chuck<br><span style="font-size: 13px; color: #666;">Earned Escape by COTIB Adventures LLC</span></p>
