@@ -2,7 +2,7 @@
 // Asserts the Nov 21 EE wording refresh, plus the follow-up H1, fee-line,
 // and IT management body copy. Locks the new homepage H1, the approved
 // supplier fee line, and the absence of the old fee phrases and
-// "corporate IT" on the in-scope surfaces.
+// "corporate IT" across the site source and rendered pages.
 process.env.NODE_ENV = 'production';
 const test = require('node:test');
 const assert = require('node:assert/strict');
@@ -156,8 +156,8 @@ test('about body uses IT management and the approved fee line', async () => {
   assert.doesNotMatch(body, /corporate IT/i);
   assert.match(body, FEE_RE);
   assert.doesNotMatch(body, OLD_FEE);
-  // Left in place for Chuck to review; not rewritten in this PR.
-  assert.match(body, /all at no added cost to you/);
+  assert.match(body, /at no extra fee to you/);
+  assert.doesNotMatch(body, /all at no added cost to you/);
   assert.match(body, /25\+ years in IT management/);
 });
 
@@ -168,6 +168,9 @@ test('royal-caribbean body and FAQ use the approved fee line', async () => {
   assert.doesNotMatch(body, OLD_FEE);
   assert.match(body, /Do you charge a planning fee\?/);
   assert.match(body, /Trips booked through my suppliers are planned at no extra fee\. You pay the cruise fare and any add-ons you choose\./);
+  assert.match(body, /the same way I planned complex systems over 25\+ years in IT management\./);
+  assert.doesNotMatch(body, /in corporate IT/);
+  assert.doesNotMatch(body, /corporate IT/i);
   assert.match(body, /25\+ years in IT management/);
 });
 
@@ -205,8 +208,8 @@ test('rendered sitemap pages have no old fee phrases', async () => {
   }
 });
 
-test('in-scope pages have no corporate IT except the flagged royal-caribbean body sentence', async () => {
-  const checked = ['/', '/about', '/theme-parks', '/universal', '/disney-world', '/disney-cruise-line', '/plan'];
+test('rendered pages and EE site source have no corporate IT', async () => {
+  const checked = ['/', '/about', '/theme-parks', '/universal', '/disney-world', '/disney-cruise-line', '/plan', '/royal-caribbean'];
   for (const p of checked) {
     const { res, body } = await get(p);
     assert.ok(res.status === 200 || res.status === 307, `${p} ${res.status}`);
@@ -214,4 +217,25 @@ test('in-scope pages have no corporate IT except the flagged royal-caribbean bod
   }
   const { body: about } = await get('/about');
   assert.match(about, /25\+ years in IT management/);
+  const { body: rc } = await get('/royal-caribbean');
+  assert.match(rc, /the same way I planned complex systems over 25\+ years in IT management\./);
+
+  const siteRoot = path.join(__dirname, '..');
+  const skipDirs = new Set(['node_modules', 'test', 'public/css']);
+  const hits = [];
+  function walk(dir) {
+    for (const ent of fs.readdirSync(dir, { withFileTypes: true })) {
+      const rel = path.relative(siteRoot, path.join(dir, ent.name));
+      if (ent.isDirectory()) {
+        if (ent.name === 'node_modules' || ent.name === 'test' || rel === path.join('public', 'css')) continue;
+        walk(path.join(dir, ent.name));
+        continue;
+      }
+      if (!/\.(njk|js|txt|html|xml|md|json)$/i.test(ent.name)) continue;
+      const src = fs.readFileSync(path.join(dir, ent.name), 'utf8');
+      if (/corporate IT/i.test(src)) hits.push(rel);
+    }
+  }
+  walk(siteRoot);
+  assert.deepEqual(hits, [], `corporate IT still present in: ${hits.join(', ')}`);
 });
