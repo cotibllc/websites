@@ -1,7 +1,8 @@
 'use strict';
-// Asserts the Nov 21 EE wording refresh: new titles and descriptions,
-// unchanged homepage H1, no twitter:site tag, and the locked supplier fee line
-// in the in-scope surfaces. Does not rewrite or assert out-of-scope body copy.
+// Asserts the Nov 21 EE wording refresh, plus the follow-up H1, fee-line,
+// and IT management body copy. Locks the new homepage H1, the approved
+// supplier fee line, and the absence of the old fee phrases and
+// "corporate IT" on the in-scope surfaces.
 process.env.NODE_ENV = 'production';
 const test = require('node:test');
 const assert = require('node:assert/strict');
@@ -21,6 +22,10 @@ const ABOUT_META =
 const FEE_LINE = 'Trips booked through my suppliers are planned at no extra fee.';
 const SCHEMA_DESC =
   'Trips planned around how you travel: family cruises, theme park vacations, active and outdoor trips, Europe and Asia. Every trip gets luxury-level care, whatever the style or budget. Trips booked through my suppliers are planned at no extra fee.';
+const NEW_H1 = '<h1 class="hero__headline" id="hero-heading">Trips planned around how you travel</h1>';
+const OLD_H1 = '<h1 class="hero__headline" id="hero-heading">Royal Caribbean<br>Cruise Planning</h1>';
+const OLD_FEE = /No planning fee|no planning fee|There is no planning fee|without adding a separate planning fee|Zero pressure, no planning fee|zero planning fee|costs nothing/i;
+const FEE_RE = new RegExp(FEE_LINE.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
 
 let server;
 let base;
@@ -70,13 +75,16 @@ test('homepage title, descriptions, schema, and H1', async () => {
   assert.equal(meta(body, 'property', 'og:title'), HOME_TITLE);
   assert.equal(meta(body, 'name', 'twitter:title'), HOME_TITLE);
   assertDescriptions(body, HOME_META);
-  assert.match(body, /<h1 class="hero__headline" id="hero-heading">Royal Caribbean<br>Cruise Planning<\/h1>/);
+  assert.match(body, new RegExp(NEW_H1.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
+  assert.doesNotMatch(body, new RegExp(OLD_H1.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
   assert.match(body, /I plan family cruises, theme park trips, active travel, Europe and Asia around how you like to travel/);
   assert.match(body, new RegExp(SCHEMA_DESC.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
   assert.match(body, /"priceRange": "\$\$-\$\$\$\$"/);
   assert.equal(meta(body, 'name', 'twitter:site'), null);
   assert.doesNotMatch(body, /zero planning fee/i);
   assert.doesNotMatch(body, /costs nothing/i);
+  assert.match(body, FEE_RE);
+  assert.doesNotMatch(body, OLD_FEE);
 });
 
 test('about title and meta use IT management', async () => {
@@ -110,7 +118,7 @@ test('404 inherits the new homepage meta and has no twitter:site', async () => {
 test('theme-parks body uses the supplier fee line', async () => {
   const { res, body } = await get('/theme-parks');
   assert.equal(res.status, 200);
-  assert.match(body, new RegExp(FEE_LINE.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
+  assert.match(body, FEE_RE);
   assert.doesNotMatch(body, /There is no planning fee\./);
 });
 
@@ -118,11 +126,13 @@ test('llms.txt uses the repositioned description and supplier fee line', async (
   const { res, body } = await get('/llms.txt');
   assert.equal(res.status, 200);
   assert.match(body, /Trips planned around how you travel, including family cruises, theme parks, Europe and Asia/);
-  assert.match(body, new RegExp(FEE_LINE.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
+  assert.match(body, FEE_RE);
+  assert.match(body, /25\+ years in IT management applied to travel/);
   assert.doesNotMatch(body, /There is no planning fee/);
   assert.doesNotMatch(body, /No planning fee either way/);
   assert.doesNotMatch(body, /White-glove planning for elevated family vacations/);
   assert.doesNotMatch(body, /zero planning fee/i);
+  assert.doesNotMatch(body, /corporate IT/i);
   const onDisk = fs.readFileSync(path.join(__dirname, '../public/llms.txt'), 'utf8');
   assert.equal(body.replace(/\r\n/g, '\n').trim(), onDisk.replace(/\r\n/g, '\n').trim());
 });
@@ -137,4 +147,71 @@ test('proposed title and meta lengths stay within House Rule 37 limits', () => {
   for (const s of [HOME_TITLE, HOME_META, RC_TITLE, RC_META, ABOUT_TITLE, ABOUT_META, FEE_LINE, SCHEMA_DESC]) {
     assert.doesNotMatch(s, /[\u2013\u2014]/);
   }
+});
+
+test('about body uses IT management and the approved fee line', async () => {
+  const { res, body } = await get('/about');
+  assert.equal(res.status, 200);
+  assert.match(body, /<strong>25\+ years in IT management<\/strong>/);
+  assert.doesNotMatch(body, /corporate IT/i);
+  assert.match(body, FEE_RE);
+  assert.doesNotMatch(body, OLD_FEE);
+  // Left in place for Chuck to review; not rewritten in this PR.
+  assert.match(body, /all at no added cost to you/);
+  assert.match(body, /25\+ years in IT management/);
+});
+
+test('royal-caribbean body and FAQ use the approved fee line', async () => {
+  const { res, body } = await get('/royal-caribbean');
+  assert.equal(res.status, 200);
+  assert.match(body, FEE_RE);
+  assert.doesNotMatch(body, OLD_FEE);
+  assert.match(body, /Do you charge a planning fee\?/);
+  assert.match(body, /Trips booked through my suppliers are planned at no extra fee\. You pay the cruise fare and any add-ons you choose\./);
+  assert.match(body, /25\+ years in IT management/);
+});
+
+test('author-bio uses IT management, not corporate IT', () => {
+  const src = fs.readFileSync(path.join(__dirname, '../views/partials/author-bio.njk'), 'utf8');
+  assert.match(src, /with 25\+ years in IT management\./);
+  assert.doesNotMatch(src, /corporate IT/i);
+});
+
+test('why.njk uses the approved fee line', () => {
+  const src = fs.readFileSync(path.join(__dirname, '../views/partials/why.njk'), 'utf8');
+  assert.match(src, FEE_RE);
+  assert.doesNotMatch(src, OLD_FEE);
+});
+
+test('quiz email copy uses the approved fee line', () => {
+  const src = fs.readFileSync(path.join(__dirname, '../routes/index.js'), 'utf8');
+  assert.match(src, /Want to turn this into an actual itinerary\? Let's hop on a free 30-minute planning call\. Zero pressure\. Trips booked through my suppliers are planned at no extra fee\./);
+  assert.match(src, /If you want a second set of eyes, grab a free 30-minute call\. Zero pressure\. Trips booked through my suppliers are planned at no extra fee\./);
+  assert.doesNotMatch(src, /Zero pressure, no planning fee/);
+  assert.doesNotMatch(src, OLD_FEE);
+});
+
+const sitemap = fs.readFileSync(path.join(__dirname, '../public/sitemap.xml'), 'utf8');
+const sitemapPaths = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)]
+  .map((m) => new URL(m[1]).pathname)
+  .filter((p) => !p.endsWith('.pdf'));
+
+test('rendered sitemap pages have no old fee phrases', async () => {
+  for (const p of sitemapPaths) {
+    const { res, body } = await get(p);
+    assert.equal(res.status, 200, p);
+    assert.doesNotMatch(body, OLD_FEE, p);
+    assert.doesNotMatch(body, /costs nothing/i, p);
+  }
+});
+
+test('in-scope pages have no corporate IT except the flagged royal-caribbean body sentence', async () => {
+  const checked = ['/', '/about', '/theme-parks', '/universal', '/disney-world', '/disney-cruise-line', '/plan'];
+  for (const p of checked) {
+    const { res, body } = await get(p);
+    assert.ok(res.status === 200 || res.status === 307, `${p} ${res.status}`);
+    assert.doesNotMatch(body, /corporate IT/i, p);
+  }
+  const { body: about } = await get('/about');
+  assert.match(about, /25\+ years in IT management/);
 });
