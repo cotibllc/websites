@@ -125,8 +125,8 @@ router.get('/about', (req, res) => {
   res.render('pages/about.njk', {
     site,
     bodyClass: 'dest-page about-page',
-    title: 'Meet Chuck | Family & Luxury Travel Advisor | Earned Escape',
-    description: 'After decades of travel and 25+ years in corporate IT, Chuck Betancourt built Earned Escape to plan family vacations and luxury escapes with the same precision.',
+    title: 'Meet Chuck | Family Travel Advisor | Earned Escape',
+    description: 'Meet Chuck Betancourt of Earned Escape: trips planned around how you travel, with 25+ years in IT management, for family cruises, theme parks, Europe and Asia.',
     canonical: '/about',
     ogImage: '/images/photos/chuck-betancourt-headshot-square.jpg',
   });
@@ -148,8 +148,8 @@ router.get('/royal-caribbean', (req, res) => {
     site,
     bodyClass: 'dest-page',
     destination: 'royal-caribbean',
-    title: 'Royal Caribbean Cruises | Earned Escape',
-    description: 'Royal Caribbean cruise planning shaped by firsthand travel experience, with help choosing the right ship, stateroom, and itinerary.',
+    title: 'Royal Caribbean Cruise Planning for Families | Earned Escape',
+    description: 'Royal Caribbean planning around how your family travels, from firsthand sailings. Trips booked through my suppliers are planned at no extra fee.',
     canonical: '/royal-caribbean',
   });
 });

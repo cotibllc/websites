@@ -74,10 +74,9 @@ module.exports = {
 
   // ── SEO
   seo: {
-    title: "Earned Escape | White-Glove Family & Luxury Travel Planning",
+    title: "Earned Escape | Trips Planned Around How You Travel",
     description:
-      "White-glove planning for elevated family vacations and luxury escapes. Personal travel planning for multi-gen family cruises and more, at zero planning fee.",
+      "Trips planned around how you travel, including family cruises, theme parks, Europe and Asia. Trips booked through my suppliers are planned at no extra fee.",
     ogImage: '/images/og/og-default.png',
-    twitterHandle: '@earned_escape',
   },
 };
