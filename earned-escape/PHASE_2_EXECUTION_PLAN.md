@@ -19,7 +19,7 @@ The homepage introduces your story, but the `/about` page will be the deep dive.
 - **Narrative Focus:** 
   - Traveling the world since age 6.
   - The China bucket list trip.
-  - Applying 30 years of corporate IT precision to travel planning.
+  - Applying 30 years of IT management precision to travel planning.
   - Why you created COTIB Adventures LLC as a family legacy.
 - **Visuals:** We need 3-4 strong photos here (e.g., your solo travel moments, the China trip highlights, and perhaps a professional but warm headshot).
 - **Deliverable:** A new `about.njk` view and corresponding `/about` route.

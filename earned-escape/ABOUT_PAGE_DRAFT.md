@@ -20,7 +20,7 @@
 **Visual:** High-quality, warm portrait (e.g., smiling at the Great Wall or a strong solo travel shot).
 **Eyebrow:** The COTIB Story
 **Headline:** Travel isn’t just what I do.<br>It’s *who I am.*
-**Subhead:** After decades of exploring the world and 30 years in corporate IT, I built Earned Escape to help families plan the kind of trips they deserve—with absolute precision.
+**Subhead:** After decades of exploring the world and 30 years in IT management, I built Earned Escape to help families plan the kind of trips they deserve—with absolute precision.
 
 ### 2. A Lifetime of Travel (The Origin)
 **Headline:** Exploring the world since I was six.

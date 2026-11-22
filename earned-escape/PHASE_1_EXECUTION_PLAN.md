@@ -47,7 +47,7 @@
   - Lifetime travel since age 6 (solo + wife + family)
   - January 2026 China trip (Beijing → Xi’an → Chongqing) — a major personal bucket list achievement
   - Deep Royal Caribbean loyalty (5th & 6th cruises in 2026, why he returns)
-  - 30 years corporate IT precision mindset applied to travel planning
+  - 30 years IT management precision mindset applied to travel planning
   - COTIB Adventures LLC as the family legacy company
   - Flexible support model (“I can hold your hand or be a lighter advisor”)
 - Updated “How It Works” if needed to reinforce the two support tiers
