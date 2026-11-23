@@ -138,9 +138,9 @@ test('F11.1 confirm adds the contact to the DTNT segment, records consent, start
   assert.equal(res.headers.get('cache-control'), 'no-store');
   const html = await res.text();
   assert.match(html, /You're confirmed\./);
-  assert.match(html, /You're on the list\. Tip 1 is on its way\. If it hasn't arrived in a few minutes, check your spam or promotions folder\. Tip 2 comes on day 3 and Tip 3 on day 7\. Here are the titles of the three tips:/);
+  assert.match(html, /You're on the list\. Tip 1 is on its way\. If it hasn't arrived in a few minutes, check your spam or promotions folder\. Tip 2 comes on day 3 and Tip 3 on day 7, with a bonus tip around day 14\. Here are the titles of the tips:/);
   assert.doesNotMatch(html, /in your inbox now/, 'no promise that the email has already landed');
-  assert.match(html, /<a class="btn btn-primary" href="\/do-the-next-thing\/tips">See the three tip titles<\/a>/);
+  assert.match(html, /<a class="btn btn-primary" href="\/do-the-next-thing\/tips">See the tip titles<\/a>/);
   assert.doesNotMatch(html, /sampler|3 prompts|\/free\/dl\//, 'the confirmed page no longer offers the PDF');
   const c = world.contacts.get('reader@example.com');
   assert.ok(c && c.segments.has('seg_mock_dtnt_free') && !c.unsubscribed);
@@ -148,12 +148,13 @@ test('F11.1 confirm adds the contact to the DTNT segment, records consent, start
   assert.ok(c.properties.dtnt_confirmed_at && c.properties.dtnt_signed_up_at && c.properties.dtnt_ip_hash);
   const contactCall = world.calls.find((x) => x.path === '/contacts' && x.method === 'POST');
   assert.equal(contactCall.headers.Authorization, 'Bearer mock-full-key', 'contacts use the full-access key');
-  // Confirm email, then Tips 2 and 3 (scheduled), then Tip 1 (immediate).
-  assert.equal(world.emails.length, 4);
-  assert.deepEqual(world.emails.slice(1).map((e) => e.subject), [tipsData.TIPS[1].subject, tipsData.TIPS[2].subject, tipsData.TIPS[0].subject]);
+  // Confirm email, then Tips 2 and 3 and the bonus tip (scheduled), then Tip 1 (immediate).
+  assert.equal(world.emails.length, 5);
+  assert.deepEqual(world.emails.slice(1).map((e) => e.subject), [tipsData.TIPS[1].subject, tipsData.TIPS[2].subject, tipsData.TIPS[3].subject, tipsData.TIPS[0].subject]);
   assert.match(tipEmail(1).idempotencyKey, /^dtnt-tip1-/);
   assert.match(tipEmail(2).idempotencyKey, /^dtnt-tip2-/);
   assert.match(tipEmail(3).idempotencyKey, /^dtnt-tip3-/);
+  assert.match(tipEmail(4).idempotencyKey, /^dtnt-tip4-/);
 });
 
 // The sampler PDF is no longer linked from any page or email. The endpoint
@@ -417,7 +418,7 @@ test('fails closed when any env var is missing, before calling anyone', async ()
     delete process.env[k];
     const r = await signup(good());
     assert.equal(r.status, 503, `signup without ${k}`);
-    assert.match((await r.json()).error, /isn't available right now/);
+    assert.match((await r.json()).error, /^The free coaching tips signup isn't available right now\. Try again later, or email customerservice@cotib\.com\.$/);
     assert.equal(world.calls.length, 0);
     process.env[k] = saved;
   }
@@ -798,9 +799,9 @@ const unsubscribeVia = (email, { oneClick = false } = {}) => {
 
 test('tips: the three approved emails are the text on file, unchanged', () => {
   const crypto = require('crypto');
-  assert.deepEqual(tipsData.TIPS.map((t) => t.subject), ['The proposal opening you keep avoiding', 'The follow-up you skipped', 'Close the tabs, pick one']);
+  assert.deepEqual(tipsData.TIPS.slice(0, 3).map((t) => t.subject), ['The proposal opening you keep avoiding', 'The follow-up you skipped', 'Close the tabs, pick one']);
   assert.equal(
-    crypto.createHash('sha256').update(JSON.stringify(tipsData.TIPS.map((t) => [t.subject, t.blocks]))).digest('hex'),
+    crypto.createHash('sha256').update(JSON.stringify(tipsData.TIPS.slice(0, 3).map((t) => [t.subject, t.blocks]))).digest('hex'),
     '31b888430cc8fab0ede4bb7d913671eec4a3767dacf74e667021ce673dc1048c',
     'tip text changed: it must match the version Chuck approved on 2026-11-17 (update this hash only with his OK)',
   );
@@ -811,20 +812,38 @@ test('tips: the three approved emails are the text on file, unchanged', () => {
   assert.match(prompts[2], /^I've been researching \[the decision\] instead of making it\./);
 });
 
-test('tips: delivery is relative to the confirm click: Tip 1 now, Tip 2 on day 3, Tip 3 on day 7', () => {
-  assert.deepEqual(tipsData.TIPS.map((t) => t.delayDays), [0, 3, 7]);
+test('tips: the bonus tip text is the text Chuck approved on 2026-11-19, with its credit line, labeled as a bonus and never "Tip 4"', () => {
+  const crypto = require('crypto');
+  const bonus = tipsData.TIPS[3];
+  assert.equal(tipsData.TIPS.length, 4);
+  assert.equal(bonus.bonus, true);
+  assert.ok(tipsData.TIPS.slice(0, 3).every((t) => !t.bonus));
+  assert.equal(bonus.subject, 'Bonus tip: Name the goal, not the step');
+  assert.equal(bonus.archiveTitle, 'Name the goal, not the step');
+  assert.equal(
+    crypto.createHash('sha256').update(JSON.stringify([[bonus.subject, bonus.blocks]])).digest('hex'),
+    '5b46411a846cc4945b45faeacfdc37265c58e062e3ca69ea7dbbcca94f80a09a',
+    'bonus tip text changed: it must match the version Chuck approved on 2026-11-19 (update this hash only with his OK)',
+  );
+  assert.equal(bonus.credit.text + bonus.credit.url, 'The goal-first idea here comes from Lauren (@poteto): https://x.com/poteto/status/2123159537016533493');
+  assert.match(bonus.blocks.find((b) => b[0] === 'code')[1], /^I keep working on \[the step\] and haven't reached \[the result it's for\]\./);
+  assert.doesNotMatch(JSON.stringify([bonus.subject, bonus.archiveTitle, bonus.blocks]), /Tip 4|Grok Bot|[\u2013\u2014]/);
+});
+
+test('tips: delivery is relative to the confirm click: Tip 1 now, Tip 2 on day 3, Tip 3 on day 7, bonus tip on day 14', () => {
+  assert.deepEqual(tipsData.TIPS.map((t) => t.delayDays), [0, 3, 7, 14]);
   const t0 = Date.parse('2026-12-01T14:30:00Z');
-  assert.deepEqual(tipsData.TIPS.map((t) => tipsData.sendAtMs(t0, t)), [t0, t0 + 3 * DAY, t0 + 7 * DAY]);
+  assert.deepEqual(tipsData.TIPS.map((t) => tipsData.sendAtMs(t0, t)), [t0, t0 + 3 * DAY, t0 + 7 * DAY, t0 + 14 * DAY]);
   assert.ok(tipsData.TIPS.every((t) => !('publishAt' in t)), 'no fixed publish dates remain');
 });
 
-test('tips: confirm sends Tip 1 now and schedules Tips 2 and 3 at Resend for 3 and 7 days after the click, within Resend\'s 30 day limit', async () => {
+test('tips: confirm sends Tip 1 now and schedules Tips 2 and 3 and the bonus tip at Resend for 3, 7 and 14 days after the click, within Resend\'s 30 day limit', async () => {
   await signup(good());
   const link = confirmLink(world.emails[0]);
   const clickAt = Date.now() + 90 * 1000;
   await withClock(90, async () => { assert.equal((await get(link)).status, 200); });
-  const [t1, t2, t3] = [1, 2, 3].map(tipEmail);
-  for (const e of [t1, t2, t3]) {
+  const [t1, t2, t3, t4] = [1, 2, 3, 4].map(tipEmail);
+  for (const e of [t1, t2, t3, t4]) {
     assert.deepEqual(e.to, ['reader@example.com']);
     assert.equal(e.headers['List-Unsubscribe-Post'], 'List-Unsubscribe=One-Click');
   }
@@ -834,8 +853,9 @@ test('tips: confirm sends Tip 1 now and schedules Tips 2 and 3 at Resend for 3 a
   const near = (iso, expected) => assert.ok(Math.abs(Date.parse(iso) - expected) < 5000, `${iso} is not near ${new Date(expected).toISOString()}`);
   near(t2.scheduled_at, clickAt + 3 * DAY);
   near(t3.scheduled_at, clickAt + 7 * DAY);
+  near(t4.scheduled_at, clickAt + 14 * DAY);
   assert.match(t2.scheduled_at, /^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d\.\d{3}Z$/, 'ISO 8601');
-  for (const e of [t2, t3]) {
+  for (const e of [t2, t3, t4]) {
     assert.equal(e.last_event, 'scheduled');
     assert.ok(Date.parse(e.scheduled_at) - Date.now() < 30 * DAY, 'inside the 30 day scheduling limit');
   }
@@ -844,7 +864,8 @@ test('tips: confirm sends Tip 1 now and schedules Tips 2 and 3 at Resend for 3 a
   const props = world.contacts.get('reader@example.com').properties;
   assert.equal(props.dtnt_tip2_email_id, t2.id);
   assert.equal(props.dtnt_tip3_email_id, t3.id);
-  assert.equal(new Set(world.emails.map((e) => e.idempotencyKey).filter(Boolean)).size, 3, 'one idempotency key per tip');
+  assert.equal(props.dtnt_tip4_email_id, t4.id);
+  assert.equal(new Set(world.emails.map((e) => e.idempotencyKey).filter(Boolean)).size, 4, 'one idempotency key per tip');
 });
 
 test('tips: two readers who confirm on different days get different send times, each counted from their own click', async () => {
@@ -854,8 +875,8 @@ test('tips: two readers who confirm on different days get different send times, 
     await get(confirmLink(world.emails.filter((e) => e.to[0] === 'b@example.com').at(-1)));
   });
   const second = world.emails.filter((e) => e.to[0] === 'b@example.com' && e.scheduled_at).map((e) => Date.parse(e.scheduled_at));
-  assert.equal(first.length, 2);
-  assert.equal(second.length, 2);
+  assert.equal(first.length, 3);
+  assert.equal(second.length, 3);
   second.forEach((t, i) => assert.ok(Math.abs(t - first[i] - 5 * DAY) < 10000, 'five days later, five days later'));
 });
 
@@ -867,7 +888,7 @@ test('tips: a repeat click on the confirm link neither sends nor schedules anyth
   await get(link);
   await get(link);
   assert.equal(world.emails.length, before);
-  assert.equal(world.emails.filter((e) => e.scheduled_at).length, 2);
+  assert.equal(world.emails.filter((e) => e.scheduled_at).length, 3);
 });
 
 test('tips: the same confirm token reuses its idempotency keys, so a retry inside Resend\'s window cannot double-send', async () => {
@@ -880,7 +901,7 @@ test('tips: the same confirm token reuses its idempotency keys, so a retry insid
   world.fetch = async (url, opts = {}) => (/\/contacts\/reader%40example\.com$/.test(url) && (opts.method || 'GET') === 'GET' ? { ok: false, status: 500, json: async () => ({}) } : real(url, opts));
   await get(link);
   world.fetch = real;
-  assert.equal(world.emails.length, 4, 'Resend returned the original emails for the same keys');
+  assert.equal(world.emails.length, 5, 'Resend returned the original emails for the same keys');
   assert.deepEqual(world.emails.slice(1).map((e) => e.idempotencyKey), keys);
 });
 
@@ -897,19 +918,20 @@ test('tips: no tip is sent or scheduled without the required tips consent on the
   assert.equal(refused.status, 400);
 });
 
-test('tips: unsubscribing cancels the scheduled Tips 2 and 3 and leaves the delivered Tip 1 alone', async () => {
+test('tips: unsubscribing cancels the scheduled Tips 2 and 3 and the bonus tip and leaves the delivered Tip 1 alone', async () => {
   const tip1 = await confirmedReader();
   assert.equal((await unsubscribeVia(tip1)).status, 200);
   assert.equal(world.contacts.get('reader@example.com').unsubscribed, true);
   assert.equal(tipEmail(2).last_event, 'canceled');
   assert.equal(tipEmail(3).last_event, 'canceled');
+  assert.equal(tipEmail(4).last_event, 'canceled');
   assert.equal(tipEmail(1).last_event, 'delivered');
   const cancels = resendCalls('POST', /^\/emails\/[^/]+\/cancel$/);
-  assert.equal(cancels.length, 2);
+  assert.equal(cancels.length, 3);
   for (const c of cancels) assert.equal(c.headers.Authorization, 'Bearer mock-full-key');
   // Repeating the unsubscribe is safe: nothing left to cancel.
   assert.equal((await unsubscribeVia(tip1)).status, 200);
-  assert.equal(resendCalls('POST', /^\/emails\/[^/]+\/cancel$/).length, 2);
+  assert.equal(resendCalls('POST', /^\/emails\/[^/]+\/cancel$/).length, 3);
 });
 
 test('tips: one-click unsubscribe (RFC 8058) from a later tip also cancels what is still scheduled', async () => {
@@ -918,8 +940,9 @@ test('tips: one-click unsubscribe (RFC 8058) from a later tip also cancels what 
   assert.equal((await unsubscribeVia(tipEmail(2), { oneClick: true })).status, 200);
   assert.equal(tipEmail(2).last_event, 'delivered', 'an email that already went out is not touched');
   assert.equal(tipEmail(3).last_event, 'canceled');
+  assert.equal(tipEmail(4).last_event, 'canceled');
   const cancelled = resendCalls('POST', /^\/emails\/[^/]+\/cancel$/).map((c) => c.path);
-  assert.deepEqual(cancelled, [`/emails/${tipEmail(3).id}/cancel`]);
+  assert.deepEqual(cancelled, [`/emails/${tipEmail(3).id}/cancel`, `/emails/${tipEmail(4).id}/cancel`]);
 });
 
 test('tips: if the cancel fails, unsubscribe says so (502, one-click 502) instead of claiming success, and a retry finishes it', async () => {
@@ -952,11 +975,11 @@ test('tips: after an unsubscribe, a fresh confirm starts the series over from th
   await signup(good());
   await get(confirmLink(world.emails.at(-1)));
   const scheduled = world.emails.filter((e) => e.scheduled_at);
-  assert.equal(scheduled.length, 4);
+  assert.equal(scheduled.length, 6);
   const live = scheduled.filter((e) => e.last_event === 'scheduled');
-  assert.equal(live.length, 2, 'only the new Tips 2 and 3 are live');
+  assert.equal(live.length, 3, 'only the new Tips 2 and 3 and bonus tip are live');
   const props = world.contacts.get('reader@example.com').properties;
-  assert.deepEqual([props.dtnt_tip2_email_id, props.dtnt_tip3_email_id].sort(), live.map((e) => e.id).sort(), 'the contact points at the live ones');
+  assert.deepEqual([props.dtnt_tip2_email_id, props.dtnt_tip3_email_id, props.dtnt_tip4_email_id].sort(), live.map((e) => e.id).sort(), 'the contact points at the live ones');
   // Unsubscribing again cancels exactly those.
   await unsubscribeVia(world.emails.filter((e) => e.subject === SUBJECT_TIP1).at(-1));
   assert.ok(scheduled.every((e) => e.last_event === 'canceled'));
@@ -981,24 +1004,53 @@ test('tips: if Resend refuses to schedule, the reader still confirms and gets Ti
   assert.doesNotMatch(JSON.stringify(logs), /reader@example\.com/);
 });
 
+test('tips: if Resend refuses to schedule the bonus tip, Tips 2 and 3 are cancelled again too and only Tip 1 is delivered', async () => {
+  await signup(good());
+  const real = world.fetch;
+  world.fetch = async (url, opts = {}) => {
+    const body = opts.body ? JSON.parse(opts.body) : {};
+    if (body.scheduled_at && body.subject === tipsData.TIPS[3].subject) return { ok: false, status: 422, json: async () => ({ message: 'mock: cannot schedule' }) };
+    return real(url, opts);
+  };
+  const res = await get(confirmLink(world.emails[0]));
+  world.fetch = real;
+  assert.equal(res.status, 200);
+  assert.ok(tipEmail(1));
+  assert.equal(tipEmail(2).last_event, 'canceled');
+  assert.equal(tipEmail(3).last_event, 'canceled');
+  assert.equal(tipEmail(4), undefined);
+  assert.equal(world.contacts.get('reader@example.com').properties.dtnt_tip2_email_id, undefined, 'no ids saved for cancelled tips');
+});
+
 test('tips: the emails carry the approved tip text word for word, say where the reader is in the series, and keep the footer', async () => {
   await confirmedReader();
   tipsData.TIPS.forEach((t, i) => {
     const e = tipEmail(i + 1);
     assert.equal(e.subject, t.subject);
     for (const [, text] of t.blocks) assert.ok(e.text.includes(text.replace(/\*\*/g, '')), `Tip ${t.number} text block present: ${text.slice(0, 40)}`);
-    assert.match(e.text, new RegExp(`Tip ${t.number} of 3`));
+    if (t.bonus) assert.match(e.text, /^Bonus tip\. This one comes on top of the three\./); else assert.match(e.text, new RegExp(`Tip ${t.number} of 3`));
     assert.ok(e.html.includes(POSTAL) && e.text.includes(POSTAL));
     assert.doesNotMatch(e.html + e.text, /Hi \[first name\]|\$24|\$37|Pack\b|Setup Kit/);
   });
-  assert.match(tipEmail(1).text, /^You're on the list\. This is Tip 1 of 3\. Tip 2 arrives 3 days from now and Tip 3 arrives on day 7\./);
+  assert.match(tipEmail(1).text, /^You're on the list\. This is Tip 1 of 3\. Tip 2 arrives 3 days from now, Tip 3 arrives on day 7, and a bonus tip follows around day 14\./);
   assert.match(tipEmail(1).html, /<strong>The technique:<\/strong>/);
   assert.match(tipEmail(1).html, /<pre [^>]*>I need to start \[the thing\]/);
-  assert.match(tipEmail(3).text, /^Tip 3 of 3, the last one\./);
-  assert.match(world.emails[0].text, /After you confirm, Tip 1 arrives right away, Tip 2 on day 3 and Tip 3 on day 7\./);
+  assert.match(tipEmail(2).text, /^Tip 2 of 3\. Tip 3 arrives in 4 days\./);
+  assert.match(tipEmail(3).text, /^Tip 3 of 3\. A bonus tip follows around day 14\./);
+  assert.doesNotMatch(tipEmail(3).text, /the last one/);
+  assert.doesNotMatch(tipEmail(4).text + tipEmail(4).html + tipEmail(4).subject, /Tip 4/);
+  assert.match(world.emails[0].text, /After you confirm, Tip 1 arrives right away, Tip 2 on day 3 and Tip 3 on day 7, with a bonus tip around day 14\./);
+  // The credit line sits above the footer, in the bonus email only, as plain text and as a link.
+  const credit = 'The goal-first idea here comes from Lauren (@poteto): https://x.com/poteto/status/2123159537016533493';
+  const t4 = tipEmail(4);
+  assert.ok(t4.text.includes(`\n\n${credit}\n\n--\n`), 'credit is the last thing before the footer');
+  assert.match(t4.html, /The goal-first idea here comes from Lauren \(@poteto\): <a href="https:\/\/x\.com\/poteto\/status\/2123159537016533493"/);
+  assert.ok(t4.html.indexOf('Lauren') < t4.html.indexOf(POSTAL), 'credit comes before the footer in the HTML too');
+  for (const n of [1, 2, 3]) assert.doesNotMatch(tipEmail(n).text + tipEmail(n).html, /Lauren|poteto/);
+  assert.match(t4.html, /<span style="display:none[^>]*>Bonus tip: Name the goal, not the step<\/span>/, 'preheader');
 });
 
-test('tips: the public page lists only the three tip titles and when each arrives, never the tip text', async () => {
+test('tips: the public page lists only the tip titles and when each arrives, never the tip text', async () => {
   const res = await get('/do-the-next-thing/tips');
   assert.equal(res.status, 200);
   assert.match(res.headers.get('content-type'), /text\/html/);
@@ -1006,9 +1058,10 @@ test('tips: the public page lists only the three tip titles and when each arrive
   const html = await res.text();
   const doc = new TipsDOM(html).window.document;
   assert.equal(doc.querySelector('h1').textContent, 'The tips');
-  assert.equal(doc.querySelectorAll('article.tip').length, 3);
-  assert.deepEqual([...doc.querySelectorAll('.tip-meta')].map((m) => m.textContent), ['Tip 1Arrives when you confirm', 'Tip 2Arrives on day 3', 'Tip 3Arrives on day 7']);
-  assert.deepEqual([...doc.querySelectorAll('article.tip h2')].map((h) => h.textContent), tipsData.TIPS.map((t) => t.subject));
+  assert.equal(doc.querySelectorAll('article.tip').length, 4);
+  assert.deepEqual([...doc.querySelectorAll('.tip-meta')].map((m) => m.textContent), ['Tip 1Arrives when you confirm', 'Tip 2Arrives on day 3', 'Tip 3Arrives on day 7', 'Bonus tipArrives on day 14']);
+  assert.deepEqual([...doc.querySelectorAll('article.tip h2')].map((h) => h.textContent), ['The proposal opening you keep avoiding', 'The follow-up you skipped', 'Close the tabs, pick one', 'Name the goal, not the step']);
+  assert.doesNotMatch(html, /Tip 4|Lauren|poteto/, 'the bonus tip is never "Tip 4", and the credit is in the email only');
   // Each article holds only its label and title.
   for (const art of doc.querySelectorAll('article.tip')) {
     assert.deepEqual([...art.children].map((c) => c.tagName), ['P', 'H2']);
@@ -1024,7 +1077,7 @@ test('tips: the public page lists only the three tip titles and when each arrive
     }
   }
   assert.doesNotMatch(html, /I need to start \[the thing\]|I skipped \[the thing\]|I've been researching|The technique:|Today:|class="tip-prompt"|<pre/);
-  assert.match(doc.querySelector('.tips-head').textContent, /The tips come by email: Tip 1 when you confirm your signup, Tip 2 on day 3 and Tip 3 on day 7\. Here are the three titles\./);
+  assert.match(doc.querySelector('.tips-head').textContent, /The tips come by email: Tip 1 when you confirm your signup, Tip 2 on day 3 and Tip 3 on day 7, with a bonus tip around day 14\. Here are the titles\./);
   assert.doesNotMatch(html, /hasn't gone out yet|Sent (January|February|March|April|May|June|July|August|September|October|November|December)/);
   assert.doesNotMatch(html, DASHES);
   assert.match(html, /<title>Do the Next Thing: the tips \| COTIB LLC<\/title>/);
@@ -1066,14 +1119,14 @@ test('tips: the tips page escapes titles, never renders blocks, and only accepts
 
 test('tips: the DTNT page, the confirmed page and the already-subscribed note point to the titles page and say when tips arrive', async () => {
   const page = fs.readFileSync(path.join(ROOT, 'www', 'do-the-next-thing.html'), 'utf8');
-  assert.match(page, /<p class="tips-link">Already signed up\? <a href="\/do-the-next-thing\/tips">See the three tip titles\.<\/a><\/p>/);
+  assert.match(page, /<p class="tips-link">Already signed up\? <a href="\/do-the-next-thing\/tips">See the tip titles\.<\/a><\/p>/);
   assert.match(page, /<a href="\/do-the-next-thing\/tips">tips page<\/a>/);
-  assert.match(page, /Tip 1 arrives right after you click it, Tip 2 on day 3 and Tip 3 on day 7\./);
-  assert.match(page, /As three short emails, timed from the day you confirm your signup: Tip 1 right away, Tip 2 on day 3 and Tip 3 on day 7\. The three tip titles are also on the <a href="\/do-the-next-thing\/tips">tips page<\/a>\./);
+  assert.match(page, /Tip 1 arrives right after you click it, Tip 2 on day 3 and Tip 3 on day 7, with a bonus tip around day 14\./);
+  assert.match(page, /As short emails, timed from the day you confirm your signup: Tip 1 right away, Tip 2 on day 3 and Tip 3 on day 7, with a bonus tip around day 14\. The tip titles are also on the <a href="\/do-the-next-thing\/tips">tips page<\/a>\./);
   const privacy = fs.readFileSync(path.join(ROOT, 'www', 'do-the-next-thing', 'privacy.html'), 'utf8');
-  assert.match(privacy, /Tip 1 when you confirm, Tip 2 on day 3 and Tip 3 on day 7/);
-  assert.match(privacy, /we can cancel them if you unsubscribe/);
-  assert.match(privacy, /The titles of the three tips are listed on cotib\.com\/do-the-next-thing\/tips, which anyone can read\./);
+  assert.match(privacy, /Tip 1 when you confirm, Tip 2 on day 3 and Tip 3 on day 7, with a bonus tip around day 14/);
+  assert.match(privacy, /we save those three scheduled email IDs on your contact so we can cancel them if you unsubscribe/);
+  assert.match(privacy, /The titles of the tips are listed on cotib\.com\/do-the-next-thing\/tips, which anyone can read\./);
   assert.match(privacy, /Effective November 17, 2026\./, 'privacy effective date stays as is (Chuck, Nov 19)');
   await signup(good());
   const confirmHtml = await (await get(confirmLink(world.emails[0]))).text();
@@ -1083,8 +1136,8 @@ test('tips: the DTNT page, the confirmed page and the already-subscribed note po
   const note = world.emails.at(-1);
   assert.match(note.text, /http:\/\/127\.0\.0\.1:\d+\/do-the-next-thing\/tips/);
   assert.match(note.html, /href="http:\/\/127\.0\.0\.1:\d+\/do-the-next-thing\/tips"/);
-  assert.match(note.text, /^You're already on the list, so there's nothing more to do\.\n\nThree tips arrive in order: Tip 1 when you confirm, Tip 2 on day 3 and Tip 3 on day 7\./);
-  assert.match(note.text, /The titles of the three tips are here: /);
+  assert.match(note.text, /^You're already on the list, so there's nothing more to do\.\n\nThree tips arrive in order: Tip 1 when you confirm, Tip 2 on day 3 and Tip 3 on day 7, with a bonus tip around day 14\./);
+  assert.match(note.text, /The titles of the tips are here: /);
 });
 
 test('tips: no leftover wording about fixed dates or publish schedules in the code or the pages', () => {
