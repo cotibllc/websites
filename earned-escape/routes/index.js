@@ -222,7 +222,7 @@ router.get('/privacy', (req, res) => {
     site,
     bodyClass: 'dest-page',
     title: 'Privacy Policy | Earned Escape',
-    description: 'How Earned Escape handles your information: consent-gated Google Analytics, guide and quiz emails, planning requests, and who processes data for COTIB Adventures LLC.',
+    description: 'How Earned Escape handles your information: consent-first analytics, guide and quiz emails, planning requests, and who processes data for COTIB Adventures.',
     canonical: '/privacy',
     contactEmail: TO_EMAIL,
     gaCookie: `_ga_${GA_MEASUREMENT_ID.replace(/^G-/, '')}`,
