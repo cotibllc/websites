@@ -18,7 +18,7 @@ const podcastJsonLd = {
   name: "The IT XP",
   url: "https://www.theitxp.com",
   description:
-    "A podcast for IT professionals — pulling back the curtain on what it's really like to work in Information Technology.",
+    "A podcast for IT professionals, pulling back the curtain on what it's really like to work in Information Technology.",
   webFeed: "https://theitxp.libsyn.com/rss",
   author: {
     "@type": "Person",

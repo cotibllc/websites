@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "About The IT XP — a show dedicated to the world of Information Technology and the professionals driving business initiatives with their technology skills.",
+    "About The IT XP: a show dedicated to the world of Information Technology and the professionals driving business initiatives with their technology skills.",
   alternates: { canonical: "/about" },
 };
 

@@ -1,20 +1,20 @@
 # Earned Escape
 
-> White-glove planning for elevated family vacations and luxury escapes. Luxury & Family Travel · Sports Event Packages. Operated by COTIB Adventures LLC and affiliated with Castle Dreams Travel through Charles Betancourt, Independent Advisor.
+> Trips planned around how you travel, including family cruises, theme parks, Europe and Asia. Sports Event Packages. Operated by COTIB Adventures LLC and affiliated with Castle Dreams Travel through Charles Betancourt, Independent Advisor.
 
-Earned Escape is built on a lifetime of travel experience combined with 25+ years of corporate IT systems engineering precision. We plan two kinds of trips with the same level of care: elevated, multi-generational family vacations and more exclusive, bucket-list luxury escapes. There is no planning fee - support is provided at no added cost to the traveler.
+Earned Escape plans trips around how you travel: family cruises, theme park vacations, active and outdoor trips, Europe and Asia. Every trip gets luxury-level care, whatever the style or budget. Trips booked through my suppliers are planned at no extra fee.
 
 ## Who We Serve
 
-- **Elevated Family Vacations**: Multi-generational family trips, milestone celebrations, and first-time cruisers who want a smoother, more elevated experience.
-- **Luxury & Bucket-List Escapes**: Premium cabins, higher-end itineraries, and once-in-a-lifetime experiences for travelers seeking a more exclusive trip.
-- **Support models**: Full-Service Planning (hands-on, start to finish) or Advisory / Light-Touch Support (strategy and second opinion while the traveler books directly). No planning fee either way.
+- **Family cruises and theme park trips**: Multi-generational family trips, milestone celebrations, and first-time cruisers who want a smoother experience.
+- **Active travel, Europe and Asia**: Active and outdoor trips, plus Europe and Asia, planned around how you like to travel.
+- **Support models**: Full-Service Planning (hands-on, start to finish) or Advisory / Light-Touch Support (strategy and second opinion while the traveler books directly). Trips booked through my suppliers are planned at no extra fee.
 
 ## Core Pages
 
-- [Homepage (/)](https://earnedescape.agency/): Overview of both family and luxury planning pathways, personal travel story, and our interactive travel vibe selector.
-- [About Us (/about)](https://earnedescape.agency/about): The COTIB Story. Founder Chuck Betancourt's background: traveling the world since age six, 25+ years of corporate IT systems planning applied to travel, credentials and experience, and the vision of COTIB Adventures LLC as a family legacy.
-- [Plan Your Escape (/plan)](https://earnedescape.agency/plan): Book a free 30-minute Vacation Planning Call with Chuck via Google Calendar. Covers both family and luxury trip planning. Leads auto-ingest into Tern CRM.
+- [Homepage (/)](https://earnedescape.agency/): Overview of trips planned around how you travel, personal travel story, and our interactive travel vibe selector.
+- [About Us (/about)](https://earnedescape.agency/about): The COTIB Story. Founder Chuck Betancourt's background: traveling the world since age six, 25+ years in IT management applied to travel, credentials and experience, and the vision of COTIB Adventures LLC as a family legacy.
+- [Plan Your Escape (/plan)](https://earnedescape.agency/plan): Book a free 30-minute Vacation Planning Call with Chuck via Google Calendar. Covers family cruises, theme parks, and other trips planned around how you travel. Leads auto-ingest into Tern CRM.
 - [Compliance (/compliance)](https://earnedescape.agency/compliance): Licensing, business registration (New Jersey), and official affiliate disclosures as an independent contractor of Castle Dreams Travel through Charles Betancourt, Independent Advisor.
 
 ## Destinations & Planning Guides
@@ -33,7 +33,7 @@ Earned Escape is built on a lifetime of travel experience combined with 25+ year
 
 ### Theme parks
 
-- [Theme parks (/theme-parks)](https://earnedescape.agency/theme-parks): Theme park trip planning hub. Each destination has its own section and planning page. No planning fee.
+- [Theme parks (/theme-parks)](https://earnedescape.agency/theme-parks): Theme park trip planning hub. Each destination has its own section and planning page. Trips booked through my suppliers are planned at no extra fee.
 - [Universal Orlando (/universal)](https://earnedescape.agency/universal): Vacation planning for Universal Orlando and the new Epic Universe theme park, featuring hotel recommendations and park strategy.
 
 ### Disney

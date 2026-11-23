@@ -9,7 +9,13 @@
   "functions": {
     "api/dtnt/download.js": { "includeFiles": "private/dtnt/*.pdf" }
   },
+  "redirects": [
+    { "source": "/blog", "destination": "/ventures", "statusCode": 301 },
+    { "source": "/blog.html", "destination": "/ventures", "statusCode": 301 },
+    { "source": "/favicon.ico", "destination": "/favicon.svg", "statusCode": 301 }
+  ],
   "rewrites": [
+    { "source": "/do-the-next-thing/tips", "destination": "/api/dtnt-tips" },
     { "source": "/do-the-next-thing/free", "destination": "/api/dtnt/signup" },
     { "source": "/do-the-next-thing/free/confirm", "destination": "/api/dtnt/confirm" },
     { "source": "/do-the-next-thing/free/dl/:token", "destination": "/api/dtnt/download?t=:token" },
@@ -55,6 +61,12 @@
         { "key": "Cache-Control", "value": "no-store" },
         { "key": "X-Robots-Tag", "value": "noindex, nofollow" },
         { "key": "Referrer-Policy", "value": "no-referrer" }
+      ]
+    },
+    {
+      "source": "/api/consent-region",
+      "headers": [
+        { "key": "Cache-Control", "value": "private, no-store, max-age=0" }
       ]
     },
     {

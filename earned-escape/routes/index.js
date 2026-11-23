@@ -10,6 +10,7 @@ const { getTemplates, listUnsubscribeHeaders } = require('../lib/guide-emails');
 const { createToken, verifyToken } = require('../lib/unsubscribe-token');
 const leadStore = require('../lib/lead-store');
 const chinaChecklist = require('../lib/china-checklist');
+const { GA_MEASUREMENT_ID } = require('../lib/consent');
 
 
 const TO_EMAIL = 'cbetancourt@castledreamstravel.com';
@@ -125,8 +126,8 @@ router.get('/about', (req, res) => {
   res.render('pages/about.njk', {
     site,
     bodyClass: 'dest-page about-page',
-    title: 'Meet Chuck | Family & Luxury Travel Advisor | Earned Escape',
-    description: 'After decades of exploring the world and 25+ years in corporate IT, Chuck Betancourt built Earned Escape to plan elevated family vacations and luxury escapes with the same precision.',
+    title: 'Meet Chuck | Family Travel Advisor | Earned Escape',
+    description: 'Meet Chuck Betancourt of Earned Escape: trips planned around how you travel, with 25+ years in IT management, for family cruises, theme parks, Europe and Asia.',
     canonical: '/about',
     ogImage: '/images/photos/chuck-betancourt-headshot-square.jpg',
   });
@@ -148,8 +149,8 @@ router.get('/royal-caribbean', (req, res) => {
     site,
     bodyClass: 'dest-page',
     destination: 'royal-caribbean',
-    title: 'Royal Caribbean Cruises | Earned Escape',
-    description: 'Royal Caribbean cruise planning shaped by firsthand travel experience, with help choosing the right ship, stateroom, and itinerary.',
+    title: 'Royal Caribbean Cruise Planning for Families | Earned Escape',
+    description: 'Royal Caribbean planning around how your family travels, from firsthand sailings. Trips booked through my suppliers are planned at no extra fee.',
     canonical: '/royal-caribbean',
   });
 });
@@ -181,7 +182,7 @@ router.get('/sports', (req, res) => {
     bodyClass: 'dest-page sports-page',
     sports: sportsEvents,
     title: 'Sports Event Travel Packages | Earned Escape',
-    description: 'Sports event travel packages through Roadtrips: Rose Bowl, Super Bowl, Masters, Kentucky Derby, Indy 500, Monaco Grand Prix, Wimbledon, Ryder Cup and more. Request a quote with Chuck.',
+    description: 'Sports event travel packages through Roadtrips: Rose Bowl, Super Bowl, Masters, Kentucky Derby, Indy 500, Wimbledon and more. Request a quote with Chuck.',
     canonical: '/sports',
   });
 });
@@ -211,8 +212,20 @@ router.get('/compliance', (req, res) => {
     site,
     bodyClass: 'dest-page',
     title: 'Compliance & Disclosures | Earned Escape',
-    description: 'Affiliate disclosure, business registration, and transparency about how Earned Escape operates as an affiliate of Castle Dreams Travel through Charles Betancourt, Independent Advisor.',
+    description: 'Affiliate disclosure, business registration, and how Earned Escape works as an affiliate of Castle Dreams Travel via Charles Betancourt, Independent Advisor.',
     canonical: '/compliance',
+  });
+});
+
+router.get('/privacy', (req, res) => {
+  res.render('pages/privacy.njk', {
+    site,
+    bodyClass: 'dest-page',
+    title: 'Privacy Policy | Earned Escape',
+    description: 'How Earned Escape handles your information: consent-first analytics, guide and quiz emails, planning requests, and who processes data for COTIB Adventures.',
+    canonical: '/privacy',
+    contactEmail: TO_EMAIL,
+    gaCookie: `_ga_${GA_MEASUREMENT_ID.replace(/^G-/, '')}`,
   });
 });
 
@@ -238,8 +251,8 @@ router.get('/china', (req, res) => {
     checklist: chinaChecklist.data,
     bodyClass: 'dest-page china-page',
     // Copy source: EE Marketing page.md (ee-china-copy-2026-10).
-    title: 'Can Americans Visit China Without a Visa? The 240-Hour Transit, Explained | Earned Escape',
-    description: "Yes, for up to 10 days, if you fly on to a third country or region. How China's 240-hour transit works for US passports, when you need a tourist visa instead, and the payment, phone and arrival steps to sort first.",
+    title: "China's 240-Hour Visa-Free Transit Explained | Earned Escape",
+    description: "Yes, for up to 10 days, if you fly on to a third country or region. How China's 240-hour transit works for US passports, and when you need a tourist visa.",
     canonical: '/china',
   });
 });
@@ -560,7 +573,7 @@ function quizResultsEmailHtml({
     ${tipItems}
   </ol>
   <p style="margin: 0 0 12px;"><a href="${tipPack.moreUrl}" style="color: #2A164E; font-weight: 600;">${escapeHtml(tipPack.moreLabel)} &rarr;</a></p>
-  <p style="margin: 0 0 16px;">Want to turn this into an actual itinerary? Let's hop on a free 30-minute planning call. Zero pressure, no planning fee.</p>
+  <p style="margin: 0 0 16px;">Want to turn this into an actual itinerary? Let's hop on a free 30-minute planning call. Zero pressure. Trips booked through my suppliers are planned at no extra fee.</p>
   <p style="margin: 24px 0;"><a href="https://earnedescape.agency/plan" style="display:inline-block; padding:12px 24px; background:#2A164E; color:#fff; text-decoration:none; border-radius:4px;">Reserve My Planning Call</a></p>
   <p style="margin: 20px 0 0; color: #0D0821;">Talk soon,<br>Chuck<br><span style="font-size: 13px; color: #666;">Earned Escape by COTIB Adventures LLC</span></p>
   <hr style="margin: 32px 0 16px; border: none; border-top: 1px solid #eee;">
@@ -578,7 +591,7 @@ function quizNurtureEmailHtml(name, safeTitle) {
   <p style="margin: 0 0 16px; color: #0D0821;">Hi ${escapeHtml(name)},</p>
   <p style="margin: 0 0 16px;">A few days ago you took the Design My Escape quiz and landed on <strong>${escapeHtml(safeTitle)}</strong>.</p>
   <p style="margin: 0 0 16px;">Most people get stuck right after that moment, comparing options in too many tabs and second-guessing dates, ships, or resorts. That is exactly when a short planning call helps: we narrow the field, map a realistic pace, and decide what is worth booking now versus later.</p>
-  <p style="margin: 0 0 16px;">If you want a second set of eyes, grab a free 30-minute call. Zero pressure, no planning fee.</p>
+  <p style="margin: 0 0 16px;">If you want a second set of eyes, grab a free 30-minute call. Zero pressure. Trips booked through my suppliers are planned at no extra fee.</p>
   <p style="margin: 24px 0;"><a href="https://earnedescape.agency/plan" style="display:inline-block; padding:12px 24px; background:#2A164E; color:#fff; text-decoration:none; border-radius:4px;">Reserve My Planning Call</a></p>
   <p style="margin: 0 0 16px;">Either way, keep the tips from your results email handy when you research. You've earned a trip that actually feels easy.</p>
   <p style="margin: 20px 0 0; color: #0D0821;">Best,<br>Chuck<br><span style="font-size: 13px; color: #666;">Earned Escape by COTIB Adventures LLC</span></p>

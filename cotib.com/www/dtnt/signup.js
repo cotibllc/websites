@@ -7,9 +7,28 @@
   if (!card || !form) return;
   var err = document.getElementById('free-error');
   var btn = form.querySelector('button[type="submit"]');
+  // Signup source: copy utm_source, utm_medium and utm_campaign from the page
+  // URL into the hidden fields. The server cleans them and uses 'direct' for
+  // anything missing.
+  var UTM = ['utm_source', 'utm_medium', 'utm_campaign'];
+  var params;
+  try { params = new URLSearchParams(window.location.search); } catch (x) { params = null; }
+  UTM.forEach(function (k) {
+    var input = form.querySelector('input[type="hidden"][name="' + k + '"]');
+    var v = params ? params.get(k) : null;
+    if (input && v) input.value = v.trim().slice(0, 100);
+  });
+  function utmFields() {
+    var out = {};
+    UTM.forEach(function (k) {
+      var input = form.querySelector('input[type="hidden"][name="' + k + '"]');
+      out[k] = input ? input.value : '';
+    });
+    return out;
+  }
   var MSG = {
     email: "That email address doesn't look right. Check it and try again.",
-    consent: 'Check the box so we can email you the sampler.',
+    consent: 'Check the box so we can email you the coaching tips.',
     // No token yet: the widget is still checking, or was just reset.
     pending: 'Wait for the human check to say Success, then send.',
     network: "We couldn't send the email just now. Wait a minute and try again."
@@ -36,7 +55,7 @@
       var res = await fetch(form.action, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify({ email: email, consent: true, turnstileToken: token, website: form.website.value })
+        body: JSON.stringify(Object.assign({ email: email, consent: true, marketingConsent: form.marketing_consent.checked, turnstileToken: token, website: form.website.value }, utmFields()))
       });
       var data = {};
       try { data = await res.json(); } catch (x) { data = {}; }

@@ -33,13 +33,15 @@ export default function NavBar() {
         </Link>
         <nav className="hidden md:flex items-center gap-0" aria-label="Main navigation">
           {navLinks.map((link) => (
-            <Link key={link.href} href={link.href} className="font-mono text-[11px] tracking-[0.12em] uppercase px-3 py-1.5 text-white/70 hover:text-white hover:bg-white/10 transition-colors">
+            <Link key={link.href} href={link.href} className="font-mono text-[11px] tracking-[0.12em] uppercase whitespace-nowrap px-2 xl:px-3 py-1.5 text-white/70 hover:text-white hover:bg-white/10 transition-colors">
               {link.label}
             </Link>
           ))}
         </nav>
         <div className="flex items-center gap-3 flex-shrink-0">
-          <SystemClock />
+          <span className="inline-flex md:hidden lg:inline-flex">
+            <SystemClock />
+          </span>
           <span className="font-mono text-[10px] tracking-[0.1em] uppercase text-white/60 hidden lg:block">
             Morrison, C., IT Dept
           </span>

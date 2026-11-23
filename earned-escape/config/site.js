@@ -20,7 +20,7 @@ const turnstileSiteKey = (process.env.TURNSTILE_SITE_KEY && !process.env.TURNSTI
 module.exports = {
   siteUrl,
   // Bump when static assets change (cache-bust CDN after deploy)
-  assetVersion: '20261018-sports-china',
+  assetVersion: '20261030-consent',
   // ── BRAND
   brand: {
     name: 'Earned Escape',
@@ -74,10 +74,9 @@ module.exports = {
 
   // ── SEO
   seo: {
-    title: "Earned Escape | White-Glove Family & Luxury Travel Planning",
+    title: "Earned Escape | Trips Planned Around How You Travel",
     description:
-      "White-glove planning for elevated family vacations and luxury escapes. Luxury & Family Travel · Sports Event Packages. Personal travel planning for multi-gen family cruises and more exclusive escapes, at zero planning fee.",
+      "Trips planned around how you travel, including family cruises, theme parks, Europe and Asia. Trips booked through my suppliers are planned at no extra fee.",
     ogImage: '/images/og/og-default.png',
-    twitterHandle: '@earned_escape',
   },
 };

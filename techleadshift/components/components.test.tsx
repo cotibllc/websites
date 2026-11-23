@@ -82,3 +82,20 @@ describe("FeedNotice", () => {
     assert.match(text(renderToStaticMarkup(<FeedNotice snapshotDate="Oct 27, 2026" />)), /could not be loaded right now\. This is the Core Series as of Oct 27, 2026\./);
   });
 });
+
+describe("DiagnosticFields (/work form)", () => {
+  it("renders five required selects, labelled, each starting on a disabled Choose one", async () => {
+    const { DiagnosticFields } = await import("./ContactForm");
+    const answers = { interest: "", role: "", teamSize: "", timeline: "", approval: "" };
+    const html = renderToStaticMarkup(<DiagnosticFields answers={answers} onChange={() => {}} />);
+    for (const id of ["interest", "role", "teamSize", "timeline", "approval"]) {
+      assert.match(html, new RegExp(`<label for="${id}">`), id);
+      assert.match(html, new RegExp(`<select id="${id}" name="${id}" required=""`), id);
+    }
+    assert.equal(html.match(/<option value="" disabled="" selected="">Choose one<\/option>/g)?.length, 5);
+    assert.equal(
+      text(html.replace(/<option[^>]*>[^<]*<\/option>/g, "")),
+      "What are you looking for? Your role How many people do you lead? When do you want to start? Who signs off on work like this?"
+    );
+  });
+});

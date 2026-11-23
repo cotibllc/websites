@@ -1,7 +1,7 @@
 import { XMLParser } from "fast-xml-parser";
 
 // The IT XP YouTube channel (@theitxp). YouTube publishes a free, key-less
-// RSS feed of the most recent ~15 uploads per channel — no API quota needed.
+// RSS feed of the most recent ~15 uploads per channel, no API quota needed.
 const CHANNEL_ID = "UCaHtxKdXJIFCu-Tjsv1B8Mg";
 const FEED_URL = `https://www.youtube.com/feeds/videos.xml?channel_id=${CHANNEL_ID}`;
 

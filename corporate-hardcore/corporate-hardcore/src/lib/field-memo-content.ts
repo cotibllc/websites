@@ -11,6 +11,11 @@ export interface FieldMemoBody {
   title: string;
   date: string;
   description: string;
+  /** Optional shorter <title> when the headline is over 60 characters (see src/lib/seo.ts). */
+  seoTitle?: string;
+  /** Optional memo header overrides (see src/lib/memo-header.ts). */
+  department?: string;
+  classification?: string;
   /** Optional canonical path override (e.g. "/blog/<slug>" when the memo mirrors a blog post). */
   canonical?: string;
   contentHtml: string;

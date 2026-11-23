@@ -63,7 +63,7 @@ export default function ContactPage() {
       ) : (
         <form onSubmit={handleSubmit} className="space-y-5">
 
-          {/* Honeypot — hidden from humans, bots fill it in */}
+          {/* Honeypot: hidden from humans, bots fill it in */}
           <div aria-hidden="true" className="hidden">
             <label htmlFor="website">Website</label>
             <input

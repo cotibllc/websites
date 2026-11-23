@@ -4,7 +4,18 @@ import { TIME_ZONE } from "./site";
  * Approved publish Wednesdays (calendar dates, New York). Add the next ones
  * here when Chuck approves them. When none is left the "Next" line is hidden.
  */
-export const APPROVED_WEDNESDAYS: readonly string[] = ["2026-11-04", "2026-11-18", "2026-12-02", "2026-12-16"];
+export const APPROVED_WEDNESDAYS: readonly string[] = [
+  "2026-11-04",
+  "2026-11-18",
+  "2026-12-02",
+  "2026-12-16",
+  // Articles 15 to 19, approved by Chuck on 2026-10-31.
+  "2026-12-30",
+  "2027-01-13",
+  "2027-01-27",
+  "2027-02-10",
+  "2027-02-24",
+];
 
 /** Calendar date (YYYY-MM-DD) of an instant in New York. */
 export function easternDate(instant: Date | string): string {

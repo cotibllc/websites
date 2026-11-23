@@ -1,5 +1,6 @@
 ---
 title: "Self-Assessment Due Friday. Synergy Assist Has Already Submitted Mine."
+seoTitle: "Self-Assessment Due Friday. Synergy Assist Submitted Mine."
 date: "2026-10-12"
 description: "The Q4 review window opened at 9:00. Mine was \"in progress\" by 9:04. I had not started it."
 arc: "AI as Employee"

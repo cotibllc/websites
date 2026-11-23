@@ -2,6 +2,7 @@ import { getEpisodes, getEpisodeBySlug } from "@/lib/feed";
 import EpisodePlayer from "@/components/EpisodePlayer";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
+import { episodePageTitle } from "@/lib/text";
 
 export const revalidate = 900; // 15 min, matches FEED_REVALIDATE_SECONDS in lib/feed.ts
 
@@ -20,7 +21,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!episode) return {};
   const description = episode.description.replace(/<[^>]*>/g, "").slice(0, 160);
   return {
-    title: episode.title,
+    // Absolute so the layout template can't push it past 60 characters.
+    title: { absolute: episodePageTitle(episode.slug, episode.title) },
     description,
     alternates: { canonical: `/${episode.slug}` },
     openGraph: {

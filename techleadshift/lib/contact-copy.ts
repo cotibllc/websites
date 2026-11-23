@@ -6,6 +6,7 @@ export const CONTACT_ERRORS = {
   notConfigured: "Contact form is not configured",
   badJson: "The form couldn't be read. Refresh the page and try again",
   missingFields: "Missing required fields",
+  invalidChoice: "One of the answers isn't on the list. Refresh the page and try again",
   noToken: "Captcha verification is required",
   failed: "Captcha verification failed",
   config: "The contact form isn't working on our end right now",

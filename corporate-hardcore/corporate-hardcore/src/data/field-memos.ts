@@ -1,4 +1,5 @@
 import type { EpisodeStatus } from "@/data/content";
+import { pickLatest, type DatedItem } from "../lib/memo-header";
 
 /** Curated Field Memo allowlist only — never auto-ingest YouTube RSS shorts. */
 export interface FieldMemoEntry {
@@ -13,6 +14,24 @@ export interface FieldMemoEntry {
 }
 
 export const fieldMemos: FieldMemoEntry[] = [
+  {
+    videoId: "5WD-SkEUtEY",
+    slug: "holiday-blackout",
+    fmCode: "FM-05",
+    status: "FILED",
+    title: "Holiday Blackout · PTO Calendar | Synergy Corp Field Memo",
+    rub: "Nineteen days expiring. Zero days eligible. Thank you for your flexibility.",
+    published: "2026-11-09T00:00:00.000Z",
+  },
+  {
+    videoId: "XbmOOahZxRQ",
+    slug: "direct-report",
+    fmCode: "FM-04",
+    status: "FILED",
+    title: "Direct Report · Annual Review | Synergy Corp Field Memo",
+    rub: "Two hundred and twelve meetings created. None attended. Top accomplishment.",
+    published: "2026-11-03T00:00:00.000Z",
+  },
   {
     videoId: "Y9lxK46WAmA",
     slug: "growth-paths",
@@ -56,6 +75,16 @@ export function getFieldMemoSlugs(): string[] {
   return fieldMemos.flatMap((m) => (m.slug ? [m.slug] : []));
 }
 
-export function getLatestFieldMemo(): FieldMemoEntry | null {
-  return getFieldMemos()[0] ?? null;
+/** Id and date per allowlist entry, the input for memo numbers and "latest". */
+export function fieldMemoDatedItems(
+  entries: readonly FieldMemoEntry[] = fieldMemos
+): (DatedItem & { entry: FieldMemoEntry })[] {
+  return entries.map((entry) => ({ id: entry.slug ?? entry.videoId, date: entry.published, entry }));
+}
+
+/** Newest allowlist entry by `published`. Used by the home card and /start-here. */
+export function getLatestFieldMemo(
+  entries: readonly FieldMemoEntry[] = fieldMemos
+): FieldMemoEntry | null {
+  return pickLatest(fieldMemoDatedItems(entries))?.entry ?? null;
 }

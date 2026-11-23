@@ -1,4 +1,5 @@
 import { XMLParser } from "fast-xml-parser";
+import { removeDashes } from "./text";
 
 const RSS_URL = "https://theitxp.libsyn.com/rss";
 
@@ -56,10 +57,10 @@ function parseEpisode(item: Record<string, unknown>): Episode {
       : String(guid ?? "");
 
   return {
-    title: extractString(item["title"]),
+    title: removeDashes(extractString(item["title"]), "title"),
     slug: slugFromUrl(link),
     pubDate: String(item["pubDate"] ?? ""),
-    description,
+    description: removeDashes(description),
     enclosureUrl: enclosure?.["@_url"] ?? "",
     enclosureLength: Number(enclosure?.["@_length"] ?? 0),
     duration: String(item["itunes:duration"] ?? ""),

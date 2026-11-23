@@ -19,7 +19,10 @@ async function call(keyName, method, path, payload, extraHeaders = {}) {
   return { ok: res.ok, status: res.status, data };
 }
 
-async function sendEmail({ to, subject, html, text, headers, idempotencyKey }) {
+// scheduledAt (ISO 8601 string) holds the email at Resend until then. Resend
+// accepts up to 30 days ahead; the tip series needs 7. Returns Resend's
+// response, whose id is what cancelEmail needs later.
+async function sendEmail({ to, subject, html, text, headers, idempotencyKey, scheduledAt }) {
   const r = await call('RESEND_API_KEY', 'POST', '/emails', {
     from: require('./config').FROM_EMAIL,
     to: [to],
@@ -28,6 +31,7 @@ async function sendEmail({ to, subject, html, text, headers, idempotencyKey }) {
     html,
     text,
     headers,
+    ...(scheduledAt ? { scheduled_at: scheduledAt } : {}),
   }, idempotencyKey ? { 'Idempotency-Key': idempotencyKey } : {});
   if (!r.ok) throw new Error(`Resend send failed (${r.status})`);
   return r.data;
@@ -73,6 +77,14 @@ async function setConsentProperties(email, props) {
   return r.data;
 }
 
+// Other contact properties (the signup source). Same rule: the keys must
+// exist in Resend, and the caller treats a failure as non-fatal.
+async function setContactProperties(email, props) {
+  const r = await call('RESEND_FULL_API_KEY', 'PATCH', `/contacts/${encodeURIComponent(email)}`, { properties: props });
+  if (!r.ok) throw new Error(`Resend contact properties failed (${r.status})`);
+  return r.data;
+}
+
 // Only called from confirm, after a fresh double opt-in click on a link that
 // was issued after the address unsubscribed. Contacts are never deleted.
 async function resubscribeContact(email) {
@@ -94,4 +106,56 @@ async function unsubscribeContact(email) {
   return r.data;
 }
 
-module.exports = { sendEmail, contactStatus, createContact, addToSegment, setConsentProperties, resubscribeContact, unsubscribeContact };
+// Scheduled tips (Tips 2 and 3 and the bonus tip, number 4). Resend does not stop a scheduled email when a contact
+// unsubscribes (unsubscribes only affect Broadcasts), so confirm.js saves each
+// scheduled email id on the contact and the unsubscribe handler cancels them.
+// Property keys, created by Chuck in Resend (Contacts, Properties, type string):
+const TIP_ID_PROPERTIES = { 2: 'dtnt_tip2_email_id', 3: 'dtnt_tip3_email_id', 4: 'dtnt_tip4_email_id' };
+
+// Last events after which an email can no longer be cancelled. Anything else
+// (scheduled, queued, unknown) gets a cancel attempt.
+const NOT_CANCELLABLE = new Set(['sent', 'delivered', 'delivery_delayed', 'opened', 'clicked', 'bounced', 'complained', 'failed', 'suppressed', 'canceled']);
+
+// Cancel one scheduled email. Returns 'cancelled' or 'skipped' (already sent
+// or already cancelled). Throws on anything unexpected, so the caller can
+// tell the person it did not finish.
+async function cancelScheduledEmail(emailId) {
+  const got = await call('RESEND_FULL_API_KEY', 'GET', `/emails/${encodeURIComponent(emailId)}`);
+  if (got.status === 404) return 'skipped';
+  if (!got.ok || !got.data) throw new Error(`Resend email lookup failed (${got.status})`);
+  if (NOT_CANCELLABLE.has(got.data.last_event)) return 'skipped';
+  const r = await call('RESEND_FULL_API_KEY', 'POST', `/emails/${encodeURIComponent(emailId)}/cancel`);
+  if (!r.ok) throw new Error(`Resend cancel failed (${r.status})`);
+  return 'cancelled';
+}
+
+// Cancel the scheduled tips saved on a contact. Safe to repeat. A contact that
+// does not exist, or has no saved ids, has nothing to cancel.
+async function cancelScheduledTips(email) {
+  const r = await call('RESEND_FULL_API_KEY', 'GET', `/contacts/${encodeURIComponent(email)}`);
+  if (r.status === 404) return { cancelled: 0, skipped: 0 };
+  if (!r.ok || !r.data) throw new Error(`Resend contact lookup failed (${r.status})`);
+  const props = r.data.properties || {};
+  const result = { cancelled: 0, skipped: 0 };
+  for (const key of Object.values(TIP_ID_PROPERTIES)) {
+    const raw = props[key];
+    const id = raw && typeof raw === 'object' ? raw.value : raw;
+    if (!id || typeof id !== 'string') continue;
+    result[await cancelScheduledEmail(id) === 'cancelled' ? 'cancelled' : 'skipped'] += 1;
+  }
+  return result;
+}
+
+module.exports = {
+  TIP_ID_PROPERTIES,
+  cancelScheduledEmail,
+  cancelScheduledTips,
+  sendEmail,
+  contactStatus,
+  createContact,
+  addToSegment,
+  setConsentProperties,
+  setContactProperties,
+  resubscribeContact,
+  unsubscribeContact,
+};

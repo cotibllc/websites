@@ -8,7 +8,7 @@
 
 **Goal:** Transform Earned Escape from a well-designed brochure site into a high-trust, high-conversion client acquisition engine that consistently books trips.
 
-**Core Insight:** You have an unusually strong personal story and real expertise that most travel advisors lack. The current site under-leverages this. When we properly tell your story (lifetime traveler since age 6, deep Royal Caribbean loyalty, China bucket list trip, 30 years of corporate IT precision applied to travel, and COTIB Adventures LLC as family legacy) and pair it with real photography + an owned conversion experience, we can materially increase qualified inquiries and bookings.
+**Core Insight:** You have an unusually strong personal story and real expertise that most travel advisors lack. The current site under-leverages this. When we properly tell your story (lifetime traveler since age 6, deep Royal Caribbean loyalty, China bucket list trip, 30 years of IT management precision applied to travel, and COTIB Adventures LLC as family legacy) and pair it with real photography + an owned conversion experience, we can materially increase qualified inquiries and bookings.
 
 **Recommended Approach:** Keep the existing premium aesthetic (navy + gold, starfield) while making the site significantly more personal, visual, and conversion-focused.
 
@@ -56,7 +56,7 @@
    - Has sailed Norwegian and Disney Cruise Line but **always returns to Royal Caribbean** for superior customer service and experiences that work for all ages
    - This is a powerful, specific differentiator most advisors won't claim
 
-3. **Precision Mindset from 30 Years in Corporate IT**
+3. **Precision Mindset from 30 Years in IT Management**
    - Attention to detail is not optional — it's how you create peace of mind
    - Systems thinking, risk mitigation, and making complex things simple for the client
    - "I plan trips the way I used to architect complex IT systems: nothing falls through the cracks"

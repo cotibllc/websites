@@ -5,10 +5,13 @@
 // scripts/build-dtnt-pages.js, so every DTNT page looks the same.
 const { esc } = require('./emails');
 const { SUPPORT_EMAIL } = require('./config');
+const { TIPS } = require('./tips');
 
 const FONTS = 'https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=IBM+Plex+Serif:wght@400;600&family=IBM+Plex+Mono:wght@400;500&display=swap';
 
-function head({ title, description, canonical, noindex }) {
+function head({ title, description, canonical, noindex, ogTitle, ogDescription, twitter }) {
+  const socialTitle = ogTitle || title;
+  const socialDescription = ogDescription || description;
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,9 +21,12 @@ function head({ title, description, canonical, noindex }) {
   ${description ? `<meta name="description" content="${esc(description)}">` : ''}
   ${noindex ? '<meta name="robots" content="noindex, nofollow">' : '<meta name="robots" content="index,follow">'}
   <meta property="og:site_name" content="COTIB LLC">
-  <meta property="og:title" content="${esc(title)}">
-  ${description ? `<meta property="og:description" content="${esc(description)}">` : ''}
+  <meta property="og:title" content="${esc(socialTitle)}">
+  ${socialDescription ? `<meta property="og:description" content="${esc(socialDescription)}">` : ''}
   ${canonical ? `<meta property="og:url" content="${esc(canonical)}">\n  <link rel="canonical" href="${esc(canonical)}">` : ''}
+  ${twitter ? `<meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="${esc(socialTitle)}">
+  ${socialDescription ? `<meta name="twitter:description" content="${esc(socialDescription)}">` : ''}` : ''}
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -44,7 +50,9 @@ const HEADER = `
     </div>
   </header>`;
 
-const FOOTER = `
+// analytics: true only on the two static DTNT pages. The confirm, download and
+// unsubscribe state pages carry tokens in the URL, so they never load GA.
+const footer = ({ analytics = false } = {}) => `
   <footer class="site-footer">
     <div class="wrap">
       <div class="foot-grid">
@@ -70,7 +78,11 @@ const FOOTER = `
         </div>
       </div>
       <div class="foot-base">
-        <p class="m0">&copy; 2026 COTIB LLC. All rights reserved. New York City, NY.</p>
+        <p class="m0">&copy; 2026 COTIB LLC. All rights reserved. New York City, NY.</p>${analytics ? `
+        <nav aria-label="Privacy">
+          <a href="/website-privacy">Website privacy</a>
+          <button type="button" data-cookie-choices aria-controls="cookie-consent" hidden>Cookie choices</button>
+        </nav>` : ''}
         <nav aria-label="Social">
           <a href="https://www.linkedin.com/in/charles-b-technologist/" rel="noopener">LinkedIn</a>
           <a href="https://techleadshift.substack.com" rel="noopener">Substack</a>
@@ -79,15 +91,16 @@ const FOOTER = `
       </div>
     </div>
   </footer>
-  <script src="/dtnt/menu.js" defer></script>`;
+  <script src="/dtnt/menu.js" defer></script>${analytics ? `
+  <script src="/js/consent-v1.js" defer></script>` : ''}`;
 
-function page({ title, description, canonical, noindex, headExtra = '', main, bodyEnd = '' }) {
-  return `${head({ title, description, canonical, noindex })}${headExtra}
+function page({ title, description, canonical, noindex, ogTitle, ogDescription, twitter, headExtra = '', main, bodyEnd = '', analytics = false }) {
+  return `${head({ title, description, canonical, noindex, ogTitle, ogDescription, twitter })}${headExtra}
 </head>
 <body>${HEADER}
   <main id="main">
 ${main}
-  </main>${FOOTER}${bodyEnd}
+  </main>${footer({ analytics })}${bodyEnd}
 </body>
 </html>
 `;
@@ -113,18 +126,62 @@ ${action}
   });
 }
 
+// ---------- Tip list (/do-the-next-thing/tips) ----------
+// Titles only (Chuck, Nov 19, 2026): the full tips live in the emails, so no
+// tip body is ever rendered on this page. Nothing here depends on a date: each
+// reader gets the tips on their own clock (Tip 1 on confirm, Tip 2 on day 3,
+// Tip 3 on day 7, a bonus tip on day 14).
+const TIPS_PATH = '/do-the-next-thing/tips';
+
+// When a tip reaches a reader, for the label on the page.
+function arrives(tip) {
+  return tip.delayDays === 0 ? 'Arrives when you confirm' : `Arrives on day ${tip.delayDays}`;
+}
+
+function tipsPage({ tips = TIPS } = {}) {
+  const list = tips.map((tip) => `          <article class="tip" id="tip-${esc(tip.slug)}" aria-labelledby="tip-${esc(tip.slug)}-title">
+            <p class="tip-meta"><span>${tip.bonus ? 'Bonus tip' : `Tip ${tip.number}`}</span><span>${esc(arrives(tip))}</span></p>
+            <h2 id="tip-${esc(tip.slug)}-title">${esc(tip.archiveTitle || tip.subject)}</h2>
+          </article>`).join('\n');
+  return page({
+    title: 'Do the Next Thing: the tips | COTIB LLC',
+    description: 'The Do the Next Thing coaching tips, by title. Each one comes by email, with a line to paste into your AI chat.',
+    canonical: `https://www.cotib.com${TIPS_PATH}`,
+    analytics: true,
+    main: `    <section class="hero tips-head" aria-labelledby="title">
+      <div class="wrap">
+        <div class="state-simple">
+          <p class="eyebrow">a COTIB LLC product</p>
+          <h1 id="title">The tips</h1>
+          <div class="ticks" aria-hidden="true"></div>
+          <p>Short coaching tips for the one small piece you keep putting off. Each one names a stall, gives one technique and a line to paste into your AI chat, and ends with one small thing to do today.</p>
+          <p>The tips come by email: Tip 1 when you confirm your signup, Tip 2 on day 3 and Tip 3 on day 7, with a bonus tip around day 14. Here are the titles.</p>
+        </div>
+      </div>
+    </section>
+    <section class="tips" aria-label="The tips">
+      <div class="wrap">
+        <div class="tip-list">
+${list}
+        </div>
+        <p class="tips-foot"><a class="btn btn-quiet" href="/do-the-next-thing#free">Get the tips by email</a></p>
+      </div>
+    </section>`,
+    bodyEnd: '',
+  });
+}
+
 const BACK = '<a href="/do-the-next-thing">cotib.com/do-the-next-thing</a>';
 const MAIL = `<a href="mailto:${SUPPORT_EMAIL}">${SUPPORT_EMAIL}</a>`;
 
 const states = {
   // Approved copy: free-tier copy section 3, confirm page success.
-  confirmed: ({ downloadPath }) => statePage({
+  confirmed: () => statePage({
     state: 'confirmed',
     title: "You're confirmed",
     heading: "You're confirmed.",
-    paragraphs: ['Your 3 prompts are ready:'],
-    action: `          <p><a class="btn btn-primary" href="${esc(downloadPath)}">Download the free sampler</a></p>
-          <p>We also emailed you the link. It works for 30 days.</p>
+    paragraphs: ["You're on the list. Tip 1 is on its way. If it hasn't arrived in a few minutes, check your spam or promotions folder. Tip 2 comes on day 3 and Tip 3 on day 7, with a bonus tip around day 14. Here are the titles of the tips:"],
+    action: `          <p><a class="btn btn-primary" href="${TIPS_PATH}">See the tip titles</a></p>
           <p class="muted-line">a COTIB LLC product.</p>`,
   }),
   // Approved copy: confirm page, bad or expired link.
@@ -175,7 +232,7 @@ const states = {
     state: 'check-email',
     title: 'Check your email',
     heading: 'Check your email.',
-    paragraphs: ["We sent a confirm link to the address you entered. Click it within 48 hours to get your 3 prompts. Not there in a few minutes? Check spam or promotions."],
+    paragraphs: ["We sent a confirm link to the address you entered. Click it within 48 hours to confirm your signup. Not there in a few minutes? Check spam or promotions."],
   }),
   formError: ({ message }) => statePage({
     state: 'form-error',
@@ -187,9 +244,9 @@ const states = {
   paused: () => statePage({
     state: 'paused',
     title: 'Not available right now',
-    heading: "The free sampler isn't available right now.",
+    heading: "The free coaching tips signup isn't available right now.",
     paragraphs: [`Try again later, or email ${MAIL}.`],
   }),
 };
 
-module.exports = { page, head, HEADER, FOOTER, states };
+module.exports = { page, head, HEADER, footer, states, tipsPage, TIPS_PATH };

@@ -114,7 +114,7 @@ Current stats are a bit generic. Here's a stronger version:
   <span class="about-stat-card__number">30+</span>
   <div class="about-stat-card__text">
     <strong>Years of Precision</strong>
-    <span>Bringing systems thinking from corporate IT to travel planning</span>
+    <span>Bringing systems thinking from IT management to travel planning</span>
   </div>
 </div>
 
