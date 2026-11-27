@@ -1,0 +1,97 @@
+/* Unlisted /showcase page: one focal idea, the vertical video. */
+
+.showcase {
+  background: var(--navy-deep);
+  color: var(--white);
+  /* Extra bottom space so links and video controls clear the sticky cookie banner. */
+  padding: calc(100px + 16px) var(--section-pad-x) 48px;
+}
+
+.showcase__inner {
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.showcase__title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(26px, 4.4vw, 44px);
+  color: var(--white);
+  line-height: 1.15;
+  margin: 0 0 8px;
+}
+
+.showcase__lede {
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--off-white);
+  margin: 0 0 20px;
+  max-width: 42ch;
+}
+
+.showcase__frame {
+  /* 80vh is the cap. Subtract nav, copy, and the cookie banner so controls stay usable. */
+  width: min(100%, calc((100vh - 30rem) * 9 / 16));
+  max-height: min(80vh, calc(100vh - 30rem));
+  aspect-ratio: 9 / 16;
+  margin: 0 auto;
+  background: var(--ink);
+}
+
+@media (min-width: 768px) {
+  .showcase__frame {
+    width: min(100%, calc((100vh - 22rem) * 9 / 16));
+    max-height: min(80vh, calc(100vh - 22rem));
+  }
+}
+
+.showcase__video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: var(--ink);
+}
+
+.showcase__video:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 4px;
+}
+
+.showcase__fallback,
+.showcase__home {
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: 13px;
+  line-height: 1.6;
+  margin: 16px 0 0;
+}
+
+.showcase__home {
+  margin-top: 10px;
+}
+
+.showcase__fallback a,
+.showcase__home a {
+  color: var(--gold);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(201, 168, 76, 0.35);
+}
+
+.showcase__fallback a:hover,
+.showcase__home a:hover {
+  border-bottom-color: var(--gold);
+}
+
+.showcase__fallback a:focus-visible,
+.showcase__home a:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}

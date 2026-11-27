@@ -8,6 +8,9 @@
 
 <title>{{ title or site.seo.title }}</title>
 <meta name="description" content="{{ description or site.seo.description }}">
+{% if noindex %}
+<meta name="robots" content="noindex, nofollow">
+{% endif %}
 
 <!-- Canonical -->
 <link rel="canonical" href="{{ site.siteUrl }}{{ canonical or '' }}">
@@ -39,6 +42,7 @@
 <!-- Styles -->
 <link rel="stylesheet" href="/css/main.bundle.css?v={{ site.assetVersion }}">
 
+{% if not noindex %}
 <!-- Structured Data -->
 <script type="application/ld+json">
 {
@@ -99,3 +103,4 @@
   ]
 }
 </script>
+{% endif %}

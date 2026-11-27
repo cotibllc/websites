@@ -5,6 +5,8 @@ const site = require('../config/site');
 const baseUrl = site.siteUrl;
 
 const urls = [
+  // /showcase is unlisted (noindex) and must stay out of this list.
+
   { loc: '/', priority: '1.0', changefreq: 'weekly' },
   { loc: '/plan', priority: '0.95', changefreq: 'monthly' },
   { loc: '/royal-caribbean', priority: '0.9', changefreq: 'monthly' },

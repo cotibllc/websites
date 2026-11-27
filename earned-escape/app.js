@@ -18,6 +18,7 @@ app.use(helmet({
       styleSrc: ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com'],
       fontSrc: ["'self'", 'https://fonts.gstatic.com'],
       imgSrc: ["'self'", 'data:', 'https://www.googletagmanager.com', 'https://www.google-analytics.com'],
+      mediaSrc: ["'self'"],
       connectSrc: ["'self'", 'https://challenges.cloudflare.com', 'https://www.google-analytics.com', 'https://*.google-analytics.com', 'https://*.analytics.google.com'],
       frameSrc: ["'self'", 'https://challenges.cloudflare.com'],
     },

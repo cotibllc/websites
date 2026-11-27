@@ -1,0 +1,29 @@
+{% extends "layout/base.njk" %}
+
+{% block content %}
+<section class="showcase" aria-labelledby="showcase-heading">
+  <div class="showcase__inner">
+    <h1 class="showcase__title" id="showcase-heading">A short hello from Earned Escape</h1>
+    <p class="showcase__lede">This is a 30-second look at how I plan trips.</p>
+
+    <div class="showcase__frame">
+      <video
+        id="showcase-video"
+        class="showcase__video"
+        controls
+        playsinline
+        preload="metadata"
+        poster="/videos/earned-escape-elevenlabs-poster.jpg?v={{ site.assetVersion }}"
+        width="720"
+        height="1280"
+        aria-label="A short hello from Earned Escape, 30 seconds"
+      >
+        <source src="/videos/earned-escape-elevenlabs.mp4" type="video/mp4">
+      </video>
+    </div>
+
+    <p class="showcase__fallback"><a href="/videos/earned-escape-elevenlabs.mp4">Open the video file</a></p>
+    <p class="showcase__home"><a href="/">Visit the Earned Escape homepage</a></p>
+  </div>
+</section>
+{% endblock %}

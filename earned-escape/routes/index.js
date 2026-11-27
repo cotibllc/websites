@@ -268,6 +268,20 @@ router.get('/links', (req, res) => {
   });
 });
 
+// Unlisted MasterClass showcase. Kept off the sitemap and chrome on purpose.
+router.get('/showcase', (req, res) => {
+  res.set('X-Robots-Tag', 'noindex, nofollow');
+  res.render('pages/showcase.njk', {
+    site,
+    bodyClass: 'dest-page showcase-page',
+    noindex: true,
+    title: 'A short hello from Earned Escape',
+    description: 'A 30-second look at how I plan trips.',
+    canonical: '/showcase',
+    ogImage: '/videos/earned-escape-elevenlabs-poster.jpg',
+  });
+});
+
 // POST /api/guide: free guide lead capture. guideType selects the guide
 // (config/guides.js); it defaults to 'rc' and only enabled guides are accepted.
 router.post('/api/guide', async (req, res) => {
