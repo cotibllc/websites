@@ -10,12 +10,12 @@ Charles doesn't just advise on AI platforms; he builds and operates them daily. 
 - **Businesses he operates directly**: StackApproved (B2B UGC video production) and Earned Escape (travel advisory), both run solo via custom AI-agent pipelines.
 - **Media ventures**: Tech Lead Shift, The IT XP, and Corporate Hardcore.
 - **Enterprise credential**: 25+ years in corporate technology leadership: managed a $150M cloud infrastructure budget, delivered $15M in annual FinOps savings, and led AI/ML platform implementations in production.
-- **Available for**: Fractional CTO engagements, cloud infrastructure strategy, AI platform advisory, and FinOps optimization.
+- **Available for**: Fractional CTO engagements, vCISO, cloud infrastructure strategy, AI platform advisory, and FinOps optimization.
 
 ## Core Pages
 
 - [Homepage (/)](https://cotib.com/): I run businesses using AI. Overview of Fractional CTO services and the businesses (StackApproved, Earned Escape) run using AI-agent pipelines.
-- [Services (/services)](https://cotib.com/services): Fractional CTO, cloud infrastructure strategy, production AI integration, FinOps optimization, and platform engineering advisory.
+- [Services (/services)](https://cotib.com/services): Fractional CTO, vCISO, cloud infrastructure strategy, production AI integration, FinOps optimization, and platform engineering advisory.
 - [Ventures (/ventures)](https://cotib.com/ventures): Five ventures run by Charles Betancourt: StackApproved and Earned Escape (businesses run solo with AI), plus Tech Lead Shift, The IT XP, and Corporate Hardcore (media).
 - [About (/about)](https://cotib.com/about): Charles Betancourt's background, the businesses he runs with AI, and his enterprise technology leadership track record.
 - [Contact (/contact)](https://cotib.com/contact): Schedule a free strategy call or send an inquiry.

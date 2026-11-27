@@ -64,6 +64,7 @@ const footer = ({ analytics = false } = {}) => `
           <h2>Services</h2>
           <ul>
             <li><a href="/services#cto">Fractional CTO</a></li>
+            <li><a href="/services#vciso">vCISO</a></li>
             <li><a href="/services#ai">AI Platforms</a></li>
             <li><a href="/services#finops">FinOps &amp; Savings</a></li>
           </ul>
