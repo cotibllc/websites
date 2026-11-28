@@ -37,3 +37,15 @@ test('homepage pillars grid has three cards in a three-column grid', () => {
   assert.equal(grid.match(/glass-card/g).length, 3);
   assert.doesNotMatch(html, /Cloud Security/);
 });
+
+test('services page lists Fractional vCISO after Fractional CTO and before AI', () => {
+  const html = fs.readFileSync(path.join(WWW, 'services.html'), 'utf8');
+  assert.match(html, /id="vciso"/);
+  assert.match(html, /<h2 class="text-2xl font-bold text-white mb-4">Fractional vCISO<\/h2>/);
+  const cto = html.indexOf('id="cto"');
+  const vciso = html.indexOf('id="vciso"');
+  const ai = html.indexOf('id="ai"');
+  assert.ok(cto >= 0 && vciso > cto && ai > vciso, `order cto=${cto} vciso=${vciso} ai=${ai}`);
+  assert.match(html, /href="\/services#vciso"/);
+});
+
